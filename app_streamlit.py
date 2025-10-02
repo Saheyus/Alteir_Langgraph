@@ -20,12 +20,17 @@ st.set_page_config(
 # === OPTIMISATIONS: Lazy Loading avec Cache ===
 
 @st.cache_resource(show_spinner="Chargement des dépendances...")
-def load_workflow_dependencies():
+def load_workflow_dependencies(domain="personnages"):
     """Charge les dépendances lourdes une seule fois"""
     from workflows.content_workflow import ContentWorkflow
     from agents.writer_agent import WriterConfig
-    from config.domain_configs.personnages_config import PERSONNAGES_CONFIG
-    return ContentWorkflow, WriterConfig, PERSONNAGES_CONFIG
+    
+    if domain == "lieux":
+        from config.domain_configs.lieux_config import LIEUX_CONFIG
+        return ContentWorkflow, WriterConfig, LIEUX_CONFIG
+    else:
+        from config.domain_configs.personnages_config import PERSONNAGES_CONFIG
+        return ContentWorkflow, WriterConfig, PERSONNAGES_CONFIG
 
 @st.cache_data(ttl=60)
 def get_outputs_count():
@@ -186,7 +191,19 @@ def main():
         st.caption(f"**{model_info['provider']}** • {model_info['description']}")
         
         st.subheader("Domaine")
-        domain = st.selectbox("Domaine", ["Personnages"], index=0)
+        domain = st.selectbox(
+            "Domaine", 
+            ["Personnages", "Lieux"], 
+            index=0,
+            help="Choisir le type de contenu à générer"
+        )
+        
+        # Icône selon le domaine
+        domain_icons = {
+            "Personnages": "👤",
+            "Lieux": "🏛️"
+        }
+        st.caption(f"{domain_icons[domain]} **{domain}**")
         
         st.subheader("📊 Statistiques")
         nb_files = get_outputs_count()  # Utilise le cache
@@ -197,10 +214,15 @@ def main():
     
     # TAB 1: Création
     with tab1:
-        st.header("Créer un Personnage")
+        # En-tête adapté au domaine
+        domain_headers = {
+            "Personnages": "Créer un Personnage",
+            "Lieux": "Créer un Lieu"
+        }
+        st.header(domain_headers[domain])
         
-        # Exemples de briefs
-        BRIEF_EXAMPLES = [
+        # Exemples de briefs selon le domaine
+        BRIEF_EXAMPLES_PERSONNAGES = [
             "Un alchimiste qui transforme les émotions en substances physiques. Genre: Non défini. Espèce: Humain modifié. Âge: 38 cycles. Membre d'une guilde secrète, cache une dépendance à ses propres créations.",
             "Un cartographe solitaire membre d'un culte cherchant des ossements divins. Genre: Féminin. Espèce: Humaine. Âge: 45 cycles. Porte un compas en os qui vibre près des reliques.",
             "Un marchand d'ombres qui vend des souvenirs oubliés. Genre: Non binaire. Espèce: Gedroth. Âge: 102 cycles. Ancien bibliothécaire devenu contrebandier de mémoires interdites.",
@@ -211,20 +233,38 @@ def main():
             "Un ancien soldat reconverti en chef cuisinier utilisant des ingrédients interdits. Genre: Masculin. Espèce: Humain. Âge: 52 cycles. Ses plats réveillent des souvenirs enfouis.",
         ]
         
+        BRIEF_EXAMPLES_LIEUX = [
+            "Une bibliothèque souterraine abandonnée dont les livres murmurent. Taille: Site. Rôle: Lieu de culte. Autrefois lieu de savoir, maintenant repaire de cultistes.",
+            "Un marché flottant sur des plateformes organiques qui respirent. Taille: Secteur. Rôle: Lieu commercial. Construit sur le dos d'une créature endormie.",
+            "Les ruines d'une station de purification d'eau devenue sanctuaire. Taille: Point d'intérêt. Rôle: Zone magique. L'eau y coule encore, mais transforme ce qu'elle touche.",
+            "Un quartier vertical dans les entrailles d'un Léviathan pétrifié. Taille: District. Rôle: Ville. Sept niveaux de habitations creusées dans l'os ancien.",
+            "Une forge maudite où les armes forgées pleurent. Taille: Site. Rôle: Lieu artisanal. Les artisans y travaillent avec des masques pour ne pas entendre.",
+            "Un jardin suspendu où poussent des souvenirs cristallisés. Taille: Site. Rôle: Zone naturelle. Entretenu par des jardiniers aveugles qui récoltent les rêves.",
+            "Une gare abandonnée devenue labyrinthe de rails fantômes. Taille: Secteur. Rôle: Lieu unique. Des trains spectraux y passent encore certaines nuits.",
+        ]
+        
+        BRIEF_EXAMPLES = BRIEF_EXAMPLES_LIEUX if domain == "Lieux" else BRIEF_EXAMPLES_PERSONNAGES
+        
         # Brief avec boutons d'exemple
         col_brief_label, col_example_btn = st.columns([4, 1])
         with col_brief_label:
-            st.markdown("**Description du personnage**")
+            brief_label = "Description du lieu" if domain == "Lieux" else "Description du personnage"
+            st.markdown(f"**{brief_label}**")
         with col_example_btn:
             if st.button("🎲 Brief aléatoire", help="Charger un exemple de brief"):
                 import random
                 st.session_state.brief_example = random.choice(BRIEF_EXAMPLES)
                 st.rerun()
         
+        brief_placeholder = {
+            "Personnages": "Ex: Un alchimiste qui transforme les émotions en substances physiques...",
+            "Lieux": "Ex: Une bibliothèque souterraine dont les livres murmurent..."
+        }
+        
         brief = st.text_area(
-            "Description du personnage",
+            brief_label,
             value=st.session_state.get('brief_example', ''),
-            placeholder="Ex: Un alchimiste qui transforme les émotions en substances physiques...",
+            placeholder=brief_placeholder[domain],
             height=100,
             label_visibility="collapsed"
         )
@@ -449,12 +489,21 @@ def main():
         st.session_state.dialogue_mode = dialogue_mode
         st.session_state.creativity = creativity
         
-        # Bouton de génération
-        if st.button("🚀 Générer le Personnage", type="primary", use_container_width=True):
+        # Bouton de génération adapté au domaine
+        button_text = {
+            "Personnages": "🚀 Générer le Personnage",
+            "Lieux": "🚀 Générer le Lieu"
+        }
+        error_text = {
+            "Personnages": "⚠️ Veuillez fournir une description du personnage",
+            "Lieux": "⚠️ Veuillez fournir une description du lieu"
+        }
+        
+        if st.button(button_text[domain], type="primary", use_container_width=True):
             if not brief:
-                st.error("⚠️ Veuillez fournir une description du personnage")
+                st.error(error_text[domain])
             else:
-                generate_character(brief, intent, level, dialogue_mode, creativity, selected_model, MODELS[selected_model])
+                generate_content(brief, intent, level, dialogue_mode, creativity, selected_model, MODELS[selected_model], domain)
     
     # TAB 2: Résultats
     with tab2:
@@ -515,11 +564,11 @@ def create_llm(model_name: str, model_config: dict, creativity: float):
     
     return ChatOpenAI(**llm_config)
 
-def generate_character(brief, intent, level, dialogue_mode, creativity, model_name, model_config):
-    """Génère un personnage"""
+def generate_content(brief, intent, level, dialogue_mode, creativity, model_name, model_config, domain):
+    """Génère du contenu (personnage ou lieu) selon le domaine"""
     
-    # Lazy load des dépendances lourdes
-    ContentWorkflow, WriterConfig, PERSONNAGES_CONFIG = load_workflow_dependencies()
+    # Lazy load des dépendances lourdes selon le domaine
+    ContentWorkflow, WriterConfig, domain_config = load_workflow_dependencies(domain.lower())
     
     # Créer le LLM selon le modèle choisi
     llm = create_llm(model_name, model_config, creativity)
@@ -533,7 +582,7 @@ def generate_character(brief, intent, level, dialogue_mode, creativity, model_na
     )
     
     # Workflow avec le LLM choisi
-    workflow = ContentWorkflow(PERSONNAGES_CONFIG, llm=llm)
+    workflow = ContentWorkflow(domain_config, llm=llm)
     
     # Progress bar détaillée avec étapes
     progress_container = st.container()
@@ -668,7 +717,11 @@ def generate_character(brief, intent, level, dialogue_mode, creativity, model_na
         json_file, md_file = workflow.save_results(result)
         
         # Afficher résultats
-        st.success(f"✅ Personnage généré avec succès ! (Modèle: {model_config['icon']} {model_name})")
+        success_msg = {
+            "personnages": f"✅ Personnage généré avec succès ! (Modèle: {model_config['icon']} {model_name})",
+            "lieux": f"✅ Lieu généré avec succès ! (Modèle: {model_config['icon']} {model_name})"
+        }
+        st.success(success_msg[domain.lower()])
         
         # Métriques
         col1, col2, col3 = st.columns(3)
