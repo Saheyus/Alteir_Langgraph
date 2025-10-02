@@ -188,10 +188,23 @@ Commence directement par le contenu corrigé."""
     
     def _parse_corrections(self, original: str, correction_text: str) -> tuple[str, List[Correction], str]:
         """Parse le résultat pour extraire le contenu corrigé et les modifications"""
+        import re
+        
+        # Nettoyer les sections parasites (instructions, etc.)
+        cleaned_text = correction_text
+        
+        # Supprimer les sections "INSTRUCTIONS" et "Corrections effectuées:" vides
+        cleaned_text = re.sub(r'INSTRUCTIONS DE CORRECTION:.*?(?=\n\n|\Z)', '', cleaned_text, flags=re.DOTALL)
+        cleaned_text = re.sub(r'Corrections effectuées:\s*$', '', cleaned_text, flags=re.MULTILINE)
         
         # Séparer le contenu corrigé des corrections listées
-        parts = correction_text.split('[CORRECTION:', 1)
+        parts = cleaned_text.split('[CORRECTION:', 1)
         corrected_content = parts[0].strip()
+        
+        # Aussi séparer si format "- [CORRECTION:" (avec tiret)
+        if len(parts) == 1 and '- [CORRECTION:' in cleaned_text:
+            parts = cleaned_text.split('- [CORRECTION:', 1)
+            corrected_content = parts[0].strip()
         
         corrections = []
         summary = ""
@@ -202,9 +215,12 @@ Commence directement par le contenu corrigé."""
             lines = corrections_part.split('\n')
             
             for line in lines:
-                if '[CORRECTION:' in line:
+                # Gérer aussi le format avec tiret: "- [CORRECTION: ..."
+                if '[CORRECTION:' in line or '- [CORRECTION:' in line:
                     try:
                         # Format: [CORRECTION: type] Original → Corrigé (explication)
+                        # ou: - [CORRECTION: type] Original → Corrigé (explication)
+                        line = line.replace('- [CORRECTION:', '[CORRECTION:')
                         parts_line = line.split(']', 1)
                         if len(parts_line) > 1:
                             corr_type = parts_line[0].replace('[CORRECTION:', '').strip()
@@ -223,17 +239,21 @@ Commence directement par le contenu corrigé."""
                                         corrected_text = corr_expl
                                         explanation = None
                                     
-                                    corrections.append(Correction(
-                                        type=corr_type,
-                                        original=original_text,
-                                        corrected=corrected_text,
-                                        explanation=explanation
-                                    ))
+                                    # Vérifier que c'est une vraie correction (pas juste un titre)
+                                    if original_text and corrected_text and original_text != corrected_text:
+                                        corrections.append(Correction(
+                                            type=corr_type,
+                                            original=original_text,
+                                            corrected=corrected_text,
+                                            explanation=explanation
+                                        ))
                     except:
                         pass
             
-            # Extraire le résumé (dernières lignes généralement)
-            summary_lines = [l for l in lines if not l.startswith('[CORRECTION:') and l.strip() and len(l) > 20]
+            # Extraire le résumé (dernières lignes non vides après corrections)
+            summary_lines = [l.strip() for l in lines 
+                           if l.strip() and not l.startswith(('[CORRECTION:', '- [CORRECTION:', 'Corrections effectuées'))
+                           and len(l.strip()) > 20]
             if summary_lines:
                 summary = ' '.join(summary_lines[-3:])
         

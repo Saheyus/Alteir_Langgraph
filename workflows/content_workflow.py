@@ -272,7 +272,8 @@ class ContentWorkflow:
             camel_case = words[0].lower() + ''.join(w.capitalize() for w in words[1:] if w)
             # Supprimer caractères non alphanumériques
             camel_case = re.sub(r'[^a-zA-Z0-9]', '', camel_case)
-            filename_base = camel_case
+            # Format: domaine_nomCamelCase_timestamp
+            filename_base = f"{state['domain']}_{camel_case}"
         else:
             # Nom non trouvé - utiliser domaine par défaut
             filename_base = state['domain']

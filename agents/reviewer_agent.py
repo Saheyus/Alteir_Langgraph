@@ -202,30 +202,85 @@ Termine par un score de cohérence globale (0.0 à 1.0) et 3-5 suggestions d'am�
     
     def _parse_review(self, review_text: str) -> tuple[List[ReviewIssue], List[str], float]:
         """Parse la relecture pour extraire issues, suggestions et score"""
+        import re
+        
         issues = []
         improvements = []
         score = 0.7  # Score par défaut
         
-        # TODO: Implémenter un vrai parser
-        # Pour l'instant, extraire basiquement
-        
         lines = review_text.split('\n')
-        for line in lines:
-            # Détecter les issues
-            if '[CRITIQUE]' in line or '[MAJEUR]' in line or '[MINEUR]' in line:
-                severity = "critical" if '[CRITIQUE]' in line else ("major" if '[MAJEUR]' in line else "minor")
-                issues.append(ReviewIssue(
-                    severity=severity,
-                    category="general",
-                    description=line.strip(),
-                    suggestion=None
-                ))
+        
+        # Parser les problèmes avec contexte
+        current_severity = None
+        current_category = None
+        current_description = []
+        current_suggestion = []
+        in_suggestion = False
+        
+        for i, line in enumerate(lines):
+            line_stripped = line.strip()
+            
+            # Détecter un nouveau problème
+            severity_match = re.search(r'Sévérité:\s*\[?(CRITIQUE|MAJEUR|MINEUR)\]?', line, re.IGNORECASE)
+            if severity_match:
+                # Sauvegarder le problème précédent s'il existe
+                if current_severity and current_description:
+                    desc = ' '.join(current_description).strip()
+                    sugg = ' '.join(current_suggestion).strip() if current_suggestion else None
+                    if desc and desc not in ["- Sévérité: [CRITIQUE]", "- Sévérité: [MAJEUR]", "- Sévérité: [MINEUR]"]:
+                        issues.append(ReviewIssue(
+                            severity=current_severity,
+                            category=current_category or "general",
+                            description=desc,
+                            suggestion=sugg
+                        ))
+                
+                # Nouveau problème
+                current_severity = severity_match.group(1).lower()
+                if current_severity == "critique":
+                    current_severity = "critical"
+                elif current_severity == "majeur":
+                    current_severity = "major"
+                elif current_severity == "mineur":
+                    current_severity = "minor"
+                    
+                current_description = []
+                current_suggestion = []
+                in_suggestion = False
+                continue
+            
+            # Détecter la catégorie
+            category_match = re.search(r'Catégorie:\s*(.+)', line, re.IGNORECASE)
+            if category_match:
+                current_category = category_match.group(1).strip()
+                continue
+            
+            # Détecter la description
+            desc_match = re.search(r'Description:\s*(.+)', line, re.IGNORECASE)
+            if desc_match:
+                current_description.append(desc_match.group(1).strip())
+                continue
+            
+            # Détecter la suggestion
+            if re.search(r'Suggestion.*:', line, re.IGNORECASE):
+                in_suggestion = True
+                sugg_match = re.search(r'Suggestion[^:]*:\s*(.+)', line, re.IGNORECASE)
+                if sugg_match:
+                    current_suggestion.append(sugg_match.group(1).strip())
+                continue
+            
+            # Continuer description ou suggestion
+            if current_severity:
+                if in_suggestion and line_stripped:
+                    current_suggestion.append(line_stripped)
+                elif not in_suggestion and line_stripped and not line_stripped.startswith(('Problème', 'Sévérité', 'Catégorie')):
+                    # C'est probablement la suite de la description
+                    if i > 0 and current_description:  # Seulement si on a déjà une description
+                        current_description.append(line_stripped)
             
             # Détecter le score
             if 'score' in line.lower() and any(c.isdigit() for c in line):
                 try:
-                    # Extraire le score (format 0.X ou X/10)
-                    import re
                     if '/' in line:
                         match = re.search(r'(\d+)/10', line)
                         if match:
@@ -237,10 +292,25 @@ Termine par un score de cohérence globale (0.0 à 1.0) et 3-5 suggestions d'am�
                 except:
                     pass
         
-        # Extraire les suggestions (dernières lignes généralement)
+        # Sauvegarder le dernier problème
+        if current_severity and current_description:
+            desc = ' '.join(current_description).strip()
+            sugg = ' '.join(current_suggestion).strip() if current_suggestion else None
+            if desc and desc not in ["- Sévérité: [CRITIQUE]", "- Sévérité: [MAJEUR]", "- Sévérité: [MINEUR]"]:
+                issues.append(ReviewIssue(
+                    severity=current_severity,
+                    category=current_category or "general",
+                    description=desc,
+                    suggestion=sugg
+                ))
+        
+        # Extraire les suggestions d'amélioration générales
         if "suggestion" in review_text.lower() or "amélioration" in review_text.lower():
-            suggestion_lines = [l for l in lines if l.strip().startswith(('-', '•', '*', '1.', '2.', '3.'))]
-            improvements = [l.strip().lstrip('-•*123456789.').strip() for l in suggestion_lines[-5:]]
+            suggestion_section = re.split(r'Suggestions? d[\'e]amélioration', review_text, flags=re.IGNORECASE)
+            if len(suggestion_section) > 1:
+                suggestion_lines = [l.strip() for l in suggestion_section[-1].split('\n') 
+                                   if l.strip() and l.strip().startswith(('-', '•', '*', '1.', '2.', '3.'))]
+                improvements = [l.lstrip('-•*123456789.').strip() for l in suggestion_lines[:5]]
         
         return issues, improvements, score
     
