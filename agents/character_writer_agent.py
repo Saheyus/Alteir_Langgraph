@@ -41,32 +41,11 @@ class CharacterWriterAgent:
     - Blancs actifs
     """
     
-    SYSTEM_PROMPT = """Tu es un générateur de personnages expert pour le GDD Alteir, un RPG narratif exploratoire.
+    def get_system_prompt(self) -> str:
+        """Récupère le prompt système depuis la configuration du domaine"""
+        return f"""Tu es un générateur de personnages expert pour le GDD Alteir, un RPG narratif exploratoire.
 
-**PRINCIPES FONDAMENTAUX:**
-
-1. **Orthogonalité rôle ↔ profondeur**: La profondeur du personnage ne doit PAS être explicable par son rôle visible seul (sauf indication contraire).
-
-2. **Surface / Profondeur / Monde**:
-   - Surface = gestes, objets, micro-règles, répliques brèves SANS backstory
-   - Profondeur = indices, artefacts, témoins, lieux, analepses par strates
-   - Monde = contraintes institutionnelles/écologiques/économiques
-
-3. **Temporalité IS / WAS / COULD-HAVE-BEEN**: Montrer le présent, un passé concret, ET une voie non empruntée.
-
-4. **Show > Tell**: Privilégier objets, rituels, silences, traces. Réserver l'exposition directe aux rubriques qui l'exigent.
-
-5. **Blancs actifs**: Toute zone d'ombre ouvre une ACTION (parler à X, aller à Y, utiliser Z). Éviter le "mystère inerte".
-
-**LANGUE & STYLE:**
-- Français clair, précis, sans méta
-- Prose continue (pas de tableaux "avant/après")
-- Néologismes autorisés avec glose brève (5-8 mots) à la première mention si nécessaire
-- Éviter les anglicismes non nécessaires
-- Décrire violences/immoralités sans euphémiser, de façon crue mais non esthétisante
-
-**ANTI-CLICHÉS:**
-Éviter l'archétype omniprésent, l'exposition torrentielle, la "voix off" méta. Le rôle fonctionnel reste FAÇADE.
+{self.domain_config.get_role_instructions("writer")}
 
 **RECHERCHE & AUTONOMIE:**
 Pour chaque nom propre inventé ou terme capitalisé:
@@ -85,28 +64,20 @@ Tu es extrêmement pro-actif pour t'approprier les concepts, lieux et personnage
         self.llm = llm or ChatOpenAI(
             model="gpt-4o-mini",  # Modèle accessible et performant
             temperature=0.7,  # Créativité modérée
-            max_tokens=2000,  # Plus long pour les fiches complètes
+            max_tokens=8000,  # Augmenté pour le template narratif complet
         )
         
-        # Template Notion pour personnages (basé sur la structure récupérée)
-        self.character_template = {
-            "Nom": "",
-            "Alias": "",
-            "Type": "",  # PJ, PNJ, PNJ principal, etc.
-            "Occupation": "",
-            "Espèce": "",
-            "Âge": 0,
-            "Genre": "",
-            "Archétype littéraire": [],
-            "Axe idéologique": "",
-            "Qualités": [],
-            "Défauts": [],
-            "Langage": [],
-            "Communautés": [],
-            "Lieux de vie": [],
-            "Réponse au problème moral": "",
-            "État": "Brouillon IA"
-        }
+        # Charger la configuration du domaine personnages
+        from config.domain_configs.personnages_config import PERSONNAGES_CONFIG
+        self.domain_config = PERSONNAGES_CONFIG
+        
+        # Template narratif et schéma des colonnes
+        self.narrative_template = self.domain_config.template
+        self.character_schema = self.domain_config.schema or {}
+        
+        # Options disponibles pour les champs select/multi_select (depuis la config)
+        from config.domain_configs.personnages_config import PERSONNAGES_FIELD_OPTIONS
+        self.field_options = PERSONNAGES_FIELD_OPTIONS
     
     def _build_character_prompt(self, brief: str, context_data: Dict[str, Any]) -> str:
         """
@@ -169,35 +140,35 @@ Tu es extrêmement pro-actif pour t'approprier les concepts, lieux et personnage
 **CONTEXTE NOTION (univers Alteir):**
 {self._format_context(context_data)}
 
-**STRUCTURE OBLIGATOIRE (template Notion):**
+**TEMPLATE NARRATIF OBLIGATOIRE (basé sur la page Notion PNJ important V2):**
 
-## Caractérisation
-**[Surface]**: Traits visibles concrets, gestes/tics, objets portés. Pas de backstory.
+{self.narrative_template}
 
-**[Profondeur]**: 2 noyaux latents formulés sans pathos + comment ils se découvrent (artefact/témoin/lieu).
+**CHAMPS NOTION (métadonnées à remplir exactement):**
+- **Nom**: [Nom du personnage]
+- **Alias**: [Alias/surnom]
+- **Type**: [Choisir parmi: {', '.join(self.field_options['Type'])}]
+- **Occupation**: [Profession/activité]
+- **Espèce**: [Choisir parmi les espèces disponibles dans le contexte]
+- **Âge**: [Nombre en cycles]
+- **Genre**: [Choisir parmi: {', '.join(self.field_options['Genre'])}]
+- **Archétype littéraire**: [Choisir 1-2 parmi: {', '.join(self.field_options['Archétype littéraire'])}]
+- **Axe idéologique**: [Choisir parmi: {', '.join(self.field_options['Axe idéologique'])}]
+- **Qualités**: [Choisir 2-4 parmi: {', '.join(self.field_options['Qualités'][:10])}...]
+- **Défauts**: [Choisir 2-4 parmi: {', '.join(self.field_options['Défauts'][:10])}...]
+- **Langage**: [Choisir 1-2 parmi: {', '.join(self.field_options['Langage'])}]
+- **Communautés**: [Référencer les communautés du contexte]
+- **Lieux de vie**: [Référencer les lieux du contexte]
+- **Réponse au problème moral**: [Réponse personnelle du personnage]
+- **État**: "Brouillon IA"
+- **Sprint**: [Choisir parmi: {', '.join(self.field_options['Sprint'])}]
 
-## Dialogue
-{specs['dialogues']} variées. Mode: {self.config.dialogue_mode}.
-
-[Exemples de répliques ici, selon le mode]
-
-## Background / Histoire
-Paragraphe compact (80-120 mots), neutre. Les détails sensibles vont en [Profondeur].
-
-## Relations
-{specs['relations']}. Chaque relation doit avoir un ENJEU CONCRET (prix, dette, délai, tabou).
-
-## Arcs / Quêtes
-- Au moins une micro-quête principale
-- Une alternative "low combat"
-- CONSÉQUENCE D'ÉCHEC
-- ÉTAT PERSISTANT si retour
-
-## Chronologie
-Mini-table âge/événement/date (système: {self.config.calendar_spec})
-
-## Indices profonds
-Au moins 1 artefact OU 1 témoin vivant OU 1 lieu actif (pas d'obligation cumulée).
+**INSTRUCTIONS SPÉCIFIQUES:**
+- Respecter EXACTEMENT la structure du template narratif ci-dessus
+- Remplir chaque section avec du contenu cohérent et détaillé
+- Les dialogues doivent être {specs['dialogues']} variées (mode: {self.config.dialogue_mode})
+- Les relations doivent avoir un ENJEU CONCRET (prix, dette, délai, tabou)
+- Appliquer les principes narratifs (orthogonalité, show>tell, blancs actifs)
 
 **CONTRÔLE QUALITÉ:**
 ✓ Aucune fuite de backstory en [Surface]
@@ -291,7 +262,7 @@ Produis la fiche DIRECTEMENT dans cette structure, sans apartés méthodologique
         
         # Générer avec le LLM
         messages = [
-            {"role": "system", "content": self.SYSTEM_PROMPT},
+            {"role": "system", "content": self.get_system_prompt()},
             {"role": "user", "content": user_prompt}
         ]
         
@@ -339,13 +310,53 @@ Produis la fiche DIRECTEMENT dans cette structure, sans apartés méthodologique
         """
         Parse le texte généré en structure Notion
         
-        Note: Implémentation simplifiée, à améliorer avec regex/parsing robuste
+        Extrait les champs Notion du texte généré par le LLM
         """
-        # TODO: Implémenter un vrai parser pour extraire les champs Notion
-        # Pour l'instant, retourner le template avec le texte brut
-        parsed = self.character_template.copy()
+        import re
+        
+        parsed = self.character_schema.copy()
         parsed["_raw_text"] = text
         parsed["État"] = "Brouillon IA"
+        
+        # Patterns pour extraire les champs Notion
+        patterns = {
+            "Nom": r"\*\*Nom\*\*:\s*(.+)",
+            "Alias": r"\*\*Alias\*\*:\s*(.+)",
+            "Type": r"\*\*Type\*\*:\s*(.+)",
+            "Occupation": r"\*\*Occupation\*\*:\s*(.+)",
+            "Espèce": r"\*\*Espèce\*\*:\s*(.+)",
+            "Âge": r"\*\*Âge\*\*:\s*(\d+)",
+            "Genre": r"\*\*Genre\*\*:\s*(.+)",
+            "Archétype littéraire": r"\*\*Archétype littéraire\*\*:\s*(.+)",
+            "Axe idéologique": r"\*\*Axe idéologique\*\*:\s*(.+)",
+            "Qualités": r"\*\*Qualités\*\*:\s*(.+)",
+            "Défauts": r"\*\*Défauts\*\*:\s*(.+)",
+            "Langage": r"\*\*Langage\*\*:\s*(.+)",
+            "Communautés": r"\*\*Communautés\*\*:\s*(.+)",
+            "Lieux de vie": r"\*\*Lieux de vie\*\*:\s*(.+)",
+            "Réponse au problème moral": r"\*\*Réponse au problème moral\*\*:\s*(.+)",
+            "Sprint": r"\*\*Sprint\*\*:\s*(.+)"
+        }
+        
+        # Extraire les champs avec regex
+        for field, pattern in patterns.items():
+            match = re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
+            if match:
+                value = match.group(1).strip()
+                
+                # Traitement spécial selon le type de champ
+                if field in ["Archétype littéraire", "Qualités", "Défauts", "Langage"]:
+                    # Multi-select: séparer par virgule et nettoyer
+                    parsed[field] = [item.strip() for item in value.split(",") if item.strip()]
+                elif field == "Âge":
+                    # Number: convertir en entier
+                    try:
+                        parsed[field] = int(value)
+                    except ValueError:
+                        parsed[field] = 0
+                else:
+                    # Text/Select: garder tel quel
+                    parsed[field] = value
         
         return parsed
 

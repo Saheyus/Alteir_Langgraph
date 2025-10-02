@@ -69,11 +69,14 @@ class DomainConfig:
     domain: str  # "personnages", "lieux", "communautes", etc.
     display_name: str  # "Personnages", "Lieux", etc.
     
-    # Template Notion
-    template: Dict[str, Any]
+    # Template Notion (narratif)
+    template: str
     
     # Instructions spécifiques au domaine
     domain_instructions: str
+    
+    # Schéma des colonnes Notion (métadonnées)
+    schema: Optional[Dict[str, Any]] = None
     
     # Règles de validation
     validation_rules: List[ValidationRule] = field(default_factory=list)
@@ -117,7 +120,9 @@ class DomainConfig:
     
     def get_template_fields(self) -> List[str]:
         """Retourne la liste des champs du template"""
-        return list(self.template.keys())
+        if self.schema:
+            return list(self.schema.keys())
+        return []
     
     def get_required_fields(self) -> List[str]:
         """Retourne les champs obligatoires basés sur les règles"""

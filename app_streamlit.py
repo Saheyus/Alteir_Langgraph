@@ -68,14 +68,6 @@ def main():
         st.subheader("Domaine")
         domain = st.selectbox("Domaine", ["Personnages"], index=0)
         
-        st.subheader("🎲 Mode Paramètres")
-        param_mode = st.radio(
-            "Mode",
-            ["Random", "Manuel"],
-            index=0,
-            help="Random = paramètres aléatoires à chaque génération"
-        )
-        
         st.subheader("📊 Statistiques")
         outputs_dir = Path("outputs")
         if outputs_dir.exists():
@@ -96,73 +88,137 @@ def main():
             height=100
         )
         
-        col1, col2 = st.columns(2)
+        # Initialiser session state pour les paramètres
+        import random
+        if 'random_seed' not in st.session_state:
+            st.session_state.random_seed = 0
         
-        # Générer valeurs aléatoires si mode Random
-        if param_mode == "Random":
-            import random
-            intent_options = ["orthogonal_depth", "vocation_pure", "archetype_assume", "mystere_non_resolu"]
-            level_options = ["cameo", "standard", "major"]
-            dialogue_options = ["parle", "gestuel", "telepathique", "ecrit_only"]
-            
-            intent_random = random.choice(intent_options)
-            level_random = random.choice(level_options)
-            dialogue_random = random.choice(dialogue_options)
-            creativity_random = round(random.uniform(0.5, 0.9), 1)
+        # Options disponibles
+        intent_options = ["orthogonal_depth", "vocation_pure", "archetype_assume", "mystere_non_resolu"]
+        level_options = ["cameo", "standard", "major"]
+        dialogue_options = ["parle", "gestuel", "telepathique", "ecrit_only"]
+        
+        # Initialiser les valeurs par défaut si elles n'existent pas
+        if 'intent' not in st.session_state:
+            st.session_state.intent = "orthogonal_depth"
+        if 'level' not in st.session_state:
+            st.session_state.level = "standard"
+        if 'dialogue_mode' not in st.session_state:
+            st.session_state.dialogue_mode = "parle"
+        if 'creativity' not in st.session_state:
+            st.session_state.creativity = 0.7
+        
+        # Fonction helper pour choisir une valeur différente
+        def random_different(options, current):
+            """Choisit une valeur aléatoire différente de la valeur actuelle"""
+            if len(options) <= 1:
+                return options[0] if options else current
+            available = [opt for opt in options if opt != current]
+            return random.choice(available)
+        
+        # Bouton dé global
+        col_dice, col_space = st.columns([1, 5])
+        with col_dice:
+            if st.button("🎲", help="Mélanger tous les paramètres", use_container_width=True):
+                st.session_state.intent = random_different(intent_options, st.session_state.intent)
+                st.session_state.level = random_different(level_options, st.session_state.level)
+                st.session_state.dialogue_mode = random_different(dialogue_options, st.session_state.dialogue_mode)
+                # Pour la créativité, s'assurer d'une différence d'au moins 0.1
+                while True:
+                    new_creativity = round(random.uniform(0.5, 0.9), 2)
+                    if abs(new_creativity - st.session_state.creativity) >= 0.1:
+                        st.session_state.creativity = new_creativity
+                        break
+                st.session_state.random_seed += 1
+                st.rerun()
+        
+        col1, col2 = st.columns(2)
         
         with col1:
             st.subheader("Paramètres Narratifs")
             
-            if param_mode == "Random":
-                st.info(f"""
-                🎲 **Paramètres aléatoires:**
-                - Intent: `{intent_random}`
-                - Niveau: `{level_random}`
-                - Dialogue: `{dialogue_random}`
-                - Créativité: `{creativity_random}`
-                
-                (Passer en mode Manuel pour choisir)
-                """)
-                intent = intent_random
-                level = level_random
-                dialogue_mode = dialogue_random
-                creativity = creativity_random
-            else:
+            # Intention narrative
+            col_intent, col_intent_random = st.columns([4, 1])
+            with col_intent_random:
+                st.write("")  # Spacer
+                st.write("")  # Spacer
+                if st.button("🎲", key="random_intent", help="Valeur aléatoire"):
+                    st.session_state.intent = random_different(intent_options, st.session_state.intent)
+                    st.session_state.random_seed += 1
+                    st.rerun()
+            with col_intent:
                 intent = st.selectbox(
                     "Intention narrative",
-                    [
-                        "orthogonal_depth",
-                        "vocation_pure",
-                        "archetype_assume",
-                        "mystere_non_resolu"
-                    ],
-                    help="Orthogonal = profondeur ≠ rôle visible"
+                    intent_options,
+                    index=intent_options.index(st.session_state.intent),
+                    help="Orthogonal = profondeur ≠ rôle visible",
+                    key=f"intent_select_{st.session_state.random_seed}"
                 )
-                
+            
+            # Niveau de détail
+            col_level, col_level_random = st.columns([4, 1])
+            with col_level_random:
+                st.write("")  # Spacer
+                st.write("")  # Spacer
+                if st.button("🎲", key="random_level", help="Valeur aléatoire"):
+                    st.session_state.level = random_different(level_options, st.session_state.level)
+                    st.session_state.random_seed += 1
+                    st.rerun()
+            with col_level:
                 level = st.selectbox(
                     "Niveau de détail",
-                    ["cameo", "standard", "major"],
-                    index=1,
-                    help="cameo: 4-6 répliques | standard: 8-10 | major: 10-12"
+                    level_options,
+                    index=level_options.index(st.session_state.level),
+                    help="cameo: 4-6 répliques | standard: 8-10 | major: 10-12",
+                    key=f"level_select_{st.session_state.random_seed}"
                 )
-                
+            
+            # Mode de dialogue
+            col_dialogue, col_dialogue_random = st.columns([4, 1])
+            with col_dialogue_random:
+                st.write("")  # Spacer
+                st.write("")  # Spacer
+                if st.button("🎲", key="random_dialogue", help="Valeur aléatoire"):
+                    st.session_state.dialogue_mode = random_different(dialogue_options, st.session_state.dialogue_mode)
+                    st.session_state.random_seed += 1
+                    st.rerun()
+            with col_dialogue:
                 dialogue_mode = st.selectbox(
                     "Mode de dialogue",
-                    ["parle", "gestuel", "telepathique", "ecrit_only"],
-                    help="Comment le personnage communique"
+                    dialogue_options,
+                    index=dialogue_options.index(st.session_state.dialogue_mode),
+                    help="Comment le personnage communique",
+                    key=f"dialogue_select_{st.session_state.random_seed}"
                 )
         
         with col2:
             st.subheader("Paramètres Techniques")
             
-            if param_mode == "Manuel":
+            # Créativité avec bouton random
+            col_creativity, col_creativity_random = st.columns([4, 1])
+            with col_creativity_random:
+                st.write("")  # Spacer
+                st.write("")  # Spacer
+                st.write("")  # Spacer
+                st.write("")  # Spacer
+                if st.button("🎲", key="random_creativity", help="Valeur aléatoire"):
+                    # S'assurer d'une différence d'au moins 0.1
+                    while True:
+                        new_creativity = round(random.uniform(0.5, 0.9), 2)
+                        if abs(new_creativity - st.session_state.creativity) >= 0.1:
+                            st.session_state.creativity = new_creativity
+                            break
+                    st.session_state.random_seed += 1
+                    st.rerun()
+            with col_creativity:
                 creativity = st.slider(
                     "Créativité (température)",
                     min_value=0.0,
                     max_value=1.0,
-                    value=0.7,
-                    step=0.1,
-                    help="0 = déterministe | 1 = très créatif"
+                    value=st.session_state.creativity,
+                    step=0.01,
+                    help="0 = déterministe | 1 = très créatif",
+                    key=f"creativity_slider_{st.session_state.random_seed}"
                 )
             
             st.info(f"""
@@ -172,6 +228,12 @@ def main():
             - Dialogue: `{dialogue_mode}`
             - Température: `{creativity}`
             """)
+        
+        # Mettre à jour session state avec les valeurs choisies manuellement
+        st.session_state.intent = intent
+        st.session_state.level = level
+        st.session_state.dialogue_mode = dialogue_mode
+        st.session_state.creativity = creativity
         
         # Bouton de génération
         if st.button("🚀 Générer le Personnage", type="primary", use_container_width=True):

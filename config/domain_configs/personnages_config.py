@@ -14,25 +14,107 @@ from agents.base.domain_config import (
     RelationRule
 )
 
-# Template Notion pour les personnages
-PERSONNAGES_TEMPLATE = {
-    "Nom": "",
+# Schéma des colonnes Notion (pour les métadonnées)
+PERSONNAGES_SCHEMA = {
+    "Nom": "",  # title field
     "Alias": "",
-    "Type": "",  # PJ, PNJ, PNJ principal, etc.
+    "Type": "",  # select: PJ, PNJ, PNJ principal, PNJ recrutable, PNJ secondaire, PNJ historique, Entité supérieure
     "Occupation": "",
-    "Espèce": "",
-    "Âge": 0,
-    "Genre": "",
-    "Archétype littéraire": [],
-    "Axe idéologique": "",
-    "Qualités": [],
-    "Défauts": [],
-    "Langage": [],
-    "Communautés": [],
-    "Lieux de vie": [],
+    "Espèce": "",  # relation vers collection espèces
+    "Âge": 0,  # number
+    "Genre": "",  # select: Féminin, Masculin, Non défini, Non Binaire, Pluriel, Zim (incubateur), Fluide, Multimod (ultrafluide)
+    "Archétype littéraire": [],  # multi_select: Artiste/Cynique, Amoureuse/Faire-valoir, etc.
+    "Axe idéologique": "",  # select: Retrait, Destruction, Rébellion, Connexion, Subversion, Contrôle
+    "Qualités": [],  # multi_select: Confiante, Conciliante, Courageuse, etc.
+    "Défauts": [],  # multi_select: Autoritaire, Colérique, Cynique, etc.
+    "Langage": [],  # multi_select: Abraldique ancien, Principit, Kesh-Varash, etc.
+    "Communautés": [],  # relation vers collection communautés
+    "Lieux de vie": [],  # relation vers collection lieux
     "Réponse au problème moral": "",
-    "État": "Brouillon IA"
+    "État": "Brouillon IA",  # status: Pas commencé, Brouillon IA, En cours, A relire, A implémenter, Implémenté, Polished
+    "Sprint": "",  # select: Facultatif, Plus tard, Sprint 1, Sprint 2, Sprint 3
+    "Détient": [],  # relation vers collection objets
 }
+
+# Template narratif Notion pour les personnages (structure de contenu)
+PERSONNAGES_NARRATIVE_TEMPLATE = """
+# Résumé de la fiche
+[Description courte du personnage en 2-3 phrases]
+
+# Caractérisation
+
+## Faiblesse
+[Point faible du personnage, ce qui le rend vulnérable]
+
+## Compulsion
+[Ce qui le pousse à agir, son moteur interne]
+
+## Désir
+[Ce qu'il veut vraiment, son objectif profond]
+
+# Background
+
+## Contexte
+[Environnement, situation sociale, position dans le monde]
+
+## Apparence
+[Description physique, vêtements, objets portés]
+
+## Évènements marquants
+**De sa vie d'enfant :**
+- [Événement significatif]
+**De sa vie d'ado :**
+- [Événement significatif]
+**De sa vie d'adulte :**
+- [Événement significatif]
+
+## Relations
+**À sa famille :**
+- [Relation familiale avec enjeu concret]
+**Aux autres :**
+- [Relations avec prix/dette/délai/tabou]
+
+## Centres d'intérêt
+- [Passions, hobbies, domaines d'expertise]
+
+## Fluff
+- [Détails colorés, anecdotes, particularités]
+
+# Arcs Narratifs
+
+## Actions concrètes
+[Ce que le personnage fait activement dans l'histoire]
+
+## Quêtes annexes
+[Missions secondaires, objectifs à court terme]
+
+## Conséquences de la Révélation
+- **Si besoin résolu :** [État final positif]
+- **Si besoin non résolu :** [État final négatif]
+- **Si le besoin empire :** [État final critique]
+
+# Dialogue Type
+
+## [Thème] du jeu
+[Comment le personnage aborde le thème central]
+
+## Registre de langage du personnage
+[Niveau de langue, style de communication]
+
+## Champs lexicaux utilisés
+[Mots-clés, domaines de vocabulaire privilégiés]
+
+## Expressions courantes
+- [Phrases typiques du personnage]
+
+# Dialogue du personnage
+
+## Rencontre initiale
+[Première impression, accroche]
+
+## Exemples de dialogues
+[8-10 répliques variées de 10-20 mots chacune]
+"""
 
 # Instructions spécifiques au domaine Personnages
 PERSONNAGES_INSTRUCTIONS = """
@@ -118,7 +200,20 @@ PERSONNAGES_EXAMPLES = [
     # Ajouter plus d'exemples ici
 ]
 
-# Paramètres spécifiques aux personnages
+# Options disponibles pour les champs select/multi_select (basées sur le schéma Notion)
+PERSONNAGES_FIELD_OPTIONS = {
+    "Type": ["PJ", "PNJ", "PNJ principal", "PNJ recrutable", "PNJ secondaire", "PNJ historique", "Entité supérieure"],
+    "Genre": ["Féminin", "Masculin", "Non défini", "Non Binaire", "Pluriel", "Zim (incubateur)", "Fluide", "Multimod (ultrafluide)"],
+    "Archétype littéraire": ["Artiste / Cynique", "Amoureuse / Faire-valoir", "Magicienne / Sorcier", "Rebelle / Destructeur", "Guerrière / Surhomme", "Friponne / Menteur", "Mentor / Gourou", "Reine / Tyran"],
+    "Axe idéologique": ["Retrait", "Destruction", "Rébellion", "Connexion", "Subversion", "Contrôle"],
+    "Qualités": ["Confiante", "Conciliante", "Courageuse", "Décent", "Détachée", "Diplomate", "Discrète", "Empathique", "Energique", "Fiable", "Généreuse", "Honnête", "Humble", "Ingénieuse", "Lucide", "Idéaliste", "Loyale", "Modeste", "Organisée", "Ouverte", "Patiente", "Persévérante", "Posée", "Prudente", "Rigoureuse", "Respectueuse", "Responsable", "Sincère", "Tempérée", "Tolérante"],
+    "Défauts": ["Autoritaire", "Colérique", "Cynique", "Manipulatrice", "Obstinée", "Désordonnée", "Égoïste", "Incompétent", "Provocatrice", "Prétentieuse", "Insensible", "Défaitiste", "Irresponsable", "Intolérante", "Indiscrète", "Imprudente", "Irrespectueuse", "Impatiente", "Instable", "Lâche", "Malhonnête", "Méfiante", "Naïve", "Négligente", "Orgueilleuse", "Paresseuse", "Sensuelle", "Susceptible", "Traîtresse"],
+    "Langage": ["Abraldique ancien", "Principit", "Kesh-Varash", "Néo-Frémissant", "Langage vertebral", "Mécanaqueux", "Acqueux", "Abyssal"],
+    "État": ["Pas commencé", "Brouillon IA", "En cours", "A relire", "A implémenter", "Implémenté", "Polished"],
+    "Sprint": ["Facultatif", "Plus tard", "Sprint 1", "Sprint 2", "Sprint 3"]
+}
+
+# Paramètres spécifiques aux personnages (techniques uniquement)
 PERSONNAGES_SPECIFIC_PARAMS = {
     "intent_modes": ["orthogonal_depth", "vocation_pure", "archetype_assume", "mystere_non_resolu"],
     "dialogue_modes": ["parle", "gestuel", "telepathique", "ecrit_only"],
@@ -132,7 +227,8 @@ PERSONNAGES_SPECIFIC_PARAMS = {
 PERSONNAGES_CONFIG = DomainConfig(
     domain="personnages",
     display_name="Personnages",
-    template=PERSONNAGES_TEMPLATE,
+    template=PERSONNAGES_NARRATIVE_TEMPLATE,  # Template narratif
+    schema=PERSONNAGES_SCHEMA,  # Schéma de colonnes
     domain_instructions=PERSONNAGES_INSTRUCTIONS,
     validation_rules=PERSONNAGES_VALIDATION_RULES,
     context_sources=PERSONNAGES_CONTEXT_SOURCES,

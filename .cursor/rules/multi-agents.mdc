@@ -111,7 +111,22 @@ app = graph.compile()
 
 ## 🖥️ Lancement Interfaces
 
-### Streamlit (Recommandé)
+### Fichiers .cmd (Windows - Recommandé)
+```cmd
+# Menu principal avec toutes les options
+GDD_Alteir.cmd
+
+# Lancer directement l'application
+lancer_app.cmd
+
+# Lancer les tests
+lancer_tests.cmd
+
+# Lancer une démo
+lancer_demo.cmd
+```
+
+### Streamlit (Manuel)
 ```bash
 # IMPORTANT: Utiliser chemin ABSOLU sur Windows
 python -m streamlit run "F:\Projets\Langgraph Alteir\app_streamlit.py"
@@ -169,6 +184,77 @@ def my_function(param1: str) -> bool:
 ❌ Créer agents spécialisés → Créer `DomainConfig`
 ❌ Modèles inexistants (GPT-5-nano existe depuis août 2025)
 
+## 🧪 Tests
+
+### Structure des Tests
+```
+tests/
+  test_notion_integration.py    # Tests MCP Notion
+  test_narrative_template.py    # Tests templates narratifs
+  test_real_data.py            # Tests avec vraies données
+```
+
+### Créer un Test
+```python
+#!/usr/bin/env python3
+"""
+Tests pour [domaine/fonctionnalité]
+"""
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
+
+from rich.console import Console
+from rich.panel import Panel
+
+console = Console()
+
+def test_my_feature():
+    """Test: Description du test"""
+    console.print(Panel("[bold cyan]=== Test: Mon Test ===[/bold cyan]", expand=False))
+    
+    try:
+        # Code de test
+        result = my_function()
+        
+        if result:
+            console.print("[green]✓ Test réussi[/green]")
+            return True
+        else:
+            console.print("[red]✗ Test échoué[/red]")
+            return False
+            
+    except Exception as e:
+        console.print(f"[bold red]✗ Erreur:[/bold red] {e}")
+        return False
+
+def run_tests():
+    """Exécute tous les tests"""
+    results = [
+        ("Mon Test", test_my_feature()),
+    ]
+    
+    # Résumé
+    for test_name, success in results:
+        status = "[green]✓[/green]" if success else "[red]✗[/red]"
+        console.print(f"{status} {test_name}")
+
+if __name__ == "__main__":
+    run_tests()
+```
+
+### Lancer les Tests
+```bash
+# Test spécifique
+python tests/test_narrative_template.py
+
+# Tous les tests d'intégration
+python tests/test_notion_integration.py
+
+# Tests avec vraies données
+python tests/test_real_data.py
+```
+
 ## ✅ Bonnes Pratiques
 
 ✓ `LLMAdapter` pour multi-provider
@@ -178,3 +264,5 @@ def my_function(param1: str) -> bool:
 ✓ Tester avec plusieurs providers
 ✓ Type hints partout
 ✓ Workflows LangGraph simples
+✓ Tests permanents dans `tests/` (pas de fichiers temporaires)
+✓ Utiliser Rich pour l'affichage des tests

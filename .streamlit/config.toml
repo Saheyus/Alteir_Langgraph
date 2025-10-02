@@ -1,0 +1,10 @@
+[server]
+# Désactiver la surveillance des fichiers pour éviter l'erreur Windows
+fileWatcherType = "none"
+
+[theme]
+# Thème sombre pour l'interface
+primaryColor = "#FF6B6B"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#262730"
+textColor = "#FAFAFA"
