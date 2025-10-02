@@ -1319,6 +1319,13 @@ def export_to_notion(result):
                 "properties": notion_properties
             }
             
+            # DEBUG: Afficher les propriétés envoyées
+            if relation_stats["resolved"] > 0:
+                st.info(f"DEBUG: Envoi de {len(notion_properties)} propriétés dont relations")
+                for key in notion_properties:
+                    if "relation" in str(notion_properties[key]):
+                        st.write(f"  {key}: {notion_properties[key]}")
+            
             response = requests.post(
                 "https://api.notion.com/v1/pages",
                 headers=headers,
@@ -1431,7 +1438,7 @@ def export_to_notion(result):
                     ✅ {domain_label} exporté vers Notion (BAC À SABLE) !
                 </div>
                 <div style="color: #164e63; line-height: 1.8;">
-                    📄 <b>Lien :</b> <a href="{page_url}" target="_blank" style="color: #0284c7; text-decoration: none; font-weight: 500;">{nom}</a><br>
+                    📄 <b>Lien :</b> <a href="{page_url}" target="_blank" style="color: #0284c7; text-decoration: underline; font-weight: 600;">{nom}</a><br>
                     📊 <b>Base :</b> {domain_label}s (1) - Bac à sable<br>
                     🆔 <b>ID :</b> <code style="background-color: #e0f2fe; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem;">{page_id}</code>{relations_summary}
                 </div>
@@ -1451,7 +1458,9 @@ def export_to_notion(result):
                                 for r in detail["resolved"]:
                                     confidence_pct = int(r["confidence"] * 100)
                                     match_icon = "🎯" if confidence_pct == 100 else "🔍"
-                                    st.markdown(f"  {match_icon} `{r['original']}` → **{r['matched']}** ({confidence_pct}%)")
+                                    # Construire l'URL Notion (format standard)
+                                    notion_url = f"https://www.notion.so/{r['id'].replace('-', '')}"
+                                    st.markdown(f"  {match_icon} `{r['original']}` → [**{r['matched']}**]({notion_url}) ({confidence_pct}%)")
                             
                             if detail["unresolved"]:
                                 st.warning(f"⚠️ {len(detail['unresolved'])} non trouvé(s): {', '.join(detail['unresolved'])}")
