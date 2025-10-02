@@ -68,6 +68,14 @@ def main():
         st.subheader("Domaine")
         domain = st.selectbox("Domaine", ["Personnages"], index=0)
         
+        st.subheader("🎲 Mode Paramètres")
+        param_mode = st.radio(
+            "Mode",
+            ["Random", "Manuel"],
+            index=0,
+            help="Random = paramètres aléatoires à chaque génération"
+        )
+        
         st.subheader("📊 Statistiques")
         outputs_dir = Path("outputs")
         if outputs_dir.exists():
@@ -90,44 +98,72 @@ def main():
         
         col1, col2 = st.columns(2)
         
+        # Générer valeurs aléatoires si mode Random
+        if param_mode == "Random":
+            import random
+            intent_options = ["orthogonal_depth", "vocation_pure", "archetype_assume", "mystere_non_resolu"]
+            level_options = ["cameo", "standard", "major"]
+            dialogue_options = ["parle", "gestuel", "telepathique", "ecrit_only"]
+            
+            intent_random = random.choice(intent_options)
+            level_random = random.choice(level_options)
+            dialogue_random = random.choice(dialogue_options)
+            creativity_random = round(random.uniform(0.5, 0.9), 1)
+        
         with col1:
             st.subheader("Paramètres Narratifs")
             
-            intent = st.selectbox(
-                "Intention narrative",
-                [
-                    "orthogonal_depth",
-                    "vocation_pure",
-                    "archetype_assume",
-                    "mystere_non_resolu"
-                ],
-                help="Orthogonal = profondeur ≠ rôle visible"
-            )
-            
-            level = st.selectbox(
-                "Niveau de détail",
-                ["cameo", "standard", "major"],
-                index=1,
-                help="cameo: 4-6 répliques | standard: 8-10 | major: 10-12"
-            )
-            
-            dialogue_mode = st.selectbox(
-                "Mode de dialogue",
-                ["parle", "gestuel", "telepathique", "ecrit_only"],
-                help="Comment le personnage communique"
-            )
+            if param_mode == "Random":
+                st.info(f"""
+                🎲 **Paramètres aléatoires:**
+                - Intent: `{intent_random}`
+                - Niveau: `{level_random}`
+                - Dialogue: `{dialogue_random}`
+                - Créativité: `{creativity_random}`
+                
+                (Passer en mode Manuel pour choisir)
+                """)
+                intent = intent_random
+                level = level_random
+                dialogue_mode = dialogue_random
+                creativity = creativity_random
+            else:
+                intent = st.selectbox(
+                    "Intention narrative",
+                    [
+                        "orthogonal_depth",
+                        "vocation_pure",
+                        "archetype_assume",
+                        "mystere_non_resolu"
+                    ],
+                    help="Orthogonal = profondeur ≠ rôle visible"
+                )
+                
+                level = st.selectbox(
+                    "Niveau de détail",
+                    ["cameo", "standard", "major"],
+                    index=1,
+                    help="cameo: 4-6 répliques | standard: 8-10 | major: 10-12"
+                )
+                
+                dialogue_mode = st.selectbox(
+                    "Mode de dialogue",
+                    ["parle", "gestuel", "telepathique", "ecrit_only"],
+                    help="Comment le personnage communique"
+                )
         
         with col2:
             st.subheader("Paramètres Techniques")
             
-            creativity = st.slider(
-                "Créativité (température)",
-                min_value=0.0,
-                max_value=1.0,
-                value=0.7,
-                step=0.1,
-                help="0 = déterministe | 1 = très créatif"
-            )
+            if param_mode == "Manuel":
+                creativity = st.slider(
+                    "Créativité (température)",
+                    min_value=0.0,
+                    max_value=1.0,
+                    value=0.7,
+                    step=0.1,
+                    help="0 = déterministe | 1 = très créatif"
+                )
             
             st.info(f"""
             **Configuration:**
