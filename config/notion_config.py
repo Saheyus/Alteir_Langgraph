@@ -84,13 +84,23 @@ class NotionConfig:
             description="Événements historiques et timeline"
         ),
         # Base de test pour l'écriture (Bac à sable)
+        # IMPORTANT: Utiliser cette database pour tous les tests jusqu'à validation
         "tests": NotionDatabase(
-            id="2806e4d21b4580eab1a2def9831bdc80",  # Bac à sable
+            id="2806e4d21b4580eab1a2def9831bdc80",  # Page "Bac à sable"
             name="Bac à sable",
             read_access=True,
             write_access=True,
-            description="Base de test pour les agents multi-agents",
-            data_sources=["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]  # Personnages
+            description="Base de test pour les agents multi-agents - TOUTES les créations se font ici",
+            data_sources=["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]  # Personnages (1)
+        ),
+        # Database Personnages (1) dans le bac à sable - Pour export direct
+        "personnages_sandbox": NotionDatabase(
+            id="2806e4d21b458012a744d8d6723c8be1",  # Personnages (1)
+            name="Personnages (1) - Bac à sable",
+            read_access=True,
+            write_access=True,
+            description="Database Personnages dans le bac à sable - Utiliser pour exports",
+            data_sources=["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]
         )
     }
     

@@ -1,0 +1,127 @@
+# Export vers Notion - Règles et Configuration
+
+## 🚨 **RÈGLE CRITIQUE : Utiliser UNIQUEMENT le Bac à Sable**
+
+### ❌ **NE JAMAIS créer dans les bases principales**
+Jusqu'à validation complète du projet, **TOUTE CRÉATION** doit se faire dans le **bac à sable**.
+
+### ✅ **Bases de données à utiliser**
+
+#### **Bac à Sable (ÉCRITURE AUTORISÉE)**
+- **Personnages (1)** : 
+  - Database ID: `2806e4d21b458012a744d8d6723c8be1`
+  - Data Source: `collection://2806e4d2-1b45-811b-b079-000bda28ed01`
+  - Localisation: Page "Bac à sable" (`2806e4d21b4580eab1a2def9831bdc80`)
+
+- **Lieux (1)** :
+  - Database ID: `2806e4d21b4580969f1cd7463a4c889c`
+  - Localisation: Page "Bac à sable"
+
+#### **Bases Principales (LECTURE SEULE)**
+- **Personnages** : `1886e4d21b4581a29340f77f5f2e5885` ⚠️ **NE PAS ÉCRIRE**
+- **Lieux** : `1886e4d21b4581eda022ea4e0f1aba5f` ⚠️ **NE PAS ÉCRIRE**
+- **Communautés** : `1886e4d21b4581dea4f4d01beb5e1be2` ⚠️ **NE PAS ÉCRIRE**
+- **Espèces** : `1886e4d21b4581e9a768df06185c1aea` ⚠️ **NE PAS ÉCRIRE**
+- **Objets** : `1886e4d21b4581098024c61acd801f52` ⚠️ **NE PAS ÉCRIRE**
+
+## 📋 **Workflow de Validation**
+
+### Phase 1 : Développement (ACTUEL)
+1. ✅ Générer le contenu avec les agents
+2. ✅ Exporter vers **Bac à Sable uniquement**
+3. ✅ Tester et valider dans le bac à sable
+4. ✅ Itérer et améliorer
+
+### Phase 2 : Validation (FUTURE)
+1. ⏳ Valider la qualité des générations
+2. ⏳ Tester les workflows complets
+3. ⏳ Obtenir l'accord pour production
+
+### Phase 3 : Production (APRÈS VALIDATION)
+1. 🔒 Modifier les IDs vers les bases principales
+2. 🔒 Activer l'écriture en production
+3. 🔒 Déployer le système validé
+
+## 🔧 **Implémentation dans le Code**
+
+### API REST Notion (app_streamlit.py)
+```python
+# BAC À SABLE - Ne pas modifier sans validation
+DATABASE_ID = "2806e4d21b458012a744d8d6723c8be1"  # Personnages (1)
+
+# PRODUCTION (désactivé)
+# DATABASE_ID = "1886e4d21b4581a29340f77f5f2e5885"  # Personnages
+```
+
+### Outils MCP (pour l'IA)
+```python
+# Créer dans le bac à sable
+mcp_notionMCP_notion-create-pages(
+    parent={"data_source_id": "2806e4d2-1b45-811b-b079-000bda28ed01"},  # Personnages (1)
+    pages=[...]
+)
+```
+
+## 📊 **Structure du Bac à Sable**
+
+### Page "Bac à sable" (`2806e4d21b4580eab1a2def9831bdc80`)
+```
+📄 Bac à sable
+  ├── 📊 Personnages (1)  [Database pour tests]
+  └── 📊 Lieux (1)        [Database pour tests]
+```
+
+### Propriétés identiques
+Les databases du bac à sable ont **exactement le même schéma** que les bases principales :
+- Même structure de colonnes
+- Mêmes propriétés (Type, Genre, État, etc.)
+- Mêmes relations possibles
+
+## ⚠️ **Vérifications Avant Export**
+
+### Checklist Pré-Export
+- [ ] Le DATABASE_ID pointe vers le **bac à sable**
+- [ ] Le token Notion est configuré dans `.env`
+- [ ] L'export affiche clairement "Bac à sable" dans les logs
+- [ ] Le lien généré mène vers Personnages (1) et non Personnages
+
+### En cas d'erreur
+```python
+# Vérifier l'ID utilisé
+if DATABASE_ID == "1886e4d21b4581a29340f77f5f2e5885":
+    raise ValueError("❌ ERREUR: Ne pas créer dans la base principale!")
+```
+
+## 📝 **Documentation des Exports**
+
+### Message utilisateur
+Toujours indiquer clairement à l'utilisateur où la fiche a été créée :
+```
+✅ Export réussi
+Le personnage Norrik a été créé dans le bac à sable Personnages (1)
+📄 Ouvrir la fiche dans Notion →
+```
+
+### Logs de debug
+```python
+st.info(f"""
+**Informations de la page:**
+- Base: Personnages (1) - BAC À SABLE ⚠️
+- ID: {page_id}
+- État: Brouillon IA
+""")
+```
+
+## 🎯 **Objectif Final**
+
+Une fois le projet validé :
+1. Changer tous les IDs vers les bases principales
+2. Documenter le changement
+3. Tester exhaustivement
+4. Déployer en production
+
+---
+
+**RAPPEL IMPORTANT** : Tant que cette règle existe, **AUCUNE création** ne doit se faire dans les bases principales. Toujours utiliser le bac à sable.
+
+*Dernière mise à jour : 2 octobre 2025*

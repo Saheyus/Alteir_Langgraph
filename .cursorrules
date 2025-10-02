@@ -123,6 +123,21 @@ app = graph.compile()
 
 ## 🔗 Intégration Notion
 
+### 🚨 RÈGLE CRITIQUE : Bac à Sable UNIQUEMENT
+**TOUTE CRÉATION doit se faire dans le bac à sable jusqu'à validation du projet.**
+Voir `.cursor/rules/export-notion.mdc` pour la documentation complète.
+
+#### Bases de Bac à Sable (ÉCRITURE AUTORISÉE) ✅
+- **Personnages (1)** : `2806e4d21b458012a744d8d6723c8be1` 
+- **Lieux (1)** : `2806e4d21b4580969f1cd7463a4c889c`
+
+#### Bases Principales (LECTURE SEULE ⚠️ NE PAS ÉCRIRE)
+- **Personnages** : `1886e4d21b4581a29340f77f5f2e5885`
+- **Lieux** : `1886e4d21b4581eda022ea4e0f1aba5f`
+- **Communautés** : `1886e4d21b4581dea4f4d01beb5e1be2`
+- **Espèces** : `1886e4d21b4581e9a768df06185c1aea`
+- **Objets** : `1886e4d21b4581098024c61acd801f52`
+
 ### API Version
 ```python
 # config/notion_config.py
