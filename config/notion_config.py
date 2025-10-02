@@ -83,13 +83,14 @@ class NotionConfig:
             write_access=False,
             description="Événements historiques et timeline"
         ),
-        # Base de test pour l'écriture
+        # Base de test pour l'écriture (Bac à sable)
         "tests": NotionDatabase(
-            id="",  # À remplir après création
-            name="GDD - Tests Multi-Agents",
+            id="2806e4d21b4580eab1a2def9831bdc80",  # Bac à sable
+            name="Bac à sable",
             read_access=True,
             write_access=True,
-            description="Base de test pour les agents multi-agents"
+            description="Base de test pour les agents multi-agents",
+            data_sources=["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]  # Personnages
         )
     }
     
