@@ -314,6 +314,10 @@ def main():
         if 'reasoning_effort' not in st.session_state:
             st.session_state.reasoning_effort = MODELS[selected_model].get("default_reasoning", "minimal")
         
+        # Initialiser max_tokens
+        if 'max_tokens' not in st.session_state:
+            st.session_state.max_tokens = MODELS[selected_model].get("max_tokens", 2000)
+        
         # Mémoriser le dernier domaine
         st.session_state.last_domain = domain
         
@@ -606,6 +610,18 @@ def main():
                     )
                     reasoning_effort = None  # Pas utilisé pour GPT-4
             
+            # Max tokens (pour tous les modèles)
+            st.write("")  # Spacer
+            max_tokens = st.slider(
+                "Max tokens (sortie)",
+                min_value=1000,
+                max_value=8000,
+                value=st.session_state.max_tokens,
+                step=1000,
+                help="Limite de tokens pour la réponse (1000-8000). ⚠️ GPT-5 utilise des tokens pour le reasoning !",
+                key=f"max_tokens_slider_{st.session_state.random_seed}"
+            )
+            
             # Configuration affichée selon le domaine et le modèle
             config_lines = [f"- Intent: `{intent}`"]
             
@@ -626,6 +642,9 @@ def main():
             else:
                 config_lines.append(f"- Température: `{creativity}`")
             
+            # Max tokens pour tous
+            config_lines.append(f"- Max tokens: `{max_tokens}`")
+            
             st.info("**Configuration:**\n" + "\n".join(config_lines))
         
         # Mettre à jour session state avec les valeurs choisies manuellement
@@ -643,6 +662,9 @@ def main():
         else:
             st.session_state.creativity = creativity
         
+        # Mettre à jour max_tokens
+        st.session_state.max_tokens = max_tokens
+        
         # Bouton de génération adapté au domaine
         button_text = {
             "Personnages": "🚀 Générer le Personnage",
@@ -657,7 +679,7 @@ def main():
             if not brief:
                 st.error(error_text[domain])
             else:
-                generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_effort, selected_model, MODELS[selected_model], domain)
+                generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_effort, max_tokens, selected_model, MODELS[selected_model], domain)
     
     # TAB 2: Résultats
     with tab2:
@@ -697,14 +719,14 @@ def main():
         - Scores de qualité (cohérence, complétude, qualité)
         """)
 
-def create_llm(model_name: str, model_config: dict, creativity: float = None, reasoning_effort: str = None):
+def create_llm(model_name: str, model_config: dict, creativity: float = None, reasoning_effort: str = None, max_tokens: int = None):
     """Crée une instance LLM selon le modèle choisi"""
     from langchain_openai import ChatOpenAI
     
     # Configuration de base
     llm_config = {
         "model": model_config["name"],
-        "max_tokens": model_config["max_tokens"],
+        "max_tokens": max_tokens or model_config["max_tokens"],
     }
     
     # Configuration selon le type de modèle
@@ -720,14 +742,14 @@ def create_llm(model_name: str, model_config: dict, creativity: float = None, re
     
     return ChatOpenAI(**llm_config)
 
-def generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_effort, model_name, model_config, domain):
+def generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_effort, max_tokens, model_name, model_config, domain):
     """Génère du contenu (personnage ou lieu) selon le domaine"""
     
     # Lazy load des dépendances lourdes selon le domaine
     ContentWorkflow, WriterConfig, domain_config = load_workflow_dependencies(domain.lower())
     
     # Créer le LLM selon le modèle choisi
-    llm = create_llm(model_name, model_config, creativity=creativity, reasoning_effort=reasoning_effort)
+    llm = create_llm(model_name, model_config, creativity=creativity, reasoning_effort=reasoning_effort, max_tokens=max_tokens)
     
     # Configuration
     writer_config = WriterConfig(
