@@ -1079,16 +1079,31 @@ def export_to_notion(result):
             
             # 3. Fonction helper pour extraire les champs
             def extract_field(field_name, content):
-                """Extrait un champ du contenu markdown (avec ou sans gras **)"""
-                # Format: "- **Nom**: valeur" ou "- Nom: valeur"
-                pattern = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
-                match = re.search(pattern, content, re.MULTILINE | re.IGNORECASE)
+                """Extrait un champ du contenu markdown (formats variés)"""
+                # Format 1: "- **Nom**: valeur" (personnages)
+                pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
+                match = re.search(pattern_bold, content, re.MULTILINE | re.IGNORECASE)
                 if match:
                     return match.group(1).strip()
-                # Fallback sans gras
+                
+                # Format 2: "- Nom: valeur" (lieux - sous CHAMPS NOTION)
                 pattern_plain = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
                 match = re.search(pattern_plain, content, re.MULTILINE | re.IGNORECASE)
-                return match.group(1).strip() if match else None
+                if match:
+                    return match.group(1).strip()
+                
+                # Format 3: Sous section "CHAMPS NOTION (métadonnées)" (lieux)
+                # Chercher spécifiquement après cette section
+                section_match = re.search(r'CHAMPS NOTION.*?\n(.*?)(?:\n\n|CONTENU NARRATIF|\Z)', 
+                                         content, re.DOTALL | re.IGNORECASE)
+                if section_match:
+                    section_content = section_match.group(1)
+                    pattern_in_section = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+                    match = re.search(pattern_in_section, section_content, re.MULTILINE | re.IGNORECASE)
+                    if match:
+                        return match.group(1).strip()
+                
+                return None
             
             # 4. Extraire le nom
             nom = extract_field("Nom", content) or "Sans nom"
@@ -1202,11 +1217,15 @@ def export_to_notion(result):
             
             # 9. Message de succès
             st.markdown(f"""
-            <div style="background-color: #d4edda; border-left: 4px solid #28a745; padding: 1rem; margin: 1rem 0; border-radius: 0.3rem;">
-                ✅ <b>{domain_label} exporté vers Notion (BAC À SABLE) !</b><br><br>
-                📄 <b>Lien :</b> <a href="{page_url}" target="_blank">{nom}</a><br>
-                📊 <b>Base :</b> {domain_label}s (1) - Bac à sable<br>
-                🆔 <b>ID :</b> <code>{page_id}</code>
+            <div style="background-color: #f0f9ff; border-left: 5px solid #0ea5e9; padding: 1.25rem; margin: 1rem 0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div style="color: #0c4a6e; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">
+                    ✅ {domain_label} exporté vers Notion (BAC À SABLE) !
+                </div>
+                <div style="color: #164e63; line-height: 1.8;">
+                    📄 <b>Lien :</b> <a href="{page_url}" target="_blank" style="color: #0284c7; text-decoration: none; font-weight: 500;">{nom}</a><br>
+                    📊 <b>Base :</b> {domain_label}s (1) - Bac à sable<br>
+                    🆔 <b>ID :</b> <code style="background-color: #e0f2fe; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem;">{page_id}</code>
+                </div>
             </div>
             """, unsafe_allow_html=True)
             

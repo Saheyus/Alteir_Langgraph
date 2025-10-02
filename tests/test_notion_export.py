@@ -41,7 +41,7 @@ Facilement distrait
 
 @pytest.fixture
 def sample_lieu_content():
-    """Contenu markdown d'un lieu de test"""
+    """Contenu markdown d'un lieu de test (format avec section CHAMPS NOTION)"""
     return """# Marché Test
 
 CHAMPS NOTION (métadonnées)
@@ -50,8 +50,10 @@ CHAMPS NOTION (métadonnées)
 - Catégorie: Lieu
 - Rôle: Lieu commercial
 - Taille: Secteur
+- Contenu par: Plateformes organiques
+- Contient: Étals mouvants
 
-CONTENU NARRATIF
+CONTENU NARRATIF COMPLET
 
 Le marché est un endroit de test.
 """
@@ -90,17 +92,32 @@ def sample_result_lieu(sample_lieu_content):
 @pytest.mark.unit
 def test_extract_field_with_bold(sample_personnage_content):
     """Test extraction d'un champ avec format gras **Nom**:"""
-    # Fonction extract_field de app_streamlit.py
+    # Fonction extract_field de app_streamlit.py (version complète)
     def extract_field(field_name, content):
-        # Format: "- **Nom**: valeur" ou "- Nom: valeur"
-        pattern = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
-        match = re.search(pattern, content, re.MULTILINE | re.IGNORECASE)
+        """Extrait un champ du contenu markdown (formats variés)"""
+        # Format 1: "- **Nom**: valeur" (personnages)
+        pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
+        match = re.search(pattern_bold, content, re.MULTILINE | re.IGNORECASE)
         if match:
             return match.group(1).strip()
-        # Fallback sans gras
+        
+        # Format 2: "- Nom: valeur" (lieux - sous CHAMPS NOTION)
         pattern_plain = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
         match = re.search(pattern_plain, content, re.MULTILINE | re.IGNORECASE)
-        return match.group(1).strip() if match else None
+        if match:
+            return match.group(1).strip()
+        
+        # Format 3: Sous section "CHAMPS NOTION (métadonnées)" (lieux)
+        section_match = re.search(r'CHAMPS NOTION.*?\n(.*?)(?:\n\n|CONTENU NARRATIF|\Z)', 
+                                 content, re.DOTALL | re.IGNORECASE)
+        if section_match:
+            section_content = section_match.group(1)
+            pattern_in_section = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+            match = re.search(pattern_in_section, section_content, re.MULTILINE | re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        
+        return None
     
     # Test extraction
     nom = extract_field("Nom", sample_personnage_content)
@@ -132,18 +149,71 @@ def test_extract_field_without_bold():
 
 
 @pytest.mark.unit
+def test_extract_field_from_champs_notion_section(sample_lieu_content):
+    """Test extraction depuis la section CHAMPS NOTION (métadonnées)"""
+    def extract_field(field_name, content):
+        """Extrait un champ du contenu markdown (formats variés)"""
+        pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
+        match = re.search(pattern_bold, content, re.MULTILINE | re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+        
+        pattern_plain = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+        match = re.search(pattern_plain, content, re.MULTILINE | re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+        
+        section_match = re.search(r'CHAMPS NOTION.*?\n(.*?)(?:\n\n|CONTENU NARRATIF|\Z)', 
+                                 content, re.DOTALL | re.IGNORECASE)
+        if section_match:
+            section_content = section_match.group(1)
+            pattern_in_section = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+            match = re.search(pattern_in_section, section_content, re.MULTILINE | re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        
+        return None
+    
+    # Test extraction depuis section CHAMPS NOTION
+    nom = extract_field("Nom", sample_lieu_content)
+    assert nom == "Marché des Tests", f"Expected 'Marché des Tests', got '{nom}'"
+    
+    categorie = extract_field("Catégorie", sample_lieu_content)
+    assert categorie == "Lieu"
+    
+    role = extract_field("Rôle", sample_lieu_content)
+    assert role == "Lieu commercial"
+    
+    taille = extract_field("Taille", sample_lieu_content)
+    assert taille == "Secteur"
+
+
+@pytest.mark.unit
 def test_extract_field_missing():
     """Test extraction d'un champ absent"""
     content = "- Nom: Test"
     
     def extract_field(field_name, content):
-        pattern = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
-        match = re.search(pattern, content, re.MULTILINE | re.IGNORECASE)
+        pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
+        match = re.search(pattern_bold, content, re.MULTILINE | re.IGNORECASE)
         if match:
             return match.group(1).strip()
+        
         pattern_plain = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
         match = re.search(pattern_plain, content, re.MULTILINE | re.IGNORECASE)
-        return match.group(1).strip() if match else None
+        if match:
+            return match.group(1).strip()
+        
+        section_match = re.search(r'CHAMPS NOTION.*?\n(.*?)(?:\n\n|CONTENU NARRATIF|\Z)', 
+                                 content, re.DOTALL | re.IGNORECASE)
+        if section_match:
+            section_content = section_match.group(1)
+            pattern_in_section = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+            match = re.search(pattern_in_section, section_content, re.MULTILINE | re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        
+        return None
     
     alias = extract_field("Alias", content)
     assert alias is None
@@ -157,13 +227,26 @@ def test_extract_field_missing():
 def test_notion_properties_personnage(sample_personnage_content):
     """Test construction des propriétés Notion pour un personnage"""
     def extract_field(field_name, content):
-        pattern = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
-        match = re.search(pattern, content, re.MULTILINE | re.IGNORECASE)
+        pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
+        match = re.search(pattern_bold, content, re.MULTILINE | re.IGNORECASE)
         if match:
             return match.group(1).strip()
+        
         pattern_plain = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
         match = re.search(pattern_plain, content, re.MULTILINE | re.IGNORECASE)
-        return match.group(1).strip() if match else None
+        if match:
+            return match.group(1).strip()
+        
+        section_match = re.search(r'CHAMPS NOTION.*?\n(.*?)(?:\n\n|CONTENU NARRATIF|\Z)', 
+                                 content, re.DOTALL | re.IGNORECASE)
+        if section_match:
+            section_content = section_match.group(1)
+            pattern_in_section = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+            match = re.search(pattern_in_section, section_content, re.MULTILINE | re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        
+        return None
     
     # Extraire et construire propriétés
     nom = extract_field("Nom", sample_personnage_content)
@@ -191,13 +274,26 @@ def test_notion_properties_personnage(sample_personnage_content):
 def test_notion_properties_lieu(sample_lieu_content):
     """Test construction des propriétés Notion pour un lieu"""
     def extract_field(field_name, content):
-        pattern = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
-        match = re.search(pattern, content, re.MULTILINE | re.IGNORECASE)
+        pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
+        match = re.search(pattern_bold, content, re.MULTILINE | re.IGNORECASE)
         if match:
             return match.group(1).strip()
+        
         pattern_plain = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
         match = re.search(pattern_plain, content, re.MULTILINE | re.IGNORECASE)
-        return match.group(1).strip() if match else None
+        if match:
+            return match.group(1).strip()
+        
+        section_match = re.search(r'CHAMPS NOTION.*?\n(.*?)(?:\n\n|CONTENU NARRATIF|\Z)', 
+                                 content, re.DOTALL | re.IGNORECASE)
+        if section_match:
+            section_content = section_match.group(1)
+            pattern_in_section = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+            match = re.search(pattern_in_section, section_content, re.MULTILINE | re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        
+        return None
     
     nom = extract_field("Nom", sample_lieu_content)
     categorie = extract_field("Catégorie", sample_lieu_content)
