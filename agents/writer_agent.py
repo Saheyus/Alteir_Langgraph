@@ -144,6 +144,9 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
         # Structure du template
         template_section = self._build_template_section()
         
+        # Champs Notion (métadonnées)
+        notion_fields_section = self._build_notion_fields_section()
+        
         prompt = f"""**BRIEF:** {brief}
 
 {spec_section}
@@ -153,6 +156,8 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
 
 **STRUCTURE OBLIGATOIRE:**
 {template_section}
+
+{notion_fields_section}
 
 Produis le contenu DIRECTEMENT dans cette structure, sans apartés méthodologiques."""
         
@@ -224,6 +229,46 @@ Produis le contenu DIRECTEMENT dans cette structure, sans apartés méthodologiq
 Champs obligatoires: {', '.join(required)}
 
 Structure la sortie de manière claire et organisée."""
+    
+    def _build_notion_fields_section(self) -> str:
+        """Construit la section des champs Notion (métadonnées de la base de données)"""
+        if not self.domain_config.schema:
+            return ""
+        
+        # Récupérer les field_options depuis le domaine config si disponibles
+        field_options = {}
+        if self.domain == "personnages":
+            try:
+                from config.domain_configs.personnages_config import PERSONNAGES_FIELD_OPTIONS
+                field_options = PERSONNAGES_FIELD_OPTIONS
+            except ImportError:
+                pass
+        
+        schema_fields = []
+        schema_fields.append("**CHAMPS NOTION (métadonnées de la base de données à remplir en fin de fiche):**\n")
+        
+        for field_name in self.domain_config.schema.keys():
+            # Formatage selon si les options sont disponibles
+            if field_name in field_options:
+                options = field_options[field_name]
+                if len(options) <= 5:
+                    options_str = ", ".join(options)
+                else:
+                    options_str = ", ".join(options[:5]) + f"... ({len(options)} options)"
+                schema_fields.append(f"- **{field_name}**: [Choisir parmi: {options_str}]")
+            elif field_name in ["Communautés", "Lieux de vie", "Détient"]:
+                schema_fields.append(f"- **{field_name}**: [Référencer depuis le contexte]")
+            elif field_name in ["Âge"]:
+                schema_fields.append(f"- **{field_name}**: [Nombre en cycles]")
+            elif field_name == "Nom":
+                schema_fields.append(f"- **{field_name}**: [Nom du personnage]")
+            else:
+                schema_fields.append(f"- **{field_name}**: [Texte libre]")
+        
+        # Toujours mettre État à "Brouillon IA"
+        schema_fields.append("\n- **État**: \"Brouillon IA\" (obligatoire)")
+        
+        return "\n".join(schema_fields)
     
     def _parse_content(self, content_text: str) -> Dict[str, Any]:
         """Parse le contenu généré en structure (à améliorer)"""
