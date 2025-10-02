@@ -1120,7 +1120,9 @@ def export_to_notion(result):
                 if taille := extract_field("Taille", content):
                     notion_properties["Taille"] = {"select": {"name": taille}}
                 if role := extract_field("Rôle", content):
-                    notion_properties["Rôle"] = {"rich_text": [{"text": {"content": role[:2000]}}]}
+                    # Rôle est un select, prendre seulement le premier élément si plusieurs valeurs
+                    role_clean = role.split(';')[0].strip()[:100]  # Limite à 100 chars
+                    notion_properties["Rôle"] = {"select": {"name": role_clean}}
             
             # 7. Créer la page
             headers = {
