@@ -1,0 +1,269 @@
+# Tests - Bonnes Pratiques
+
+## 📁 Organisation des Tests
+
+### Structure des dossiers
+```
+tests/
+├── test_notion_api_2025.py
+├── test_agents.py
+├── test_workflows.py
+├── test_gpt5_reasoning.py  ← Tests de configuration LLM
+└── ...
+```
+
+### ⚠️ RÈGLE CRITIQUE : NE JAMAIS créer de fichiers de test à la racine
+
+**❌ INTERDIT :**
+```
+test_*.py  ← À la racine du projet
+*_test.py  ← À la racine du projet
+```
+
+**✅ OBLIGATOIRE :**
+```
+tests/test_*.py  ← Dans le dossier tests/
+```
+
+## 🧪 Types de Tests
+
+### 1. Tests unitaires d'agents
+**Fichier :** `tests/test_agents.py`
+```python
+"""Tests unitaires des agents (Writer, Reviewer, etc.)"""
+import pytest
+from agents.writer_agent import WriterAgent
+from agents.base.domain_config import DomainConfig
+
+def test_writer_agent_initialization():
+    """Test l'initialisation du WriterAgent"""
+    # ...
+
+def test_writer_agent_process():
+    """Test la méthode process du WriterAgent"""
+    # ...
+```
+
+### 2. Tests d'intégration workflow
+**Fichier :** `tests/test_workflows.py`
+```python
+"""Tests d'intégration des workflows LangGraph"""
+from workflows.content_workflow import ContentWorkflow
+
+def test_complete_workflow():
+    """Test le workflow complet de génération"""
+    # ...
+```
+
+### 3. Tests de configuration LLM
+**Fichier :** `tests/test_gpt5_reasoning.py`
+```python
+"""Tests de configuration GPT-5 vs GPT-4"""
+import os
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
+
+def test_gpt5_config():
+    """Vérifie que GPT-5 utilise reasoning"""
+    # ...
+
+def test_gpt4_config():
+    """Vérifie que GPT-4 utilise temperature"""
+    # ...
+```
+
+### 4. Tests API Notion
+**Fichier :** `tests/test_notion_api_2025.py` (déjà existant)
+```python
+"""Tests de l'API Notion 2025-09-03"""
+# Tests existants...
+```
+
+## 🚀 Lancer les Tests
+
+### Tous les tests
+```bash
+pytest tests/
+```
+
+### Un fichier spécifique
+```bash
+pytest tests/test_agents.py
+```
+
+### Un test spécifique
+```bash
+pytest tests/test_agents.py::test_writer_agent_process
+```
+
+### Avec verbose
+```bash
+pytest tests/ -v
+```
+
+### Avec coverage
+```bash
+pytest tests/ --cov=agents --cov=workflows --cov-report=html
+```
+
+## 📝 Conventions de Nommage
+
+### Fichiers
+- Préfixe : `test_`
+- Nom descriptif : `test_<module>_<aspect>.py`
+- Exemples : `test_agents.py`, `test_notion_api.py`, `test_gpt5_reasoning.py`
+
+### Fonctions de test
+- Préfixe : `test_`
+- Nom descriptif : `test_<ce_qui_est_testé>`
+- Exemples : `test_writer_agent_initialization()`, `test_gpt5_uses_reasoning()`
+
+### Classes de test
+- Préfixe : `Test`
+- Nom descriptif : `Test<Module>`
+- Exemples : `TestWriterAgent`, `TestNotionAPI`
+
+## ⚙️ Configuration pytest
+
+**Fichier :** `pytest.ini` (à créer si besoin)
+```ini
+[pytest]
+testpaths = tests
+python_files = test_*.py
+python_classes = Test*
+python_functions = test_*
+addopts = 
+    -v
+    --tb=short
+    --strict-markers
+markers =
+    slow: Tests lents (nécessitent des appels API)
+    unit: Tests unitaires (rapides, pas d'API)
+    integration: Tests d'intégration
+```
+
+## 🏷️ Markers pytest
+
+### Utilisation
+```python
+import pytest
+
+@pytest.mark.unit
+def test_fast_function():
+    """Test rapide sans appel API"""
+    pass
+
+@pytest.mark.slow
+def test_api_call():
+    """Test lent avec appel API"""
+    pass
+
+@pytest.mark.integration
+def test_complete_workflow():
+    """Test d'intégration complet"""
+    pass
+```
+
+### Lancer par marker
+```bash
+pytest -m unit        # Seulement les tests unitaires
+pytest -m "not slow"  # Exclure les tests lents
+pytest -m integration # Seulement les tests d'intégration
+```
+
+## 🔧 Fixtures Communes
+
+**Fichier :** `tests/conftest.py`
+```python
+"""Fixtures pytest communes à tous les tests"""
+import pytest
+from langchain_openai import ChatOpenAI
+
+@pytest.fixture
+def mock_llm():
+    """Mock LLM pour tests sans appel API"""
+    # ...
+
+@pytest.fixture
+def domain_config():
+    """Config de domaine pour tests"""
+    # ...
+
+@pytest.fixture
+def sample_brief():
+    """Brief d'exemple pour tests"""
+    return "Un alchimiste qui transforme les émotions..."
+```
+
+## 📊 Tests de Performance
+
+**Fichier :** `tests/test_performance.py`
+```python
+"""Tests de performance et benchmarks"""
+import time
+import pytest
+
+@pytest.mark.slow
+def test_workflow_execution_time():
+    """Vérifie que le workflow s'exécute en <60s"""
+    start = time.time()
+    # ... exécuter workflow
+    duration = time.time() - start
+    assert duration < 60, f"Workflow trop lent: {duration}s"
+```
+
+## 🐛 Tests de Debug
+
+Pour des tests de debug **temporaires** :
+- Créer dans `tests/debug/` (ajouter au .gitignore si nécessaire)
+- **Toujours nettoyer** après debug
+- Ne **JAMAIS** commit des tests de debug
+
+## ✅ Checklist avant Commit
+
+- [ ] Tous les fichiers de test sont dans `tests/`
+- [ ] Aucun fichier `test_*.py` à la racine
+- [ ] Tests passent avec `pytest tests/`
+- [ ] Coverage acceptable (optionnel)
+- [ ] Pas de tests de debug temporaires committés
+
+## 🎯 Exemples Pratiques
+
+### Test rapide d'une config LLM
+```bash
+# Créer le test dans tests/
+cat > tests/test_my_feature.py << 'EOF'
+def test_my_feature():
+    assert True
+EOF
+
+# Lancer
+pytest tests/test_my_feature.py
+
+# Si c'était temporaire, supprimer
+rm tests/test_my_feature.py
+```
+
+### Test avec appel API (marqué slow)
+```python
+# tests/test_gpt5_reasoning.py
+import pytest
+from langchain_openai import ChatOpenAI
+
+@pytest.mark.slow
+def test_gpt5_reasoning():
+    """Vérifie le reasoning de GPT-5 (nécessite API key)"""
+    llm = ChatOpenAI(
+        model="gpt-5-nano",
+        use_responses_api=True,
+        reasoning={"effort": "minimal"},
+    )
+    response = llm.invoke("Test")
+    assert 'reasoning' in response.additional_kwargs
+```
+
+## 📚 Ressources
+
+- [pytest documentation](https://docs.pytest.org/)
+- [pytest fixtures](https://docs.pytest.org/en/stable/fixture.html)
+- [pytest markers](https://docs.pytest.org/en/stable/mark.html)
