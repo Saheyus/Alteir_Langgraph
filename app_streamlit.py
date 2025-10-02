@@ -1260,8 +1260,9 @@ def export_to_notion(result):
                     
                     # Ajouter à Notion si des matches trouvés
                     if lieux_resolved:
+                        # Notion veut les IDs sans tirets pour les relations
                         notion_properties["Lieux de vie"] = {
-                            "relation": [{"id": lr["id"]} for lr in lieux_resolved]
+                            "relation": [{"id": lr["id"].replace("-", "")} for lr in lieux_resolved]
                         }
                         relation_stats["resolved"] += len(lieux_resolved)
                     
@@ -1295,8 +1296,9 @@ def export_to_notion(result):
                             zones_unresolved.append(zone_name)
                     
                     if zones_resolved:
+                        # Notion veut les IDs sans tirets pour les relations
                         notion_properties["Zones limitrophes"] = {
-                            "relation": [{"id": zr["id"]} for zr in zones_resolved]
+                            "relation": [{"id": zr["id"].replace("-", "")} for zr in zones_resolved]
                         }
                         relation_stats["resolved"] += len(zones_resolved)
                     
