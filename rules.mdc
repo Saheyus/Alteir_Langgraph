@@ -1,0 +1,167 @@
+# Règles et Conventions - Système Multi-Agents GDD Alteir
+
+## 🎯 Objectif du Projet
+Développer un système multi-agents local pour l'écriture, la relecture et la correction du Game Design Document (GDD) stocké dans Notion, utilisant LangGraph et les outils MCP.
+
+## 🏗️ Architecture Technique
+
+### Framework Principal
+- **LangGraph** : Framework de choix pour les graphes d'état et workflows multi-agents
+- **LangGraph Studio** : Interface locale via `langgraph dev` pour visualisation
+- **MCP (Model Context Protocol)** : Intégration avec Notion et autres services
+
+### Modèles IA
+- **Principal** : GPT-5 (via OpenAI Responses API)
+- **Paramètres recommandés** :
+  - `reasoning.effort = "minimal"` pour les tests
+  - `verbosity = "low"` pour contrôler la longueur
+  - `max_output_tokens` pour borner les coûts
+- **Modèles locaux** : 20-30B paramètres (optionnel)
+
+## 🤖 Agents Spécialisés
+
+### Agent Écrivain
+- **Rôle** : Création de contenu pour les différentes sections du GDD
+- **Spécialisations** : Personnages, Lieux, Chronologie, Objets, Communautés
+- **Sortie** : Contenu structuré en format Notion Markdown
+
+### Agent Relecteur
+- **Rôle** : Vérification de la cohérence narrative et structurelle
+- **Responsabilités** :
+  - Validation des liens entre éléments
+  - Contrôle de la cohérence du lore
+  - Vérification de la structure des sections
+
+### Agent Correcteur
+- **Rôle** : Correction linguistique et amélioration du style
+- **Responsabilités** :
+  - Correction orthographique et grammaticale
+  - Amélioration de la clarté et du style
+  - Respect des conventions d'écriture
+
+### Agent Validateur
+- **Rôle** : Validation finale et contrôle qualité
+- **Responsabilités** :
+  - Vérification des références croisées
+  - Validation des données structurées
+  - Contrôle de la complétude
+
+## 📊 Intégration Notion
+
+### Bases de Données Principales
+- **Lieux** : `1886e4d21b4581eda022ea4e0f1aba5f`
+- **Personnages** : `1886e4d21b4581a29340f77f5f2e5885`
+- **Communautés** : `1886e4d21b4581dea4f4d01beb5e1be2`
+- **Espèces** : `1886e4d21b4581e9a768df06185c1aea`
+- **Objets** : `1886e4d21b4581098024c61acd801f52`
+- **Chronologie d'Escelion** : `22c6e4d21b458066b17cc2af998de0b8`
+
+### Méthode de Récupération des Données
+1. **Fetch de la base** : `mcp_notionMCP_fetch` avec l'ID de la base
+2. **Search sur data_source** : `mcp_notionMCP_search` avec le `data_source_url`
+3. **Filtrage** : Côté client après récupération complète
+
+## 💻 Conventions de Code
+
+### Structure des Fichiers
+```
+/
+├── agents/           # Agents spécialisés
+├── workflows/        # Définitions des workflows
+├── utils/           # Utilitaires et helpers
+├── config/          # Configuration et paramètres
+├── tests/           # Tests unitaires et d'intégration
+└── docs/            # Documentation
+```
+
+### Conventions Python
+- **Type hints** : Obligatoires pour toutes les fonctions
+- **Docstrings** : Format Google pour toutes les fonctions publiques
+- **Nommage** : snake_case pour variables/fonctions, PascalCase pour classes
+- **Imports** : Triés et groupés (standard, tiers, local)
+
+### Gestion des États
+- **Classe DocState** : État partagé entre agents
+- **Normalisation** : Fonction `to_text()` pour uniformiser les contenus
+- **Sérialisation** : Support JSON pour persistance
+
+## 🔧 Configuration et Environnement
+
+### Variables d'Environnement
+```bash
+OPENAI_API_KEY=your_key_here
+NOTION_TOKEN=your_notion_token
+LANGGRAPH_API_KEY=optional_for_studio
+```
+
+### Dépendances Principales
+- `langgraph` : Framework multi-agents
+- `langchain-openai` : Intégration OpenAI
+- `mcp` : Protocole de contexte modèle
+- `python-dotenv` : Gestion des variables d'environnement
+
+## 🚀 Workflows
+
+### Workflow Standard (Écriture → Relecture → Correction)
+1. **Agent Écrivain** : Génère le contenu initial
+2. **Agent Relecteur** : Vérifie la cohérence
+3. **Agent Correcteur** : Améliore la forme
+4. **Agent Validateur** : Validation finale
+
+### Workflows Spécialisés
+- **Création de personnage** : Écriture → Validation des liens → Correction
+- **Mise à jour de chronologie** : Relecture → Validation des dates → Correction
+- **Ajout de lieu** : Écriture → Validation géographique → Correction
+
+## 🧪 Tests et Validation
+
+### Tests Unitaires
+- Chaque agent doit avoir ses tests
+- Tests des workflows complets
+- Tests d'intégration MCP
+
+### Validation des Résultats
+- Comparaison avec contenu existant
+- Vérification de la cohérence narrative
+- Contrôle qualité linguistique
+
+## 📝 Documentation
+
+### Documentation du Code
+- Docstrings complètes
+- Exemples d'utilisation
+- Guide de contribution
+
+### Documentation Utilisateur
+- Guide d'installation
+- Tutoriel d'utilisation
+- FAQ et dépannage
+
+## 🔒 Sécurité et Bonnes Pratiques
+
+### Gestion des Clés API
+- Variables d'environnement uniquement
+- Pas de clés en dur dans le code
+- Rotation régulière des tokens
+
+### Validation des Entrées
+- Sanitisation des inputs utilisateur
+- Validation des formats de données
+- Gestion des erreurs MCP
+
+## 📈 Optimisation et Performance
+
+### Coûts OpenAI
+- Utilisation de `max_output_tokens`
+- Paramètres `reasoning.effort` adaptés
+- Cache des réponses identiques
+
+### Performance Locale
+- Parallélisation des agents quand possible
+- Optimisation des appels MCP
+- Gestion de la mémoire
+
+---
+
+*Dernière mise à jour : Janvier 2025*
+*Version : 1.0*
