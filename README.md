@@ -34,29 +34,37 @@ git clone <url>
 cd "Langgraph Alteir"
 
 # Installer les dépendances
-pip install langgraph langchain-openai python-dotenv rich
+pip install -r requirements.txt
 
 # Configurer les variables d'environnement
 cp env.example .env
 # Éditer .env avec vos clés API
 ```
 
-### 2. Visualiser les Outputs
+### 2. Utiliser l'Interface
 
-#### Option A : Demo avec Rich (Recommandé)
+#### Option A : Interface Web Streamlit (Recommandé)
 ```bash
-python demo_workflow.py
+streamlit run app_streamlit.py
 ```
-Affichage coloré avec :
-- Configuration du workflow
-- Historique des étapes
-- Métriques de qualité
-- Problèmes identifiés
-- Corrections appliquées
-- Contenu final
-- Sauvegarde automatique en JSON et Markdown
+Interface graphique avec :
+- Formulaire de création de personnage
+- Configuration des paramètres (intent, level, dialogue, créativité)
+- Visualisation en temps réel
+- Consultation des résultats générés
+- Métriques et scores détaillés
 
-#### Option B : LangGraph Studio
+#### Option B : Interface CLI
+```bash
+python app_cli.py
+```
+Interface en ligne de commande avec :
+- Menu interactif
+- Assistant de création
+- Visualisation des résultats
+- Configuration
+
+#### Option C : LangGraph Studio
 ```bash
 # Installer LangGraph CLI
 pip install langgraph-cli
