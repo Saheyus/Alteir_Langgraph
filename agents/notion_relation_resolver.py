@@ -50,7 +50,7 @@ class NotionRelationResolver:
         
         # Configuration Notion
         self.notion_token = os.getenv("NOTION_TOKEN")
-        self.notion_version = "2025-09-03"
+        self.notion_version = "2022-06-28"
         
         # Mapping domaines → Database IDs (sandbox)
         self.database_ids = {
@@ -99,11 +99,16 @@ class NotionRelationResolver:
             print(f"Warning: Domain '{domain}' not configured")
             return {}
         
+        # Formater l'ID avec tirets (format UUID)
+        # 2806e4d21b458012a744d8d6723c8be1 → 2806e4d2-1b45-8012-a744-d8d6723c8be1
+        if "-" not in database_id and len(database_id) == 32:
+            database_id = f"{database_id[:8]}-{database_id[8:12]}-{database_id[12:16]}-{database_id[16:20]}-{database_id[20:]}"
+        
         entities = {}
         metadata = {}
         
         try:
-            # Fetch depuis Notion (Search API)
+            # Fetch depuis Notion (Database Query API)
             headers = {
                 "Authorization": f"Bearer {self.notion_token}",
                 "Notion-Version": self.notion_version,
@@ -111,38 +116,32 @@ class NotionRelationResolver:
             }
             
             # Query pour récupérer toutes les pages de la database
-            url = "https://api.notion.com/v1/search"
-            payload = {
-                "filter": {
-                    "value": "page",
-                    "property": "object"
-                },
-                "page_size": 100
-            }
+            url = f"https://api.notion.com/v1/databases/{database_id}/query"
             
-            response = requests.post(url, headers=headers, json=payload)
+            has_more = True
+            start_cursor = None
             
-            if response.status_code != 200:
-                print(f"Error fetching from Notion: {response.status_code} - {response.text}")
-                return {}
-            
-            data = response.json()
-            results = data.get("results", [])
-            
-            print(f"DEBUG: {len(results)} pages retournées par Search API")
-            
-            # Filtrer par database (parent)
-            for page in results:
-                parent = page.get("parent", {})
-                parent_db_id = parent.get("database_id", "").replace("-", "")
+            while has_more:
+                payload = {"page_size": 100}
+                if start_cursor:
+                    payload["start_cursor"] = start_cursor
                 
-                print(f"DEBUG: Page parent DB ID: {parent_db_id}, Recherché: {database_id}")
+                response = requests.post(url, headers=headers, json=payload)
                 
-                if parent.get("type") == "database_id" and parent_db_id == database_id:
-                    # Extraire le titre (nom)
+                if response.status_code != 200:
+                    print(f"Error fetching from Notion: {response.status_code} - {response.text}")
+                    return {}
+                
+                data = response.json()
+                results = data.get("results", [])
+                has_more = data.get("has_more", False)
+                start_cursor = data.get("next_cursor")
+                
+                # Extraire les titres
+                for page in results:
                     properties = page.get("properties", {})
                     
-                    # Trouver la propriété title
+                    # Trouver la propriété title (peut s'appeler "Nom", "Name", etc.)
                     title_prop = None
                     for prop_name, prop_value in properties.items():
                         if prop_value.get("type") == "title":
@@ -151,8 +150,8 @@ class NotionRelationResolver:
                     
                     if title_prop:
                         title_array = title_prop.get("title", [])
-                        if title_array:
-                            name = title_array[0].get("plain_text", "")
+                        if title_array and len(title_array) > 0:
+                            name = title_array[0].get("plain_text", "").strip()
                             if name:
                                 notion_id = page["id"]
                                 normalized = self.normalize_name(name)
@@ -161,8 +160,6 @@ class NotionRelationResolver:
                                     "name": name,
                                     "url": page.get("url", "")
                                 }
-            
-            print(f"[OK] Fetched {len(entities)} {domain} from Notion")
             
         except Exception as e:
             print(f"Error in fetch_entity_names: {e}")
@@ -332,20 +329,31 @@ if __name__ == "__main__":
     # Test fetch
     print("1. Fetch personnages...")
     entities = resolver.fetch_entity_names("personnages")
-    print(f"   > {len(entities)} personnages en cache\n")
+    print(f"   > {len(entities)} personnages en cache")
+    
+    # Afficher les 5 premiers pour debug
+    print("\n   Premiers personnages:")
+    for i, (normalized, notion_id) in enumerate(list(entities.items())[:5]):
+        metadata = resolver.cache_metadata["personnages"][notion_id]
+        print(f"   - {metadata['name']} (normalisé: '{normalized}')")
+    print()
     
     # Test matching exact
-    print("2. Test matching exact: 'Norrik'")
-    match = resolver.find_match("Norrik", "personnages")
+    print("2. Test matching exact: 'Bardin Kerlain'")
+    match = resolver.find_match("Bardin Kerlain", "personnages")
     if match:
         print(f"   [OK] Match: '{match.matched_name}' (confiance: {match.confidence:.0%})")
         print(f"   ID: {match.notion_id}\n")
+    else:
+        print(f"   [X] Pas de match\n")
     
     # Test fuzzy matching
-    print("3. Test fuzzy matching: 'norrik' (minuscules)")
-    match = resolver.find_match("norrik", "personnages")
+    print("3. Test fuzzy matching: 'bardin' (minuscules partiel)")
+    match = resolver.find_match("bardin", "personnages")
     if match:
         print(f"   [OK] Match: '{match.matched_name}' (confiance: {match.confidence:.0%})\n")
+    else:
+        print(f"   [X] Pas de match\n")
     
     # Test no match
     print("4. Test no match: 'Jean-Michel Inexistant'")
