@@ -1,0 +1,157 @@
+---
+description: Architecture multi-agents avec LangGraph et MCP Notion
+globs: agents/**/*.py,workflows/**/*.py,config/**/*.py
+alwaysApply: false
+---
+
+# Système Multi-Agents GDD Alteir
+
+## 🤖 Modèles LLM
+
+### OpenAI GPT-5-nano (Production)
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-5-nano",  # VALIDE depuis août 2025
+    use_responses_api=True,
+    extra_body={
+        "reasoning": {"effort": "minimal"},
+        "max_output_tokens": 1000,
+    }
+)
+```
+
+### Multi-Provider avec LLMAdapter
+**TOUJOURS utiliser `LLMAdapter`** pour abstraction fournisseur :
+
+```python
+from agents.base.llm_utils import LLMAdapter
+
+adapter = LLMAdapter(llm)  # Fonctionne avec OpenAI, Anthropic, Mistral, Ollama
+result = adapter.get_structured_output(prompt, schema=MySchema)
+```
+
+## 🏗️ Architecture Agents
+
+### Créer un nouvel agent
+```python
+from agents.base.base_agent import BaseAgent, AgentResult
+from agents.base.domain_config import DomainConfig
+
+class MyAgent(BaseAgent):
+    def __init__(self, domain_config: DomainConfig, llm=None):
+        super().__init__(domain_config, llm)
+    
+    def process(self, input_data, context=None) -> AgentResult:
+        # 1. Utiliser self.domain_config pour spécificités
+        # 2. Utiliser self.llm pour appels LLM
+        # 3. Retourner AgentResult
+        pass
+```
+
+### 4 Agents Génériques
+1. **WriterAgent**: Génération contenu
+2. **ReviewerAgent**: Analyse cohérence
+3. **CorrectorAgent**: Correction linguistique
+4. **ValidatorAgent**: Validation finale
+
+**Ne PAS créer de nouveaux agents** → Créer une **DomainConfig** à la place !
+
+## 📊 Structured Outputs (OBLIGATOIRE)
+
+### ✅ TOUJOURS utiliser Structured Outputs
+```python
+from pydantic import BaseModel, Field
+
+class MyResult(BaseModel):
+    field1: str = Field(description="...")
+    field2: List[str]
+
+adapter = LLMAdapter(llm)
+result = adapter.get_structured_output(prompt, schema=MyResult)
+# result est typé, pas de parsing manuel !
+```
+
+### ❌ NE JAMAIS faire de parsing manuel
+```python
+# ❌ ÉVITER CECI
+if '[CORRECTION:' in line:
+    parts = line.split(']', 1)
+
+# ✅ FAIRE CECI
+result = adapter.get_structured_output(prompt, schema=CorrectionResult)
+for corr in result.corrections:
+    print(corr.type, corr.original)
+```
+
+## 🔄 Workflows LangGraph
+
+### Pattern Standard
+```python
+from langgraph.graph import StateGraph, END
+from typing import TypedDict
+
+class MyState(TypedDict):
+    content: str
+    metadata: dict
+
+def node_function(state: MyState) -> dict:
+    return {"content": "..."}
+
+graph = StateGraph(MyState)
+graph.add_node("node1", node_function)
+graph.add_edge("node1", END)
+app = graph.compile()
+```
+
+### Sauvegarde Résultats
+- **JSON** (`outputs/*.json`): État complet
+- **Markdown** (`outputs/*.md`): Contenu lisible
+
+## 📝 Conventions Code
+
+### Nommage
+- **Classes**: `PascalCase` (WriterAgent, DomainConfig)
+- **Fonctions/Variables**: `snake_case` (process_content)
+- **Constantes**: `UPPER_SNAKE_CASE` (PERSONNAGES_CONFIG)
+
+### Type Hints OBLIGATOIRES
+```python
+def process(self, content: str, context: Dict[str, Any] = None) -> AgentResult:
+    pass
+```
+
+### Docstrings Google
+```python
+def my_function(param1: str) -> bool:
+    """
+    Description courte.
+    
+    Args:
+        param1: Description
+        
+    Returns:
+        Description retour
+    """
+    pass
+```
+
+## 🚨 Erreurs à Éviter
+
+❌ Parsing manuel de texte LLM
+❌ Hardcoder le provider (toujours `LLMAdapter`)
+❌ Oublier type hints
+❌ Ignorer structured outputs
+❌ Créer agents spécialisés → Créer `DomainConfig`
+❌ Modèles inexistants (GPT-5-nano existe depuis août 2025)
+
+## ✅ Bonnes Pratiques
+
+✓ `LLMAdapter` pour multi-provider
+✓ Structured Outputs avec Pydantic
+✓ `DomainConfig` pour spécialisation
+✓ Sauvegarder JSON + Markdown
+✓ Tester avec plusieurs providers
+✓ Type hints partout
+✓ Workflows LangGraph simples

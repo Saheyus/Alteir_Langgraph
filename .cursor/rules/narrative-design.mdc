@@ -1,0 +1,166 @@
+---
+description: Principes narratifs pour le domaine Personnages (GDD Alteir)
+globs: config/domain_configs/personnages_config.py,agents/writer_agent.py
+alwaysApply: false
+---
+
+# Principes Narratifs - Personnages Alteir
+
+## 🎭 Règles Créatives
+
+### 1. Orthogonalité Rôle ↔ Profondeur
+La profondeur du personnage **NE DOIT PAS** être explicable par son rôle visible seul.
+
+**Exemples :**
+- ❌ Alchimiste obsédé par l'alchimie → Trop logique
+- ✅ Cartographe membre d'un culte ancien → Orthogonal
+
+**Exceptions :** Mode `vocation_pure` autorise l'alignement.
+
+### 2. Structure Surface / Profondeur / Monde
+
+**Surface** = Visible immédiat
+- Gestes, micro-règles, objets portés
+- Répliques brèves SANS backstory
+- Apparence, tics, habitudes
+
+**Profondeur** = Caché, révélable
+- Indices, artefacts, témoins
+- Lieux significatifs
+- Analepses par strates
+- Secrets, motivations réelles
+
+**Monde** = Contraintes externes
+- Institutionnelles (guilde, loi)
+- Écologiques (environnement)
+- Économiques (ressources, dette)
+
+### 3. Temporalité IS / WAS / COULD-HAVE-BEEN
+
+**IS** = Présent actuel
+- Occupation, état, relations actuelles
+
+**WAS** = Passé concret
+- Événements vécus, cicatrices
+- Relations perdues, lieux quittés
+
+**COULD-HAVE-BEEN** = Voie non empruntée
+- Vocation abandonnée
+- Choix alternatif
+- Potentiel non réalisé
+
+### 4. Show > Tell
+
+**Privilégier :**
+- Objets porteurs de sens
+- Rituels quotidiens
+- Silences et non-dits
+- Traces physiques
+
+**Réserver l'exposition directe** aux rubriques qui l'exigent (Réponse au problème moral, etc.).
+
+### 5. Blancs Actifs
+
+Toute zone d'ombre **DOIT ouvrir une ACTION** jouable :
+- Parler à X pour découvrir Y
+- Aller au lieu Z pour comprendre
+- Utiliser l'objet W pour révéler
+
+**❌ Éviter :** Mystères non résolubles, dead ends narratifs
+
+### 6. Relations Concrètes
+
+Chaque relation **DOIT avoir** au moins un de ces éléments :
+- **Prix** : Coût pour maintenir la relation
+- **Dette** : Obligation mutuelle
+- **Délai** : Urgence temporelle
+- **Tabou** : Limite à ne pas franchir
+
+**Exemple :**
+- ❌ "Ami proche" → Trop vague
+- ✅ "Ami qui lui doit 3 cycles de protection, tabou : ne jamais mentionner sa sœur"
+
+## 📝 Style d'Écriture
+
+### Langue
+- **Français cru** mais non esthétisant
+- Pas d'euphémismes pour la violence
+- Décrire sans embellir
+
+### Néologismes
+- **Autorisés** avec glose brève (5-8 mots) à première mention
+- **Exemple :** "Les vertébraux — habitants des cités-colonies ancrées aux os du monde — parlent rarement aux étrangers."
+
+### Anglicismes
+- **Éviter** sauf si terme technique nécessaire
+- Privilégier équivalents français
+
+### Format
+- **Prose continue** (pas de tableaux comparatifs)
+- Paragraphes fluides
+- Dialogues intégrés naturellement
+
+## 🎯 Paramètres Intent
+
+### orthogonal_depth (par défaut)
+Profondeur NON ALIGNÉE au rôle visible.
+
+### vocation_pure
+Profondeur PEUT s'aligner au rôle (exception).
+
+### archetype_assume
+Monomoteur volontaire, archétype assumé (show > tell reste actif).
+
+### mystere_non_resolu
+Profondeur ELLIPTIQUE avec indices mais zones d'ombre persistantes.
+
+## 📊 Niveaux de Détail
+
+### cameo
+- 4-6 répliques
+- 0-1 relation
+- 0-1 artefact
+- Présence minimale
+
+### standard
+- 8-10 répliques
+- 1-3 relations
+- 1-2 artefacts
+- Profondeur moyenne
+
+### major
+- 10-12 répliques
+- 2-4 relations
+- 2-3 artefacts
+- Profondeur maximale
+
+## 🚨 À Éviter Absolument
+
+❌ Archétypes omniprésents (héros maudit, mentor sage)
+❌ Exposition torrentielle (backstory en bloc)
+❌ Dialogues explicatifs (personnage raconte sa vie)
+❌ Relations sans enjeu concret
+❌ Mystères décoratifs (sans prise pour le joueur)
+❌ Temporalité plate (uniquement présent)
+❌ Rôle = profondeur (sauf mode vocation_pure)
+
+## ✅ Exemples de Qualité
+
+### Bon Personnage
+```
+Nom: Kira l'Entailleuse
+Rôle: Cartographe (Surface)
+Profondeur: Membre d'un culte cherchant des ossements divins (Orthogonal)
+Artefact: Compas en os qui vibre près des reliques
+Relation: Ancien partenaire, dette = 2 cycles de protection, tabou = ne jamais mentionner l'expédition des Vertèbres
+Dialogue: "Les cartes mentent moins que les gens." (show méfiance sans exposition)
+```
+
+### Mauvais Personnage
+```
+Nom: Aria la Sage
+Rôle: Mentor sage
+Profondeur: A beaucoup souffert et veut aider les jeunes (Cliché + aligné au rôle)
+Relation: "Beaucoup d'élèves qu'elle aime" (Vague, sans enjeu)
+Dialogue: "Quand j'avais ton âge, j'ai perdu ma famille dans la guerre..." (Exposition directe)
+```

@@ -1,0 +1,168 @@
+---
+description: Intégration Notion via MCP avec API 2025-09-03
+globs: config/notion_config.py,agents/notion_agent.py
+alwaysApply: false
+---
+
+# Notion MCP Integration
+
+## 📊 API Notion 2025-09-03
+
+### Version API
+```python
+API_VERSION = "2025-09-03"  # Support multi-source databases
+```
+
+### Headers Requis
+```python
+headers = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2025-09-03",
+    "Content-Type": "application/json"
+}
+```
+
+## 🔧 Outils MCP Disponibles
+
+### 1. Fetch Database/Page
+```python
+# Récupérer une database pour voir son schéma
+database = mcp_notionMCP_notion-fetch(id=database_id)
+
+# Extraire les data sources
+data_source_url = database["data_sources"][0]  # collection://...
+```
+
+### 2. Search (Sémantique)
+```python
+# Rechercher dans une data source spécifique
+results = mcp_notionMCP_notion-search(
+    query="Un cartographe mystérieux",
+    data_source_url="collection://...",
+    filters={
+        "created_date_range": {
+            "start_date": "2024-01-01"
+        }
+    }
+)
+```
+
+### 3. Create Pages
+```python
+# Créer avec data_source_id (pas database_id)
+mcp_notionMCP_notion-create-pages(
+    parent={"data_source_id": "..."},
+    pages=[{
+        "properties": {
+            "Nom": "Valen Arkan",
+            "Type": "PNJ principal",
+            "Espèce": "Humain modifié"
+        },
+        "content": "# Description\n..."
+    }]
+)
+```
+
+### 4. Update Page
+```python
+mcp_notionMCP_notion-update-page(
+    data={
+        "page_id": "...",
+        "command": "update_properties",
+        "properties": {
+            "État": "Validé"
+        }
+    }
+)
+```
+
+## 🗂️ Bases de Données
+
+### Bases Principales (Lecture)
+```python
+DATABASES = {
+    "lieux": "1886e4d21b4581eda022ea4e0f1aba5f",
+    "personnages": "1886e4d21b4581a29340f77f5f2e5885",
+    "communautes": "1886e4d21b4581dea4f4d01beb5e1be2",
+    "especes": "1886e4d21b4581e9a768df06185c1aea",
+    "objets": "1886e4d21b4581098024c61acd801f52",
+    "chronologie": "22c6e4d21b458066b17cc2af998de0b8"
+}
+```
+
+### Base Test (Écriture)
+```python
+"tests": {
+    "id": "2806e4d21b4580eab1a2def9831bdc80",
+    "data_sources": ["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]
+}
+```
+
+## 🔄 Pattern Multi-Source
+
+### 1. Fetch pour récupérer les sources
+```python
+db = mcp_notionMCP_notion-fetch(id=database_id)
+
+# Database peut avoir plusieurs data sources
+for source in db["data_sources"]:
+    print(source["url"])  # collection://...
+```
+
+### 2. Utiliser data_source_url (pas database_id)
+```python
+# ❌ Ne fonctionne pas avec multi-source
+mcp_notionMCP_notion-search(database_id=db_id)
+
+# ✅ Fonctionne
+mcp_notionMCP_notion-search(data_source_url=source_url)
+```
+
+## 📝 Propriétés Spéciales
+
+### Date Properties
+```python
+properties = {
+    "date:Due Date:start": "2024-12-25",
+    "date:Due Date:end": "2024-12-26",
+    "date:Due Date:is_datetime": 0  # 0 = date only, 1 = datetime
+}
+```
+
+### Place Properties
+```python
+properties = {
+    "place:Location:name": "Le Léviathan Pétrifié",
+    "place:Location:latitude": 45.5,
+    "place:Location:longitude": -73.5
+}
+```
+
+### Checkbox
+```python
+properties = {
+    "Is Complete": "__YES__",  # ou "__NO__"
+}
+```
+
+### Relations
+```python
+properties = {
+    "Communautés": ["page_url_1", "page_url_2"]
+}
+```
+
+## 🚨 Erreurs Courantes
+
+❌ Utiliser `database_id` au lieu de `data_source_id` pour création
+❌ Oublier l'API version `2025-09-03`
+❌ Ne pas fetch avant de chercher les data sources
+❌ Properties nommées "id" ou "url" → Préfixer `userDefined:`
+
+## ✅ Bonnes Pratiques
+
+✓ Toujours fetch database d'abord
+✓ Utiliser `data_source_url` pour recherche
+✓ Utiliser `data_source_id` pour création
+✓ Valider les properties avec le schéma
+✓ Gérer les multi-source databases

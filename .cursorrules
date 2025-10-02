@@ -1,0 +1,298 @@
+# Cursor Rules - Système Multi-Agents GDD Alteir
+
+## 🎯 Contexte du Projet
+Système multi-agents local pour l'écriture, relecture et correction du GDD Alteir (RPG narratif).
+- Stack: LangGraph + MCP Notion + OpenAI (ou autres providers)
+- Modèle principal: GPT-5-nano (rapide, économique, reasoning intégré)
+- 4 agents génériques configurés par domaine (Writer, Reviewer, Corrector, Validator)
+- Architecture hybride: Rôle + DomainConfig pour extensibilité
+
+## 🤖 Modèles LLM
+
+### OpenAI (Production)
+```python
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="gpt-5-nano",  # VALIDE depuis août 2025
+    use_responses_api=True,
+    extra_body={
+        "reasoning": {"effort": "minimal"},  # Pour GPT-5
+        "max_output_tokens": 1000,
+    }
+)
+```
+
+### Multi-Provider Support
+- **Toujours utiliser `LLMAdapter`** pour abstraction fournisseur
+- Supporte: OpenAI, Anthropic, Mistral, Ollama (local)
+- Structured Outputs quand disponible, sinon fallback JSON parsing
+
+```python
+from agents.base.llm_utils import LLMAdapter
+
+adapter = LLMAdapter(llm)  # N'importe quel LLM
+result = adapter.get_structured_output(prompt, schema=MySchema)
+```
+
+## 🏗️ Architecture des Agents
+
+### BaseAgent Pattern
+```python
+from agents.base.base_agent import BaseAgent, AgentResult
+from agents.base.domain_config import DomainConfig
+
+class MyAgent(BaseAgent):
+    def __init__(self, domain_config: DomainConfig, llm=None):
+        super().__init__(domain_config, llm)
+    
+    def process(self, input_data, context=None) -> AgentResult:
+        # Utiliser self.domain_config pour spécificités
+        # Utiliser self.llm pour appels LLM
+        pass
+```
+
+### DomainConfig
+- **1 config par domaine** (personnages, lieux, communautés, etc.)
+- Définit: template Notion, règles validation, prompts par rôle
+- Localisation: `config/domain_configs/`
+
+### Agents Génériques
+1. **WriterAgent**: Génération contenu original
+2. **ReviewerAgent**: Analyse cohérence narrative
+3. **CorrectorAgent**: Correction linguistique
+4. **ValidatorAgent**: Validation finale
+
+## 📊 Structured Outputs (IMPORTANT)
+
+### Toujours Préférer Structured Outputs
+```python
+from pydantic import BaseModel, Field
+from typing import List
+
+class MyResult(BaseModel):
+    field1: str = Field(description="...")
+    field2: List[str]
+
+# Utiliser LLMAdapter (multi-provider)
+adapter = LLMAdapter(llm)
+result = adapter.get_structured_output(
+    prompt="...",
+    schema=MyResult
+)
+# result est typé, pas de parsing manuel !
+```
+
+### NE PAS faire de parsing manuel fragile
+❌ Éviter:
+```python
+if '[CORRECTION:' in line:  # Fragile, dépend du format texte
+    parts = line.split(']', 1)
+```
+
+✅ Utiliser:
+```python
+result = adapter.get_structured_output(prompt, schema=CorrectionResult)
+for corr in result.corrections:  # Typé, fiable
+    print(corr.type, corr.original)
+```
+
+## 🔄 Workflows LangGraph
+
+### Pattern Standard
+```python
+from langgraph.graph import StateGraph, END
+from typing import TypedDict
+
+class MyState(TypedDict):
+    content: str
+    metadata: dict
+
+def node_function(state: MyState) -> dict:
+    return {"content": "..."}
+
+graph = StateGraph(MyState)
+graph.add_node("node1", node_function)
+graph.add_edge("node1", END)
+app = graph.compile()
+```
+
+### Sauvegarde des Résultats
+- **JSON** (`outputs/*.json`): État complet, métadonnées
+- **Markdown** (`outputs/*.md`): Contenu formaté, lisible
+
+## 🔗 Intégration Notion
+
+### API Version
+```python
+# config/notion_config.py
+API_VERSION = "2025-09-03"  # Support multi-source databases
+```
+
+### Outils MCP Disponibles
+- `mcp_notionMCP_notion-search`: Recherche sémantique
+- `mcp_notionMCP_notion-fetch`: Récupérer page/database
+- `mcp_notionMCP_notion-create-pages`: Créer pages
+- `mcp_notionMCP_notion-update-page`: Modifier pages
+
+### Pattern MCP
+```python
+# 1. Fetch database pour schéma
+database = mcp_notionMCP_notion-fetch(id=database_id)
+
+# 2. Utiliser data_source_url pour recherche
+results = mcp_notionMCP_notion-search(
+    query="...",
+    data_source_url=data_source_url
+)
+
+# 3. Créer avec structure validée
+mcp_notionMCP_notion-create-pages(
+    parent={"data_source_id": "..."},
+    pages=[{"properties": {...}, "content": "..."}]
+)
+```
+
+## 📝 Conventions Code
+
+### Nommage
+- **Classes**: PascalCase (WriterAgent, DomainConfig)
+- **Fonctions/Variables**: snake_case (process_content, domain_config)
+- **Constantes**: UPPER_SNAKE_CASE (PERSONNAGES_CONFIG)
+
+### Type Hints (OBLIGATOIRE)
+```python
+def process(self, content: str, context: Dict[str, Any] = None) -> AgentResult:
+    pass
+```
+
+### Docstrings (Format Google)
+```python
+def my_function(param1: str) -> bool:
+    """
+    Description courte.
+    
+    Args:
+        param1: Description du paramètre
+        
+    Returns:
+        Description du retour
+    """
+    pass
+```
+
+### Structure Fichiers
+```
+agents/
+  base/
+    base_agent.py          # Classe abstraite
+    domain_config.py       # Système config
+    llm_utils.py          # Adapter multi-provider
+  writer_agent.py
+  reviewer_agent.py
+  ...
+
+config/
+  domain_configs/
+    personnages_config.py  # Config complète domaine
+    lieux_config.py
+    ...
+  notion_config.py         # Config Notion/MCP
+
+workflows/
+  content_workflow.py      # Workflow LangGraph complet
+
+outputs/                   # Résultats générés
+  *.json
+  *.md
+```
+
+## 🎨 Principes Narratifs (Domaine Personnages)
+
+### Règles Créatives
+1. **Orthogonalité rôle ↔ profondeur**: Profondeur ≠ rôle visible
+2. **Structure Surface/Profondeur/Monde**: Gestes/Indices/Contraintes
+3. **Temporalité IS/WAS/COULD-HAVE-BEEN**: Présent/Passé/Voie non prise
+4. **Show > Tell**: Objets, rituels, traces > exposition
+5. **Blancs actifs**: Zones d'ombre = actions possibles
+6. **Relations concrètes**: Prix, dette, délai, tabou
+
+### Style
+- Français cru mais non esthétisant
+- Néologismes avec glose brève (5-8 mots)
+- Éviter anglicismes non nécessaires
+- Prose continue (pas tableaux comparatifs)
+
+## ⚙️ Configuration Environnement
+
+### Variables .env
+```bash
+# LLM Provider
+LLM_PROVIDER=openai  # ou anthropic, mistral, ollama
+OPENAI_API_KEY=sk-...
+
+# Notion
+NOTION_TOKEN=secret_...
+```
+
+### Tests
+```bash
+# Test workflow complet
+python workflows/content_workflow.py
+
+# Test agent individuel
+python agents/writer_agent.py
+
+# Test avec provider spécifique
+LLM_PROVIDER=ollama python examples/corrector_structured_example.py
+```
+
+## 🚨 Erreurs Courantes à Éviter
+
+❌ Parsing manuel de texte LLM
+❌ Hardcoder le provider (toujours via LLMAdapter)
+❌ Oublier les type hints
+❌ Ne pas valider avec le DomainConfig
+❌ Ignorer les structured outputs quand disponibles
+❌ Créer des agents spécialisés au lieu de configs
+❌ Utiliser des modèles inexistants (vérifier docs OpenAI)
+
+## ✅ Bonnes Pratiques
+
+✓ Utiliser LLMAdapter pour abstraction provider
+✓ Structured Outputs avec Pydantic pour typage
+✓ DomainConfig pour spécialisation (pas nouveaux agents)
+✓ Sauvegarder résultats en JSON + Markdown
+✓ Tester avec plusieurs providers
+✓ Valider références croisées Notion
+✓ Garder workflows LangGraph simples
+✓ Documenter avec type hints + docstrings
+
+## 🔧 Debug & Monitoring
+
+### Outputs
+- Console: Progression temps réel
+- `outputs/*.json`: État complet workflow
+- `outputs/*.md`: Contenu formaté + métriques
+
+### LangGraph Studio
+```bash
+pip install langgraph-cli
+langgraph dev
+# Ouvrir http://localhost:8000
+```
+
+### Logs
+- `[WRITER]`, `[REVIEWER]`, etc.: Étapes workflow
+- Scores: Cohérence, Complétude, Qualité (0.0-1.0)
+- Validation: Erreurs critiques vs warnings
+
+## 📚 Références Rapides
+
+- **GPT-5-nano**: Modèle rapide OpenAI (août 2025), `use_responses_api=True`
+- **LLMAdapter**: `agents/base/llm_utils.py`
+- **BaseAgent**: `agents/base/base_agent.py`
+- **DomainConfig**: `agents/base/domain_config.py`
+- **Notion API**: Version `2025-09-03` (multi-source)
+- **Workflow**: `workflows/content_workflow.py`
+
