@@ -154,12 +154,16 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
 **CONTEXTE ({self.domain_config.display_name.upper()}):**
 {context_section}
 
-**STRUCTURE OBLIGATOIRE:**
-{template_section}
-
 {notion_fields_section}
 
-Produis le contenu DIRECTEMENT dans cette structure, sans apartés méthodologiques."""
+**STRUCTURE NARRATIVE OBLIGATOIRE:**
+{template_section}
+
+Produis le contenu dans cet ordre exact:
+1. D'abord les CHAMPS NOTION (métadonnées)
+2. Puis le CONTENU NARRATIF complet
+
+Sans apartés méthodologiques."""
         
         return prompt
     
