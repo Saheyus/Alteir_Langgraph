@@ -13,15 +13,29 @@ Système multi-agents local pour l'écriture, relecture et correction du GDD Alt
 ```python
 from langchain_openai import ChatOpenAI
 
+# GPT-5 (Reasoning models)
 llm = ChatOpenAI(
-    model="gpt-5-nano",  # VALIDE depuis août 2025
+    model="gpt-5-nano",  # ou gpt-5, gpt-5-mini
     use_responses_api=True,
-    extra_body={
-        "reasoning": {"effort": "minimal"},  # Pour GPT-5
-        "max_output_tokens": 1000,
-    }
+    reasoning={
+        "effort": "minimal"  # minimal, low, medium, high
+    },
+    max_tokens=1000,
+    # ⚠️ NE PAS utiliser temperature avec GPT-5 (non supporté)
+)
+
+# GPT-4 (Chat models classiques)
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0.7,
+    max_tokens=1000,
 )
 ```
+
+**IMPORTANT:** 
+- **GPT-5** : Utilise `reasoning` au lieu de `temperature`
+- **GPT-4** : Utilise `temperature` classique
+- LangChain gère automatiquement la distinction via `use_responses_api`
 
 ### Multi-Provider Support
 - **Toujours utiliser `LLMAdapter`** pour abstraction fournisseur

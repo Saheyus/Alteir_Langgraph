@@ -153,28 +153,35 @@ def main():
                 "provider": "OpenAI",
                 "description": "Modèle le plus puissant, raisonnement approfondi",
                 "max_tokens": 4000,
-                "icon": "🚀"
+                "icon": "🚀",
+                "uses_reasoning": True,
+                "default_reasoning": "medium"
             },
             "GPT-5-mini": {
                 "name": "gpt-5-mini",
                 "provider": "OpenAI",
                 "description": "Équilibré entre performance et coût",
                 "max_tokens": 3000,
-                "icon": "⚡"
+                "icon": "⚡",
+                "uses_reasoning": True,
+                "default_reasoning": "low"
             },
             "GPT-5-nano": {
                 "name": "gpt-5-nano",
                 "provider": "OpenAI",
                 "description": "Rapide et économique, idéal pour itérations",
                 "max_tokens": 2000,
-                "icon": "✨"
+                "icon": "✨",
+                "uses_reasoning": True,
+                "default_reasoning": "minimal"
             },
             "GPT-4o-mini": {
                 "name": "gpt-4o-mini",
                 "provider": "OpenAI",
                 "description": "Modèle de fallback stable",
                 "max_tokens": 2000,
-                "icon": "🔄"
+                "icon": "🔄",
+                "uses_reasoning": False
             }
         }
         
@@ -302,6 +309,10 @@ def main():
         
         if 'creativity' not in st.session_state:
             st.session_state.creativity = 0.7
+        
+        # Initialiser reasoning_effort selon le modèle
+        if 'reasoning_effort' not in st.session_state:
+            st.session_state.reasoning_effort = MODELS[selected_model].get("default_reasoning", "minimal")
         
         # Mémoriser le dernier domaine
         st.session_state.last_domain = domain
@@ -551,42 +562,71 @@ def main():
         with col2:
             st.subheader("Paramètres Techniques")
             
-            # Créativité avec bouton random
-            col_creativity, col_creativity_random = st.columns([4, 1])
-            with col_creativity_random:
-                st.write("")  # Spacer
-                st.write("")  # Spacer
-                st.write("")  # Spacer
-                st.write("")  # Spacer
-                st.button("🎲", key="random_creativity", help="Valeur aléatoire", on_click=randomize_creativity)
-            with col_creativity:
-                creativity = st.slider(
-                    "Créativité (température)",
-                    min_value=0.0,
-                    max_value=1.0,
-                    value=st.session_state.creativity,
-                    step=0.01,
-                    help="0 = déterministe | 1 = très créatif",
-                    key=f"creativity_slider_{st.session_state.random_seed}"
-                )
-            
-            # Configuration affichée selon le domaine
-            if domain == "Lieux":
-                st.info(f"""
-                **Configuration:**
-                - Intent: `{intent}`
-                - Échelle: `{level}`
-                - Atmosphère: `{atmosphere}`
-                - Température: `{creativity}`
-                """)
+            # Température (GPT-4) OU Reasoning Effort (GPT-5)
+            if model_info.get("uses_reasoning"):
+                # GPT-5 : Reasoning Effort
+                reasoning_options = ["minimal", "low", "medium", "high"]
+                
+                def randomize_reasoning():
+                    st.session_state.reasoning_effort = random_different(reasoning_options, st.session_state.reasoning_effort)
+                    st.session_state.random_seed += 1
+                
+                col_reasoning, col_reasoning_random = st.columns([4, 1])
+                with col_reasoning_random:
+                    st.write("")  # Spacer
+                    st.write("")  # Spacer
+                    st.button("🎲", key="random_reasoning", help="Valeur aléatoire", on_click=randomize_reasoning)
+                with col_reasoning:
+                    reasoning_effort = st.selectbox(
+                        "Effort de raisonnement",
+                        options=reasoning_options,
+                        index=reasoning_options.index(st.session_state.reasoning_effort),
+                        help="minimal = rapide | low = équilibré | medium = standard | high = approfondi",
+                        key=f"reasoning_select_{st.session_state.random_seed}"
+                    )
+                    creativity = None  # Pas utilisé pour GPT-5
             else:
-                st.info(f"""
-                **Configuration:**
-                - Intent: `{intent}`
-                - Niveau: `{level}`
-                - Dialogue: `{dialogue_mode}`
-                - Température: `{creativity}`
-                """)
+                # GPT-4 : Température classique
+                col_creativity, col_creativity_random = st.columns([4, 1])
+                with col_creativity_random:
+                    st.write("")  # Spacer
+                    st.write("")  # Spacer
+                    st.write("")  # Spacer
+                    st.write("")  # Spacer
+                    st.button("🎲", key="random_creativity", help="Valeur aléatoire", on_click=randomize_creativity)
+                with col_creativity:
+                    creativity = st.slider(
+                        "Créativité (température)",
+                        min_value=0.0,
+                        max_value=1.0,
+                        value=st.session_state.creativity,
+                        step=0.01,
+                        help="0 = déterministe | 1 = très créatif",
+                        key=f"creativity_slider_{st.session_state.random_seed}"
+                    )
+                    reasoning_effort = None  # Pas utilisé pour GPT-4
+            
+            # Configuration affichée selon le domaine et le modèle
+            config_lines = [f"- Intent: `{intent}`"]
+            
+            if domain == "Lieux":
+                config_lines.extend([
+                    f"- Échelle: `{level}`",
+                    f"- Atmosphère: `{atmosphere}`"
+                ])
+            else:
+                config_lines.extend([
+                    f"- Niveau: `{level}`",
+                    f"- Dialogue: `{dialogue_mode}`"
+                ])
+            
+            # Paramètre de créativité/reasoning selon le modèle
+            if model_info.get("uses_reasoning"):
+                config_lines.append(f"- Reasoning: `{reasoning_effort}`")
+            else:
+                config_lines.append(f"- Température: `{creativity}`")
+            
+            st.info("**Configuration:**\n" + "\n".join(config_lines))
         
         # Mettre à jour session state avec les valeurs choisies manuellement
         st.session_state.intent = intent
@@ -596,7 +636,12 @@ def main():
             dialogue_mode = "none"  # Valeur par défaut pour lieux
         else:
             st.session_state.dialogue_mode = dialogue_mode
-        st.session_state.creativity = creativity
+        
+        # Mettre à jour selon le type de modèle
+        if model_info.get("uses_reasoning"):
+            st.session_state.reasoning_effort = reasoning_effort
+        else:
+            st.session_state.creativity = creativity
         
         # Bouton de génération adapté au domaine
         button_text = {
@@ -612,7 +657,7 @@ def main():
             if not brief:
                 st.error(error_text[domain])
             else:
-                generate_content(brief, intent, level, dialogue_mode, creativity, selected_model, MODELS[selected_model], domain)
+                generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_effort, selected_model, MODELS[selected_model], domain)
     
     # TAB 2: Résultats
     with tab2:
@@ -652,35 +697,37 @@ def main():
         - Scores de qualité (cohérence, complétude, qualité)
         """)
 
-def create_llm(model_name: str, model_config: dict, creativity: float):
+def create_llm(model_name: str, model_config: dict, creativity: float = None, reasoning_effort: str = None):
     """Crée une instance LLM selon le modèle choisi"""
     from langchain_openai import ChatOpenAI
     
-    # Configuration commune
+    # Configuration de base
     llm_config = {
         "model": model_config["name"],
-        "temperature": creativity,
         "max_tokens": model_config["max_tokens"],
     }
     
-    # Ajout des paramètres spécifiques GPT-5 si applicable
-    if "gpt-5" in model_config["name"]:
+    # Configuration selon le type de modèle
+    if model_config.get("uses_reasoning"):
+        # GPT-5 : utilise reasoning au lieu de temperature
         llm_config["use_responses_api"] = True
-        llm_config["extra_body"] = {
-            "reasoning": {"effort": "minimal"},
-            "max_output_tokens": model_config["max_tokens"],
+        llm_config["reasoning"] = {
+            "effort": reasoning_effort or model_config.get("default_reasoning", "minimal")
         }
+    else:
+        # GPT-4 : utilise temperature classique
+        llm_config["temperature"] = creativity
     
     return ChatOpenAI(**llm_config)
 
-def generate_content(brief, intent, level, dialogue_mode, creativity, model_name, model_config, domain):
+def generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_effort, model_name, model_config, domain):
     """Génère du contenu (personnage ou lieu) selon le domaine"""
     
     # Lazy load des dépendances lourdes selon le domaine
     ContentWorkflow, WriterConfig, domain_config = load_workflow_dependencies(domain.lower())
     
     # Créer le LLM selon le modèle choisi
-    llm = create_llm(model_name, model_config, creativity)
+    llm = create_llm(model_name, model_config, creativity=creativity, reasoning_effort=reasoning_effort)
     
     # Configuration
     writer_config = WriterConfig(
