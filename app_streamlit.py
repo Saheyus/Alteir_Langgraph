@@ -1056,161 +1056,166 @@ def generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_
         st.error(f"❌ Erreur lors de la génération: {e}")
 
 def export_to_notion(result):
-    """Exporte le résultat vers Notion avec MCP"""
+    """Exporte le résultat vers Notion (BAC À SABLE)"""
+    import re
+    import requests
+    import os
+    
     try:
         with st.spinner("📤 Export vers Notion en cours..."):
-            # Récupérer les métadonnées du personnage
-            metadata = result.get('writer_metadata', {})
+            # 1. Détecter le domaine
+            domain = result.get('domain', 'personnages').lower()
+            content = result.get('content', '')
             
-            # Préparer les propriétés pour Notion
-            properties = {
-                "Nom": metadata.get('nom', 'Sans nom'),
-                "Type": metadata.get('type', 'PNJ'),
-                "Espèce": metadata.get('espece', ''),
-                "Genre": metadata.get('genre', 'Non défini'),
-                "État": "Brouillon IA",
+            # 2. Configuration selon le domaine (BAC À SABLE)
+            if domain == 'lieux':
+                DATABASE_ID = "2806e4d21b4580969f1cd7463a4c889c"  # Lieux (1) - BAC À SABLE
+                domain_label = "Lieu"
+                nom_property = "Nom"
+            else:
+                DATABASE_ID = "2806e4d21b458012a744d8d6723c8be1"  # Personnages (1) - BAC À SABLE
+                domain_label = "Personnage"
+                nom_property = "Nom"
+            
+            # 3. Fonction helper pour extraire les champs
+            def extract_field(field_name, content):
+                """Extrait un champ du contenu markdown"""
+                pattern = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+                match = re.search(pattern, content, re.MULTILINE | re.IGNORECASE)
+                return match.group(1).strip() if match else None
+            
+            # 4. Extraire le nom
+            nom = extract_field("Nom", content) or "Sans nom"
+            
+            # 5. Préparer les propriétés communes
+            notion_properties = {
+                nom_property: {
+                    "title": [{"text": {"content": nom}}]
+                },
+                "État": {"status": {"name": "Brouillon IA"}}
             }
             
-            # Ajouter les propriétés optionnelles si présentes
-            if metadata.get('age'):
-                properties['Âge'] = int(metadata.get('age', 0))
-            if metadata.get('alias'):
-                properties['Alias'] = metadata.get('alias')
-            if metadata.get('occupation'):
-                properties['Occupation'] = metadata.get('occupation')
-            if metadata.get('axe_ideologique'):
-                properties['Axe idéologique'] = metadata.get('axe_ideologique')
-            if metadata.get('archetype'):
-                properties['Archétype littéraire'] = [metadata.get('archetype')]
-            if metadata.get('langage'):
-                properties['Langage'] = [metadata.get('langage')]
+            # 6. Propriétés spécifiques au domaine
+            if domain == 'personnages':
+                # Extraire propriétés personnages
+                if type_val := extract_field("Type", content):
+                    notion_properties["Type"] = {"select": {"name": type_val}}
+                if genre := extract_field("Genre", content):
+                    notion_properties["Genre"] = {"select": {"name": genre}}
+                if alias := extract_field("Alias", content):
+                    notion_properties["Alias"] = {"rich_text": [{"text": {"content": alias}}]}
+                if occupation := extract_field("Occupation", content):
+                    notion_properties["Occupation"] = {"rich_text": [{"text": {"content": occupation}}]}
+                if age_str := extract_field("Âge", content):
+                    try:
+                        age = int(re.search(r'\d+', age_str).group())
+                        notion_properties["Âge"] = {"number": age}
+                    except:
+                        pass
             
-            # Log pour debug
-            with st.expander("🔍 Debug - Données envoyées", expanded=False):
-                st.write("**Propriétés:**")
-                st.json(properties)
-                st.write("**Contenu (prévisualisation):**")
-                st.text(result['content'][:300] + "...")
+            elif domain == 'lieux':
+                # Extraire propriétés lieux
+                if categorie := extract_field("Catégorie", content):
+                    notion_properties["Catégorie"] = {"select": {"name": categorie}}
+                if taille := extract_field("Taille", content):
+                    notion_properties["Taille"] = {"select": {"name": taille}}
+                if role := extract_field("Rôle", content):
+                    notion_properties["Rôle"] = {"rich_text": [{"text": {"content": role[:2000]}}]}
             
-            # Base de données Personnages
-            DATABASE_ID = "1886e4d21b4581a29340f77f5f2e5885"  # Personnages
+            # 7. Créer la page
+            headers = {
+                "Authorization": f"Bearer {os.getenv('NOTION_TOKEN')}",
+                "Notion-Version": "2022-06-28",
+                "Content-Type": "application/json"
+            }
             
-            # Appel API REST Notion pour créer la page
-            try:
-                import requests
-                import os
+            payload = {
+                "parent": {"database_id": DATABASE_ID.replace("-", "")},
+                "properties": notion_properties
+            }
+            
+            response = requests.post(
+                "https://api.notion.com/v1/pages",
+                headers=headers,
+                json=payload
+            )
+            
+            if response.status_code != 200:
+                st.error(f"❌ Erreur API Notion: {response.status_code}")
+                st.json(response.json())
+                raise Exception(f"API Error: {response.text}")
+            
+            page_data = response.json()
+            page_id = page_data.get('id', '')
+            page_url = page_data.get('url', '#')
+            
+            # 8. Ajouter le contenu complet
+            # Convertir markdown en blocks Notion
+            content_lines = content.split('\n')
+            blocks = []
+            
+            for line in content_lines[:50]:  # Limite à 50 lignes pour éviter timeout
+                line = line.strip()
+                if not line:
+                    continue
                 
-                # Préparer les propriétés au format Notion API
-                notion_properties = {}
-                
-                # Title property
-                notion_properties["Nom"] = {
-                    "title": [{"text": {"content": properties.get("Nom", "Sans nom")}}]
-                }
-                
-                # Select properties
-                if properties.get("Type"):
-                    notion_properties["Type"] = {"select": {"name": properties["Type"]}}
-                if properties.get("Genre"):
-                    notion_properties["Genre"] = {"select": {"name": properties["Genre"]}}
-                if properties.get("État"):
-                    notion_properties["État"] = {"status": {"name": properties["État"]}}
-                if properties.get("Axe idéologique"):
-                    notion_properties["Axe idéologique"] = {"select": {"name": properties["Axe idéologique"]}}
-                
-                # Rich text properties
-                if properties.get("Espèce"):
-                    notion_properties["Espèce"] = {
-                        "rich_text": [{"text": {"content": properties["Espèce"]}}]
-                    }
-                if properties.get("Alias"):
-                    notion_properties["Alias"] = {
-                        "rich_text": [{"text": {"content": properties["Alias"]}}]
-                    }
-                if properties.get("Occupation"):
-                    notion_properties["Occupation"] = {
-                        "rich_text": [{"text": {"content": properties["Occupation"]}}]
-                    }
-                
-                # Number property
-                if properties.get("Âge"):
-                    notion_properties["Âge"] = {"number": properties["Âge"]}
-                
-                # Multi-select properties
-                if properties.get("Archétype littéraire"):
-                    notion_properties["Archétype littéraire"] = {
-                        "multi_select": [{"name": arch} for arch in properties["Archétype littéraire"]]
-                    }
-                if properties.get("Langage"):
-                    notion_properties["Langage"] = {
-                        "multi_select": [{"name": lang} for lang in properties["Langage"]]
-                    }
-                
-                # Créer la page via API REST
-                headers = {
-                    "Authorization": f"Bearer {os.getenv('NOTION_TOKEN')}",
-                    "Notion-Version": "2022-06-28",
-                    "Content-Type": "application/json"
-                }
-                
-                payload = {
-                    "parent": {"database_id": DATABASE_ID.replace("-", "")},
-                    "properties": notion_properties
-                }
-                
-                response = requests.post(
-                    "https://api.notion.com/v1/pages",
+                # Titres
+                if line.startswith('# '):
+                    blocks.append({
+                        "heading_1": {"rich_text": [{"text": {"content": line[2:].strip()[:2000]}}]}
+                    })
+                elif line.startswith('## '):
+                    blocks.append({
+                        "heading_2": {"rich_text": [{"text": {"content": line[3:].strip()[:2000]}}]}
+                    })
+                elif line.startswith('### '):
+                    blocks.append({
+                        "heading_3": {"rich_text": [{"text": {"content": line[4:].strip()[:2000]}}]}
+                    })
+                # Liste
+                elif line.startswith('- '):
+                    blocks.append({
+                        "bulleted_list_item": {"rich_text": [{"text": {"content": line[2:].strip()[:2000]}}]}
+                    })
+                # Paragraphe
+                else:
+                    blocks.append({
+                        "paragraph": {"rich_text": [{"text": {"content": line[:2000]}}]}
+                    })
+            
+            # Ajouter les blocks via PATCH
+            if blocks:
+                patch_payload = {"children": blocks[:100]}  # Notion limite à 100 blocks
+                patch_response = requests.patch(
+                    f"https://api.notion.com/v1/blocks/{page_id}/children",
                     headers=headers,
-                    json=payload
+                    json=patch_payload
                 )
+            
+            # 9. Message de succès
+            st.markdown(f"""
+            <div style="background-color: #d4edda; border-left: 4px solid #28a745; padding: 1rem; margin: 1rem 0; border-radius: 0.3rem;">
+                ✅ <b>{domain_label} exporté vers Notion (BAC À SABLE) !</b><br><br>
+                📄 <b>Lien :</b> <a href="{page_url}" target="_blank">{nom}</a><br>
+                📊 <b>Base :</b> {domain_label}s (1) - Bac à sable<br>
+                🆔 <b>ID :</b> <code>{page_id}</code>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            with st.expander("📋 Prochaines étapes"):
+                st.markdown(f"""
+                **À compléter manuellement dans Notion :**
+                - 🔗 Relations (Communautés, Espèces, Lieux, etc.)
+                - 📅 Dates et événements liés
+                - 🗺️ Carte et zones limitrophes
+                - ✅ Validation et changement d'état
                 
-                if response.status_code != 200:
-                    st.error(f"Erreur API Notion: {response.status_code}")
-                    st.json(response.json())
-                    raise Exception(f"API Error: {response.text}")
-                
-                page_data = response.json()
-                page_url = page_data.get('url', '#')
-                page_id = page_data.get('id', 'unknown')
-                
-                st.success(f"""
-                ✅ **Personnage exporté vers Notion !**
-                
-                📄 **Lien de la fiche:** [{properties['Nom']}]({page_url})
-                
-                Le personnage a été créé dans la base Personnages.
-                
-                **Informations :**
-                - ID de la page : `{page_id}`
-                - Base : Personnages
-                - État : Brouillon IA
-                
-                **Prochaines étapes :**
-                - Vérifier la page dans Notion
-                - Compléter les relations (Communautés, Lieux, etc.)
-                - Valider et changer l'état si nécessaire
+                **Note :** Les relations ne peuvent pas être créées via API sans les IDs exacts des entités liées.
                 """)
                 
-                st.balloons()  # Animation de célébration
-                
-            except Exception as mcp_error:
-                st.error(f"❌ Erreur MCP lors de la création : {mcp_error}")
-                
-                # Afficher les détails pour debugging
-                with st.expander("🔧 Détails de l'erreur", expanded=True):
-                    st.exception(mcp_error)
-                    st.write("**Configuration actuelle:**")
-                    st.json({
-                        "data_source_id": DATA_SOURCE_ID,
-                        "properties": properties,
-                        "content_length": len(result['content'])
-                    })
-                
-                raise
-    
     except Exception as e:
         st.error(f"❌ Erreur lors de l'export : {e}")
-        st.exception(e)  # Afficher la stack trace complète
+        st.exception(e)
 
 def show_results():
     """Affiche les résultats générés"""
