@@ -34,119 +34,59 @@ LIEUX_SCHEMA = {
     "Sprint": "",  # select
 }
 
-# Template narratif Notion pour les lieux
+# Template narratif Notion pour les lieux (aligné avec le template Notion)
 LIEUX_NARRATIVE_TEMPLATE = """
-# Résumé du lieu
+# Résumé de la fiche
 [Description courte du lieu en 2-3 phrases : essence, fonction, atmosphère]
 
-# Caractéristiques
+# Identité & Vue d'ensemble
 
-## Fonction primaire
-[Quel est le rôle principal de ce lieu ? Commerce, culte, résidence, passage, etc.]
+## Histoire du lieu
+[Origine et évolution du lieu : comment il est né, ce qu'il était autrefois, ce qu'il est devenu]
 
-## Atmosphère dominante
-[L'ambiance générale : oppressante, vivante, abandonnée, sacrée, etc.]
+## Rôle dans l'intrigue
+[Importance narrative du lieu : quel rôle il joue dans l'histoire, pourquoi les personnages s'y rendent]
 
-## Particularité unique
-[Ce qui distingue ce lieu de tous les autres, son élément mémorable]
+# Géographie & Environnement
 
-# Description sensorielle
+## Écosystème
+[Faune, flore, climat, particularités écologiques du lieu]
 
-## Visuel
-[Ce qu'on voit : architecture, couleurs, lumière, matériaux]
+## Voies d'accès
+[Comment accéder au lieu : chemins, passages, restrictions, dangers du voyage]
 
-## Sonore
-[Ce qu'on entend : bruits ambiants, sons caractéristiques]
+# Organisation humaine
 
-## Olfactif
-[Ce qu'on sent : odeurs dominantes, parfums, puanteurs]
+## Structure politique
+[Gouvernance, autorités, lois, hiérarchies de pouvoir]
 
-## Tactile
-[Ce qu'on ressent : température, humidité, textures]
+## Centres urbains & Habitats
+[Villes, villages, campements, types d'habitations, organisation spatiale]
 
-# Structure spatiale
+# Culture & Société
 
-## Zones principales
-### [Zone 1]
-- **Fonction** : [Usage de cette zone]
-- **Accès** : [Comment y accéder]
-- **Éléments notables** : [Objets, détails marquants]
+## Population
+[Qui habite ici : communautés, démographie, diversité, tensions]
 
-### [Zone 2]
-- **Fonction** : [Usage de cette zone]
-- **Accès** : [Comment y accéder]
-- **Éléments notables** : [Objets, détails marquants]
+## Économie
+[Ressources, commerce, artisanat, monnaie, échanges]
+
+## Fêtes/moments importants
+[Célébrations, rituels, événements cycliques, traditions]
+
+## Alimentation spécifique
+[Cuisine locale, ressources alimentaires, plats typiques, tabous culinaires]
+
+# Dynamiques
+
+## Enjeux actuels
+[Problèmes, conflits, défis que rencontre le lieu actuellement]
 
 ## Points d'intérêt
-- [Lieu/objet/élément significatif avec interaction possible]
+[Lieux remarquables, monuments, sites à visiter, secrets à découvrir]
 
-## Passages et connexions
-- **Vers [Lieu A]** : [Comment/où/condition]
-- **Vers [Lieu B]** : [Comment/où/condition]
-
-# Histoire du lieu
-
-## Origine
-[Comment ce lieu est né, qui l'a créé, pourquoi]
-
-## Évolution
-**Passé (WAS)** : [Ce qu'était le lieu autrefois]
-**Présent (IS)** : [Ce qu'est le lieu maintenant]
-**Potentiel (COULD-BE)** : [Ce que le lieu pourrait devenir]
-
-## Événements marquants
-- [Événement historique 1 avec trace visible]
-- [Événement historique 2 avec trace visible]
-
-## Traces et stigmates
-[Marques physiques du passé : ruines, graffitis, monuments, cicatrices]
-
-# Habitants et présences
-
-## Communautés présentes
-- **[Communauté 1]** : [Rôle, quartier, relation au lieu]
-- **[Communauté 2]** : [Rôle, quartier, relation au lieu]
-
-## Personnages notables
-- **[Personnage 1]** : [Fonction, localisation habituelle]
-- **[Personnage 2]** : [Fonction, localisation habituelle]
-
-## Faune & Flore
-- [Espèces présentes avec rôle écologique ou narratif]
-
-## Dynamique sociale
-[Règles non-écrites, tensions, hiérarchies, tabous du lieu]
-
-# Opportunités narratives
-
-## Actions possibles
-- [Action concrète que le joueur peut faire]
-- [Interaction avec l'environnement]
-- [Découverte ou exploration]
-
-## Quêtes potentielles
-- [Objectif lié au lieu]
-- [Problème à résoudre]
-- [Secret à découvrir]
-
-## Conséquences de présence
-- **Si exploration complète** : [Récompense, découverte]
-- **Si ignoré** : [Manque, perte d'opportunité]
-- **Si profané/détruit** : [Réaction, conséquences]
-
-# Ambiance et détails
-
-## Objets et artefacts
-- [Objet notable 1 avec usage/histoire]
-- [Objet notable 2 avec usage/histoire]
-
-## Détails immersifs
-- [Élément sensoriel ou visuel marquant]
-- [Anecdote ou micro-événement observable]
-
-## Dangers et obstacles
-- [Péril environnemental ou créature]
-- [Contrainte d'accès ou navigation]
+## Système de jeu
+[Mécaniques de gameplay spécifiques au lieu : quêtes, interactions, opportunités narratives]
 """
 
 # Instructions spécifiques au domaine Lieux
@@ -261,11 +201,10 @@ LIEUX_FIELD_OPTIONS = {
 
 # Paramètres spécifiques aux lieux
 LIEUX_SPECIFIC_PARAMS = {
-    "scale_modes": ["micro", "meso", "macro"],  # échelle de description
-    "atmosphere_tags": ["oppressante", "vivante", "sacrée", "corrompue", "abandonnée", "militarisée", "commerciale"],
-    "sensory_focus": ["visuel", "sonore", "olfactif", "tactile", "gustatif"],  # sens privilégiés
-    "spatial_complexity": ["simple", "moyenne", "complexe", "labyrinthique"],
-    "time_layer": ["présent_only", "avec_passé", "full_temporal"],  # profondeur temporelle
+    "intent_modes": ["hub_central", "passage_obligé", "zone_exploration", "lieu_secret"],
+    "atmosphere_modes": ["oppressante", "vivante", "sacrée", "hostile", "accueillante", "neutre"],
+    "level_options": ["point_interet", "site", "secteur", "district"],  # échelle du lieu
+    "complexity": ["simple", "moyen", "complexe"],  # complexité narrative
 }
 
 # Configuration complète du domaine Lieux

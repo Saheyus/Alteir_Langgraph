@@ -274,20 +274,37 @@ def main():
         if 'random_seed' not in st.session_state:
             st.session_state.random_seed = 0
         
-        # Options disponibles
-        intent_options = ["orthogonal_depth", "vocation_pure", "archetype_assume", "mystere_non_resolu"]
-        level_options = ["cameo", "standard", "major"]
-        dialogue_options = ["parle", "gestuel", "telepathique", "ecrit_only"]
+        # Options disponibles selon le domaine
+        if domain == "Lieux":
+            intent_options = ["hub_central", "passage_obligé", "zone_exploration", "lieu_secret"]
+            level_options = ["point_interet", "site", "secteur", "district"]
+            atmosphere_options = ["oppressante", "vivante", "sacrée", "hostile", "accueillante", "neutre"]
+            
+            # Initialiser les valeurs par défaut pour lieux
+            if 'intent' not in st.session_state or domain != st.session_state.get('last_domain'):
+                st.session_state.intent = "zone_exploration"
+            if 'level' not in st.session_state or domain != st.session_state.get('last_domain'):
+                st.session_state.level = "site"
+            if 'atmosphere' not in st.session_state:
+                st.session_state.atmosphere = "neutre"
+        else:  # Personnages
+            intent_options = ["orthogonal_depth", "vocation_pure", "archetype_assume", "mystere_non_resolu"]
+            level_options = ["cameo", "standard", "major"]
+            dialogue_options = ["parle", "gestuel", "telepathique", "ecrit_only"]
+            
+            # Initialiser les valeurs par défaut pour personnages
+            if 'intent' not in st.session_state or domain != st.session_state.get('last_domain'):
+                st.session_state.intent = "orthogonal_depth"
+            if 'level' not in st.session_state or domain != st.session_state.get('last_domain'):
+                st.session_state.level = "standard"
+            if 'dialogue_mode' not in st.session_state:
+                st.session_state.dialogue_mode = "parle"
         
-        # Initialiser les valeurs par défaut si elles n'existent pas
-        if 'intent' not in st.session_state:
-            st.session_state.intent = "orthogonal_depth"
-        if 'level' not in st.session_state:
-            st.session_state.level = "standard"
-        if 'dialogue_mode' not in st.session_state:
-            st.session_state.dialogue_mode = "parle"
         if 'creativity' not in st.session_state:
             st.session_state.creativity = 0.7
+        
+        # Mémoriser le dernier domaine
+        st.session_state.last_domain = domain
         
         # Fonction helper pour choisir une valeur différente
         def random_different(options, current):
@@ -301,7 +318,10 @@ def main():
         def randomize_all():
             st.session_state.intent = random_different(intent_options, st.session_state.intent)
             st.session_state.level = random_different(level_options, st.session_state.level)
-            st.session_state.dialogue_mode = random_different(dialogue_options, st.session_state.dialogue_mode)
+            if domain == "Lieux":
+                st.session_state.atmosphere = random_different(atmosphere_options, st.session_state.atmosphere)
+            else:
+                st.session_state.dialogue_mode = random_different(dialogue_options, st.session_state.dialogue_mode)
             while True:
                 new_creativity = round(random.uniform(0.5, 0.9), 2)
                 if abs(new_creativity - st.session_state.creativity) >= 0.1:
@@ -332,44 +352,83 @@ def main():
         # Profils prédéfinis et bouton dé global
         st.subheader("Profils & Paramètres")
         
-        # Profils prédéfinis
-        PROFILS = {
-            "Personnage principal": {
-                "intent": "orthogonal_depth",
-                "level": "major",
-                "dialogue_mode": "parle",
-                "creativity": 0.75,
-                "description": "Profondeur maximale, 10-12 répliques, 2-4 relations"
-            },
-            "PNJ secondaire": {
-                "intent": "orthogonal_depth",
-                "level": "standard",
-                "dialogue_mode": "parle",
-                "creativity": 0.70,
-                "description": "Profondeur moyenne, 8-10 répliques, 1-3 relations"
-            },
-            "Cameo/Figurant": {
-                "intent": "mystere_non_resolu",
-                "level": "cameo",
-                "dialogue_mode": "parle",
-                "creativity": 0.65,
-                "description": "Présence minimale, 4-6 répliques, 0-1 relation"
-            },
-            "Boss/Antagoniste": {
-                "intent": "archetype_assume",
-                "level": "major",
-                "dialogue_mode": "parle",
-                "creativity": 0.80,
-                "description": "Archétype assumé, profondeur maximale"
-            },
-            "Personnage mystérieux": {
-                "intent": "mystere_non_resolu",
-                "level": "standard",
-                "dialogue_mode": "gestuel",
-                "creativity": 0.85,
-                "description": "Zones d'ombre, communication non-verbale"
-            },
-        }
+        # Profils prédéfinis selon le domaine
+        if domain == "Lieux":
+            PROFILS = {
+                "Hub central": {
+                    "intent": "hub_central",
+                    "level": "district",
+                    "atmosphere": "vivante",
+                    "creativity": 0.75,
+                    "description": "Lieu de convergence, plein de vie et d'activités"
+                },
+                "Zone d'exploration": {
+                    "intent": "zone_exploration",
+                    "level": "secteur",
+                    "atmosphere": "neutre",
+                    "creativity": 0.70,
+                    "description": "Zone à découvrir, secrets et opportunités"
+                },
+                "Passage obligé": {
+                    "intent": "passage_obligé",
+                    "level": "site",
+                    "atmosphere": "hostile",
+                    "creativity": 0.65,
+                    "description": "Lieu de transit, dangers potentiels"
+                },
+                "Lieu secret": {
+                    "intent": "lieu_secret",
+                    "level": "point_interet",
+                    "atmosphere": "oppressante",
+                    "creativity": 0.80,
+                    "description": "Caché, découverte importante"
+                },
+                "Sanctuaire": {
+                    "intent": "lieu_secret",
+                    "level": "site",
+                    "atmosphere": "sacrée",
+                    "creativity": 0.85,
+                    "description": "Lieu de culte ou protection, ambiance spirituelle"
+                },
+            }
+        else:  # Personnages
+            PROFILS = {
+                "Personnage principal": {
+                    "intent": "orthogonal_depth",
+                    "level": "major",
+                    "dialogue_mode": "parle",
+                    "creativity": 0.75,
+                    "description": "Profondeur maximale, 10-12 répliques, 2-4 relations"
+                },
+                "PNJ secondaire": {
+                    "intent": "orthogonal_depth",
+                    "level": "standard",
+                    "dialogue_mode": "parle",
+                    "creativity": 0.70,
+                    "description": "Profondeur moyenne, 8-10 répliques, 1-3 relations"
+                },
+                "Cameo/Figurant": {
+                    "intent": "mystere_non_resolu",
+                    "level": "cameo",
+                    "dialogue_mode": "parle",
+                    "creativity": 0.65,
+                    "description": "Présence minimale, 4-6 répliques, 0-1 relation"
+                },
+                "Boss/Antagoniste": {
+                    "intent": "archetype_assume",
+                    "level": "major",
+                    "dialogue_mode": "parle",
+                    "creativity": 0.80,
+                    "description": "Archétype assumé, profondeur maximale"
+                },
+                "Personnage mystérieux": {
+                    "intent": "mystere_non_resolu",
+                    "level": "standard",
+                    "dialogue_mode": "gestuel",
+                    "creativity": 0.85,
+                    "description": "Zones d'ombre, communication non-verbale"
+                },
+            }
         
         def apply_profile():
             """Applique un profil prédéfini automatiquement"""
@@ -377,7 +436,10 @@ def main():
                 profile = PROFILS[st.session_state.selected_profile]
                 st.session_state.intent = profile["intent"]
                 st.session_state.level = profile["level"]
-                st.session_state.dialogue_mode = profile["dialogue_mode"]
+                if domain == "Lieux":
+                    st.session_state.atmosphere = profile["atmosphere"]
+                else:
+                    st.session_state.dialogue_mode = profile["dialogue_mode"]
                 st.session_state.creativity = profile["creativity"]
                 st.session_state.random_seed += 1
         
@@ -408,50 +470,83 @@ def main():
         with col1:
             st.subheader("Paramètres Narratifs")
             
-            # Intention narrative
+            # Intention narrative (personnages) ou Fonction narrative (lieux)
             col_intent, col_intent_random = st.columns([4, 1])
             with col_intent_random:
                 st.write("")  # Spacer
                 st.write("")  # Spacer
                 st.button("🎲", key="random_intent", help="Valeur aléatoire", on_click=randomize_intent)
             with col_intent:
+                if domain == "Lieux":
+                    intent_label = "Fonction narrative"
+                    intent_help = "Rôle du lieu dans l'histoire"
+                else:
+                    intent_label = "Intention narrative"
+                    intent_help = "Orthogonal = profondeur ≠ rôle visible"
+                
                 intent = st.selectbox(
-                    "Intention narrative",
+                    intent_label,
                     intent_options,
                     index=intent_options.index(st.session_state.intent),
-                    help="Orthogonal = profondeur ≠ rôle visible",
+                    help=intent_help,
                     key=f"intent_select_{st.session_state.random_seed}"
                 )
             
-            # Niveau de détail
+            # Niveau de détail (personnages) ou Échelle (lieux)
             col_level, col_level_random = st.columns([4, 1])
             with col_level_random:
                 st.write("")  # Spacer
                 st.write("")  # Spacer
                 st.button("🎲", key="random_level", help="Valeur aléatoire", on_click=randomize_level)
             with col_level:
+                if domain == "Lieux":
+                    level_label = "Échelle spatiale"
+                    level_help = "Taille du lieu : point d'intérêt < site < secteur < district"
+                else:
+                    level_label = "Niveau de détail"
+                    level_help = "cameo: 4-6 répliques | standard: 8-10 | major: 10-12"
+                
                 level = st.selectbox(
-                    "Niveau de détail",
+                    level_label,
                     level_options,
                     index=level_options.index(st.session_state.level),
-                    help="cameo: 4-6 répliques | standard: 8-10 | major: 10-12",
+                    help=level_help,
                     key=f"level_select_{st.session_state.random_seed}"
                 )
             
-            # Mode de dialogue
-            col_dialogue, col_dialogue_random = st.columns([4, 1])
-            with col_dialogue_random:
-                st.write("")  # Spacer
-                st.write("")  # Spacer
-                st.button("🎲", key="random_dialogue", help="Valeur aléatoire", on_click=randomize_dialogue)
-            with col_dialogue:
-                dialogue_mode = st.selectbox(
-                    "Mode de dialogue",
-                    dialogue_options,
-                    index=dialogue_options.index(st.session_state.dialogue_mode),
-                    help="Comment le personnage communique",
-                    key=f"dialogue_select_{st.session_state.random_seed}"
-                )
+            # Mode de dialogue (Personnages) OU Atmosphère (Lieux)
+            if domain == "Lieux":
+                def randomize_atmosphere():
+                    st.session_state.atmosphere = random_different(atmosphere_options, st.session_state.atmosphere)
+                    st.session_state.random_seed += 1
+                
+                col_atmosphere, col_atmosphere_random = st.columns([4, 1])
+                with col_atmosphere_random:
+                    st.write("")  # Spacer
+                    st.write("")  # Spacer
+                    st.button("🎲", key="random_atmosphere", help="Valeur aléatoire", on_click=randomize_atmosphere)
+                with col_atmosphere:
+                    atmosphere = st.selectbox(
+                        "Atmosphère",
+                        atmosphere_options,
+                        index=atmosphere_options.index(st.session_state.atmosphere),
+                        help="Ambiance générale du lieu",
+                        key=f"atmosphere_select_{st.session_state.random_seed}"
+                    )
+            else:  # Personnages
+                col_dialogue, col_dialogue_random = st.columns([4, 1])
+                with col_dialogue_random:
+                    st.write("")  # Spacer
+                    st.write("")  # Spacer
+                    st.button("🎲", key="random_dialogue", help="Valeur aléatoire", on_click=randomize_dialogue)
+                with col_dialogue:
+                    dialogue_mode = st.selectbox(
+                        "Mode de dialogue",
+                        dialogue_options,
+                        index=dialogue_options.index(st.session_state.dialogue_mode),
+                        help="Comment le personnage communique",
+                        key=f"dialogue_select_{st.session_state.random_seed}"
+                    )
         
         with col2:
             st.subheader("Paramètres Techniques")
@@ -475,18 +570,32 @@ def main():
                     key=f"creativity_slider_{st.session_state.random_seed}"
                 )
             
-            st.info(f"""
-            **Configuration:**
-            - Intent: `{intent}`
-            - Niveau: `{level}`
-            - Dialogue: `{dialogue_mode}`
-            - Température: `{creativity}`
-            """)
+            # Configuration affichée selon le domaine
+            if domain == "Lieux":
+                st.info(f"""
+                **Configuration:**
+                - Intent: `{intent}`
+                - Échelle: `{level}`
+                - Atmosphère: `{atmosphere}`
+                - Température: `{creativity}`
+                """)
+            else:
+                st.info(f"""
+                **Configuration:**
+                - Intent: `{intent}`
+                - Niveau: `{level}`
+                - Dialogue: `{dialogue_mode}`
+                - Température: `{creativity}`
+                """)
         
         # Mettre à jour session state avec les valeurs choisies manuellement
         st.session_state.intent = intent
         st.session_state.level = level
-        st.session_state.dialogue_mode = dialogue_mode
+        if domain == "Lieux":
+            st.session_state.atmosphere = atmosphere
+            dialogue_mode = "none"  # Valeur par défaut pour lieux
+        else:
+            st.session_state.dialogue_mode = dialogue_mode
         st.session_state.creativity = creativity
         
         # Bouton de génération adapté au domaine
