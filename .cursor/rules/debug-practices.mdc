@@ -1,0 +1,183 @@
+---
+description: Bonnes pratiques pour le debug et l'exploration de code
+alwaysApply: true
+---
+
+# Debug & Exploration - Bonnes Pratiques
+
+## ❌ ANTI-PATTERN : Scripts jetables
+
+**NE JAMAIS faire :**
+```python
+# test_debug_truc.py créé juste pour debug
+# puis supprimé après exécution
+```
+
+**Problème :** Pollue le dépôt, crée du bruit dans git, pas reproductible.
+
+---
+
+## ✅ Méthodes recommandées
+
+### 1. REPL Python (préféré pour exploration interactive)
+
+**Cas d'usage :** Tester une fonction, explorer un objet, itérer rapidement
+
+```bash
+$ python
+>>> from agents.notion_relation_resolver import NotionRelationResolver
+>>> r = NotionRelationResolver()
+>>> r.calculate_similarity("strate i", "strate i - la peripherie")
+0.75
+>>> r.normalize_name("Le Léviathan")
+'leviathan'
+```
+
+**Avantages :**
+- Pas de fichier créé
+- Historique accessible (flèches haut/bas)
+- Résultats immédiats
+
+### 2. IPython (si installé, meilleur que python vanilla)
+
+```bash
+$ ipython
+In [1]: from agents.notion_relation_resolver import NotionRelationResolver
+In [2]: r = NotionRelationResolver()
+In [3]: r.fetch_entity_names("lieux")  # Auto-complétion, coloration syntaxe
+```
+
+### 3. Commandes inline (pour tests très courts)
+
+```bash
+python -c "from agents.notion_resolver import ...; print(test())"
+```
+
+**Cas d'usage :** Scripts one-liner, CI/CD, vérifications rapides
+
+### 4. Bloc `if __name__ == "__main__"` dans les modules
+
+**Le meilleur compromis pour tester un module en développement**
+
+```python
+# agents/notion_relation_resolver.py
+
+class NotionRelationResolver:
+    # ... code principal ...
+    pass
+
+if __name__ == "__main__":
+    """Tests rapides du module (non committé dans tests/)"""
+    import sys
+    sys.stdout.reconfigure(encoding='utf-8')  # Windows
+    
+    # Test 1
+    print("=== Test fetch ===")
+    resolver = NotionRelationResolver()
+    lieux = resolver.fetch_entity_names("lieux")
+    print(f"Fetched {len(lieux)} lieux")
+    
+    # Test 2
+    print("\n=== Test fuzzy matching ===")
+    match = resolver.find_match("Léviathan", "lieux")
+    if match:
+        print(f"✅ Match: {match.matched_name} ({match.confidence:.2f})")
+    else:
+        print("❌ No match")
+```
+
+**Exécution :**
+```bash
+python agents/notion_relation_resolver.py
+```
+
+**Avantages :**
+- Code de test **avec** le module (cohésion)
+- Pas de fichier séparé à créer/supprimer
+- Docummente les usages du module
+- Reproductible (commité avec le code)
+
+---
+
+## 🧪 Tests pérennes vs. Exploration
+
+### Tests pérennes → `tests/`
+- Documentent le comportement attendu
+- Exécutés en CI/CD
+- Protègent contre les régressions
+- **Restent dans le dépôt**
+
+**Exemple :** `tests/test_relation_principale.py`
+
+### Exploration/Debug → REPL ou `if __name__`
+- Itérations rapides
+- Hypothèses à vérifier
+- Pas de régression à couvrir
+- **Pas de fichiers jetables**
+
+---
+
+## 📋 Checklist avant de "tester quelque chose"
+
+1. **C'est une exploration ?** → REPL / IPython
+2. **C'est un test unitaire d'une fonction ?** → `if __name__` dans le module
+3. **C'est un test de comportement système ?** → `tests/test_*.py`
+4. **C'est un script d'usage unique ?** → Évaluer si vraiment nécessaire
+
+**Jamais :** Créer `test_truc.py`, l'exécuter, puis le supprimer.
+
+---
+
+## Exemples pratiques
+
+### Debugger un problème de fuzzy matching
+
+**❌ Mauvais :**
+```bash
+# Créer tests/debug_fuzzy.py
+python tests/debug_fuzzy.py
+# Supprimer tests/debug_fuzzy.py
+```
+
+**✅ Bon :**
+```bash
+$ python
+>>> from agents.notion_relation_resolver import NotionRelationResolver
+>>> r = NotionRelationResolver()
+>>> r.calculate_similarity("strate i", "strate i - la peripherie caudale")
+0.75
+# Tester plusieurs valeurs, itérer
+```
+
+### Vérifier la configuration d'une API
+
+**❌ Mauvais :**
+```bash
+# Créer check_notion_api.py
+python check_notion_api.py
+rm check_notion_api.py
+```
+
+**✅ Bon :**
+```python
+# Dans agents/notion_relation_resolver.py
+if __name__ == "__main__":
+    # Vérifier la config API
+    resolver = NotionRelationResolver()
+    print(f"Token: {'✓' if resolver.notion_token else '✗'}")
+    print(f"Version: {resolver.notion_version}")
+```
+
+---
+
+## 🎯 Principe général
+
+> **Si tu dois créer un fichier juste pour l'exécuter une fois,  
+> demande-toi pourquoi tu ne peux pas le faire dans un REPL.**
+
+Les seules exceptions :
+- Notebooks Jupyter (exploration de données complexe)
+- Scripts d'administration (migrations DB, etc.) → dossier `scripts/`
+- Benchmarks reproductibles → `benchmarks/`
+
+**Jamais** de fichiers éphémères dans `tests/` ou à la racine.

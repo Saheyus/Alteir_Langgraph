@@ -65,6 +65,9 @@ logs/
 .DS_Store
 Thumbs.db
 
+# Scratch directory for one-off debug scripts
+scratch/
+
 # Test coverage
 htmlcov/
 .coverage

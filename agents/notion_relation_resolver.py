@@ -52,13 +52,15 @@ class NotionRelationResolver:
         self.notion_token = os.getenv("NOTION_TOKEN")
         self.notion_version = "2022-06-28"
         
-        # Mapping domaines → Database IDs (sandbox)
+        # Mapping domaines → Database IDs (PRINCIPALES pour relations)
+        # Note: Les entités créées vont dans les sandbox,
+        # mais peuvent référencer les bases principales
         self.database_ids = {
-            "personnages": "2806e4d21b458012a744d8d6723c8be1",
-            "lieux": "2806e4d21b4580969f1cd7463a4c889c",
-            # Futures extensions:
-            # "communautes": "...",
-            # "objets": "...",
+            "personnages": "1886e4d21b4581a29340f77f5f2e5885",  # Personnages (principale)
+            "lieux": "1886e4d21b4581eda022ea4e0f1aba5f",        # Lieux (principale)
+            "communautes": "1886e4d21b4581dea4f4d01beb5e1be2",  # Communautés (principale)
+            "especes": "1886e4d21b4581e9a768df06185c1aea",      # Espèces (principale)
+            "objets": "1886e4d21b4581098024c61acd801f52",       # Objets (principale)
         }
     
     def normalize_name(self, name: str) -> str:
@@ -172,8 +174,43 @@ class NotionRelationResolver:
         return entities
     
     def calculate_similarity(self, str1: str, str2: str) -> float:
-        """Calcule la similarité entre deux chaînes (0-1)"""
-        return SequenceMatcher(None, str1, str2).ratio()
+        """
+        Calcule la similarité entre deux chaînes (0-1)
+        
+        Combine plusieurs méthodes :
+        - Ratio global (pour correspondances exactes)
+        - Partial ratio (pour substrings)
+        - Début de chaîne (pour préfixes)
+        """
+        # 1. Ratio global classique
+        global_ratio = SequenceMatcher(None, str1, str2).ratio()
+        
+        # 2. Partial matching : vérifier si l'un est dans l'autre
+        shorter, longer = (str1, str2) if len(str1) < len(str2) else (str2, str1)
+        
+        if shorter in longer:
+            # Substring exacte : score élevé basé sur la proportion
+            base_ratio = len(shorter) / len(longer)
+            
+            # Boost important si c'est au début (préfixe)
+            if longer.startswith(shorter):
+                # Préfixe exact : score minimum 0.75 (très bon match)
+                partial_ratio = max(0.75, base_ratio * 2)
+            else:
+                # Substring au milieu/fin : score minimum 0.60
+                partial_ratio = max(0.60, base_ratio * 1.5)
+        else:
+            # Pas de substring exacte : utiliser le ratio des mots communs
+            words1 = set(str1.split())
+            words2 = set(str2.split())
+            if words1 and words2:
+                common_words = words1.intersection(words2)
+                partial_ratio = len(common_words) / max(len(words1), len(words2))
+            else:
+                partial_ratio = 0.0
+        
+        # 3. Prendre le meilleur score
+        return max(global_ratio, partial_ratio)
     
     def find_match(self, name: str, domain: str) -> Optional[EntityMatch]:
         """
