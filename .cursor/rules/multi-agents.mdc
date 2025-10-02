@@ -109,6 +109,29 @@ app = graph.compile()
 - **JSON** (`outputs/*.json`): État complet
 - **Markdown** (`outputs/*.md`): Contenu lisible
 
+## 🖥️ Lancement Interfaces
+
+### Streamlit (Recommandé)
+```bash
+# IMPORTANT: Utiliser chemin ABSOLU sur Windows
+python -m streamlit run "F:\Projets\Langgraph Alteir\app_streamlit.py"
+
+# ❌ NE PAS faire (ne trouve pas le fichier en background)
+streamlit run app_streamlit.py
+```
+
+L'app s'ouvre automatiquement sur **http://localhost:8501**
+
+### CLI
+```bash
+python app_cli.py
+```
+
+### Demo Rich
+```bash
+python demo_workflow.py
+```
+
 ## 📝 Conventions Code
 
 ### Nommage
