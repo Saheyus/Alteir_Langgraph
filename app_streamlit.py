@@ -217,7 +217,7 @@ def main():
         st.metric("Générations", nb_files)
     
     # Tabs
-    tab1, tab2, tab3 = st.tabs(["✨ Créer", "📂 Résultats", "ℹ️ À propos"])
+    tab1, tab2, tab3, tab4 = st.tabs(["✨ Créer", "📂 Résultats", "🕸️ Graphe", "ℹ️ À propos"])
     
     # TAB 1: Création
     with tab1:
@@ -316,7 +316,7 @@ def main():
         
         # Initialiser max_tokens
         if 'max_tokens' not in st.session_state:
-            st.session_state.max_tokens = MODELS[selected_model].get("max_tokens", 2000)
+            st.session_state.max_tokens = 5000  # Valeur par défaut
         
         # Mémoriser le dernier domaine
         st.session_state.last_domain = domain
@@ -615,10 +615,10 @@ def main():
             max_tokens = st.slider(
                 "Max tokens (sortie)",
                 min_value=1000,
-                max_value=8000,
+                max_value=30000,
                 value=st.session_state.max_tokens,
                 step=1000,
-                help="Limite de tokens pour la réponse (1000-8000). ⚠️ GPT-5 utilise des tokens pour le reasoning !",
+                help="Limite de tokens pour la réponse (1000-30000). ⚠️ GPT-5 utilise des tokens pour le reasoning !",
                 key=f"max_tokens_slider_{st.session_state.random_seed}"
             )
             
@@ -687,8 +687,64 @@ def main():
         
         show_results()
     
-    # TAB 3: À propos
+    # TAB 3: Graphe de relations
     with tab3:
+        st.header("🕸️ Graphe de Relations")
+        
+        st.info("""
+        📊 **Visualisation des relations entre entités**
+        
+        Cette fonctionnalité permet de visualiser les liens entre personnages, lieux, communautés et objets dans l'univers Alteir.
+        """)
+        
+        # Sélection du type de graphe
+        graph_type = st.selectbox(
+            "Type de graphe",
+            ["Personnages", "Lieux", "Tout l'univers"],
+            help="Choisissez quelles entités afficher"
+        )
+        
+        # Filtres
+        col_filter1, col_filter2 = st.columns(2)
+        with col_filter1:
+            show_communities = st.checkbox("Communautés", value=True)
+            show_species = st.checkbox("Espèces", value=True)
+        with col_filter2:
+            show_locations = st.checkbox("Lieux", value=True)
+            show_objects = st.checkbox("Objets", value=False)
+        
+        st.divider()
+        
+        # Placeholder pour le graphe
+        st.info("🚧 **Fonctionnalité en développement**")
+        st.markdown("""
+        Le graphe de relations permettra de :
+        - Visualiser les connexions entre entités
+        - Explorer les réseaux de personnages
+        - Identifier les hubs et points clés
+        - Détecter les incohérences de relations
+        
+        **Implémentation prévue** : NetworkX + Plotly pour visualisation interactive
+        """)
+        
+        # Exemple de données de graphe (mockup)
+        if st.checkbox("Voir exemple de structure de données"):
+            st.code("""
+{
+  "nodes": [
+    {"id": "personnage_1", "label": "Norrik", "type": "personnage"},
+    {"id": "lieu_1", "label": "Bibliothèque des Murmures", "type": "lieu"},
+    {"id": "communaute_1", "label": "Les Cartographes", "type": "communaute"}
+  ],
+  "edges": [
+    {"source": "personnage_1", "target": "lieu_1", "type": "vit_a"},
+    {"source": "personnage_1", "target": "communaute_1", "type": "membre_de"}
+  ]
+}
+            """, language="json")
+    
+    # TAB 4: À propos
+    with tab4:
         st.header("À propos")
         
         st.markdown("""
@@ -939,14 +995,38 @@ def generate_content(brief, intent, level, dialogue_mode, creativity, reasoning_
         if result['review_issues']:
             with st.expander(f"⚠️ Problèmes identifiés ({len(result['review_issues'])})"):
                 for issue in result['review_issues']:
-                    severity_icon = "🔴" if issue['severity'] == 'critical' else "🟡"
-                    st.write(f"{severity_icon} **{issue['description']}**")
+                    severity = issue['severity']
+                    if severity == 'critical':
+                        severity_icon = "🔴"
+                        box_color = "#f8d7da"
+                        border_color = "#dc3545"
+                    elif severity == 'major':
+                        severity_icon = "🟠"
+                        box_color = "#fff3cd"
+                        border_color = "#ffc107"
+                    else:
+                        severity_icon = "🟡"
+                        box_color = "#d1ecf1"
+                        border_color = "#17a2b8"
+                    
+                    st.markdown(f"""
+                    <div style="background-color: {box_color}; border-left: 4px solid {border_color}; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
+                        {severity_icon} <b>{issue.get('category', 'General').capitalize()}</b><br>
+                        {issue['description']}
+                        {f"<br><i>💡 Suggestion: {issue['suggestion']}</i>" if issue.get('suggestion') else ""}
+                    </div>
+                    """, unsafe_allow_html=True)
         
         # Corrections
         if result['corrections']:
             with st.expander(f"✏️ Corrections ({len(result['corrections'])})"):
                 for corr in result['corrections']:
-                    st.write(f"**{corr['type']}**: {corr['original']} → {corr['corrected']}")
+                    st.markdown(f"""
+                    <div style="background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
+                        <b>{corr['type']}</b>: <code>{corr['original']}</code> → <code>{corr['corrected']}</code>
+                        {f"<br><i>{corr['explanation']}</i>" if corr.get('explanation') else ""}
+                    </div>
+                    """, unsafe_allow_html=True)
         
         # Fichiers et export
         col_files, col_export = st.columns([2, 1])
@@ -1208,13 +1288,37 @@ def show_results():
         if data.get('review_issues'):
             with st.expander(f"⚠️ Problèmes identifiés ({len(data['review_issues'])})"):
                 for issue in data['review_issues']:
-                    severity_icon = "🔴" if issue.get('severity') == 'critical' else "🟡"
-                    st.write(f"{severity_icon} **{issue.get('description', 'N/A')}**")
+                    severity = issue.get('severity', 'minor')
+                    if severity == 'critical':
+                        severity_icon = "🔴"
+                        box_color = "#f8d7da"
+                        border_color = "#dc3545"
+                    elif severity == 'major':
+                        severity_icon = "🟠"
+                        box_color = "#fff3cd"
+                        border_color = "#ffc107"
+                    else:
+                        severity_icon = "🟡"
+                        box_color = "#d1ecf1"
+                        border_color = "#17a2b8"
+                    
+                    st.markdown(f"""
+                    <div style="background-color: {box_color}; border-left: 4px solid {border_color}; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
+                        {severity_icon} <b>{issue.get('category', 'General').capitalize()}</b><br>
+                        {issue.get('description', 'N/A')}
+                        {f"<br><i>💡 Suggestion: {issue['suggestion']}</i>" if issue.get('suggestion') else ""}
+                    </div>
+                    """, unsafe_allow_html=True)
         
         if data.get('corrections'):
             with st.expander(f"✏️ Corrections ({len(data['corrections'])})"):
                 for corr in data['corrections']:
-                    st.write(f"**{corr.get('type', 'N/A')}**: {corr.get('original', '')} → {corr.get('corrected', '')}")
+                    st.markdown(f"""
+                    <div style="background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
+                        <b>{corr.get('type', 'N/A')}</b>: <code>{corr.get('original', '')}</code> → <code>{corr.get('corrected', '')}</code>
+                        {f"<br><i>{corr['explanation']}</i>" if corr.get('explanation') else ""}
+                    </div>
+                    """, unsafe_allow_html=True)
         
         # Métadonnées
         with st.expander("📊 Métadonnées"):

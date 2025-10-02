@@ -281,10 +281,19 @@ Termine par un score de cohérence globale (0.0 à 1.0) et 3-5 suggestions d'am�
             # Détecter le score
             if 'score' in line.lower() and any(c.isdigit() for c in line):
                 try:
-                    if '/' in line:
+                    # Format avec deux points : "Score ... : 0.65"
+                    if ':' in line:
+                        match = re.search(r':\s*(\d*\.?\d+)\s*$', line)
+                        if match:
+                            score_val = float(match.group(1))
+                            # Si > 1, c'est probablement sur 10
+                            score = score_val / 10 if score_val > 1 else score_val
+                    # Format avec fraction : "8/10"
+                    elif '/' in line:
                         match = re.search(r'(\d+)/10', line)
                         if match:
                             score = float(match.group(1)) / 10
+                    # Format décimal simple : "0.65"
                     else:
                         match = re.search(r'0?\.\d+', line)
                         if match:
