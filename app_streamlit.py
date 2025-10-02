@@ -140,7 +140,50 @@ def main():
         st.header("⚙️ Configuration")
         
         st.subheader("Modèle LLM")
-        st.info("**GPT-5-nano** (OpenAI)")
+        
+        # Modèles disponibles avec leurs specs
+        MODELS = {
+            "GPT-5": {
+                "name": "gpt-5",
+                "provider": "OpenAI",
+                "description": "Modèle le plus puissant, raisonnement approfondi",
+                "max_tokens": 4000,
+                "icon": "🚀"
+            },
+            "GPT-5-mini": {
+                "name": "gpt-5-mini",
+                "provider": "OpenAI",
+                "description": "Équilibré entre performance et coût",
+                "max_tokens": 3000,
+                "icon": "⚡"
+            },
+            "GPT-5-nano": {
+                "name": "gpt-5-nano",
+                "provider": "OpenAI",
+                "description": "Rapide et économique, idéal pour itérations",
+                "max_tokens": 2000,
+                "icon": "✨"
+            },
+            "GPT-4o-mini": {
+                "name": "gpt-4o-mini",
+                "provider": "OpenAI",
+                "description": "Modèle de fallback stable",
+                "max_tokens": 2000,
+                "icon": "🔄"
+            }
+        }
+        
+        selected_model = st.selectbox(
+            "Modèle",
+            options=list(MODELS.keys()),
+            index=2,  # GPT-5-nano par défaut
+            format_func=lambda x: f"{MODELS[x]['icon']} {x}",
+            help="Choisir le modèle LLM pour la génération"
+        )
+        
+        # Afficher les détails du modèle sélectionné
+        model_info = MODELS[selected_model]
+        st.caption(f"**{model_info['provider']}** • {model_info['description']}")
         
         st.subheader("Domaine")
         domain = st.selectbox("Domaine", ["Personnages"], index=0)
@@ -411,7 +454,7 @@ def main():
             if not brief:
                 st.error("⚠️ Veuillez fournir une description du personnage")
             else:
-                generate_character(brief, intent, level, dialogue_mode, creativity)
+                generate_character(brief, intent, level, dialogue_mode, creativity, selected_model, MODELS[selected_model])
     
     # TAB 2: Résultats
     with tab2:
@@ -451,11 +494,35 @@ def main():
         - Scores de qualité (cohérence, complétude, qualité)
         """)
 
-def generate_character(brief, intent, level, dialogue_mode, creativity):
+def create_llm(model_name: str, model_config: dict, creativity: float):
+    """Crée une instance LLM selon le modèle choisi"""
+    from langchain_openai import ChatOpenAI
+    
+    # Configuration commune
+    llm_config = {
+        "model": model_config["name"],
+        "temperature": creativity,
+        "max_tokens": model_config["max_tokens"],
+    }
+    
+    # Ajout des paramètres spécifiques GPT-5 si applicable
+    if "gpt-5" in model_config["name"]:
+        llm_config["use_responses_api"] = True
+        llm_config["extra_body"] = {
+            "reasoning": {"effort": "minimal"},
+            "max_output_tokens": model_config["max_tokens"],
+        }
+    
+    return ChatOpenAI(**llm_config)
+
+def generate_character(brief, intent, level, dialogue_mode, creativity, model_name, model_config):
     """Génère un personnage"""
     
     # Lazy load des dépendances lourdes
     ContentWorkflow, WriterConfig, PERSONNAGES_CONFIG = load_workflow_dependencies()
+    
+    # Créer le LLM selon le modèle choisi
+    llm = create_llm(model_name, model_config, creativity)
     
     # Configuration
     writer_config = WriterConfig(
@@ -465,8 +532,8 @@ def generate_character(brief, intent, level, dialogue_mode, creativity):
         creativity=creativity
     )
     
-    # Workflow
-    workflow = ContentWorkflow(PERSONNAGES_CONFIG)
+    # Workflow avec le LLM choisi
+    workflow = ContentWorkflow(PERSONNAGES_CONFIG, llm=llm)
     
     # Progress bar détaillée avec étapes
     progress_container = st.container()
@@ -593,11 +660,15 @@ def generate_character(brief, intent, level, dialogue_mode, creativity):
         progress_bar.progress(100)
         time_estimate.text("")
         
+        # Ajouter les métadonnées du modèle au résultat
+        result['model_used'] = model_name
+        result['model_config'] = model_config
+        
         # Sauvegarder
         json_file, md_file = workflow.save_results(result)
         
         # Afficher résultats
-        st.success("✅ Personnage généré avec succès !")
+        st.success(f"✅ Personnage généré avec succès ! (Modèle: {model_config['icon']} {model_name})")
         
         # Métriques
         col1, col2, col3 = st.columns(3)
@@ -862,6 +933,12 @@ def show_results():
             st.metric("Complétude", f"{data['completeness_score']:.2f}")
         with col3:
             st.metric("Qualité", f"{data['quality_score']:.2f}")
+        
+        # Modèle utilisé (si disponible)
+        if data.get('model_used'):
+            model_config = data.get('model_config', {})
+            icon = model_config.get('icon', '🤖')
+            st.info(f"{icon} **Modèle utilisé :** {data['model_used']}")
         
         # Statut
         if data['ready_for_publication']:
