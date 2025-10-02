@@ -1215,6 +1215,98 @@ def export_to_notion(result):
                     sprint_clean = sprint.split(';')[0].strip()[:100]
                     notion_properties["Sprint"] = {"select": {"name": sprint_clean}}
             
+            # 6.5 RÉSOUDRE LES RELATIONS (Fuzzy matching)
+            from agents.notion_relation_resolver import NotionRelationResolver
+            
+            resolver = NotionRelationResolver(fuzzy_threshold=0.80)
+            relation_stats = {"resolved": 0, "unresolved": 0, "details": []}
+            
+            # Propriétés relation selon le domaine
+            if domain == 'personnages':
+                # Communautés
+                if communautes_raw := extract_field("Communautés", content):
+                    import re as re_module
+                    communautes_names = re_module.split(r'[,;]\s*', communautes_raw)
+                    communautes_names = [n.strip() for n in communautes_names if n.strip()]
+                    
+                    # TODO: Résoudre vers les vraies DBs quand elles seront configurées
+                    # Pour l'instant, skip car pas de DB communautés en sandbox
+                    relation_stats["details"].append({
+                        "field": "Communautés",
+                        "values": communautes_names,
+                        "status": "skipped (no DB configured)"
+                    })
+                
+                # Lieux de vie
+                if lieux_raw := extract_field("Lieux de vie", content):
+                    import re as re_module
+                    lieux_names = re_module.split(r'[,;]\s*', lieux_raw)
+                    lieux_names = [n.strip() for n in lieux_names if n.strip()]
+                    
+                    lieux_resolved = []
+                    lieux_unresolved = []
+                    
+                    for lieu_name in lieux_names:
+                        match = resolver.find_match(lieu_name, "lieux")
+                        if match:
+                            lieux_resolved.append({
+                                "id": match.notion_id,
+                                "original": lieu_name,
+                                "matched": match.matched_name,
+                                "confidence": match.confidence
+                            })
+                        else:
+                            lieux_unresolved.append(lieu_name)
+                    
+                    # Ajouter à Notion si des matches trouvés
+                    if lieux_resolved:
+                        notion_properties["Lieux de vie"] = {
+                            "relation": [{"id": lr["id"]} for lr in lieux_resolved]
+                        }
+                        relation_stats["resolved"] += len(lieux_resolved)
+                    
+                    relation_stats["unresolved"] += len(lieux_unresolved)
+                    relation_stats["details"].append({
+                        "field": "Lieux de vie",
+                        "resolved": lieux_resolved,
+                        "unresolved": lieux_unresolved
+                    })
+            
+            elif domain == 'lieux':
+                # Zones limitrophes (lieux → lieux)
+                if zones_raw := extract_field("Zones limitrophes", content):
+                    import re as re_module
+                    zones_names = re_module.split(r'[,;]\s*', zones_raw)
+                    zones_names = [n.strip() for n in zones_names if n.strip()]
+                    
+                    zones_resolved = []
+                    zones_unresolved = []
+                    
+                    for zone_name in zones_names:
+                        match = resolver.find_match(zone_name, "lieux")
+                        if match:
+                            zones_resolved.append({
+                                "id": match.notion_id,
+                                "original": zone_name,
+                                "matched": match.matched_name,
+                                "confidence": match.confidence
+                            })
+                        else:
+                            zones_unresolved.append(zone_name)
+                    
+                    if zones_resolved:
+                        notion_properties["Zones limitrophes"] = {
+                            "relation": [{"id": zr["id"]} for zr in zones_resolved]
+                        }
+                        relation_stats["resolved"] += len(zones_resolved)
+                    
+                    relation_stats["unresolved"] += len(zones_unresolved)
+                    relation_stats["details"].append({
+                        "field": "Zones limitrophes",
+                        "resolved": zones_resolved,
+                        "unresolved": zones_unresolved
+                    })
+            
             # 7. Créer la page
             headers = {
                 "Authorization": f"Bearer {os.getenv('NOTION_TOKEN')}",
@@ -1325,7 +1417,14 @@ def export_to_notion(result):
                     json=patch_payload
                 )
             
-            # 9. Message de succès
+            # 9. Message de succès avec stats relations
+            relations_summary = ""
+            if relation_stats["resolved"] > 0 or relation_stats["unresolved"] > 0:
+                relations_summary = f"""
+                    <br>🔗 <b>Relations :</b> {relation_stats['resolved']} résolues"""
+                if relation_stats["unresolved"] > 0:
+                    relations_summary += f""", {relation_stats['unresolved']} non trouvées"""
+            
             st.markdown(f"""
             <div style="background-color: #f0f9ff; border-left: 5px solid #0ea5e9; padding: 1.25rem; margin: 1rem 0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <div style="color: #0c4a6e; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">
@@ -1334,10 +1433,33 @@ def export_to_notion(result):
                 <div style="color: #164e63; line-height: 1.8;">
                     📄 <b>Lien :</b> <a href="{page_url}" target="_blank" style="color: #0284c7; text-decoration: none; font-weight: 500;">{nom}</a><br>
                     📊 <b>Base :</b> {domain_label}s (1) - Bac à sable<br>
-                    🆔 <b>ID :</b> <code style="background-color: #e0f2fe; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem;">{page_id}</code>
+                    🆔 <b>ID :</b> <code style="background-color: #e0f2fe; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem;">{page_id}</code>{relations_summary}
                 </div>
             </div>
             """, unsafe_allow_html=True)
+            
+            # Afficher détails des relations
+            if relation_stats["details"]:
+                with st.expander("🔍 Détails résolution relations"):
+                    for detail in relation_stats["details"]:
+                        field_name = detail["field"]
+                        st.markdown(f"**{field_name}:**")
+                        
+                        if "resolved" in detail:
+                            if detail["resolved"]:
+                                st.success(f"✅ {len(detail['resolved'])} correspondance(s) trouvée(s)")
+                                for r in detail["resolved"]:
+                                    confidence_pct = int(r["confidence"] * 100)
+                                    match_icon = "🎯" if confidence_pct == 100 else "🔍"
+                                    st.markdown(f"  {match_icon} `{r['original']}` → **{r['matched']}** ({confidence_pct}%)")
+                            
+                            if detail["unresolved"]:
+                                st.warning(f"⚠️ {len(detail['unresolved'])} non trouvé(s): {', '.join(detail['unresolved'])}")
+                        
+                        elif "status" in detail:
+                            st.info(f"ℹ️ {detail['status']}: {', '.join(detail['values'])}")
+                        
+                        st.divider()
             
             with st.expander("📋 Prochaines étapes"):
                 st.markdown(f"""
