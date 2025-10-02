@@ -212,7 +212,11 @@ Produis le contenu DIRECTEMENT dans cette structure, sans apartés méthodologiq
     
     def _build_template_section(self) -> str:
         """Construit la description de la structure attendue"""
-        # TODO: Améliorer avec des instructions spécifiques au template
+        # Utiliser le template narratif complet s'il existe
+        if self.domain_config.template:
+            return self.domain_config.template
+        
+        # Sinon, fallback sur la liste des champs
         fields = self.domain_config.get_template_fields()
         required = self.domain_config.get_required_fields()
         
