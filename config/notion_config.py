@@ -7,18 +7,37 @@ from dataclasses import dataclass
 
 @dataclass
 class NotionDatabase:
-    """Configuration d'une base de données Notion"""
+    """Configuration d'une base de données Notion (API 2025-09-03)"""
     id: str
     name: str
     read_access: bool = True
     write_access: bool = False
     description: str = ""
+    # Support des bases multisources
+    data_sources: List[str] = None  # IDs des sources de données
+    
+    def __post_init__(self):
+        if self.data_sources is None:
+            self.data_sources = []
 
 class NotionConfig:
     """Configuration centralisée pour l'accès Notion"""
     
     # Token d'intégration (à définir dans .env)
     NOTION_TOKEN = os.getenv("NOTION_TOKEN", "")
+    
+    # Version de l'API Notion (mise à jour 2025-09-03)
+    API_VERSION = "2025-09-03"
+    
+    # Headers pour les requêtes API
+    @classmethod
+    def get_headers(cls) -> Dict[str, str]:
+        """Retourne les headers pour les requêtes API Notion"""
+        return {
+            "Authorization": f"Bearer {cls.NOTION_TOKEN}",
+            "Notion-Version": cls.API_VERSION,
+            "Content-Type": "application/json"
+        }
     
     # Bases de données principales (lecture seule pour commencer)
     DATABASES: Dict[str, NotionDatabase] = {
@@ -99,7 +118,28 @@ class NotionConfig:
         """Retourne un résumé de la configuration"""
         readable = len(cls.get_readable_databases())
         writable = len(cls.get_writable_databases())
-        return f"Notion Config: {readable} bases en lecture, {writable} bases en écriture"
+        return f"Notion Config (API {cls.API_VERSION}): {readable} bases en lecture, {writable} bases en écriture"
+    
+    @classmethod
+    def get_data_sources_for_database(cls, database_name: str) -> List[str]:
+        """Retourne les sources de données pour une base donnée"""
+        db = cls.get_database_by_name(database_name)
+        if db:
+            return db.data_sources
+        return []
+    
+    @classmethod
+    def add_data_source(cls, database_name: str, data_source_id: str):
+        """Ajoute une source de données à une base"""
+        db = cls.get_database_by_name(database_name)
+        if db and data_source_id not in db.data_sources:
+            db.data_sources.append(data_source_id)
+    
+    @classmethod
+    def is_multisource_database(cls, database_name: str) -> bool:
+        """Vérifie si une base a plusieurs sources de données"""
+        db = cls.get_database_by_name(database_name)
+        return db and len(db.data_sources) > 1
 
 # Configuration des agents par type de contenu
 AGENT_CONTENT_MAPPING = {

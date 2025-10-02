@@ -1,7 +1,7 @@
-# Configuration MCP Notion - Guide Complet
+# Configuration MCP Notion - Guide Complet (API 2025-09-03)
 
 ## 🎯 Objectif
-Configurer l'accès sécurisé à Notion pour le système multi-agents, avec lecture globale et écriture restreinte.
+Configurer l'accès sécurisé à Notion pour le système multi-agents, avec lecture globale et écriture restreinte, en utilisant la nouvelle API Notion 2025-09-03 avec support des bases de données multisources.
 
 ## 📋 Étapes de Configuration
 
@@ -14,6 +14,7 @@ Configurer l'accès sécurisé à Notion pour le système multi-agents, avec lec
    - **Nom** : `GDD Multi-Agents Alteir`
    - **Description** : `Système multi-agents pour écriture/relecture du Game Design Document`
    - **Logo** : Optionnel (peut être ajouté plus tard)
+   - **⚠️ IMPORTANT** : Utiliser la version API `2025-09-03` pour le support des bases multisources
 
 ### 2. Configurer les Permissions
 
@@ -39,7 +40,15 @@ Ajouter chaque base avec les permissions appropriées :
 | Objets | `1886e4d21b4581098024c61acd801f52` | **Read** | Lecture des objets |
 | Chronologie | `22c6e4d21b458066b17cc2af998de0b8` | **Read** | Lecture des événements |
 
-### 3. Créer une Base de Test
+### 3. Gérer les Bases Multisources (API 2025-09-03)
+
+**Nouveauté** : Les bases de données peuvent maintenant avoir plusieurs sources de données.
+
+1. **Identifier les sources** : Chaque base peut avoir plusieurs sources
+2. **Récupérer les data_source_url** : Utiliser `mcp_notionMCP_notion-fetch` pour obtenir les sources
+3. **Configurer les permissions** : Par source de données si nécessaire
+
+### 4. Créer une Base de Test
 
 **Important** : Créer une base dédiée pour les tests d'écriture.
 
@@ -48,14 +57,15 @@ Ajouter chaque base avec les permissions appropriées :
 3. **Structure** : Copier la structure d'une base existante (ex: Personnages)
 4. **Permissions** : Donner "Full access" à l'intégration
 5. **Noter l'ID** : Copier l'ID de la base (visible dans l'URL)
+6. **Récupérer les sources** : Noter les `data_source_url` pour la configuration
 
-### 4. Récupérer le Token
+### 5. Récupérer le Token
 
 1. **Dans l'intégration** : Aller dans "Secrets"
 2. **Copier le token** : `secret_...`
 3. **⚠️ Important** : Garder ce token secret !
 
-### 5. Configuration Locale
+### 6. Configuration Locale
 
 1. **Copier le fichier d'exemple** :
    ```bash
@@ -71,6 +81,7 @@ Ajouter chaque base avec les permissions appropriées :
 3. **Mettre à jour la config** :
    - Éditer `config/notion_config.py`
    - Remplacer l'ID de la base "tests" par l'ID réel
+   - Ajouter les `data_source_url` pour les bases multisources
 
 ## 🔒 Sécurité
 
