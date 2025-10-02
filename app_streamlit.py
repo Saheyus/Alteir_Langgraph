@@ -1199,6 +1199,37 @@ def export_to_notion(result):
                         notion_properties["Âge"] = {"number": age}
                     except:
                         pass
+                
+                # Axe idéologique (select)
+                if axe := extract_field("Axe idéologique", content):
+                    # Prendre le premier si plusieurs
+                    axe_clean = axe.split(',')[0].split(';')[0].strip()
+                    notion_properties["Axe idéologique"] = {"select": {"name": axe_clean}}
+                
+                # Archétype littéraire (multi_select)
+                if archetype_raw := extract_field("Archétype littéraire", content):
+                    # Split par virgule ou point-virgule
+                    archetypes = [a.strip() for a in re.split(r'[,;]\s*', archetype_raw) if a.strip()]
+                    if archetypes:
+                        notion_properties["Archétype littéraire"] = {
+                            "multi_select": [{"name": arch} for arch in archetypes]
+                        }
+                
+                # Qualités (multi_select)
+                if qualites_raw := extract_field("Qualités", content):
+                    qualites = [q.strip() for q in re.split(r'[,;]\s*', qualites_raw) if q.strip()]
+                    if qualites:
+                        notion_properties["Qualités"] = {
+                            "multi_select": [{"name": qual} for qual in qualites]
+                        }
+                
+                # Défauts (multi_select)
+                if defauts_raw := extract_field("Défauts", content):
+                    defauts = [d.strip() for d in re.split(r'[,;]\s*', defauts_raw) if d.strip()]
+                    if defauts:
+                        notion_properties["Défauts"] = {
+                            "multi_select": [{"name": def_} for def_ in defauts]
+                        }
             
             elif domain == 'lieux':
                 # Extraire propriétés lieux
@@ -1223,19 +1254,72 @@ def export_to_notion(result):
             
             # Propriétés relation selon le domaine
             if domain == 'personnages':
-                # Communautés
+                # Espèce (relation - 1 max)
+                if espece_raw := extract_field("Espèce", content):
+                    # Ne prendre que le premier nom si plusieurs
+                    espece_name = espece_raw.split(',')[0].split(';')[0].strip()
+                    
+                    match = resolver.find_match(espece_name, "especes")
+                    if match:
+                        # Notion veut les IDs sans tirets pour les relations
+                        notion_properties["Espèce"] = {
+                            "relation": [{"id": match.notion_id.replace("-", "")}]
+                        }
+                        relation_stats["resolved"] += 1
+                        relation_stats["details"].append({
+                            "field": "Espèce",
+                            "resolved": [{
+                                "id": match.notion_id,
+                                "original": espece_name,
+                                "matched": match.matched_name,
+                                "confidence": match.confidence
+                            }],
+                            "unresolved": []
+                        })
+                    else:
+                        relation_stats["unresolved"] += 1
+                        relation_stats["details"].append({
+                            "field": "Espèce",
+                            "resolved": [],
+                            "unresolved": [espece_name]
+                        })
+                
+                # Communautés (relation multiple)
                 if communautes_raw := extract_field("Communautés", content):
                     import re as re_module
                     communautes_names = re_module.split(r'[,;]\s*', communautes_raw)
                     communautes_names = [n.strip() for n in communautes_names if n.strip()]
                     
-                    # TODO: Résoudre vers les vraies DBs quand elles seront configurées
-                    # Pour l'instant, skip car pas de DB communautés en sandbox
-                    relation_stats["details"].append({
-                        "field": "Communautés",
-                        "values": communautes_names,
-                        "status": "skipped (no DB configured)"
-                    })
+                    communautes_resolved = []
+                    communautes_unresolved = []
+                    
+                    for comm_name in communautes_names:
+                        match = resolver.find_match(comm_name, "communautes")
+                        if match:
+                            communautes_resolved.append({
+                                "id": match.notion_id,
+                                "original": comm_name,
+                                "matched": match.matched_name,
+                                "confidence": match.confidence
+                            })
+                        else:
+                            communautes_unresolved.append(comm_name)
+                    
+                    # Ajouter à Notion si des matches trouvés
+                    if communautes_resolved:
+                        # Notion veut les IDs sans tirets pour les relations
+                        notion_properties["Communautés"] = {
+                            "relation": [{"id": cr["id"].replace("-", "")} for cr in communautes_resolved]
+                        }
+                        relation_stats["resolved"] += len(communautes_resolved)
+                    
+                    relation_stats["unresolved"] += len(communautes_unresolved)
+                    if communautes_resolved or communautes_unresolved:
+                        relation_stats["details"].append({
+                            "field": "Communautés",
+                            "resolved": communautes_resolved,
+                            "unresolved": communautes_unresolved
+                        })
                 
                 # Lieux de vie
                 if lieux_raw := extract_field("Lieux de vie", content):

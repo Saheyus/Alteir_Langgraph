@@ -61,6 +61,9 @@ class NotionRelationResolver:
             "communautes": "1886e4d21b4581dea4f4d01beb5e1be2",  # Communautés (principale)
             "especes": "1886e4d21b4581e9a768df06185c1aea",      # Espèces (principale)
             "objets": "1886e4d21b4581098024c61acd801f52",       # Objets (principale)
+            # Alias pour compatibilité
+            "espèces": "1886e4d21b4581e9a768df06185c1aea",
+            "communautés": "1886e4d21b4581dea4f4d01beb5e1be2",
         }
     
     def normalize_name(self, name: str) -> str:
