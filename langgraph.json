@@ -1,0 +1,8 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "content_workflow": "./workflows/content_workflow.py:ContentWorkflow"
+  },
+  "env": ".env"
+}
+
