@@ -14,22 +14,24 @@ from agents.relation_graph import RelationGraph, EntityType, RelationType
 
 # Couleurs par type d'entité
 ENTITY_COLORS = {
-    EntityType.PERSONNAGE: '#667eea',  # Violet
-    EntityType.LIEU: '#f59e0b',  # Orange
-    EntityType.COMMUNAUTE: '#10b981',  # Vert
-    EntityType.ESPECE: '#8b5cf6',  # Pourpre
-    EntityType.OBJET: '#ef4444',  # Rouge
-    EntityType.EVENEMENT: '#06b6d4',  # Cyan
+    EntityType.CHARACTER: '#667eea',  # Violet
+    EntityType.LOCATION: '#f59e0b',  # Orange
+    EntityType.COMMUNITY: '#10b981',  # Vert
+    EntityType.SPECIES: '#8b5cf6',  # Pourpre
+    EntityType.ITEM: '#ef4444',  # Rouge
+    EntityType.EVENT: '#06b6d4',  # Cyan
+    EntityType.OTHER: '#9ca3af',  # Gris
 }
 
 # Icônes par type d'entité
 ENTITY_ICONS = {
-    EntityType.PERSONNAGE: '●',
-    EntityType.LIEU: '■',
-    EntityType.COMMUNAUTE: '▲',
-    EntityType.ESPECE: '◆',
-    EntityType.OBJET: '★',
-    EntityType.EVENEMENT: '⬢',
+    EntityType.CHARACTER: '●',
+    EntityType.LOCATION: '■',
+    EntityType.COMMUNITY: '▲',
+    EntityType.SPECIES: '◆',
+    EntityType.ITEM: '★',
+    EntityType.EVENT: '⬢',
+    EntityType.OTHER: '○',
 }
 
 def create_interactive_graph(
@@ -90,14 +92,16 @@ def create_interactive_graph(
     
     # Créer une trace par type de relation
     relation_colors = {
-        RelationType.CONNAIT.value: '#9ca3af',
-        RelationType.AMI.value: '#10b981',
-        RelationType.ENNEMI.value: '#ef4444',
-        RelationType.FAMILLE.value: '#f59e0b',
-        RelationType.HABITE.value: '#8b5cf6',
-        RelationType.MEMBRE_DE.value: '#06b6d4',
-        RelationType.POSSEDE.value: '#f97316',
-        RelationType.CONTIENT.value: '#14b8a6',
+        RelationType.KNOWS.value: '#9ca3af',
+        RelationType.FRIEND.value: '#10b981',
+        RelationType.ENEMY.value: '#ef4444',
+        RelationType.FAMILY.value: '#f59e0b',
+        RelationType.LIVES_IN.value: '#8b5cf6',
+        RelationType.LOCATED_IN.value: '#8b5cf6',
+        RelationType.MEMBER_OF.value: '#06b6d4',
+        RelationType.OWNS.value: '#f97316',
+        RelationType.CONTAINS.value: '#14b8a6',
+        RelationType.ADJACENT_TO.value: '#fbbf24',
     }
     
     for relation_type, edges in edges_by_type.items():

@@ -12,45 +12,47 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 class EntityType(Enum):
     """Types d'entités dans le GDD"""
-    PERSONNAGE = "personnage"
-    LIEU = "lieu"
-    COMMUNAUTE = "communauté"
-    ESPECE = "espèce"
-    OBJET = "objet"
-    EVENEMENT = "événement"
+    CHARACTER = "personnage"
+    LOCATION = "lieu"
+    COMMUNITY = "communauté"
+    SPECIES = "espèce"
+    ITEM = "objet"
+    EVENT = "événement"
+    OTHER = "autre"
 
 class RelationType(Enum):
     """Types de relations entre entités"""
     # Relations personnages
-    CONNAIT = "connaît"
-    AMI = "ami"
-    ENNEMI = "ennemi"
-    FAMILLE = "famille"
+    KNOWS = "connaît"
+    FRIEND = "ami"
+    ENEMY = "ennemi"
+    FAMILY = "famille"
     MENTOR = "mentor"
     RIVAL = "rival"
     
     # Relations spatiales
-    HABITE = "habite"
-    VISITE = "visite"
-    CONTIENT = "contient"
-    ADJACENT = "adjacent à"
+    LIVES_IN = "habite"
+    VISITS = "visite"
+    CONTAINS = "contient"
+    ADJACENT_TO = "adjacent à"
+    LOCATED_IN = "situé dans"
     
     # Relations communautaires
-    MEMBRE_DE = "membre de"
-    DIRIGE = "dirige"
-    OPPOSE_A = "opposé à"
-    ALLIE_A = "allié à"
+    MEMBER_OF = "membre de"
+    LEADS = "dirige"
+    OPPOSED_TO = "opposé à"
+    ALLIED_WITH = "allié à"
     
     # Relations objets/espèces
-    POSSEDE = "possède"
-    CREE = "crée"
-    DETRUIT = "détruit"
-    EST_DE_ESPECE = "est de l'espèce"
+    OWNS = "possède"
+    CREATES = "crée"
+    DESTROYS = "détruit"
+    IS_SPECIES = "est de l'espèce"
     
     # Relations événements
-    PARTICIPE_A = "participe à"
-    CAUSE = "cause"
-    RESULTE_DE = "résulte de"
+    PARTICIPATES_IN = "participe à"
+    CAUSES = "cause"
+    RESULTS_FROM = "résulte de"
 
 @dataclass
 class Entity:
@@ -58,8 +60,8 @@ class Entity:
     id: str
     name: str
     type: EntityType
-    url: str
-    properties: Dict[str, any] = field(default_factory=dict)
+    url: str = ""
+    metadata: Dict[str, any] = field(default_factory=dict)
     
     def __hash__(self):
         return hash(self.id)
@@ -72,20 +74,20 @@ class Entity:
 @dataclass
 class Relation:
     """Représente une relation entre deux entités"""
-    source: Entity
-    target: Entity
+    source_id: str
+    target_id: str
     type: RelationType
-    properties: Dict[str, any] = field(default_factory=dict)
+    metadata: Dict[str, any] = field(default_factory=dict)
     bidirectional: bool = False
     weight: float = 1.0
     
     def reverse(self) -> 'Relation':
         """Retourne la relation inverse"""
         return Relation(
-            source=self.target,
-            target=self.source,
+            source_id=self.target_id,
+            target_id=self.source_id,
             type=self.type,
-            properties=self.properties,
+            metadata=self.metadata,
             bidirectional=self.bidirectional,
             weight=self.weight
         )
@@ -106,19 +108,21 @@ class RelationGraph:
     
     def add_relation(self, relation: Relation):
         """Ajoute une relation au graphe"""
-        # Ajouter les entités si elles n'existent pas
-        if relation.source.id not in self.entities:
-            self.add_entity(relation.source)
-        if relation.target.id not in self.entities:
-            self.add_entity(relation.target)
+        # Vérifier que les entités existent
+        if relation.source_id not in self.entities:
+            print(f"Warning: Source entity {relation.source_id} not found")
+            return
+        if relation.target_id not in self.entities:
+            print(f"Warning: Target entity {relation.target_id} not found")
+            return
         
         # Ajouter la relation
         self.relations.append(relation)
-        self._adjacency[relation.source.id].add(relation.target.id)
+        self._adjacency[relation.source_id].add(relation.target_id)
         
         # Si bidirectionnelle, ajouter la relation inverse
         if relation.bidirectional:
-            self._adjacency[relation.target.id].add(relation.source.id)
+            self._adjacency[relation.target_id].add(relation.source_id)
     
     def get_entity(self, entity_id: str) -> Optional[Entity]:
         """Récupère une entité par son ID"""
@@ -126,24 +130,32 @@ class RelationGraph:
     
     def get_relations_from(self, entity_id: str) -> List[Relation]:
         """Récupère toutes les relations partant d'une entité"""
-        return [r for r in self.relations if r.source.id == entity_id]
+        return [r for r in self.relations if r.source_id == entity_id]
     
     def get_relations_to(self, entity_id: str) -> List[Relation]:
         """Récupère toutes les relations arrivant à une entité"""
-        return [r for r in self.relations if r.target.id == entity_id]
+        return [r for r in self.relations if r.target_id == entity_id]
     
     def get_all_relations(self, entity_id: str) -> List[Relation]:
         """Récupère toutes les relations d'une entité (sortantes et entrantes)"""
         return self.get_relations_from(entity_id) + self.get_relations_to(entity_id)
     
+    def get_relations_for_entity(self, entity_id: str) -> List[Relation]:
+        """Alias pour get_all_relations (utilisé par le visualizer)"""
+        return self.get_all_relations(entity_id)
+    
     def get_neighbors(self, entity_id: str) -> Set[Entity]:
         """Récupère tous les voisins directs d'une entité"""
         neighbors = set()
         for relation in self.get_all_relations(entity_id):
-            if relation.source.id == entity_id:
-                neighbors.add(relation.target)
+            if relation.source_id == entity_id:
+                neighbor_entity = self.get_entity(relation.target_id)
+                if neighbor_entity:
+                    neighbors.add(neighbor_entity)
             else:
-                neighbors.add(relation.source)
+                neighbor_entity = self.get_entity(relation.source_id)
+                if neighbor_entity:
+                    neighbors.add(neighbor_entity)
         return neighbors
     
     def get_entities_by_type(self, entity_type: EntityType) -> List[Entity]:
@@ -192,18 +204,18 @@ class RelationGraph:
                 name=entity.name,
                 type=entity.type.value,
                 url=entity.url,
-                **entity.properties
+                **entity.metadata
             )
         
         # Ajouter les arêtes
         for relation in self.relations:
             G.add_edge(
-                relation.source.id,
-                relation.target.id,
+                relation.source_id,
+                relation.target_id,
                 type=relation.type.value,
                 weight=relation.weight,
                 bidirectional=relation.bidirectional,
-                **relation.properties
+                **relation.metadata
             )
         
         return G
