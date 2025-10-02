@@ -1323,10 +1323,12 @@ def export_to_notion(result):
             
             # DEBUG: Afficher les propriétés envoyées
             if relation_stats["resolved"] > 0:
-                st.info(f"DEBUG: Envoi de {len(notion_properties)} propriétés dont relations")
+                nb_relations = sum(1 for v in notion_properties.values() if isinstance(v, dict) and "relation" in v)
+                st.info(f"DEBUG: Envoi de {len(notion_properties)} propriétés (dont {nb_relations} relation(s) avec {relation_stats['resolved']} entité(s))")
                 for key in notion_properties:
                     if "relation" in str(notion_properties[key]):
-                        st.write(f"  {key}: {notion_properties[key]}")
+                        nb_entities = len(notion_properties[key].get("relation", []))
+                        st.write(f"  {key}: {nb_entities} entité(s) → {notion_properties[key]}")
             
             response = requests.post(
                 "https://api.notion.com/v1/pages",
