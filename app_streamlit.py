@@ -1079,9 +1079,15 @@ def export_to_notion(result):
             
             # 3. Fonction helper pour extraire les champs
             def extract_field(field_name, content):
-                """Extrait un champ du contenu markdown"""
-                pattern = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+                """Extrait un champ du contenu markdown (avec ou sans gras **)"""
+                # Format: "- **Nom**: valeur" ou "- Nom: valeur"
+                pattern = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
                 match = re.search(pattern, content, re.MULTILINE | re.IGNORECASE)
+                if match:
+                    return match.group(1).strip()
+                # Fallback sans gras
+                pattern_plain = rf'^-?\s*{re.escape(field_name)}:\s*(.+)$'
+                match = re.search(pattern_plain, content, re.MULTILINE | re.IGNORECASE)
                 return match.group(1).strip() if match else None
             
             # 4. Extraire le nom
