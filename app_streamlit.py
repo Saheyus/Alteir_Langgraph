@@ -1181,7 +1181,7 @@ def show_results():
         col_export, col_download = st.columns(2)
         
         with col_export:
-            if st.button("📤 Exporter vers Notion", use_container_width=True, help="Créer une page dans Notion"):
+            if st.button("📤 Exporter vers Notion", use_container_width=True, help="Créer une page dans Notion", key=f"export_{selected_file}"):
                 export_to_notion(data)
         
         with col_download:

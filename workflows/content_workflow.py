@@ -248,21 +248,46 @@ class ContentWorkflow:
             state: État final du workflow
             output_dir: Répertoire de sortie
         """
+        import re
+        import unicodedata
+        
         output_path = Path(output_dir)
         output_path.mkdir(exist_ok=True)
         
         # Timestamp pour le nom de fichier
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
+        # Extraire le nom de la fiche pour le nom de fichier
+        content = state.get('content', '')
+        name_match = re.search(r'^-?\s*Nom:\s*(.+)$', content, re.MULTILINE)
+        
+        if name_match:
+            # Nom trouvé - convertir en camelCase sans accents
+            name = name_match.group(1).strip()
+            # Supprimer les accents
+            name_no_accent = ''.join(c for c in unicodedata.normalize('NFD', name) 
+                                     if unicodedata.category(c) != 'Mn')
+            # Convertir en camelCase
+            words = re.split(r'[\s\-\']+', name_no_accent)
+            camel_case = words[0].lower() + ''.join(w.capitalize() for w in words[1:] if w)
+            # Supprimer caractères non alphanumériques
+            camel_case = re.sub(r'[^a-zA-Z0-9]', '', camel_case)
+            filename_base = camel_case
+        else:
+            # Nom non trouvé - utiliser domaine par défaut
+            filename_base = state['domain']
+        
         # Sauvegarder le JSON complet
-        json_file = output_path / f"{state['domain']}_{timestamp}.json"
+        json_file = output_path / f"{filename_base}_{timestamp}.json"
         with open(json_file, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2, ensure_ascii=False)
         
         # Sauvegarder le contenu en Markdown
-        md_file = output_path / f"{state['domain']}_{timestamp}.md"
+        md_file = output_path / f"{filename_base}_{timestamp}.md"
         with open(md_file, "w", encoding="utf-8") as f:
-            f.write(f"# {state['domain'].capitalize()} - {timestamp}\n\n")
+            # Utiliser le nom de la fiche si disponible, sinon le domaine
+            title = name if name_match else state['domain'].capitalize()
+            f.write(f"# {title}\n\n")
             f.write(f"**Brief:** {state['brief']}\n\n")
             f.write(f"---\n\n")
             f.write(f"## Contenu Final\n\n")
