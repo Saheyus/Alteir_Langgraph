@@ -1144,6 +1144,10 @@ def export_to_notion(result):
                     # Rôle est un select, prendre seulement le premier élément si plusieurs valeurs
                     role_clean = role.split(';')[0].strip()[:100]  # Limite à 100 chars
                     notion_properties["Rôle"] = {"select": {"name": role_clean}}
+                if sprint := extract_field("Sprint", content):
+                    # Sprint est aussi un select
+                    sprint_clean = sprint.split(';')[0].strip()[:100]
+                    notion_properties["Sprint"] = {"select": {"name": sprint_clean}}
             
             # 7. Créer la page
             headers = {
@@ -1172,9 +1176,49 @@ def export_to_notion(result):
             page_id = page_data.get('id', '')
             page_url = page_data.get('url', '#')
             
-            # 8. Ajouter le contenu complet
+            # 8. Nettoyer le contenu : retirer les champs déjà insérés des métadonnées
+            cleaned_content = content
+            
+            # Liste des champs insérés dans les propriétés Notion
+            inserted_fields = set()
+            for prop_name in notion_properties.keys():
+                if prop_name != "État":  # État est toujours "Brouillon IA", pas extrait
+                    inserted_fields.add(prop_name.lower())
+            
+            # Nettoyer la section CHAMPS NOTION si elle existe
+            section_match = re.search(r'(CHAMPS NOTION.*?\n)(.*?)(\n\n|CONTENU NARRATIF|\Z)', 
+                                     cleaned_content, re.DOTALL | re.IGNORECASE)
+            if section_match:
+                section_header = section_match.group(1)
+                section_content = section_match.group(2)
+                section_end = section_match.group(3)
+                
+                # Filtrer les lignes de la section
+                filtered_lines = []
+                for line in section_content.split('\n'):
+                    # Vérifier si la ligne commence par "- ChampName:"
+                    match = re.match(r'^-?\s*([^:]+):\s*(.+)$', line)
+                    if match:
+                        field_name = match.group(1).strip().lower()
+                        # Garder seulement si NON inséré
+                        if field_name not in inserted_fields:
+                            filtered_lines.append(line)
+                    else:
+                        # Garder les lignes qui ne sont pas des champs
+                        if line.strip():
+                            filtered_lines.append(line)
+                
+                # Reconstruire la section si elle contient encore des champs
+                if filtered_lines:
+                    new_section = section_header + '\n'.join(filtered_lines) + section_end
+                    cleaned_content = cleaned_content[:section_match.start()] + new_section + cleaned_content[section_match.end():]
+                else:
+                    # Supprimer complètement la section si vide
+                    cleaned_content = cleaned_content[:section_match.start()] + section_end + cleaned_content[section_match.end():]
+            
+            # 9. Ajouter le contenu complet
             # Convertir markdown en blocks Notion
-            content_lines = content.split('\n')
+            content_lines = cleaned_content.split('\n')
             blocks = []
             
             for line in content_lines[:50]:  # Limite à 50 lignes pour éviter timeout
