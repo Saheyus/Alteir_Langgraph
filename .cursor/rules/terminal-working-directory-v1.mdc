@@ -1,0 +1,98 @@
+---
+description: Fix terminal working directory to always start in project root
+globs: ["**/*.{cmd,ps1,sh}", ".vscode/**", "*.code-workspace"]
+---
+
+# Terminal Working Directory Configuration
+
+## Problème
+
+Au démarrage de nouvelles conversations dans Cursor, le terminal s'ouvrait systématiquement dans `C:\Users\ecali` (USERPROFILE) au lieu du dossier du projet `F:\Projets\Langgraph Alteir`.
+
+### Symptômes
+- Première commande git/terminal commence dans le mauvais répertoire
+- Besoin de faire `cd "F:\Projets\Langgraph Alteir"` manuellement à chaque fois
+- Le workspace file seul ne suffisait pas
+
+### Cause Identifiée
+PowerShell démarre par défaut dans `$env:USERPROFILE` si aucune configuration locale n'est présente. Le paramètre `terminal.integrated.cwd` dans le workspace file n'est pas toujours respecté par Cursor au démarrage des nouvelles conversations.
+
+## Décision
+
+**Créer un dossier `.vscode/` avec `settings.json` pour forcer le working directory.**
+
+Cela complète le workspace file et garantit que VS Code/Cursor respecte le dossier du projet comme working directory initial.
+
+## Checklist
+
+- [x] Créer `.vscode/settings.json` avec `terminal.integrated.cwd`
+- [x] Vérifier que le workspace file existe
+- [x] Tester dans une nouvelle conversation Cursor
+- [ ] Ajouter `.vscode/` au `.gitignore` si nécessaire (décision projet)
+
+## Configuration
+
+### Fichier créé : `.vscode/settings.json`
+```json
+{
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "files.eol": "\n",
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe"
+}
+```
+
+### Workspace file existant : `Langgraphworkspace.code-workspace`
+```json
+{
+  "folders": [
+    {
+      "path": "F:\\Projets\\Langgraph Alteir"
+    }
+  ],
+  "settings": {
+    "terminal.integrated.cwd": "${workspaceFolder}"
+  }
+}
+```
+
+## Exemples
+
+### ❌ Avant (Mauvais)
+```powershell
+# Terminal s'ouvre dans C:\Users\ecali
+PS C:\Users\ecali> git status
+fatal: not a git repository
+```
+
+### ✅ Après (Bon)
+```powershell
+# Terminal s'ouvre dans le projet
+PS F:\Projets\Langgraph Alteir> git status
+On branch main
+Your branch is up to date with 'origin/main'.
+```
+
+## Vérification
+
+```powershell
+# Commande simple pour vérifier le working directory
+pwd
+
+# Devrait afficher :
+# Path
+# ----
+# F:\Projets\Langgraph Alteir
+```
+
+## Notes Additionnelles
+
+- Le paramètre `terminal.integrated.defaultProfile.windows` garantit que PowerShell est utilisé
+- `files.eol` est configuré pour LF (compatibilité cross-platform)
+- `python.defaultInterpreterPath` pointe vers le venv local si présent
+
+## Changelog
+
+- **2025-10-03**: Création initiale (Résolution problème récurrent working directory)
+  - Raison: Terminal démarrait dans USERPROFILE au lieu du projet
+  - Solution: Ajout de `.vscode/settings.json` avec configuration explicite
