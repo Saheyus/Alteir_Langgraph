@@ -15,6 +15,7 @@ from .constants import (
     LEVEL_OPTIONS,
     PROFILE_CONFIGS,
 )
+from .context_selector import render_context_selector
 from .generation import generate_content
 from .layout import get_domain_header
 
@@ -362,6 +363,9 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
 
     st.session_state.max_tokens = max_tokens
 
+    context_summary = render_context_selector(domain, brief)
+    st.session_state.selected_context_summary = context_summary
+
     button_text = {
         "Personnages": "🚀 Générer le Personnage",
         "Lieux": "🚀 Générer le Lieu",
@@ -386,4 +390,5 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 selected_model,
                 model_info,
                 domain,
+                context_summary,
             )

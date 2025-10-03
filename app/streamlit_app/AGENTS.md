@@ -137,6 +137,20 @@ app/streamlit_app/
 - Export vers Notion (bac à sable)
 - Téléchargement JSON persistant
 
+### `context_selector.py` - Selection du contexte Notion
+**Responsabilite :** Interface Streamlit pour composer le contexte avant la generation
+
+**Composants :**
+- Auto-suggestion via `NotionContextMatcher` (analyse du brief)
+- Selection manuelle par domaine avec recherche locale
+- Synthese du contexte choisi (compteur de tokens, apercus)
+
+**Notes :**
+- Stockage dans `st.session_state.context_selection` (ids, previews, suggestions)
+- Toujours utiliser les bases bac a sable Notion (Personnages (1), Lieux (1))
+- Limite douce a 50 000 tokens avec alerte visuelle
+
+
 ---
 
 ### `results.py` - Affichage et export
@@ -366,4 +380,5 @@ python lancer_app.cmd
 - Fix boutons JSON download
 - Fix reset profil lors changement domaine
 - Architecture maintenable et testable
+
 

@@ -147,12 +147,28 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
         # Champs Notion (métadonnées)
         notion_fields_section = self._build_notion_fields_section()
         
+        # Ajouter une instruction d'utilisation du contexte si du contenu est présent
+        context_instruction = ""
+        if context_section and len(context_section) > 50:
+            context_instruction = """
+**IMPORTANT - UTILISATION DU CONTEXTE:**
+Le contexte ci-dessus contient des fiches existantes de l'univers Alteir.
+Tu DOIS les utiliser pour :
+- Assurer la coherence narrative (references, relations, lieux communs)
+- Eviter les contradictions avec les elements etablis
+- Creer des liens naturels quand c'est pertinent
+- Reutiliser des concepts, lieux, ou personnages mentionnes si approprie
+
+Si tu crees de nouveaux elements (lieux, artefacts, concepts), marque-les clairement comme nouveaux.
+"""
+        
         prompt = f"""**BRIEF:** {brief}
 
 {spec_section}
 
 **CONTEXTE ({self.domain_config.display_name.upper()}):**
 {context_section}
+{context_instruction}
 
 {notion_fields_section}
 
@@ -206,6 +222,13 @@ Sans apartés méthodologiques."""
     
     def _format_context(self, context: Dict[str, Any]) -> str:
         """Formate le contexte en texte lisible"""
+        
+        # Si le contexte contient déjà du contenu formaté (depuis l'UI Streamlit),
+        # l'utiliser directement
+        if context and context.get("formatted"):
+            return context["formatted"]
+        
+        # Sinon, fallback sur l'ancien format (listes simples)
         parts = []
         
         if context.get("especes"):

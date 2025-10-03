@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import time
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import streamlit as st
 
+from agents.notion_context_fetcher import NotionClientUnavailable, NotionContextFetcher
 from .cache import load_workflow_dependencies
 
 
@@ -36,6 +37,47 @@ def create_llm(
     return ChatOpenAI(**llm_config)
 
 
+def _build_context_payload(context_summary: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    """Fetch full Notion pages for the selected context and format them."""
+
+    if not context_summary or not context_summary.get("selected_ids"):
+        return None
+
+    fetcher = NotionContextFetcher()
+    full_pages = []
+    preview_map = {item.get("id"): item for item in context_summary.get("previews", [])}
+
+    for page_id in context_summary["selected_ids"]:
+        preview = preview_map.get(page_id, {})
+        domain_hint = preview.get("domain")
+        try:
+            full_pages.append(fetcher.fetch_page_full(page_id, domain=domain_hint))
+        except NotionClientUnavailable:
+            st.warning("Impossible de charger une fiche Notion selectionnee (mode hors ligne).")
+            return None
+
+    formatted = fetcher.format_context_for_llm(full_pages)
+    return {
+        "selected_ids": list(context_summary["selected_ids"]),
+        "pages": [
+            {
+                "id": page.id,
+                "title": page.title,
+                "domain": page.domain,
+                "summary": page.summary,
+                "content": page.content,
+                "properties": page.properties,
+                "token_estimate": page.token_estimate,
+                "last_edited": page.last_edited,
+            }
+            for page in full_pages
+        ],
+        "formatted": formatted,
+        "token_estimate": sum(page.token_estimate for page in full_pages),
+        "previews": context_summary.get("previews", []),
+    }
+
+
 def generate_content(
     brief: str,
     intent: str,
@@ -47,6 +89,7 @@ def generate_content(
     model_name: str,
     model_config: Dict[str, Any],
     domain: str,
+    context_summary: Optional[Dict[str, Any]] = None,
 ):
     """Génère du contenu (personnage ou lieu) selon le domaine."""
 
@@ -65,6 +108,8 @@ def generate_content(
         dialogue_mode=dialogue_mode,
         creativity=creativity,
     )
+
+    context_payload = _build_context_payload(context_summary)
 
     workflow = ContentWorkflow(domain_config, llm=llm)
 
@@ -116,7 +161,7 @@ def generate_content(
         status_text.text("✍️ Writer : Génération du contenu initial...")
         progress_bar.progress(10)
 
-        result = workflow.run(brief, writer_config)
+        result = workflow.run(brief, writer_config, context=context_payload)
 
         step_placeholders[0].markdown(
             """
@@ -210,6 +255,8 @@ def generate_content(
 
         result["model_used"] = model_name
         result["model_config"] = model_config
+        if context_payload:
+            result["context"] = context_payload
 
         json_file, md_file = workflow.save_results(result)
 

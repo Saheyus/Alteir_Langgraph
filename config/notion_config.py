@@ -26,8 +26,8 @@ class NotionConfig:
     # Token d'intégration (à définir dans .env)
     NOTION_TOKEN = os.getenv("NOTION_TOKEN", "")
     
-    # Version de l'API Notion (mise à jour 2025-09-03)
-    API_VERSION = "2025-09-03"
+    # Version de l'API Notion (version stable actuelle)
+    API_VERSION = "2022-06-28"
     
     # Headers pour les requêtes API
     @classmethod
