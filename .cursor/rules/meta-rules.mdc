@@ -1,0 +1,292 @@
+# Meta Rules - Comment Créer des Cursor Rules
+
+## 🎯 Principe Fondamental
+
+**Les cursor rules sont POUR L'IA, pas pour l'utilisateur final.**
+
+L'utilisateur utilise l'interface. L'IA lit les rules pour savoir comment travailler.
+
+Source : [Documentation officielle Cursor](https://docs.cursor.com/context/rules)
+
+---
+
+## 📁 Localisation
+
+### ✅ TOUJOURS créer dans `.cursor/rules/`
+```
+.cursor/
+  rules/
+    nom-descriptif.mdc   ✅ Format .mdc avec frontmatter
+    autre-regle.mdc
+```
+
+### ✅ Règles imbriquées possibles
+```
+project/
+  .cursor/rules/        # Règles projet
+  backend/
+    .cursor/rules/      # Règles spécifiques backend
+  frontend/
+    .cursor/rules/      # Règles spécifiques frontend
+```
+
+### ❌ JAMAIS à la racine
+```
+GUIDE_XXX.md          ❌ Destiné aux devs
+README_XXX.md         ❌ Destiné aux devs
+DOCUMENTATION.md      ❌ Destiné aux devs
+```
+
+**Alternative simple :** `AGENTS.md` à la racine (Markdown simple, sans métadonnées)
+
+---
+
+## 📝 Format des Rules (MDC)
+
+### Extension et Structure
+**Format MDC** (.mdc) = Markdown + métadonnées YAML
+
+```markdown
+---
+description: Description courte pour l'IA
+globs: ["**/*.py", "tests/**"]
+alwaysApply: false
+---
+
+# Contenu de la règle en Markdown
+
+- Instructions claires
+- Exemples concrets
+```
+
+### Types de Règles (via métadonnées)
+
+| Type | Quand l'inclure | Métadonnées |
+|------|----------------|-------------|
+| **Always** | Toujours dans le contexte | `alwaysApply: true` |
+| **Auto Attached** | Quand fichiers matchent `globs` | `globs: ["pattern"]` |
+| **Agent Requested** | L'IA décide (besoin `description`) | `description: "..."` |
+| **Manual** | Seulement si `@ruleName` | Par défaut |
+
+### Nom de fichier
+```
+nom-descriptif-kebab-case.mdc
+```
+
+Exemples :
+- ✅ `export-notion.mdc`
+- ✅ `tests-python.mdc`
+- ✅ `debug-practices.mdc`
+- ❌ `GUIDE_TESTS.md`
+- ❌ `readme.txt`
+
+---
+
+## ✍️ Structure d'une Rule MDC
+
+### 1. Titre clair et descriptif
+```markdown
+# Nom de la Règle - Contexte
+
+Exemple : # Export Notion - Règles de Bac à Sable
+```
+
+### 2. Section "Contexte" ou "Objectif"
+Explique **pourquoi** cette règle existe.
+
+```markdown
+## 🎯 Objectif
+
+Cette règle définit comment l'IA doit gérer l'export Notion
+pour éviter de polluer la base principale.
+```
+
+### 3. Règles claires et actionnables
+Utilise des verbes d'action : TOUJOURS, JAMAIS, DOIT, NE DOIT PAS
+
+```markdown
+## ✅ Règles
+
+**TOUJOURS** exporter vers le bac à sable.
+**JAMAIS** créer dans la base principale sans validation.
+**DOIT** utiliser fuzzy matching pour les relations.
+```
+
+### 4. Exemples concrets
+Code ou commandes spécifiques.
+
+```markdown
+## 📝 Exemple
+
+\`\`\`python
+# ✅ Correct
+database_id = "2806e4d21b458012a744d8d6723c8be1"  # Sandbox
+
+# ❌ Incorrect
+database_id = "1886e4d21b4581a29340f77f5f2e5885"  # Principal
+\`\`\`
+```
+
+### 5. Références utiles
+IDs, URLs, commandes, fichiers à consulter.
+
+```markdown
+## 📚 Références
+
+- Fichier principal : `app_streamlit.py`
+- Resolver : `agents/notion_relation_resolver.py`
+- Tests : `tests/test_export_*.py`
+```
+
+---
+
+## 🚫 Ce qu'il NE FAUT PAS faire
+
+### ❌ Créer des guides utilisateur dans .cursor/rules/
+L'utilisateur n'a pas besoin de lire les rules.
+
+### ❌ Documenter l'usage de l'interface
+L'interface doit être intuitive. Si besoin, améliorer l'interface.
+
+### ❌ Dupliquer le code dans les rules
+Référencer les fichiers, ne pas copier le code.
+
+### ❌ Créer des règles trop générales
+"Bien coder" ❌ → "Toujours valider les IDs Notion avant export" ✅
+
+### ❌ Dépasser 500 lignes
+**Bonnes pratiques Cursor :** Limiter à 500 lignes maximum.
+Si plus long → Scinder en plusieurs rules composables.
+
+### ❌ Oublier de supprimer les vieux guides mal placés
+Si une rule remplace un guide, supprimer l'ancien fichier.
+
+---
+
+## ✅ Ce qu'il FAUT faire
+
+### ✅ Documenter les décisions techniques
+Pourquoi cette architecture ? Pourquoi ce choix ?
+
+### ✅ Lister les ID importants (Notion, etc.)
+L'IA en a besoin pour travailler.
+
+### ✅ Expliquer les workflows critiques
+Export, génération, tests, etc.
+
+### ✅ Documenter les pièges connus
+Ce qui a causé des bugs, les solutions.
+
+### ✅ Mettre à jour les rules quand le code change
+Rules obsolètes = bugs.
+
+---
+
+## 🔄 Workflow : Créer une Nouvelle Rule
+
+1. **Identifier le besoin**
+   - Comportement critique qui se répète
+   - Règle de projet spécifique
+   - Piège à éviter
+
+2. **Choisir un nom descriptif**
+   ```
+   .cursor/rules/nom-contexte.mdc
+   ```
+
+3. **Structurer la rule**
+   - Titre + contexte
+   - Règles claires (TOUJOURS/JAMAIS)
+   - Exemples concrets
+   - Références
+
+4. **Supprimer les anciens guides mal placés**
+   ```bash
+   git rm GUIDE_XXX.md
+   git rm docs/README_XXX.md
+   ```
+
+5. **Committer**
+   ```bash
+   git add .cursor/rules/nouvelle-rule.mdc
+   git commit -m "rules: Ajouter règle pour XXX"
+   ```
+
+---
+
+## 📋 Checklist Création de Rule
+
+Avant de committer :
+- [ ] Fichier dans `.cursor/rules/` ?
+- [ ] Extension `.mdc` ?
+- [ ] Nom descriptif en kebab-case ?
+- [ ] Titre clair ?
+- [ ] Règles actionnables (TOUJOURS/JAMAIS) ?
+- [ ] Exemples concrets ?
+- [ ] Pas de duplication de code ?
+- [ ] Anciens guides mal placés supprimés ?
+- [ ] Commit message clair (`rules: ...`) ?
+
+---
+
+## 🎓 Exemples de Rules Bien Faites
+
+### `.cursor/rules/export-notion.mdc`
+- ✅ IDs sandbox vs principal
+- ✅ Workflow complet
+- ✅ Pièges à éviter
+- ✅ Références aux fichiers
+
+### `.cursor/rules/tests.mdc`
+- ✅ Organisation des tests
+- ✅ Marqueurs pytest
+- ✅ Conventions nommage
+- ✅ Checklist avant commit
+
+### `.cursor/rules/debug-practices.mdc`
+- ✅ Interdit les fichiers temporaires
+- ✅ Alternatives (`python -c`)
+- ✅ Où mettre les tests durables
+
+---
+
+## 🔥 Rappel Important
+
+**Si l'IA oublie de créer une rule pour une décision importante :**
+→ L'utilisateur doit le rappeler : "Crée une rule pour ça"
+
+**Si l'IA crée un guide utilisateur dans le projet :**
+→ C'est une erreur, déplacer dans `.cursor/rules/` en `.mdc`
+
+**Si une rule existe déjà sur le sujet :**
+→ Mettre à jour la rule existante, ne pas créer de doublon
+
+---
+
+## 💡 Quand Créer une Rule ?
+
+✅ **OUI, créer une rule :**
+- Règle critique qui se répète (export, tests, API)
+- IDs/URLs à mémoriser (bases Notion, endpoints)
+- Workflow complexe (génération multi-agents)
+- Piège connu qui a causé des bugs
+- Architecture ou décision importante
+- Conventions de code projet-spécifiques
+
+❌ **NON, ne pas créer de rule :**
+- Explication du code (mettre en commentaire)
+- Guide utilisateur (améliorer l'interface)
+- Bonnes pratiques générales (déjà connues)
+- Changement temporaire (sera refactoré)
+
+---
+
+## 🎯 Objectif Final
+
+**L'IA doit pouvoir travailler efficacement sur le projet en lisant les rules.**
+
+Si l'IA fait la même erreur plusieurs fois → Créer une rule.
+Si une décision importante est prise → Documenter dans une rule.
+Si un workflow est complexe → Créer une rule.
+
+**Résultat :** Moins de bugs, plus de cohérence, meilleure productivité.

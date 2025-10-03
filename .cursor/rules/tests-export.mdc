@@ -1,0 +1,204 @@
+---
+description: Règles pour tester l'export Notion
+globs: ["tests/test_export_*.py", "tests/run_export_tests.py"]
+alwaysApply: false
+---
+
+# Tests Export Notion
+
+## 🎯 Objectif
+
+Suite de tests modulaire pour valider l'export Notion.
+Permet de détecter rapidement si un champ n'est pas exporté correctement.
+
+---
+
+## 📊 Structure (3 niveaux)
+
+### 1. `test_export_extraction.py` (Unitaire, < 0.5s)
+**Teste :** Extraction markdown → données Python
+
+```python
+def test_extract_espece(sample_personnage_content):
+    espece = extract_field("Espèce", content)
+    assert espece == "Humain modifié"
+```
+
+### 2. `test_export_payload.py` (Unitaire, < 0.5s)
+**Teste :** Données → Payload Notion API
+
+```python
+def test_payload_has_espece(sample_personnage_content):
+    props = build_notion_properties_personnage(content)
+    assert "Espèce" in props
+```
+
+### 3. `test_export_integration.py` (Intégration, ~10s)
+**Teste :** Payload → Notion API réelle (sandbox)
+
+```python
+@pytest.mark.integration
+def test_create_personnage_basic(notion_headers):
+    page_data = create_notion_page(...)
+    assert page_data["url"] is not None
+```
+
+**Cleanup automatique :** Toutes les pages créées sont archivées après chaque test.
+
+---
+
+## 🚀 Exécution
+
+### Développement (quotidien)
+```bash
+python tests/run_export_tests.py quick
+# 38 tests en < 1s, pas d'API
+```
+
+### Validation complète
+```bash
+python tests/run_export_tests.py full
+# 45 tests en ~10s, avec API Notion
+```
+
+### Tests spécifiques
+```bash
+# Par nom
+pytest tests/ -k "espece" -v
+
+# Par classe
+pytest tests/test_export_extraction.py::TestExtractionRelations -v
+
+# Par fichier
+pytest tests/test_export_extraction.py -v
+```
+
+---
+
+## ✅ Principe
+
+**Si un champ n'est pas exporté correctement, un test DOIT échouer.**
+
+### Workflow détection bug
+1. User : "Le champ X n'est pas exporté"
+2. IA : `pytest tests/ -k "champ_x" -v`
+3. Si tests passent → Bug dans l'interface ou API
+4. Si tests échouent → Bug dans extraction ou payload
+
+---
+
+## 📝 Ajouter un nouveau champ
+
+### 1. Fixture (markdown test)
+```python
+@pytest.fixture
+def sample_personnage_content():
+    return """
+    ...
+    - **Nouveau Champ**: Valeur test
+    ...
+    """
+```
+
+### 2. Test extraction
+```python
+def test_extract_nouveau_champ(sample_personnage_content):
+    val = extract_field("Nouveau Champ", content)
+    assert val == "Valeur test"
+```
+
+### 3. Test payload
+```python
+def test_payload_has_nouveau_champ(sample_personnage_content):
+    props = build_notion_properties_personnage(content)
+    assert "Nouveau Champ" in props
+    assert props["Nouveau Champ"]["type"]["value"] == "attendu"
+```
+
+### 4. Relancer
+```bash
+python tests/run_export_tests.py quick
+```
+
+---
+
+## 🧹 Maintenance
+
+- **Isolés** : Pas de dépendances entre tests
+- **Rapides** : Tests unitaires < 1s
+- **Propres** : Cleanup auto (intégration)
+- **Extensibles** : Nouveau champ = quelques lignes
+
+### Checklist avant commit
+```bash
+# Tests rapides (obligatoire)
+python tests/run_export_tests.py quick
+
+# Tests complets (recommandé)
+python tests/run_export_tests.py full
+```
+
+---
+
+## 🔍 Debug
+
+### Champ manquant
+```bash
+# 1. Vérifier extraction
+pytest tests/test_export_extraction.py -k "nom_champ" -v
+
+# 2. Si OK, vérifier payload
+pytest tests/test_export_payload.py -k "nom_champ" -v
+
+# 3. Si OK, vérifier API
+pytest tests/test_export_integration.py -k "nom_champ" -v -m integration
+```
+
+### Tests qui échouent
+```bash
+# Voir détails complets
+pytest tests/ -v --tb=long
+
+# Arrêter au premier échec
+pytest tests/ -v -x
+
+# Afficher les prints
+pytest tests/ -v -s
+```
+
+---
+
+## 📚 Références
+
+- **Script helper :** `tests/run_export_tests.py`
+- **Doc technique :** `tests/README_EXPORT_TESTS.md`
+- **Fixtures :** `tests/test_export_extraction.py`
+- **Helpers :** `tests/test_export_payload.py`
+- **Config :** `pytest.ini`
+
+---
+
+## ⚠️ Important
+
+### Ne JAMAIS créer de fichiers temporaires de test
+```bash
+# ❌ Interdit
+touch test_temp.py
+touch debug_fuzzy.py
+
+# ✅ Utiliser à la place
+python -c "from module import func; print(func())"
+
+# ✅ Ou ajouter dans module
+if __name__ == "__main__":
+    # Tests rapides ici
+```
+
+Voir `.cursor/rules/debug-practices.mdc` pour détails.
+
+---
+
+## 🎯 Objectif Final
+
+Tests **rapides, fiables, maintenables**.
+Détecter immédiatement si l'export est cassé.
