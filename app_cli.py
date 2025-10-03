@@ -7,11 +7,15 @@ import os
 from pathlib import Path
 from typing import Optional
 
+from config.logging_config import get_logger
+
 sys.path.append(str(Path(__file__).parent))
 
 from workflows.content_workflow import ContentWorkflow
 from agents.writer_agent import WriterConfig
 from config.domain_configs.personnages_config import PERSONNAGES_CONFIG
+
+logger = get_logger(__name__)
 
 def clear_screen():
     """Nettoie l'écran"""
@@ -65,14 +69,16 @@ def create_character():
     clear_screen()
     print_header()
     print("=== CREATION DE PERSONNAGE ===\n")
+    logger.info("Lancement de l'assistant de création de personnage")
     
     # Brief
     print("Decrivez le personnage a creer:")
     print("(Incluez: role, espece, age, particularites...)\n")
     brief = input("> ").strip()
-    
+
     if not brief:
         print("\n[ERREUR] Le brief ne peut pas etre vide.")
+        logger.warning("Brief vide fourni, annulation de la génération")
         input("\nAppuyez sur Entree pour continuer...")
         return
     
@@ -123,9 +129,10 @@ def create_character():
     print(f"Creativite: {creativity}")
     
     confirm = get_user_input("\nLancer la generation? (o/N)", "o")
-    
+
     if confirm.lower() != 'o':
         print("\nAnnule.")
+        logger.info("Génération annulée par l'utilisateur")
         input("\nAppuyez sur Entree pour continuer...")
         return
     
@@ -142,13 +149,15 @@ def create_character():
     )
     
     workflow = ContentWorkflow(PERSONNAGES_CONFIG)
-    
+
     try:
+        logger.info("Début de génération pour le domaine %s", PERSONNAGES_CONFIG.display_name)
         result = workflow.run(brief, writer_config)
-        
+
         # Sauvegarder
         json_file, md_file = workflow.save_results(result)
-        
+        logger.info("Résultats enregistrés | json=%s | markdown=%s", json_file, md_file)
+
         # Afficher résumé
         print("\n" + "=" * 70)
         print("GENERATION TERMINEE !")
@@ -170,8 +179,9 @@ def create_character():
             os.system(f'notepad {md_file}' if os.name == 'nt' else f'open {md_file}')
         
     except Exception as e:
+        logger.exception("Erreur lors de la génération CLI")
         print(f"\n[ERREUR] {e}")
-    
+
     input("\nAppuyez sur Entree pour continuer...")
 
 def view_results():
@@ -184,6 +194,7 @@ def view_results():
     
     if not outputs_dir.exists():
         print("Aucun resultat trouve.")
+        logger.info("Consultation des résultats: aucun répertoire outputs")
         input("\nAppuyez sur Entree pour continuer...")
         return
     
@@ -192,6 +203,7 @@ def view_results():
     
     if not md_files:
         print("Aucun resultat trouve.")
+        logger.info("Consultation des résultats: aucun fichier Markdown")
         input("\nAppuyez sur Entree pour continuer...")
         return
     
@@ -213,6 +225,7 @@ def view_results():
             return
         if 1 <= idx <= len(md_files[:10]):
             file_to_open = md_files[idx - 1]
+            logger.info("Ouverture d'un résultat: %s", file_to_open)
             os.system(f'notepad {file_to_open}' if os.name == 'nt' else f'open {file_to_open}')
     except ValueError:
         pass
@@ -224,6 +237,7 @@ def show_config():
     clear_screen()
     print_header()
     print("=== CONFIGURATION ===\n")
+    logger.info("Affichage de la configuration CLI")
     
     print("Modele LLM:")
     print(f"  Provider: {os.getenv('LLM_PROVIDER', 'openai')}")
@@ -251,12 +265,14 @@ def show_config():
 
 def main():
     """Boucle principale"""
+    logger.info("Démarrage de l'interface CLI")
     while True:
         clear_screen()
         print_header()
         print_menu()
-        
+
         choice = input("Votre choix: ").strip()
+        logger.debug("Choix utilisateur: %s", choice)
         
         if choice == '1':
             create_character()
@@ -266,6 +282,7 @@ def main():
             show_config()
         elif choice == '4':
             print("\nAu revoir !")
+            logger.info("Fermeture de l'interface CLI sur demande utilisateur")
             break
         else:
             print("\nChoix invalide.")
@@ -275,8 +292,10 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
+        logger.info("Arrêt manuel via Ctrl+C")
         print("\n\nInterrompu par l'utilisateur. Au revoir !")
     except Exception as e:
+        logger.exception("Erreur fatale dans la CLI")
         print(f"\n[ERREUR FATALE] {e}")
         input("\nAppuyez sur Entree pour quitter...")
 

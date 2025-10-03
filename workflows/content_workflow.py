@@ -2,12 +2,12 @@
 """
 Workflow complet pour la création de contenu
 """
-import os
-import sys
 import json
-from pathlib import Path
-from typing import TypedDict, Dict, List, Any, Optional, Literal
+import logging
+import sys
 from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, List, Optional, TypedDict
 
 # Ajouter le répertoire racine au path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -71,18 +71,20 @@ class ContentWorkflow:
             domain_config: Configuration du domaine
             llm: Modèle LLM optionnel
         """
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.domain_config = domain_config
         self.llm = llm or self._create_default_llm()
-        
+
         # Créer les agents
         self.writer = WriterAgent(domain_config, llm=self.llm)
         self.reviewer = ReviewerAgent(domain_config, llm=self.llm)
         self.corrector = CorrectorAgent(domain_config, llm=self.llm)
         self.validator = ValidatorAgent(domain_config, llm=self.llm)
-        
+
         # Construire le graphe
         self.graph = self._build_graph()
         self.app = self.graph.compile()
+        self.logger.info("Workflow initialisé pour le domaine %s", domain_config.display_name)
     
     def _create_default_llm(self) -> ChatOpenAI:
         """Crée un LLM par défaut"""
@@ -113,9 +115,17 @@ class ContentWorkflow:
     
     def _writer_node(self, state: WorkflowState) -> Dict[str, Any]:
         """Nœud Writer"""
-        print(f"\n[WRITER] Generation du contenu pour: {state['brief'][:50]}...")
-        
+        self.logger.info("WRITER → génération du contenu (%s)", state["brief"][:80])
+
         result = self.writer.process(state["brief"], state.get("context"))
+
+        if not result.success:
+            self.logger.error("Échec de la génération initiale: %s", "; ".join(result.errors))
+        else:
+            self.logger.debug(
+                "Contenu généré (%d caractères)",
+                len(result.content),
+            )
         
         history_entry = {
             "step": "writer",
@@ -131,9 +141,16 @@ class ContentWorkflow:
     
     def _reviewer_node(self, state: WorkflowState) -> Dict[str, Any]:
         """Nœud Reviewer"""
-        print(f"[REVIEWER] Analyse de la coherence...")
-        
+        self.logger.info("REVIEWER → analyse de la cohérence")
+
         result = self.reviewer.process(state["content"], state.get("context"))
+
+        if not result.success:
+            self.logger.error("Échec de la relecture: %s", "; ".join(result.errors))
+        else:
+            self.logger.debug(
+                "Relecture terminée: %d problèmes identifiés", len(result.issues)
+            )
         
         history_entry = {
             "step": "reviewer",
@@ -151,9 +168,16 @@ class ContentWorkflow:
     
     def _corrector_node(self, state: WorkflowState) -> Dict[str, Any]:
         """Nœud Corrector"""
-        print(f"[CORRECTOR] Correction du contenu...")
-        
+        self.logger.info("CORRECTOR → correction du contenu")
+
         result = self.corrector.process(state["content"], state.get("context"))
+
+        if not result.success:
+            self.logger.error("Échec de la correction: %s", "; ".join(result.errors))
+        else:
+            self.logger.debug(
+                "Corrections appliquées: %d", len(result.corrections)
+            )
         
         history_entry = {
             "step": "corrector",
@@ -170,9 +194,18 @@ class ContentWorkflow:
     
     def _validator_node(self, state: WorkflowState) -> Dict[str, Any]:
         """Nœud Validator"""
-        print(f"[VALIDATOR] Validation finale...")
-        
+        self.logger.info("VALIDATOR → validation finale")
+
         result = self.validator.process(state["content"], state.get("context"))
+
+        if not result.success:
+            self.logger.error("Échec de la validation finale: %s", "; ".join(result.errors))
+        else:
+            self.logger.debug(
+                "Validation: is_valid=%s | ready=%s",
+                result.is_valid,
+                result.ready_for_publication,
+            )
         
         history_entry = {
             "step": "validator",
@@ -228,16 +261,16 @@ class ContentWorkflow:
             self.writer.writer_config = writer_config
         
         # Exécuter le workflow
-        print(f"\n{'='*60}")
-        print(f"WORKFLOW: {self.domain_config.display_name}")
-        print(f"{'='*60}")
-        
+        self.logger.info(
+            "Démarrage du workflow %s",
+            self.domain_config.display_name,
+        )
+        self.logger.debug("Brief: %s", brief)
+
         final_state = self.app.invoke(initial_state)
-        
-        print(f"\n{'='*60}")
-        print(f"WORKFLOW TERMINE")
-        print(f"{'='*60}\n")
-        
+
+        self.logger.info("Workflow terminé pour %s", self.domain_config.display_name)
+
         return final_state
     
     def save_results(self, state: WorkflowState, output_dir: str = "outputs"):
@@ -316,10 +349,8 @@ class ContentWorkflow:
                 for i, err in enumerate(state["validation_errors"], 1):
                     f.write(f"{i}. [{err['severity']}] {err['field']}: {err['description']}\n")
         
-        print(f"\nResultats sauvegardes:")
-        print(f"  - JSON: {json_file}")
-        print(f"  - Markdown: {md_file}")
-        
+        self.logger.info("Résultats sauvegardés | json=%s | markdown=%s", json_file, md_file)
+
         return json_file, md_file
 
 def main():

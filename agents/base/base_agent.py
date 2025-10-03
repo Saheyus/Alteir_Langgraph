@@ -2,12 +2,13 @@
 """
 Classe de base pour tous les agents du système multi-agents
 """
-import os
+import logging
 import sys
-from pathlib import Path
-from typing import Dict, List, Any, Optional
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 from langchain_openai import ChatOpenAI
 
 # Ajouter le répertoire racine au path
@@ -54,12 +55,14 @@ class BaseAgent(ABC):
         self.template = domain_config.template
         self.validation_rules = domain_config.validation_rules
         self.context_sources = domain_config.context_sources
-        
+
         # LLM
         self.llm = llm or self._create_default_llm()
-        
+
         # Config Notion
         self.notion_config = NotionConfig()
+        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        self.logger.debug("Agent initialisé pour le domaine %s", self.domain)
     
     def _create_default_llm(self) -> ChatOpenAI:
         """Crée un LLM par défaut avec des paramètres standards"""
@@ -95,11 +98,17 @@ class BaseAgent(ABC):
             "template_fields": self.domain_config.get_template_fields(),
             "required_fields": self.domain_config.get_required_fields(),
         }
-        
+
         # TODO: Implémenter la récupération réelle via MCP
         # Pour l'instant, retourner un contexte simulé
-        context.update(self._get_simulated_context())
-        
+        simulated_context = self._get_simulated_context()
+        context.update(simulated_context)
+        self.logger.debug(
+            "Contexte récupéré pour %s (sources: %s)",
+            self.domain,
+            ", ".join(sorted(simulated_context.keys())),
+        )
+
         return context
     
     def _get_simulated_context(self) -> Dict[str, Any]:
@@ -176,7 +185,12 @@ Champs obligatoires: {', '.join(self.domain_config.get_required_fields())}
         Returns:
             (valid, errors)
         """
-        return self.domain_config.validate(content, context)
+        valid, errors = self.domain_config.validate(content, context)
+        if valid:
+            self.logger.debug("Validation réussie pour %s", self.domain)
+        else:
+            self.logger.warning("Validation échouée (%d erreurs)", len(errors))
+        return valid, errors
     
     def get_role_name(self) -> str:
         """Retourne le nom du rôle de l'agent (à surcharger)"""
