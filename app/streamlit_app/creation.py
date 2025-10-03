@@ -84,7 +84,6 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
 
     brief = st.text_area(
         brief_label,
-        value=st.session_state.get("brief", ""),
         placeholder=brief_placeholder,
         height=100,
         label_visibility="collapsed",
