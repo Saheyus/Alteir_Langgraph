@@ -1230,21 +1230,20 @@ def export_to_notion(result):
                         notion_properties["Défauts"] = {
                             "multi_select": [{"name": def_} for def_ in defauts]
                         }
+                
+                # Réponse au problème moral (rich_text)
+                if reponse := extract_field("Réponse au problème moral", content):
+                    notion_properties["Réponse au problème moral"] = {
+                        "rich_text": [{"text": {"content": reponse[:2000]}}]  # Limite Notion: 2000 chars
+                    }
             
             elif domain == 'lieux':
-                # Extraire propriétés lieux
-                if categorie := extract_field("Catégorie", content):
-                    notion_properties["Catégorie"] = {"select": {"name": categorie}}
-                if taille := extract_field("Taille", content):
-                    notion_properties["Taille"] = {"select": {"name": taille}}
-                if role := extract_field("Rôle", content):
-                    # Rôle est un select, prendre seulement le premier élément si plusieurs valeurs
-                    role_clean = role.split(';')[0].strip()[:100]  # Limite à 100 chars
-                    notion_properties["Rôle"] = {"select": {"name": role_clean}}
-                if sprint := extract_field("Sprint", content):
-                    # Sprint est aussi un select
-                    sprint_clean = sprint.split(';')[0].strip()[:100]
-                    notion_properties["Sprint"] = {"select": {"name": sprint_clean}}
+                # Selects
+                for field_name in ["Catégorie", "Taille", "Rôle", "Sprint"]:
+                    if value := extract_field(field_name, content):
+                        # Prendre le premier si plusieurs valeurs
+                        value_clean = value.split(',')[0].split(';')[0].strip()[:100]
+                        notion_properties[field_name] = {"select": {"name": value_clean}}
             
             # 6.5 RÉSOUDRE LES RELATIONS (Fuzzy matching)
             from agents.notion_relation_resolver import NotionRelationResolver
@@ -1358,40 +1357,51 @@ def export_to_notion(result):
                     })
             
             elif domain == 'lieux':
-                # Zones limitrophes (lieux → lieux)
-                if zones_raw := extract_field("Zones limitrophes", content):
-                    import re as re_module
-                    zones_names = re_module.split(r'[,;]\s*', zones_raw)
-                    zones_names = [n.strip() for n in zones_names if n.strip()]
-                    
-                    zones_resolved = []
-                    zones_unresolved = []
-                    
-                    for zone_name in zones_names:
-                        match = resolver.find_match(zone_name, "lieux")
-                        if match:
-                            zones_resolved.append({
-                                "id": match.notion_id,
-                                "original": zone_name,
-                                "matched": match.matched_name,
-                                "confidence": match.confidence
+                # Mapping nom_champ → domaine_resolver
+                lieux_relations_map = {
+                    "Zones limitrophes": "lieux",
+                    "Communautés présentes": "communautes",
+                    "Faunes & Flores présentes": "especes",
+                    "Objets présents": "objets",
+                    "Personnages présents": "personnages",
+                    "Contient": "lieux",
+                    "Contenu par": "lieux",
+                }
+                
+                for field_name, domain_name in lieux_relations_map.items():
+                    if raw_value := extract_field(field_name, content):
+                        import re as re_module
+                        entity_names = re_module.split(r'[,;]\s*', raw_value)
+                        entity_names = [n.strip() for n in entity_names if n.strip()]
+                        
+                        resolved = []
+                        unresolved = []
+                        
+                        for entity_name in entity_names:
+                            match = resolver.find_match(entity_name, domain_name)
+                            if match:
+                                resolved.append({
+                                    "id": match.notion_id,
+                                    "original": entity_name,
+                                    "matched": match.matched_name,
+                                    "confidence": match.confidence
+                                })
+                            else:
+                                unresolved.append(entity_name)
+                        
+                        if resolved:
+                            notion_properties[field_name] = {
+                                "relation": [{"id": r["id"].replace("-", "")} for r in resolved]
+                            }
+                            relation_stats["resolved"] += len(resolved)
+                        
+                        relation_stats["unresolved"] += len(unresolved)
+                        if resolved or unresolved:
+                            relation_stats["details"].append({
+                                "field": field_name,
+                                "resolved": resolved,
+                                "unresolved": unresolved
                             })
-                        else:
-                            zones_unresolved.append(zone_name)
-                    
-                    if zones_resolved:
-                        # Notion veut les IDs sans tirets pour les relations
-                        notion_properties["Zones limitrophes"] = {
-                            "relation": [{"id": zr["id"].replace("-", "")} for zr in zones_resolved]
-                        }
-                        relation_stats["resolved"] += len(zones_resolved)
-                    
-                    relation_stats["unresolved"] += len(zones_unresolved)
-                    relation_stats["details"].append({
-                        "field": "Zones limitrophes",
-                        "resolved": zones_resolved,
-                        "unresolved": zones_unresolved
-                    })
             
             # 7. Créer la page
             headers = {

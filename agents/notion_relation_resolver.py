@@ -184,6 +184,7 @@ class NotionRelationResolver:
         - Ratio global (pour correspondances exactes)
         - Partial ratio (pour substrings)
         - Début de chaîne (pour préfixes)
+        - Mots composés (ex: "Humain modifié" → "Humains")
         """
         # 1. Ratio global classique
         global_ratio = SequenceMatcher(None, str1, str2).ratio()
@@ -212,7 +213,17 @@ class NotionRelationResolver:
             else:
                 partial_ratio = 0.0
         
-        # 3. Prendre le meilleur score
+        # 3. Mots composés : si le 1er mot matche bien, boost le score
+        # Ex: "humain modifie" → "humains" (premier mot très similaire)
+        words1_list = str1.split()
+        words2_list = str2.split()
+        if words1_list and words2_list:
+            first_word_ratio = SequenceMatcher(None, words1_list[0], words2_list[0]).ratio()
+            # Si le premier mot matche à > 80%, considérer comme bon match
+            if first_word_ratio >= 0.80:
+                partial_ratio = max(partial_ratio, 0.85)
+        
+        # 4. Prendre le meilleur score
         return max(global_ratio, partial_ratio)
     
     def find_match(self, name: str, domain: str) -> Optional[EntityMatch]:
