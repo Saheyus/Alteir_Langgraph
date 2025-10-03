@@ -1,46 +1,6 @@
-# Meta Rules - Comment Créer des Cursor Rules
-
-## 🎯 Principe Fondamental
-
-**Les cursor rules sont POUR L'IA, pas pour l'utilisateur final.**
-
-L'utilisateur utilise l'interface. L'IA lit les rules pour savoir comment travailler.
-
-Source : [Documentation officielle Cursor](https://docs.cursor.com/context/rules)
-
 ---
-
-## 📁 Localisation
-
-### ✅ TOUJOURS créer dans `.cursor/rules/`
-```
-.cursor/
-  rules/
-    nom-descriptif.mdc   ✅ Format .mdc avec frontmatter
-    autre-regle.mdc
-```
-
-### ✅ Règles imbriquées possibles
-```
-project/
-  .cursor/rules/        # Règles projet
-  backend/
-    .cursor/rules/      # Règles spécifiques backend
-  frontend/
-    .cursor/rules/      # Règles spécifiques frontend
-```
-
-### ❌ JAMAIS à la racine
-```
-GUIDE_XXX.md          ❌ Destiné aux devs
-README_XXX.md         ❌ Destiné aux devs
-DOCUMENTATION.md      ❌ Destiné aux devs
-```
-
-**Alternative simple :** `AGENTS.md` à la racine (Markdown simple, sans métadonnées)
-
+alwaysApply: true
 ---
-
 ## 📝 Format des Rules (MDC)
 
 ### Extension et Structure
