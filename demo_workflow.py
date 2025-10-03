@@ -2,7 +2,6 @@
 """
 Démonstration complète du workflow multi-agents avec visualisation détaillée
 """
-import os
 import sys
 from pathlib import Path
 from rich.console import Console
@@ -12,6 +11,8 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.tree import Tree
 from rich import print as rprint
 
+from config.logging_config import get_logger
+
 sys.path.append(str(Path(__file__).parent))
 
 from workflows.content_workflow import ContentWorkflow, WorkflowState
@@ -19,6 +20,7 @@ from agents.writer_agent import WriterConfig
 from config.domain_configs.personnages_config import PERSONNAGES_CONFIG
 
 console = Console()
+logger = get_logger(__name__)
 
 def display_header():
     """Affiche l'en-tête"""
@@ -138,7 +140,8 @@ def display_final_status(state: WorkflowState):
 
 def main():
     """Démo avec visualisation Rich"""
-    
+
+    logger.info("Démarrage de la démonstration du workflow")
     display_header()
     console.print()
     
@@ -169,6 +172,12 @@ def main():
         task = progress.add_task("[cyan]Exécution du workflow...", total=None)
         final_state = workflow.run(brief, writer_config)
         progress.update(task, completed=True)
+
+    logger.info(
+        "Démonstration terminée | valid=%s | ready=%s",
+        final_state["is_valid"],
+        final_state["ready_for_publication"],
+    )
     
     console.print()
     

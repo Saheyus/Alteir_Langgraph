@@ -95,25 +95,32 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
         """
         # Récupérer le contexte si non fourni
         if context is None:
+            self.logger.debug("Aucun contexte fourni, récupération automatique pour %s", self.domain)
             context = self.gather_context()
-        
+
         # Construire le prompt
         user_prompt = self._build_prompt(brief, context)
-        
+
         # Générer avec le LLM
         system_prompt = self._build_system_prompt("writer")
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
         ]
-        
+
         try:
+            self.logger.info("Génération du contenu (brief: %s)", brief[:80])
             response = self.llm.invoke(messages)
             content_text = self._to_text(response.content if hasattr(response, 'content') else response)
-            
+
             # Parser si nécessaire (pour l'instant, retourner le texte brut)
             structured = self._parse_content(content_text)
-            
+
+            self.logger.debug(
+                "Contenu généré avec succès (%d caractères)",
+                len(content_text),
+            )
+
             return AgentResult(
                 success=True,
                 content=content_text,
@@ -125,6 +132,7 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
                 }
             )
         except Exception as e:
+            self.logger.exception("Erreur lors de la génération du contenu")
             return AgentResult(
                 success=False,
                 content="",

@@ -99,6 +99,7 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
         """
         # Récupérer le contexte si non fourni
         if context is None:
+            self.logger.debug("Contexte manquant pour la relecture, récupération automatique")
             context = self.gather_context()
         
         # Construire le prompt de relecture
@@ -112,15 +113,22 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
         ]
         
         try:
+            self.logger.info("Analyse de cohérence en cours")
             response = self.llm.invoke(messages)
             review_text = self._to_text(response.content if hasattr(response, 'content') else response)
-            
+
             # Parser les issues et suggestions
             issues, improvements, score = self._parse_review(review_text)
-            
+
             # Générer le contenu amélioré si pertinent
             improved_content = self._generate_improvements(content, improvements) if improvements else content
-            
+
+            self.logger.debug(
+                "Relecture réussie | issues=%d | score=%.2f",
+                len(issues),
+                score,
+            )
+
             return ReviewResult(
                 success=True,
                 content=improved_content,
@@ -134,6 +142,7 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
                 coherence_score=score
             )
         except Exception as e:
+            self.logger.exception("Erreur lors de la relecture")
             return ReviewResult(
                 success=False,
                 content=content,

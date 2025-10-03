@@ -101,6 +101,7 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
         """
         # Récupérer le contexte si nécessaire
         if context is None:
+            self.logger.debug("Contexte absent pour le correcteur, récupération automatique")
             context = self.gather_context()
         
         # Construire le prompt de correction
@@ -114,12 +115,17 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
         ]
         
         try:
+            self.logger.info("Correction linguistique en cours")
             response = self.llm.invoke(messages)
             correction_text = self._to_text(response.content if hasattr(response, 'content') else response)
-            
+
             # Parser les corrections
             corrected_content, corrections, summary = self._parse_corrections(content, correction_text)
-            
+
+            self.logger.debug(
+                "Corrections appliquées | total=%d", len(corrections)
+            )
+
             return CorrectionResult(
                 success=True,
                 content=corrected_content,
@@ -132,6 +138,7 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
                 improvement_summary=summary
             )
         except Exception as e:
+            self.logger.exception("Erreur lors de la correction")
             return CorrectionResult(
                 success=False,
                 content=content,

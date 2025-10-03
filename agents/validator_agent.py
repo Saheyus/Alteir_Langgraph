@@ -105,6 +105,7 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
         """
         # Récupérer le contexte si nécessaire
         if context is None:
+            self.logger.debug("Contexte absent pour le validateur, récupération automatique")
             context = self.gather_context()
         
         # Construire le prompt de validation
@@ -118,12 +119,21 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
         ]
         
         try:
+            self.logger.info("Validation finale en cours")
             response = self.llm.invoke(messages)
             validation_text = self._to_text(response.content if hasattr(response, 'content') else response)
-            
+
             # Parser les résultats de validation
             errors, completeness, quality, is_valid, ready = self._parse_validation(validation_text)
-            
+
+            self.logger.debug(
+                "Validation complétée | errors=%d | completeness=%.2f | quality=%.2f | ready=%s",
+                len(errors),
+                completeness,
+                quality,
+                ready,
+            )
+
             return ValidationResult(
                 success=True,
                 content=content,
@@ -138,6 +148,7 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
                 ready_for_publication=ready
             )
         except Exception as e:
+            self.logger.exception("Erreur lors de la validation")
             return ValidationResult(
                 success=False,
                 content=content,
