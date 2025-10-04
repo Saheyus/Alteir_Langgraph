@@ -37,8 +37,8 @@ Exemples :
 - ✅ `export-notion.mdc`
 - ✅ `tests-python.mdc`
 - ✅ `debug-practices.mdc`
-- ❌ `GUIDE_TESTS.md`
 - ❌ `readme.txt`
+- ❌ `ExportRules.txt`
 
 ---
 
@@ -160,13 +160,7 @@ Rules obsolètes = bugs.
    - Exemples concrets
    - Références
 
-4. **Supprimer les anciens guides mal placés**
-   ```bash
-   git rm GUIDE_XXX.md
-   git rm docs/README_XXX.md
-   ```
-
-5. **Committer**
+4. **Committer**
    ```bash
    git add .cursor/rules/nouvelle-rule.mdc
    git commit -m "rules: Ajouter règle pour XXX"
@@ -212,12 +206,6 @@ Avant de committer :
 
 ## 🔥 Rappel Important
 
-**Si l'IA oublie de créer une rule pour une décision importante :**
-→ L'utilisateur doit le rappeler : "Crée une rule pour ça"
-
-**Si l'IA crée un guide utilisateur dans le projet :**
-→ C'est une erreur, déplacer dans `.cursor/rules/` en `.mdc`
-
 **Si une rule existe déjà sur le sujet :**
 → Mettre à jour la rule existante, ne pas créer de doublon
 
@@ -229,13 +217,10 @@ Avant de committer :
 - Règle critique qui se répète (export, tests, API)
 - IDs/URLs à mémoriser (bases Notion, endpoints)
 - Workflow complexe (génération multi-agents)
-- Piège connu qui a causé des bugs
 - Architecture ou décision importante
-- Conventions de code projet-spécifiques
 
 ❌ **NON, ne pas créer de rule :**
 - Explication du code (mettre en commentaire)
-- Guide utilisateur (améliorer l'interface)
 - Bonnes pratiques générales (déjà connues)
 - Changement temporaire (sera refactoré)
 

@@ -41,22 +41,39 @@ def _build_context_payload(context_summary: Optional[Dict[str, Any]]) -> Optiona
     """Fetch full Notion pages for the selected context and format them."""
 
     if not context_summary or not context_summary.get("selected_ids"):
+        st.info("ℹ️ Aucun contexte Notion sélectionné. Génération sans contexte externe.")
         return None
+
+    selected_ids = context_summary.get("selected_ids", [])
+    st.info(f"📚 Chargement de {len(selected_ids)} fiche(s) Notion pour le contexte...")
 
     fetcher = NotionContextFetcher()
     full_pages = []
     preview_map = {item.get("id"): item for item in context_summary.get("previews", [])}
 
-    for page_id in context_summary["selected_ids"]:
+    for page_id in selected_ids:
         preview = preview_map.get(page_id, {})
         domain_hint = preview.get("domain")
         try:
-            full_pages.append(fetcher.fetch_page_full(page_id, domain=domain_hint))
+            full_page = fetcher.fetch_page_full(page_id, domain=domain_hint)
+            full_pages.append(full_page)
+            st.caption(f"  ✓ {full_page.title} ({full_page.domain})")
         except NotionClientUnavailable:
-            st.warning("Impossible de charger une fiche Notion selectionnee (mode hors ligne).")
+            st.warning("⚠️ Impossible de charger une fiche Notion sélectionnée (mode hors ligne).")
             return None
+        except Exception as e:
+            st.warning(f"⚠️ Erreur lors du chargement de la fiche {page_id}: {e}")
+            continue
+
+    if not full_pages:
+        st.warning("⚠️ Aucune fiche n'a pu être chargée. Génération sans contexte.")
+        return None
 
     formatted = fetcher.format_context_for_llm(full_pages)
+    total_tokens = sum(page.token_estimate for page in full_pages)
+    
+    st.success(f"✓ {len(full_pages)} fiche(s) chargée(s) (~{total_tokens} tokens)")
+    
     return {
         "selected_ids": list(context_summary["selected_ids"]),
         "pages": [
@@ -73,7 +90,7 @@ def _build_context_payload(context_summary: Optional[Dict[str, Any]]) -> Optiona
             for page in full_pages
         ],
         "formatted": formatted,
-        "token_estimate": sum(page.token_estimate for page in full_pages),
+        "token_estimate": total_tokens,
         "previews": context_summary.get("previews", []),
     }
 

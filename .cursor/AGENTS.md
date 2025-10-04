@@ -32,9 +32,6 @@ Types :
 
 ## Où Documenter
 - **Pour l'IA** → `.cursor/rules/*.mdc`
-- **Pour utilisateur** → Racine `.md` (ex: `GUIDE_UTILISATEUR.md`)
-- **Tech dans tests** → `tests/README_*.md`
-- **Par répertoire** → `AGENTS.md` dans chaque dossier important
 
 ## Création Rule
 1. Identifier besoin (règle critique répétée)

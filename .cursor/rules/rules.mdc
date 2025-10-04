@@ -129,17 +129,10 @@ LANGGRAPH_API_KEY=optional_for_studio
 - Vérification de la cohérence narrative
 - Contrôle qualité linguistique
 
-## 📝 Documentation
-
-### Documentation du Code
-- Docstrings complètes
-- Exemples d'utilisation
-- Guide de contribution
-
-### Documentation Utilisateur
-- Guide d'installation
-- Tutoriel d'utilisation
-- FAQ et dépannage
+## 📝 Documentation du Code
+- Docstrings complètes (format Google)
+- Type hints obligatoires
+- Exemples d'utilisation en commentaires
 
 ## 🔒 Sécurité et Bonnes Pratiques
 
@@ -295,17 +288,10 @@ LANGGRAPH_API_KEY=optional_for_studio
 - Vérification de la cohérence narrative
 - Contrôle qualité linguistique
 
-## 📝 Documentation
-
-### Documentation du Code
-- Docstrings complètes
-- Exemples d'utilisation
-- Guide de contribution
-
-### Documentation Utilisateur
-- Guide d'installation
-- Tutoriel d'utilisation
-- FAQ et dépannage
+## 📝 Documentation du Code
+- Docstrings complètes (format Google)
+- Type hints obligatoires
+- Exemples d'utilisation en commentaires
 
 ## 🔒 Sécurité et Bonnes Pratiques
 

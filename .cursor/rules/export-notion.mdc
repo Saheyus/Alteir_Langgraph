@@ -96,9 +96,9 @@ if DATABASE_ID == "1886e4d21b4581a29340f77f5f2e5885":
     raise ValueError("❌ ERREUR: Ne pas créer dans la base principale!")
 ```
 
-## 📝 **Documentation des Exports**
+## 📝 **Messages après Export**
 
-### Message utilisateur
+### Informer l'utilisateur
 Toujours indiquer clairement à l'utilisateur où la fiche a été créée :
 ```
 ✅ Export réussi
@@ -223,9 +223,9 @@ if DATABASE_ID == "1886e4d21b4581a29340f77f5f2e5885":
     raise ValueError("❌ ERREUR: Ne pas créer dans la base principale!")
 ```
 
-## 📝 **Documentation des Exports**
+## 📝 **Messages après Export**
 
-### Message utilisateur
+### Informer l'utilisateur
 Toujours indiquer clairement à l'utilisateur où la fiche a été créée :
 ```
 ✅ Export réussi

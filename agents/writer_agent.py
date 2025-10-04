@@ -157,18 +157,29 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
         
         # Ajouter une instruction d'utilisation du contexte si du contenu est présent
         context_instruction = ""
-        if context_section and len(context_section) > 50:
-            context_instruction = """
+        has_notion_context = context and context.get("formatted") and len(context.get("formatted", "")) > 50
+        
+        if has_notion_context:
+            page_count = len(context.get("pages", []))
+            context_instruction = f"""
 **IMPORTANT - UTILISATION DU CONTEXTE:**
-Le contexte ci-dessus contient des fiches existantes de l'univers Alteir.
+{page_count} fiche(s) Notion chargée(s) ci-dessus contenant des éléments existants de l'univers Alteir.
 Tu DOIS les utiliser pour :
-- Assurer la coherence narrative (references, relations, lieux communs)
-- Eviter les contradictions avec les elements etablis
-- Creer des liens naturels quand c'est pertinent
-- Reutiliser des concepts, lieux, ou personnages mentionnes si approprie
+- Assurer la cohérence narrative (références, relations, lieux communs)
+- Éviter les contradictions avec les éléments établis
+- Créer des liens naturels quand c'est pertinent
+- Réutiliser des concepts, lieux, ou personnages mentionnés si approprié
 
-Si tu crees de nouveaux elements (lieux, artefacts, concepts), marque-les clairement comme nouveaux.
+Si tu crées de nouveaux éléments (lieux, artefacts, concepts), marque-les avec ◊ (losange).
 """
+            self.logger.info(
+                "Contexte Notion inclus dans le prompt: %d page(s)", page_count
+            )
+        else:
+            self.logger.warning(
+                "Aucun contexte Notion fourni ou contexte vide (%s caractères)",
+                len(context_section),
+            )
         
         prompt = f"""**BRIEF:** {brief}
 
@@ -234,7 +245,14 @@ Sans apartés méthodologiques."""
         # Si le contexte contient déjà du contenu formaté (depuis l'UI Streamlit),
         # l'utiliser directement
         if context and context.get("formatted"):
-            return context["formatted"]
+            formatted_text = context["formatted"]
+            page_count = len(context.get("pages", []))
+            self.logger.info(
+                "Contexte Notion chargé: %d page(s), %d caractères",
+                page_count,
+                len(formatted_text),
+            )
+            return formatted_text
         
         # Sinon, fallback sur l'ancien format (listes simples)
         parts = []
@@ -248,7 +266,12 @@ Sans apartés méthodologiques."""
         if context.get("communautes"):
             parts.append("**Communautés:** " + ", ".join(context["communautes"][:5]))
         
-        return "\n".join(parts) if parts else "Contexte en cours de chargement..."
+        result = "\n".join(parts) if parts else "Contexte en cours de chargement..."
+        
+        if not parts:
+            self.logger.warning("Contexte vide ou incomplet détecté")
+        
+        return result
     
     def _build_template_section(self) -> str:
         """Construit la description de la structure attendue"""

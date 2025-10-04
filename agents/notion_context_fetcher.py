@@ -124,42 +124,74 @@ class NotionContextFetcher:
                     return response.json()
                 
                 def retrieve_page_content(self, page_id: str) -> str:
-                    """Retrieve page content blocks."""
-                    url = f"{self.base_url}/blocks/{page_id}/children"
-                    response = requests.get(url, headers=self.headers)
-                    response.raise_for_status()
-                    blocks = response.json().get("results", [])
+                    """Retrieve page content blocks recursively."""
+                    def fetch_blocks_recursive(block_id: str, indent: int = 0) -> List[str]:
+                        """Fetch blocks and their children recursively."""
+                        url = f"{self.base_url}/blocks/{block_id}/children"
+                        try:
+                            response = requests.get(url, headers=self.headers)
+                            response.raise_for_status()
+                            blocks = response.json().get("results", [])
+                        except Exception as e:
+                            LOGGER.warning(f"Failed to fetch children for block {block_id}: {e}")
+                            return []
+                        
+                        content_parts = []
+                        indent_str = "  " * indent  # Indentation for nested content
+                        
+                        for block in blocks:
+                            block_type = block.get("type")
+                            block_id = block.get("id")
+                            has_children = block.get("has_children", False)
+                            
+                            # Extract text based on block type
+                            if block_type == "paragraph":
+                                text = self._extract_rich_text(block.get("paragraph", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}{text}")
+                            elif block_type == "heading_1":
+                                text = self._extract_rich_text(block.get("heading_1", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}# {text}")
+                            elif block_type == "heading_2":
+                                text = self._extract_rich_text(block.get("heading_2", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}## {text}")
+                            elif block_type == "heading_3":
+                                text = self._extract_rich_text(block.get("heading_3", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}### {text}")
+                            elif block_type == "bulleted_list_item":
+                                text = self._extract_rich_text(block.get("bulleted_list_item", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}- {text}")
+                            elif block_type == "numbered_list_item":
+                                text = self._extract_rich_text(block.get("numbered_list_item", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}1. {text}")
+                            elif block_type == "quote":
+                                text = self._extract_rich_text(block.get("quote", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}> {text}")
+                            elif block_type == "callout":
+                                text = self._extract_rich_text(block.get("callout", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}💡 {text}")
+                            elif block_type == "toggle":
+                                text = self._extract_rich_text(block.get("toggle", {}).get("rich_text", []))
+                                if text:
+                                    content_parts.append(f"{indent_str}▶ {text}")
+                            
+                            # Recursively fetch children if present
+                            if has_children and block_id:
+                                children = fetch_blocks_recursive(block_id, indent + 1)
+                                content_parts.extend(children)
+                        
+                        return content_parts
                     
-                    # Convert blocks to markdown-like text
-                    content_parts = []
-                    for block in blocks:
-                        block_type = block.get("type")
-                        if block_type == "paragraph":
-                            text = self._extract_rich_text(block.get("paragraph", {}).get("rich_text", []))
-                            if text:
-                                content_parts.append(text)
-                        elif block_type == "heading_1":
-                            text = self._extract_rich_text(block.get("heading_1", {}).get("rich_text", []))
-                            if text:
-                                content_parts.append(f"# {text}")
-                        elif block_type == "heading_2":
-                            text = self._extract_rich_text(block.get("heading_2", {}).get("rich_text", []))
-                            if text:
-                                content_parts.append(f"## {text}")
-                        elif block_type == "heading_3":
-                            text = self._extract_rich_text(block.get("heading_3", {}).get("rich_text", []))
-                            if text:
-                                content_parts.append(f"### {text}")
-                        elif block_type == "bulleted_list_item":
-                            text = self._extract_rich_text(block.get("bulleted_list_item", {}).get("rich_text", []))
-                            if text:
-                                content_parts.append(f"- {text}")
-                        elif block_type == "numbered_list_item":
-                            text = self._extract_rich_text(block.get("numbered_list_item", {}).get("rich_text", []))
-                            if text:
-                                content_parts.append(f"1. {text}")
-                    
-                    return "\n".join(content_parts)
+                    # Start fetching from the page root
+                    all_content = fetch_blocks_recursive(page_id)
+                    return "\n".join(all_content)
                 
                 @staticmethod
                 def _extract_rich_text(rich_text_array: List[Dict[str, Any]]) -> str:
@@ -288,18 +320,41 @@ class NotionContextFetcher:
         # Extract summary from rich_text properties (Alias, Description, etc.)
         summary = self._extract_notion_summary(properties)
         
+        # Si le summary est vide, essayer de récupérer les premiers mots du contenu
+        if not summary:
+            page_id = record.get("id", "")
+            if page_id:
+                try:
+                    content = self._retrieve_content(page_id, record)
+                    if content:
+                        # Extraire les 150 premiers caractères du contenu (premiers mots)
+                        summary = self._extract_first_words(content, max_chars=150)
+                except Exception as e:
+                    LOGGER.debug(f"Could not fetch content for preview summary: {e}")
+        
         # Extract tags from multi_select properties
         tags = self._extract_notion_tags(properties)
         
-        # Estimate tokens based on summary + reasonable page estimate
-        summary_tokens = self._estimate_tokens(summary)
+        # Estimer les tokens basé sur le contenu réel si disponible
+        content = record.get("content", "")
+        if not content:
+            try:
+                page_id = record.get("id", "")
+                if page_id:
+                    content = self._retrieve_content(page_id, record)
+            except Exception:
+                pass  # Si échec, on utilisera l'estimation par défaut
         
-        # Estimate based on domain and number of properties
-        base_estimate = 800  # Base estimate for a typical Notion page
-        property_count = len([p for p in properties.values() if self._has_content(p)])
-        property_bonus = property_count * 30  # ~30 tokens per filled property
-        
-        token_estimate = max(summary_tokens, base_estimate + property_bonus)
+        if content:
+            # Estimation basée sur le contenu réel
+            token_estimate = self._estimate_tokens(content)
+        else:
+            # Fallback: estimation basée sur les propriétés
+            summary_tokens = self._estimate_tokens(summary)
+            base_estimate = 800
+            property_count = len([p for p in properties.values() if self._has_content(p)])
+            property_bonus = property_count * 30
+            token_estimate = max(summary_tokens, base_estimate + property_bonus)
 
         return NotionPagePreview(
             id=record.get("id", ""),
@@ -402,6 +457,41 @@ class NotionContextFetcher:
             return text
         slice_size = max_tokens
         return " ".join(words[:slice_size]) + " ..."
+    
+    @staticmethod
+    def _extract_first_words(text: str, max_chars: int = 150) -> str:
+        """Extrait les premiers mots du contenu pour créer un aperçu."""
+        if not text:
+            return ""
+        
+        # Nettoyer le texte (enlever les markdowns headers)
+        lines = text.split("\n")
+        clean_lines = []
+        
+        for line in lines:
+            # Ignorer les lignes vides et les headers markdown
+            stripped = line.strip()
+            if stripped and not stripped.startswith("#"):
+                # Enlever les symboles markdown courants au début
+                for prefix in ["- ", "* ", "> ", "1. ", "💡 ", "▶ "]:
+                    if stripped.startswith(prefix):
+                        stripped = stripped[len(prefix):]
+                        break
+                if stripped:
+                    clean_lines.append(stripped)
+        
+        # Joindre et tronquer
+        full_text = " ".join(clean_lines)
+        if len(full_text) <= max_chars:
+            return full_text
+        
+        # Tronquer proprement au dernier espace avant max_chars
+        truncated = full_text[:max_chars]
+        last_space = truncated.rfind(" ")
+        if last_space > max_chars * 0.8:  # Si on a au moins 80% du texte
+            truncated = truncated[:last_space]
+        
+        return truncated + "..."
 
 
 __all__ = [
