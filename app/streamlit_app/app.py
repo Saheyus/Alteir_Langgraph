@@ -4,7 +4,13 @@ import streamlit as st
 
 from .creation import render_creation_tab
 from .graph import render_graph_tab
-from .layout import apply_page_config, inject_css, render_header, render_sidebar
+from .layout import (
+    apply_page_config,
+    inject_css,
+    render_context_banner,
+    render_header,
+    render_sidebar,
+)
 from .results import show_results
 
 ABOUT_MARKDOWN = """
@@ -44,6 +50,7 @@ def run_app() -> None:
     render_header()
 
     selected_model, model_info, domain = render_sidebar()
+    render_context_banner(domain, selected_model, model_info)
 
     tab1, tab2, tab3, tab4 = st.tabs(["✨ Créer", "📂 Résultats", "🕸️ Graphe", "ℹ️ À propos"])
 

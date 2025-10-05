@@ -3,12 +3,21 @@
 from __future__ import annotations
 
 import time
+from datetime import datetime
 from typing import Any, Dict, Optional
 
 import streamlit as st
 
 from agents.notion_context_fetcher import NotionClientUnavailable, NotionContextFetcher
 from .cache import load_workflow_dependencies
+
+
+DEFAULT_STEP_ESTIMATES = {
+    "writer": 18.0,
+    "reviewer": 12.0,
+    "corrector": 10.0,
+    "validator": 4.0,
+}
 
 
 def create_llm(
@@ -131,6 +140,25 @@ def generate_content(
     workflow = ContentWorkflow(domain_config, llm=llm)
 
     progress_container = st.container()
+    context_count = len(context_summary.get("selected_ids", [])) if context_summary else 0
+    context_tokens = (
+        context_summary.get("token_estimate", 0) if context_summary else 0
+    )
+    step_order = ["writer", "reviewer", "corrector", "validator"]
+    step_history = st.session_state.get("step_duration_history", {})
+    for step in step_order:
+        step_history.setdefault(step, [])
+    st.session_state.step_duration_history = step_history
+
+    avg_durations = {}
+    for step in step_order:
+        history_values = step_history.get(step, [])
+        if history_values:
+            avg_durations[step] = sum(history_values) / len(history_values)
+        else:
+            avg_durations[step] = DEFAULT_STEP_ESTIMATES[step]
+
+    estimated_total = sum(avg_durations.values())
 
     with progress_container:
         cols = st.columns(4)
@@ -160,7 +188,29 @@ def generate_content(
         progress_bar = st.progress(0)
         status_text = st.empty()
         time_estimate = st.empty()
-        time_estimate.text("⏱️ Temps estimé : 30-45 secondes")
+        time_estimate.markdown(
+            f"⏱️ Estimation initiale : ~{estimated_total:.1f}s (historique)")
+
+        recap_badges = [
+            f"<span class='badge-soft'>{model_config['icon']} {model_name}</span>",
+            f"<span class='badge-soft secondary'>Intent : {intent}</span>",
+            f"<span class='badge-soft secondary'>Niveau : {level}</span>",
+            f"<span class='badge-soft secondary'>Tokens max : {max_tokens}</span>",
+        ]
+        if dialogue_mode and dialogue_mode != "none":
+            recap_badges.append(
+                f"<span class='badge-soft secondary'>Dialogue : {dialogue_mode}</span>"
+            )
+        if context_count:
+            recap_badges.append(
+                f"<span class='badge-soft'>Contexte : {context_count} fiche(s) · ~{context_tokens} tokens</span>"
+            )
+
+        recap_html = "".join(recap_badges)
+        st.markdown(
+            f"<div class='run-recap'>{recap_html}</div>",
+            unsafe_allow_html=True,
+        )
 
     try:
         start_time = time.time()
@@ -180,6 +230,36 @@ def generate_content(
 
         result = workflow.run(brief, writer_config, context=context_payload)
 
+        history_entries = result.get("history", [])
+        step_durations: Dict[str, float] = {}
+        previous_timestamp = datetime.fromtimestamp(start_time)
+        for entry in history_entries:
+            step_key = entry.get("step", "").lower()
+            timestamp_str = entry.get("timestamp")
+            if step_key not in step_order or not timestamp_str:
+                continue
+            try:
+                current_timestamp = datetime.fromisoformat(timestamp_str)
+            except ValueError:
+                continue
+            duration = max((current_timestamp - previous_timestamp).total_seconds(), 0.1)
+            step_durations[step_key] = duration
+            previous_timestamp = current_timestamp
+
+        for step in step_order:
+            step_durations.setdefault(step, avg_durations[step])
+
+        def update_time_feedback(completed_steps: int) -> None:
+            elapsed_total = sum(
+                step_durations[step] for step in step_order[:completed_steps]
+            )
+            remaining_total = sum(
+                step_durations[step] for step in step_order[completed_steps:]
+            )
+            time_estimate.markdown(
+                f"⏱️ {elapsed_total:.1f}s écoulées • ~{remaining_total:.1f}s restantes"
+            )
+
         step_placeholders[0].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
@@ -191,6 +271,7 @@ def generate_content(
             unsafe_allow_html=True,
         )
         progress_bar.progress(25)
+        update_time_feedback(1)
 
         step_placeholders[1].markdown(
             """
@@ -216,6 +297,7 @@ def generate_content(
             unsafe_allow_html=True,
         )
         progress_bar.progress(65)
+        update_time_feedback(2)
 
         step_placeholders[2].markdown(
             """
@@ -241,6 +323,7 @@ def generate_content(
             unsafe_allow_html=True,
         )
         progress_bar.progress(90)
+        update_time_feedback(3)
 
         step_placeholders[3].markdown(
             """
@@ -268,7 +351,12 @@ def generate_content(
         elapsed_time = time.time() - start_time
         status_text.text(f"✅ Terminé en {elapsed_time:.1f}s !")
         progress_bar.progress(100)
-        time_estimate.text("")
+        update_time_feedback(len(step_order))
+
+        for step in step_order:
+            history_list = st.session_state.step_duration_history.setdefault(step, [])
+            history_list.append(step_durations[step])
+            st.session_state.step_duration_history[step] = history_list[-10:]
 
         result["model_used"] = model_name
         result["model_config"] = model_config

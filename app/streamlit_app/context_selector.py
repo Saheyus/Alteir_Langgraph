@@ -3,10 +3,13 @@
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import asdict
 from typing import Any, Dict, List, Optional
 
 import streamlit as st
+
+import pandas as pd
 
 from agents.notion_context_fetcher import (
     NotionClientUnavailable,
@@ -17,6 +20,14 @@ from agents.notion_context_matcher import MatchSuggestion, NotionContextMatcher
 
 # Domains exposed to the user in the selector
 CONTEXT_DOMAINS = ["personnages", "lieux", "communautes", "especes", "objets"]
+
+DOMAIN_COLORS = {
+    "personnages": "#6366F1",
+    "lieux": "#10B981",
+    "communautes": "#F59E0B",
+    "especes": "#EC4899",
+    "objets": "#8B5CF6",
+}
 
 # Suggested domain grouping per main creation domain
 DOMAIN_SUGGESTION_TARGETS = {
@@ -94,59 +105,146 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
         st.info("Aucune suggestion disponible pour le moment.")
         return
 
-    st.markdown("#### Suggestions")
+    suggestion_rows = []
     for suggestion in selection["suggestions"]:
         assert isinstance(suggestion, MatchSuggestion)
         page = suggestion.page
-        checked = page.id in selection["selected_ids"] or suggestion.auto_select
-        checkbox = st.checkbox(
-            f"{page.title} — {int(suggestion.score * 100)}%",
-            value=checked,
-            key=f"suggestion_{page.id}",
-            help=page.summary or "",
+        suggestion_rows.append(
+            {
+                "id": page.id,
+                "Sélection": page.id in selection["selected_ids"] or suggestion.auto_select,
+                "Titre": page.title,
+                "Pertinence": int(round(suggestion.score * 100)),
+                "Domaine": page.domain.capitalize(),
+                "Tokens": page.token_estimate,
+                "Résumé": page.summary or "—",
+            }
         )
-        _toggle_selection(page, checkbox)
 
-        with st.expander(f"Détails · {page.domain.capitalize()} · ~{page.token_estimate} tokens", expanded=False):
-            st.markdown(f"**Résumé :** {page.summary or '—'}")
-            if suggestion.matched_keywords:
-                keywords = ", ".join(suggestion.matched_keywords)
-                st.caption(f"Correspondances : {keywords}")
+    suggestion_df = pd.DataFrame(suggestion_rows).set_index("id")
+    edited_df = st.data_editor(
+        suggestion_df,
+        hide_index=True,
+        use_container_width=True,
+        key="context_suggestions_editor",
+        column_config={
+            "Sélection": st.column_config.CheckboxColumn(
+                "Sélection",
+                help="Ajouter la fiche au contexte",
+            ),
+            "Pertinence": st.column_config.ProgressColumn(
+                "Pertinence",
+                format="%d%%",
+                min_value=0,
+                max_value=100,
+            ),
+            "Tokens": st.column_config.NumberColumn(
+                "Tokens",
+                format="~%d",
+                help="Estimation du coût contextuel",
+            ),
+            "Résumé": st.column_config.TextColumn("Résumé", width="large"),
+        },
+    )
+
+    for suggestion in selection["suggestions"]:
+        page = suggestion.page
+        row = edited_df.loc[page.id]
+        _toggle_selection(page, bool(row["Sélection"]))
 
 
 def _render_manual_selection(previews_by_domain: Dict[str, List[NotionPagePreview]]) -> None:
     st.subheader("🗂️ Sélection manuelle")
-    tabs = st.tabs([domain.capitalize() for domain in CONTEXT_DOMAINS])
 
-    for tab, domain in zip(tabs, CONTEXT_DOMAINS):
-        with tab:
-            pages = previews_by_domain.get(domain, [])
-            if not pages:
-                st.caption("Aucune fiche disponible dans ce domaine.")
-                continue
-
-            search = st.text_input(
-                "Recherche",
-                key=f"context_search_{domain}",
-                placeholder="Nom ou mot-clé",
+    all_pages: List[Dict[str, Any]] = []
+    page_lookup: Dict[str, NotionPagePreview] = {}
+    for domain, pages in previews_by_domain.items():
+        for page in pages:
+            all_pages.append(
+                {
+                    "id": page.id,
+                    "Sélection": page.id in st.session_state.context_selection["selected_ids"],
+                    "Titre": page.title,
+                    "Domaine": domain.capitalize(),
+                    "Tokens": page.token_estimate,
+                    "Résumé": page.summary or "—",
+                }
             )
-            filtered = [
-                page
-                for page in pages
-                if not search
-                or search.lower() in page.title.lower()
-                or search.lower() in page.summary.lower()
-            ]
+            page_lookup[page.id] = page
 
-            for page in filtered[:80]:  # Safety cap to avoid overwhelming the UI
-                checked = page.id in st.session_state.context_selection["selected_ids"]
-                checkbox = st.checkbox(
-                    f"{page.title} · ~{page.token_estimate} tokens",
-                    value=checked,
-                    key=f"manual_{domain}_{page.id}",
-                    help=page.summary or "Sans aperçu",
-                )
-                _toggle_selection(page, checkbox)
+    if not all_pages:
+        st.caption("Aucune fiche disponible pour le moment.")
+        return
+
+    domains_available = sorted({row["Domaine"] for row in all_pages})
+    max_tokens = max((row["Tokens"] for row in all_pages), default=0)
+    token_cap_default = max(max_tokens, 1000)
+
+    filter_col1, filter_col2, filter_col3 = st.columns([2, 2, 1])
+    with filter_col1:
+        domain_filter = st.multiselect(
+            "Domaines",
+            options=domains_available,
+            default=domains_available,
+            key="manual_domain_filter",
+        )
+    with filter_col2:
+        search = st.text_input(
+            "Recherche globale",
+            key="manual_search_filter",
+            placeholder="Titre, résumé ou mot-clé",
+        )
+    with filter_col3:
+        token_cap = st.slider(
+            "Tokens max",
+            min_value=0,
+            max_value=token_cap_default,
+            value=token_cap_default,
+            step=500,
+            key="manual_token_cap",
+        )
+
+    filtered_rows = [
+        row
+        for row in all_pages
+        if row["Domaine"] in domain_filter
+        and row["Tokens"] <= token_cap
+        and (
+            not search
+            or search.lower() in row["Titre"].lower()
+            or search.lower() in row["Résumé"].lower()
+        )
+    ]
+
+    if not filtered_rows:
+        st.info("Aucun résultat ne correspond aux filtres actuels.")
+        return
+
+    filtered_rows = filtered_rows[:200]
+    manual_df = pd.DataFrame(filtered_rows).set_index("id")
+    edited_manual = st.data_editor(
+        manual_df,
+        hide_index=True,
+        use_container_width=True,
+        key="context_manual_editor",
+        column_config={
+            "Sélection": st.column_config.CheckboxColumn(
+                "Sélection",
+                help="Cocher pour inclure la fiche",
+            ),
+            "Tokens": st.column_config.NumberColumn(
+                "Tokens",
+                format="~%d",
+            ),
+            "Résumé": st.column_config.TextColumn("Résumé", width="large"),
+        },
+    )
+
+    for page_id, row in edited_manual.iterrows():
+        page = page_lookup.get(page_id)
+        if not page:
+            continue
+        _toggle_selection(page, bool(row["Sélection"]))
 
 
 def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
@@ -169,18 +267,38 @@ def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
         ordered_previews.append(preview)
         total_tokens += preview.token_estimate
 
-    for preview in ordered_previews:
-        col_label, col_remove = st.columns([6, 1])
-        with col_label:
-            st.markdown(f"**{preview.title}** · {preview.domain.capitalize()} · ~{preview.token_estimate} tokens")
-            if preview.summary:
-                st.caption(preview.summary)
-        with col_remove:
-            if st.button("Retirer", key=f"remove_{preview.id}"):
-                _toggle_selection(preview, False)
-                st.experimental_rerun()
+    if ordered_previews:
+        grid_columns = st.columns(min(3, len(ordered_previews)))
+        for idx, preview in enumerate(ordered_previews):
+            column = grid_columns[idx % len(grid_columns)]
+            with column:
+                color = DOMAIN_COLORS.get(preview.domain, "#475569")
+                st.markdown(
+                    f"""
+                    <div class="context-card" style="border-left: 4px solid {color};">
+                        <div class="context-card__title">{preview.title}</div>
+                        <div class="context-card__meta">
+                            <span>{preview.domain.capitalize()}</span>
+                            <span>~{preview.token_estimate} tokens</span>
+                        </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+                if st.button("Retirer", key=f"remove_{preview.id}", use_container_width=True):
+                    _toggle_selection(preview, False)
+                    st.experimental_rerun()
 
-    st.metric("Total estimé", f"~{total_tokens} tokens")
+        domain_counts = Counter(preview.domain for preview in ordered_previews)
+        top_domain, top_count = domain_counts.most_common(1)[0]
+        st.caption(
+            f"Domaine dominant : {top_domain.capitalize()} ({top_count} fiche(s))"
+        )
+
+    st.markdown(
+        f"<div class='badge-soft'>Total estimé : ~{total_tokens} tokens</div>",
+        unsafe_allow_html=True,
+    )
     if total_tokens > 50000:
         st.warning("⚠️ Contexte volumineux : envisager de réduire en dessous de 50 000 tokens.")
 

@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import os
 import re
+from datetime import datetime
 from pathlib import Path
 
+import pandas as pd
 import requests
 import streamlit as st
 
@@ -550,10 +552,134 @@ def show_results():
 
     st.write(f"**{len(file_names)} résultat(s) généré(s)**")
 
-    selected_file = st.selectbox("Sélectionner un résultat", file_names)
+    outputs_dir = Path("outputs")
+    previous_selection = st.session_state.get("results_selected_file", file_names[0])
 
-    if not selected_file:
+    overview_rows = []
+    for stem in file_names:
+        json_path = outputs_dir / f"{stem}.json"
+        data_preview = load_result_file(stem)
+        if not data_preview:
+            continue
+        timestamp = datetime.fromtimestamp(json_path.stat().st_mtime)
+        domain_label = data_preview.get("domain", "").capitalize() or "—"
+        model_used = data_preview.get("model_used") or "—"
+        ready = data_preview.get("ready_for_publication", False)
+        context_count = len(data_preview.get("context", {}).get("pages", [])) if data_preview.get("context") else 0
+        overview_rows.append(
+            {
+                "id": stem,
+                "Ouvrir": stem == previous_selection,
+                "Télécharger": False,
+                "Date": timestamp.strftime("%Y-%m-%d %H:%M"),
+                "Domaine": domain_label,
+                "Modèle": model_used,
+                "Publication": "✅ Prêt" if ready else "À revoir",
+                "Contexte": context_count,
+            }
+        )
+
+    if not overview_rows:
+        st.error("Impossible de charger les métadonnées des résultats.")
         return
+
+    overview_df = pd.DataFrame(overview_rows).set_index("id")
+
+    domains_available = sorted(overview_df["Domaine"].unique())
+    status_available = sorted(overview_df["Publication"].unique())
+
+    filter_col1, filter_col2, filter_col3 = st.columns([2, 2, 2])
+    with filter_col1:
+        domain_filter = st.multiselect(
+            "Domaine",
+            options=domains_available,
+            default=domains_available,
+            key="results_domain_filter",
+        )
+    with filter_col2:
+        status_filter = st.multiselect(
+            "État",
+            options=status_available,
+            default=status_available,
+            key="results_status_filter",
+        )
+    with filter_col3:
+        search_query = st.text_input(
+            "Recherche",
+            key="results_search_query",
+            placeholder="Nom, modèle ou date",
+        )
+
+    filtered_overview = overview_df[
+        overview_df["Domaine"].isin(domain_filter)
+        & overview_df["Publication"].isin(status_filter)
+    ]
+
+    if search_query:
+        q = search_query.lower()
+
+        def _match(row: pd.Series) -> bool:
+            haystack = " ".join(
+                [
+                    row.name,
+                    str(row.get("Date", "")),
+                    str(row.get("Domaine", "")),
+                    str(row.get("Modèle", "")),
+                    str(row.get("Publication", "")),
+                ]
+            ).lower()
+            return q in haystack
+
+        filtered_overview = filtered_overview[filtered_overview.apply(_match, axis=1)]
+
+    if filtered_overview.empty:
+        st.info("Aucun résultat ne correspond aux filtres sélectionnés.")
+        return
+
+    edited_overview = st.data_editor(
+        filtered_overview,
+        hide_index=True,
+        use_container_width=True,
+        key="results_overview_editor",
+        column_config={
+            "Ouvrir": st.column_config.CheckboxColumn(
+                "Ouvrir",
+                help="Afficher les détails du résultat",
+            ),
+            "Télécharger": st.column_config.CheckboxColumn(
+                "Téléchargement",
+                help="Cocher pour activer le bouton de téléchargement ci-dessous",
+            ),
+            "Contexte": st.column_config.NumberColumn(
+                "Contexte",
+                help="Nombre de fiches utilisées",
+                format="%d",
+            ),
+        },
+    )
+
+    open_candidates = [idx for idx, row in edited_overview.iterrows() if row.get("Ouvrir")]
+    if open_candidates:
+        selected_file = open_candidates[-1]
+    else:
+        selected_file = previous_selection if previous_selection in overview_df.index else overview_df.index[0]
+
+    st.session_state.results_selected_file = selected_file
+
+    download_candidates = [idx for idx, row in edited_overview.iterrows() if row.get("Télécharger")]
+    if download_candidates:
+        with st.expander("Téléchargements rapides", expanded=True):
+            for stem in download_candidates:
+                json_path = outputs_dir / f"{stem}.json"
+                if not json_path.exists():
+                    continue
+                st.download_button(
+                    label=f"💾 {stem}.json",
+                    data=json_path.read_text(encoding="utf-8"),
+                    file_name=f"{stem}.json",
+                    mime="application/json",
+                    key=f"download_inline_{stem}",
+                )
 
     data = load_result_file(selected_file)
 
@@ -591,15 +717,14 @@ def show_results():
             export_to_notion(data)
 
     with col_download:
-        json_path = Path("outputs") / f"{selected_file}.json"
+        json_path = outputs_dir / f"{selected_file}.json"
         if json_path.exists():
-            with open(json_path, "r", encoding="utf-8") as handle:
-                st.download_button(
-                    label="💾 Télécharger JSON",
-                    data=handle.read(),
-                    file_name=f"{selected_file}.json",
-                    mime="application/json",
-                )
+            st.download_button(
+                label="💾 Télécharger JSON",
+                data=json_path.read_text(encoding="utf-8"),
+                file_name=f"{selected_file}.json",
+                mime="application/json",
+            )
 
     st.divider()
 
@@ -607,44 +732,92 @@ def show_results():
         st.markdown(data["content"])
 
     if data.get("review_issues"):
-        with st.expander(f"⚠️ Problèmes identifiés ({len(data['review_issues'])})"):
-            for issue in data["review_issues"]:
-                severity = issue.get("severity", "minor")
-                if severity == "critical":
-                    severity_icon = "🔴"
-                    box_color = "#f8d7da"
-                    border_color = "#dc3545"
-                elif severity == "major":
-                    severity_icon = "🟠"
-                    box_color = "#fff3cd"
-                    border_color = "#ffc107"
-                else:
-                    severity_icon = "🟡"
-                    box_color = "#d1ecf1"
-                    border_color = "#17a2b8"
+        severity_order = {"critical": 0, "major": 1, "minor": 2}
+        issues_sorted = sorted(
+            data["review_issues"],
+            key=lambda issue: severity_order.get(issue.get("severity", "minor"), 3),
+        )
+        issues_md = ["# Problèmes identifiés"]
+
+        with st.expander(f"⚠️ Problèmes identifiés ({len(issues_sorted)})"):
+            severity_styles = {
+                "critical": ("🔴", "Critique", "#dc2626", "#fee2e2"),
+                "major": ("🟠", "Majeur", "#d97706", "#fff7ed"),
+                "minor": ("🟡", "Mineur", "#2563eb", "#eff6ff"),
+            }
+
+            for issue in issues_sorted:
+                severity_key = issue.get("severity", "minor")
+                icon, label, border_color, bg_color = severity_styles.get(
+                    severity_key, ("🟡", "Mineur", "#2563eb", "#eff6ff")
+                )
+                category = issue.get("category", "Général").capitalize()
+                description = issue.get("description", "N/A")
+                suggestion = issue.get("suggestion")
 
                 st.markdown(
                     f"""
-                <div style="background-color: {box_color}; border-left: 4px solid {border_color}; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
-                    {severity_icon} <b>{issue.get('category', 'General').capitalize()}</b><br>
-                    {issue.get('description', 'N/A')}
-                    {f"<br><i>💡 Suggestion: {issue['suggestion']}</i>" if issue.get('suggestion') else ""}
-                </div>
-                """,
+                    <div style="background-color: {bg_color}; border-left: 4px solid {border_color}; padding: 1rem; margin: 0.5rem 0; border-radius: 0.4rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <strong>{category}</strong>
+                            <span class="badge-soft secondary">{icon} {label}</span>
+                        </div>
+                        <div style="margin-top:0.5rem;">{description}</div>
+                        {f"<div style='margin-top:0.5rem; font-style:italic;'>💡 {suggestion}</div>" if suggestion else ""}
+                    </div>
+                    """,
                     unsafe_allow_html=True,
                 )
 
+                issues_md.append(f"- **{label}** · {category}: {description}")
+                if suggestion:
+                    issues_md.append(f"  - 💡 {suggestion}")
+
+            st.download_button(
+                "⬇️ Export Markdown",
+                data="\n".join(issues_md),
+                file_name=f"{selected_file}_issues.md",
+                mime="text/markdown",
+                key=f"download_issues_{selected_file}",
+            )
+
     if data.get("corrections"):
         with st.expander(f"✏️ Corrections ({len(data['corrections'])})"):
+            corrections_df = pd.DataFrame(data["corrections"])
             for corr in data["corrections"]:
                 st.markdown(
                     f"""
-                <div style="background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
-                    <b>{corr.get('type', 'N/A')}</b>: <code>{corr.get('original', '')}</code> → <code>{corr.get('corrected', '')}</code>
-                    {f"<br><i>{corr['explanation']}</i>" if corr.get('explanation') else ""}
-                </div>
-                """,
+                    <div style="background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
+                        <b>{corr.get('type', 'N/A')}</b>: <code>{corr.get('original', '')}</code> → <code>{corr.get('corrected', '')}</code>
+                        {f"<br><i>{corr['explanation']}</i>" if corr.get('explanation') else ""}
+                    </div>
+                    """,
                     unsafe_allow_html=True,
+                )
+
+            if not corrections_df.empty:
+                markdown_lines = ["# Corrections proposées"]
+                for _, row in corrections_df.iterrows():
+                    markdown_lines.append(
+                        f"- **{row.get('type', 'N/A')}** : `{row.get('original', '')}` → `{row.get('corrected', '')}`"
+                    )
+                    if row.get("explanation"):
+                        markdown_lines.append(f"  - 💡 {row['explanation']}")
+
+                st.download_button(
+                    "⬇️ Export Markdown",
+                    data="\n".join(markdown_lines),
+                    file_name=f"{selected_file}_corrections.md",
+                    mime="text/markdown",
+                    key=f"download_corrections_md_{selected_file}",
+                )
+
+                st.download_button(
+                    "⬇️ Export CSV",
+                    data=corrections_df.to_csv(index=False),
+                    file_name=f"{selected_file}_corrections.csv",
+                    mime="text/csv",
+                    key=f"download_corrections_csv_{selected_file}",
                 )
 
     with st.expander("📊 Métadonnées"):
