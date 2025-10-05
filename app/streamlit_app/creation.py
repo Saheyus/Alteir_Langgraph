@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import random
+from html import escape
 
 import streamlit as st
 
@@ -18,6 +19,9 @@ from .constants import (
 from .context_selector import render_context_selector
 from .generation import generate_content
 from .layout import get_domain_header
+
+
+DEFAULT_MAX_TOKENS = 5000
 
 
 def _random_different(options, current):
@@ -55,13 +59,250 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
         st.session_state.reasoning_effort = model_info.get("default_reasoning", "minimal")
 
     if "max_tokens" not in st.session_state:
-        st.session_state.max_tokens = 5000
+        st.session_state.max_tokens = DEFAULT_MAX_TOKENS
 
     if "selected_profile" not in st.session_state or previous_domain != domain:
         st.session_state.selected_profile = "Personnalisé"
 
     st.session_state.last_domain = domain
 
+
+def _ensure_configuration_styles() -> None:
+    if st.session_state.get("_creation_styles_loaded"):
+        return
+
+    st.markdown(
+        """
+        <style>
+        .config-summary {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            background: #ffffff;
+        }
+        .config-summary__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .config-summary__title {
+            font-weight: 600;
+            color: #111827;
+        }
+        .config-summary__profile {
+            font-size: 0.85rem;
+            color: #4b5563;
+            padding: 0.15rem 0.55rem;
+            border-radius: 999px;
+            background: #f3f4f6;
+        }
+        .config-summary__profile--custom {
+            background: #e0f2fe;
+            color: #0c4a6e;
+            font-weight: 600;
+        }
+        .config-summary__badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 0.75rem;
+        }
+        .config-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            background: #f3f4f6;
+            color: #111827;
+            font-size: 0.85rem;
+            border: 1px solid #e5e7eb;
+        }
+        .config-badge.changed {
+            background: #dbeafe;
+            color: #1e3a8a;
+            border-color: #bfdbfe;
+            font-weight: 600;
+        }
+        .config-summary table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .config-summary th,
+        .config-summary td {
+            padding: 0.55rem 0.4rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+            color: #1f2937;
+        }
+        .config-summary th {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+            color: #6b7280;
+        }
+        .config-summary tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .config-summary .value--changed {
+            font-weight: 600;
+            color: #111827;
+        }
+        .config-summary .change-badge {
+            margin-left: 0.45rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.7rem;
+        }
+        .config-summary__baseline {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.session_state["_creation_styles_loaded"] = True
+
+
+def _format_value(value: str | float | None) -> str:
+    if value is None:
+        return "—"
+    if isinstance(value, float):
+        return f"{value:.2f}"
+    return str(value)
+
+
+def _render_configuration_summary(
+    *,
+    domain: str,
+    profils: dict,
+    selected_profile: str,
+    intent: str,
+    level: str,
+    atmosphere: str | None,
+    dialogue_mode: str | None,
+    model_info: dict,
+    creativity: float | None,
+    reasoning_effort: str | None,
+    max_tokens: int,
+) -> None:
+    _ensure_configuration_styles()
+
+    profile_reference = profils.get(selected_profile) if selected_profile in profils else None
+    profile_label = (
+        f"Profil : {escape(selected_profile)}"
+        if profile_reference
+        else "Profil personnalisé"
+    )
+    profile_class = (
+        "config-summary__profile"
+        if profile_reference
+        else "config-summary__profile config-summary__profile--custom"
+    )
+
+    narrative_rows: list[tuple[str, str | None, str | None]] = []
+    base_intent = profile_reference.get("intent") if profile_reference else None
+    narrative_rows.append(("Intention narrative", intent, base_intent))
+
+    if domain == "Lieux":
+        base_level = profile_reference.get("level") if profile_reference else None
+        base_atmosphere = profile_reference.get("atmosphere") if profile_reference else None
+        narrative_rows.append(("Échelle spatiale", level, base_level))
+        narrative_rows.append(("Atmosphère", atmosphere, base_atmosphere))
+    else:
+        base_level = profile_reference.get("level") if profile_reference else None
+        base_dialogue = profile_reference.get("dialogue_mode") if profile_reference else None
+        narrative_rows.append(("Niveau de détail", level, base_level))
+        narrative_rows.append(("Mode de dialogue", dialogue_mode, base_dialogue))
+
+    badges: list[tuple[str, str, bool]] = []
+    if model_info.get("uses_reasoning"):
+        current_reasoning = reasoning_effort or model_info.get("default_reasoning", "minimal")
+        default_reasoning = model_info.get("default_reasoning", "minimal")
+        badges.append(("Reasoning", current_reasoning, current_reasoning != default_reasoning))
+    else:
+        current_creativity = creativity if creativity is not None else st.session_state.get("creativity")
+        if current_creativity is not None:
+            base_creativity = profile_reference.get("creativity") if profile_reference else None
+            changed = (
+                base_creativity is not None and abs(current_creativity - base_creativity) > 1e-6
+            )
+            badges.append(("Température", f"{float(current_creativity):.2f}", changed))
+
+    token_changed = max_tokens != DEFAULT_MAX_TOKENS
+    badges.append(("Max tokens", f"{max_tokens:,}".replace(",", "\u202f"), token_changed))
+
+    rows_html = []
+    for label, current, baseline in narrative_rows:
+        current_display = _format_value(current)
+        baseline_display = _format_value(baseline)
+        changed = baseline is not None and str(current) != str(baseline)
+        change_badge = "" if not changed else "<span class='change-badge'>Modifié</span>"
+        value_class = "value--changed" if changed else ""
+        rows_html.append(
+            """
+            <tr>
+                <th>{label}</th>
+                <td><span class='{value_class}'>{current}</span>{badge}</td>
+                <td class='config-summary__baseline'>{baseline}</td>
+            </tr>
+            """.format(
+                label=escape(label),
+                value_class=value_class,
+                current=escape(current_display),
+                badge=change_badge,
+                baseline=escape(baseline_display),
+            )
+        )
+
+    badge_html = "".join(
+        """
+        <span class='config-badge {changed}'>
+            <span>{label}</span>
+            <strong>{value}</strong>
+        </span>
+        """.format(
+            changed="changed" if is_changed else "",
+            label=escape(label),
+            value=escape(str(value)),
+        )
+        for label, value, is_changed in badges
+    )
+
+    st.markdown(
+        """
+        <div class="config-summary">
+            <div class="config-summary__header">
+                <span class="config-summary__title">Configuration</span>
+                <span class="{profile_class}">{profile_label}</span>
+            </div>
+            <div class="config-summary__badges">{badges}</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paramètre</th>
+                        <th>Valeur actuelle</th>
+                        <th>Profil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+        </div>
+        """.format(
+            profile_class=profile_class,
+            profile_label=profile_label,
+            badges=badge_html,
+            rows="".join(rows_html),
+        ),
+        unsafe_allow_html=True,
+    )
 
 def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> None:
     """Render the creation tab for the given domain and model."""
@@ -334,19 +575,19 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             key=f"max_tokens_slider_{st.session_state.random_seed}",
         )
 
-        config_lines = [f"- Intent: `{intent}`"]
-        if domain == "Lieux":
-            config_lines.extend([f"- Échelle: `{level}`", f"- Atmosphère: `{atmosphere}`"])
-        else:
-            config_lines.extend([f"- Niveau: `{level}`", f"- Dialogue: `{dialogue_mode}`"])
-
-        if model_info.get("uses_reasoning"):
-            config_lines.append(f"- Reasoning: `{reasoning_effort}`")
-        else:
-            config_lines.append(f"- Température: `{creativity}`")
-
-        config_lines.append(f"- Max tokens: `{max_tokens}`")
-        st.info("**Configuration:**\n" + "\n".join(config_lines))
+        _render_configuration_summary(
+            domain=domain,
+            profils=profils,
+            selected_profile=selected_profile,
+            intent=intent,
+            level=level,
+            atmosphere=atmosphere if domain == "Lieux" else None,
+            dialogue_mode=dialogue_mode if domain != "Lieux" else None,
+            model_info=model_info,
+            creativity=creativity,
+            reasoning_effort=reasoning_effort,
+            max_tokens=max_tokens,
+        )
 
     st.session_state.intent = intent
     st.session_state.level = level
