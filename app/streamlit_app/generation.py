@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import time
 from typing import Any, Dict, Optional
+from pathlib import Path
+import json
 
 import streamlit as st
 
@@ -127,6 +129,9 @@ def generate_content(
     )
 
     context_payload = _build_context_payload(context_summary)
+    # Safety log for full context usage
+    if context_payload and context_payload.get("pages"):
+        st.caption(f"📚 Contexte chargé: {len(context_payload['pages'])} page(s) (~{context_payload.get('token_estimate', 0)} tokens)")
 
     workflow = ContentWorkflow(domain_config, llm=llm)
 
@@ -160,7 +165,26 @@ def generate_content(
         progress_bar = st.progress(0)
         status_text = st.empty()
         time_estimate = st.empty()
-        time_estimate.text("⏱️ Temps estimé : 30-45 secondes")
+
+    # Simple progress/ETA tracker (rolling average persisted in outputs/metrics.json)
+    metrics_path = Path("outputs") / "metrics.json"
+    try:
+        prior = json.loads(metrics_path.read_text(encoding="utf-8")) if metrics_path.exists() else {}
+    except Exception:
+        prior = {}
+
+    def _estimate_total_seconds(token_estimate: int | None) -> float:
+        # Heuristic: base + 0.0015s per token + model factor
+        base = 8.0
+        per_token = 0.0015 * (token_estimate or 2000)
+        model_factor = 1.0 if model_config.get("uses_reasoning") else 0.7
+        hist = prior.get("avg_total_s", 30.0)
+        return max(6.0, 0.5 * hist + 0.5 * (base + per_token) * model_factor)
+
+    # Use context token estimate if available
+    context_payload = _build_context_payload(context_summary)
+    eta_seconds = _estimate_total_seconds(context_payload.get("token_estimate") if context_payload else None)
+    time_estimate.text(f"⏱️ Temps estimé : ~{int(eta_seconds)}s")
 
     try:
         start_time = time.time()
@@ -178,7 +202,9 @@ def generate_content(
         status_text.text("✍️ Writer : Génération du contenu initial...")
         progress_bar.progress(10)
 
+        writer_start = time.time()
         result = workflow.run(brief, writer_config, context=context_payload)
+        writer_dur = time.time() - writer_start
 
         step_placeholders[0].markdown(
             """
@@ -190,7 +216,7 @@ def generate_content(
         """,
             unsafe_allow_html=True,
         )
-        progress_bar.progress(25)
+        progress_bar.progress(35)
 
         step_placeholders[1].markdown(
             """
@@ -203,7 +229,7 @@ def generate_content(
             unsafe_allow_html=True,
         )
         status_text.text("🔍 Reviewer : Analyse de cohérence narrative...")
-        progress_bar.progress(50)
+        progress_bar.progress(60)
 
         step_placeholders[1].markdown(
             """
@@ -228,7 +254,7 @@ def generate_content(
             unsafe_allow_html=True,
         )
         status_text.text("✏️ Corrector : Correction du style...")
-        progress_bar.progress(80)
+        progress_bar.progress(85)
 
         step_placeholders[2].markdown(
             """
@@ -240,7 +266,7 @@ def generate_content(
         """,
             unsafe_allow_html=True,
         )
-        progress_bar.progress(90)
+        progress_bar.progress(95)
 
         step_placeholders[3].markdown(
             """
@@ -269,6 +295,16 @@ def generate_content(
         status_text.text(f"✅ Terminé en {elapsed_time:.1f}s !")
         progress_bar.progress(100)
         time_estimate.text("")
+
+        # Persist rolling metrics
+        try:
+            prev_avg = float(prior.get("avg_total_s", elapsed_time))
+            new_avg = 0.7 * prev_avg + 0.3 * elapsed_time
+            prior["avg_total_s"] = new_avg
+            metrics_path.parent.mkdir(parents=True, exist_ok=True)
+            metrics_path.write_text(json.dumps(prior, ensure_ascii=False, indent=2), encoding="utf-8")
+        except Exception:
+            pass
 
         result["model_used"] = model_name
         result["model_config"] = model_config

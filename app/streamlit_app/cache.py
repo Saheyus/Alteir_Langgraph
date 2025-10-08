@@ -1,7 +1,10 @@
 """Cache helpers for the Streamlit application."""
 
 from pathlib import Path
+import os
 import json
+import platform
+from typing import Any, Dict
 import streamlit as st
 
 
@@ -56,3 +59,46 @@ def load_result_file(file_stem: str):
 
     with open(json_path, "r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+# ---------------------------------------------------------------------------
+# UI preferences persistence (QoL)
+# ---------------------------------------------------------------------------
+
+def _prefs_path() -> Path:
+    """Return a cross-platform path for UI preferences file."""
+    # Windows: APPDATA/Alteir/ui_prefs.json; others: ~/.alteir/ui_prefs.json
+    if platform.system().lower() == "windows":
+        base = Path(os.getenv("APPDATA", str(Path.home())))
+        return base / "Alteir" / "ui_prefs.json"
+    return Path.home() / ".alteir" / "ui_prefs.json"
+
+
+@st.cache_data
+def load_ui_prefs() -> Dict[str, Any]:
+    """Load UI preferences; returns empty dict if none.
+
+    Cached to avoid repeated disk access during reruns; invalidated when saving.
+    """
+    path = _prefs_path()
+    try:
+        if path.exists():
+            with path.open("r", encoding="utf-8") as fh:
+                return json.load(fh)
+    except Exception:
+        pass
+    return {}
+
+
+def save_ui_prefs(prefs: Dict[str, Any]) -> None:
+    """Persist UI preferences to disk and clear the cache entry."""
+    path = _prefs_path()
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("w", encoding="utf-8") as fh:
+            json.dump(prefs, fh, ensure_ascii=False, indent=2)
+    except Exception:
+        # Best-effort: do not crash UI if disk write fails
+        return
+    # Invalidate cache so next load sees the new data
+    load_ui_prefs.clear()

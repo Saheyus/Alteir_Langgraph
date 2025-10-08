@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from .cache import get_outputs_count
+from .cache import get_outputs_count, load_ui_prefs, save_ui_prefs
 from .constants import DOMAIN_ICONS, DOMAIN_HEADERS, MODELS
 
 
@@ -97,13 +97,19 @@ def render_sidebar():
     with st.sidebar:
         st.header("⚙️ Configuration")
 
+        # Load defaults from prefs
+        prefs = load_ui_prefs()
+        default_model = prefs.get("selected_model") or list(MODELS.keys())[2]
+        default_domain = prefs.get("domain") or "Personnages"
+
         st.subheader("Modèle LLM")
         selected_model = st.selectbox(
             "Modèle",
             options=list(MODELS.keys()),
-            index=2,
+            index=list(MODELS.keys()).index(default_model) if default_model in MODELS else 2,
             format_func=lambda key: f"{MODELS[key]['icon']} {key}",
             help="Choisir le modèle LLM pour la génération",
+            key="sidebar_model_select",
         )
 
         model_info = MODELS[selected_model]
@@ -113,14 +119,44 @@ def render_sidebar():
         domain = st.selectbox(
             "Domaine",
             ["Personnages", "Lieux"],
-            index=0,
+            index=["Personnages", "Lieux"].index(default_domain) if default_domain in ["Personnages", "Lieux"] else 0,
             help="Choisir le type de contenu à générer",
+            key="sidebar_domain_select",
         )
         st.caption(f"{DOMAIN_ICONS[domain]} **{domain}**")
 
+        # Quick stats
         st.subheader("📊 Statistiques")
         nb_files = get_outputs_count()
         st.metric("Générations", nb_files)
+
+        # Actions (always visible)
+        st.subheader("🧭 Actions")
+        # Summary of key params if available in session
+        summary_lines = []
+        if "intent" in st.session_state:
+            summary_lines.append(f"Intent: `{st.session_state.intent}`")
+        if "level" in st.session_state:
+            summary_lines.append(f"Niveau: `{st.session_state.level}`")
+        if domain == "Lieux" and "atmosphere" in st.session_state:
+            summary_lines.append(f"Atmosphère: `{st.session_state.atmosphere}`")
+        if domain == "Personnages" and "dialogue_mode" in st.session_state:
+            summary_lines.append(f"Dialogue: `{st.session_state.dialogue_mode}`")
+        if "max_tokens" in st.session_state:
+            summary_lines.append(f"Max tokens: `{st.session_state.max_tokens}`")
+        if summary_lines:
+            st.info("\n".join(summary_lines))
+
+        # Trigger button mirrors main generate button
+        if st.button("🚀 Générer", use_container_width=True, key="sidebar_generate"):
+            st.session_state.trigger_generate = True
+
+        # Persist chosen model/domain immediately
+        try:
+            prefs.update({"selected_model": selected_model, "domain": domain})
+            save_ui_prefs(prefs)
+        except Exception:
+            pass
 
     return selected_model, model_info, domain
 

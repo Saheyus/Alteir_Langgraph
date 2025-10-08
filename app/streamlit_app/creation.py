@@ -18,6 +18,7 @@ from .constants import (
 from .context_selector import render_context_selector
 from .generation import generate_content
 from .layout import get_domain_header
+from .cache import load_ui_prefs, save_ui_prefs
 
 
 def _random_different(options, current):
@@ -61,6 +62,20 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
         st.session_state.selected_profile = "Personnalisé"
 
     st.session_state.last_domain = domain
+    # Load persisted UI prefs once per app session
+    if "_ui_prefs_loaded" not in st.session_state:
+        prefs = load_ui_prefs()
+        # Restore core knobs if missing
+        st.session_state.intent = prefs.get("intent", st.session_state.intent)
+        st.session_state.level = prefs.get("level", st.session_state.level)
+        if domain == "Lieux":
+            st.session_state.atmosphere = prefs.get("atmosphere", st.session_state.atmosphere)
+        else:
+            st.session_state.dialogue_mode = prefs.get("dialogue_mode", st.session_state.dialogue_mode)
+        st.session_state.creativity = prefs.get("creativity", st.session_state.creativity)
+        st.session_state.reasoning_effort = prefs.get("reasoning_effort", st.session_state.reasoning_effort)
+        st.session_state.max_tokens = prefs.get("max_tokens", st.session_state.max_tokens)
+        st.session_state._ui_prefs_loaded = True
 
 
 def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> None:
@@ -363,6 +378,22 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
 
     st.session_state.max_tokens = max_tokens
 
+    # Persist current prefs (best-effort)
+    try:
+        prefs = load_ui_prefs()
+        prefs.update({
+            "intent": intent,
+            "level": level,
+            "dialogue_mode": dialogue_mode,
+            "atmosphere": st.session_state.get("atmosphere"),
+            "creativity": st.session_state.get("creativity"),
+            "reasoning_effort": st.session_state.get("reasoning_effort"),
+            "max_tokens": max_tokens,
+        })
+        save_ui_prefs(prefs)
+    except Exception:
+        pass
+
     st.subheader("📚 Contexte Notion")
     with st.expander("Sélectionner du contexte depuis Notion", expanded=True):
         context_summary = render_context_selector(domain, brief)
@@ -377,7 +408,8 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         "Lieux": "⚠️ Veuillez fournir une description du lieu",
     }
 
-    if st.button(button_text[domain], type="primary", use_container_width=True):
+    trigger = st.session_state.pop("trigger_generate", False)
+    if st.button(button_text[domain], type="primary", use_container_width=True) or trigger:
         if not brief:
             st.error(error_text[domain])
         else:
@@ -394,3 +426,30 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 domain,
                 context_summary,
             )
+
+    # QoL: Reset parameters button
+    with st.expander("⚙️ Options avancées"):
+        col_reset, col_cancel = st.columns(2)
+        with col_reset:
+            if st.button("🔄 Réinitialiser paramètres"):
+                for key in [
+                    "intent",
+                    "level",
+                    "dialogue_mode",
+                    "atmosphere",
+                    "creativity",
+                    "reasoning_effort",
+                    "max_tokens",
+                    "selected_profile",
+                ]:
+                    if key in st.session_state:
+                        del st.session_state[key]
+                # Clear persisted prefs as well
+                try:
+                    save_ui_prefs({})
+                except Exception:
+                    pass
+                st.experimental_rerun()
+        with col_cancel:
+            # Placeholder for future cancel: would require cooperative checks in workflow
+            st.caption("Annuler la génération (prochain itératif)")

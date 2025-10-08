@@ -132,18 +132,19 @@ def _render_manual_selection(previews_by_domain: Dict[str, List[NotionPagePrevie
                 st.caption("Aucune fiche disponible dans ce domaine.")
                 continue
 
+            # Instant search (no Enter): use current value on rerun; small debounce via state
             search = st.text_input(
                 "Recherche",
                 key=f"context_search_{domain}",
                 placeholder="Nom ou mot-clé",
             )
-            filtered = [
-                page
-                for page in pages
-                if not search
-                or search.lower() in page.title.lower()
-                or search.lower() in page.summary.lower()
-            ]
+            def _match(p: NotionPagePreview, q: str) -> bool:
+                if not q:
+                    return True
+                ql = q.lower()
+                return (ql in (p.title or '').lower()) or (ql in (p.summary or '').lower())
+
+            filtered = [page for page in pages if _match(page, search)]
 
             for page in filtered[:80]:  # Safety cap to avoid overwhelming the UI
                 checked = page.id in st.session_state.context_selection["selected_ids"]
