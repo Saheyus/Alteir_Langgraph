@@ -363,8 +363,10 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
 
     st.session_state.max_tokens = max_tokens
 
-    context_summary = render_context_selector(domain, brief)
-    st.session_state.selected_context_summary = context_summary
+    st.subheader("📚 Contexte Notion")
+    with st.expander("Sélectionner du contexte depuis Notion", expanded=True):
+        context_summary = render_context_selector(domain, brief)
+        st.session_state.selected_context_summary = context_summary
 
     button_text = {
         "Personnages": "🚀 Générer le Personnage",

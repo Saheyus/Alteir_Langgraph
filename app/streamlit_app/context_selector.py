@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from typing import Any, Dict, List, Optional
+from requests.exceptions import HTTPError
 
 import streamlit as st
 
@@ -79,10 +80,16 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
         ):
             targets = DOMAIN_SUGGESTION_TARGETS.get(domain_key, CONTEXT_DOMAINS)
             try:
-                suggestions = matcher.suggest_context(brief, domains=targets)
+                with st.spinner("Génération des suggestions..."):
+                    suggestions = matcher.suggest_context(brief, domains=targets)
                 selection["suggestions"] = suggestions
+                st.info(f"✓ {len(suggestions)} suggestion(s) trouvée(s)")
             except NotionClientUnavailable:
                 st.warning("Connexion Notion indisponible : suggestions automatiques désactivées.")
+            except HTTPError as e:
+                st.error(f"❌ Erreur API Notion pendant la suggestion: {e}")
+            except Exception as e:  # pragma: no cover - UI feedback
+                st.error(f"❌ Erreur inattendue pendant la suggestion: {e}")
     with col_info:
         st.write(
             "Sélectionne jusqu'à 5 fiches pertinentes en fonction du brief."
@@ -166,6 +173,12 @@ def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
                 previews_cache[page_id] = preview
             except NotionClientUnavailable:
                 continue
+            except HTTPError as e:
+                st.caption(f"⚠️ Erreur API sur l'aperçu {page_id}: {e}")
+                continue
+            except Exception:
+                # On ignore silencieusement pour ne pas bloquer le rendu
+                continue
         ordered_previews.append(preview)
         total_tokens += preview.token_estimate
 
@@ -200,11 +213,51 @@ def render_context_selector(domain: str, brief: str) -> Dict[str, Any]:
     fetcher = _get_fetcher()
     matcher = _get_matcher(fetcher)
 
+    # Récupération des fiches avec feedback visuel et progression
+    progress_bar = st.progress(0)
+    status_text = st.empty()
+    previews_by_domain: Dict[str, List[NotionPagePreview]] = {d: [] for d in CONTEXT_DOMAINS}
+
     try:
-        previews_by_domain = fetcher.fetch_all_databases()
-    except NotionClientUnavailable:
-        st.warning("Impossible de récupérer les fiches Notion (mode hors ligne).")
-        return {"selected_ids": [], "previews": [], "token_estimate": 0}
+        # Déterminer les domaines effectivement configurés (avec database sandbox)
+        try:
+            sandbox_map = getattr(fetcher, "SANDBOX_DATABASES", {})
+        except Exception:
+            sandbox_map = {}
+
+        targets = [(d, sandbox_map.get(d)) for d in CONTEXT_DOMAINS]
+        targets = [(d, dbid) for d, dbid in targets if dbid]
+        total = max(1, len(targets))
+
+        for idx, (d, dbid) in enumerate(targets, start=1):
+            status_text.text(f"🔄 Récupération: {d.capitalize()} ({idx}/{total})")
+            try:
+                records = fetcher._list_database_pages(dbid)  # type: ignore[attr-defined]
+                # Mode léger: ne pas récupérer le contenu, juste propriétés/titres
+                previews = [fetcher._record_to_preview(rec, d, eager_content=False) for rec in records]  # type: ignore[attr-defined]
+                previews_by_domain[d] = previews
+                # Avancement intra-domaine retiré pour éviter plusieurs barres concurrentes
+            except NotionClientUnavailable:
+                st.warning("Connexion Notion indisponible (mode hors ligne)")
+                previews_by_domain[d] = []
+            except HTTPError as e:
+                st.error(f"❌ Erreur API Notion sur {d}: {e}")
+                previews_by_domain[d] = []
+            except Exception as e:  # pragma: no cover - robustesse UI
+                st.error(f"❌ Erreur inattendue sur {d}: {e}")
+                previews_by_domain[d] = []
+
+            pct = int(idx * 100 / total)
+            progress_bar.progress(min(100, pct))
+
+        total_pages = sum(len(pages) for pages in previews_by_domain.values())
+        status_text.text("")
+        progress_bar.progress(100)
+        st.info(f"✓ {total_pages} fiche(s) préchargée(s) pour la sélection")
+    except Exception as e:  # pragma: no cover - garde-fou global
+        status_text.text("")
+        progress_bar.progress(0)
+        st.error(f"❌ Erreur lors de la récupération des fiches: {e}")
 
     _render_suggestions(brief, domain_key, matcher)
     _render_manual_selection(previews_by_domain)

@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import logging
+import os
+import time
 import math
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional, Protocol, Sequence
@@ -96,6 +98,8 @@ class NotionContextFetcher:
         """Build a fallback client using direct Notion API calls."""
         try:
             import requests
+            from requests.adapters import HTTPAdapter
+            from urllib3.util.retry import Retry
             from config.notion_config import NotionConfig
             
             if not NotionConfig.validate_token():
@@ -108,18 +112,86 @@ class NotionContextFetcher:
                 def __init__(self):
                     self.headers = NotionConfig.get_headers()
                     self.base_url = "https://api.notion.com/v1"
+                    # HTTP session with retries for robustness (handles 429/5xx)
+                    self.session = requests.Session()
+                    retry = Retry(
+                        total=3,
+                        connect=3,
+                        read=3,
+                        backoff_factor=0.8,
+                        status_forcelist=(429, 500, 502, 503, 504),
+                        allowed_methods=("GET", "POST", "PATCH"),
+                        raise_on_status=False,
+                    )
+                    adapter = HTTPAdapter(max_retries=retry)
+                    self.session.mount("http://", adapter)
+                    self.session.mount("https://", adapter)
+                    # Timeouts and caps
+                    self.request_timeout = float(os.getenv("NOTION_REQUEST_TIMEOUT", "20"))
+                    self.max_records = int(os.getenv("NOTION_MAX_RECORDS", "200"))
+                    self.page_size = int(os.getenv("NOTION_PAGE_SIZE", "50"))
+                    LOGGER.info(
+                        "DirectNotionClient initialised | timeout=%ss max_records=%s page_size=%s",
+                        self.request_timeout,
+                        self.max_records,
+                        self.page_size,
+                    )
+                
+                def _request(self, method: str, url: str, **kwargs):
+                    kwargs.setdefault("headers", self.headers)
+                    kwargs.setdefault("timeout", self.request_timeout)
+                    return self.session.request(method, url, **kwargs)
                 
                 def list_pages(self, database_id: str) -> Sequence[Dict[str, Any]]:
                     """Query database for all pages."""
                     url = f"{self.base_url}/databases/{database_id}/query"
-                    response = requests.post(url, headers=self.headers, json={})
-                    response.raise_for_status()
-                    return response.json().get("results", [])
+                    results: List[Dict[str, Any]] = []
+                    has_more = True
+                    start_cursor = None
+                    pages_fetched = 0
+                    LOGGER.info("[Notion] list_pages start | db=%s", database_id)
+                    while has_more and len(results) < self.max_records:
+                        payload: Dict[str, Any] = {"page_size": self.page_size}
+                        if start_cursor:
+                            payload["start_cursor"] = start_cursor
+                        response = self._request("POST", url, json=payload)
+                        response.raise_for_status()
+                        data = response.json()
+                        batch = data.get("results", [])
+                        results.extend(batch)
+                        has_more = bool(data.get("has_more"))
+                        start_cursor = data.get("next_cursor")
+                        pages_fetched += 1
+                        LOGGER.debug(
+                            "[Notion] list_pages batch | db=%s size=%s total=%s has_more=%s",
+                            database_id,
+                            len(batch),
+                            len(results),
+                            has_more,
+                        )
+                        # Soft rate-limit guard
+                        time.sleep(0.2)
+                        if pages_fetched >= 10:  # safety cap on batches
+                            LOGGER.warning(
+                                "[Notion] list_pages reached batch cap (10) | db=%s total=%s",
+                                database_id,
+                                len(results),
+                            )
+                            break
+                    if len(results) > self.max_records:
+                        results = results[: self.max_records]
+                    LOGGER.info(
+                        "[Notion] list_pages done | db=%s total=%s batches=%s",
+                        database_id,
+                        len(results),
+                        pages_fetched,
+                    )
+                    return results
                 
                 def retrieve_page(self, page_id: str) -> Dict[str, Any]:
                     """Retrieve a single page."""
                     url = f"{self.base_url}/pages/{page_id}"
-                    response = requests.get(url, headers=self.headers)
+                    response = self._request("GET", url)
                     response.raise_for_status()
                     return response.json()
                 
@@ -129,7 +201,7 @@ class NotionContextFetcher:
                         """Fetch blocks and their children recursively."""
                         url = f"{self.base_url}/blocks/{block_id}/children"
                         try:
-                            response = requests.get(url, headers=self.headers)
+                            response = self._request("GET", url)
                             response.raise_for_status()
                             blocks = response.json().get("results", [])
                         except Exception as e:
@@ -211,8 +283,14 @@ class NotionContextFetcher:
     # Public API
     # ---------------------------------------------------------------------
 
-    def fetch_all_databases(self, force_refresh: bool = False) -> Dict[str, List[NotionPagePreview]]:
-        """Return previews grouped by domain using sandbox databases only."""
+    def fetch_all_databases(self, force_refresh: bool = False, lightweight: bool = True) -> Dict[str, List[NotionPagePreview]]:
+        """Return previews grouped by domain using sandbox databases only.
+
+        Args:
+            force_refresh: Ignore cache and refetch.
+            lightweight: When True, avoid any content retrieval; only use properties
+                (title, light summary from properties) and compute a coarse token estimate.
+        """
 
         previews_by_domain: Dict[str, List[NotionPagePreview]] = {}
         for domain, database_id in self.SANDBOX_DATABASES.items():
@@ -229,7 +307,7 @@ class NotionContextFetcher:
                     continue
 
             records = self._list_database_pages(database_id)
-            previews = [self._record_to_preview(record, domain) for record in records]
+            previews = [self._record_to_preview(record, domain, eager_content=not lightweight) for record in records]
             previews_by_domain[domain] = previews
             context_cache.set("list", cache_key, previews)
 
@@ -310,7 +388,7 @@ class NotionContextFetcher:
             return raw_id
         return f"{raw_id[:8]}-{raw_id[8:12]}-{raw_id[12:16]}-{raw_id[16:20]}-{raw_id[20:]}"
 
-    def _record_to_preview(self, record: Dict[str, Any], domain: str) -> NotionPagePreview:
+    def _record_to_preview(self, record: Dict[str, Any], domain: str, *, eager_content: bool = False) -> NotionPagePreview:
         """Convert a Notion API record to a preview object."""
         properties = record.get("properties", {})
         
@@ -320,14 +398,14 @@ class NotionContextFetcher:
         # Extract summary from rich_text properties (Alias, Description, etc.)
         summary = self._extract_notion_summary(properties)
         
-        # Si le summary est vide, essayer de récupérer les premiers mots du contenu
-        if not summary:
+        # Si eager_content est demandé et summary vide, tenter un aperçu depuis le contenu
+        content: str = record.get("content", "")
+        if eager_content and not summary:
             page_id = record.get("id", "")
             if page_id:
                 try:
                     content = self._retrieve_content(page_id, record)
                     if content:
-                        # Extraire les 150 premiers caractères du contenu (premiers mots)
                         summary = self._extract_first_words(content, max_chars=150)
                 except Exception as e:
                     LOGGER.debug(f"Could not fetch content for preview summary: {e}")
@@ -335,25 +413,23 @@ class NotionContextFetcher:
         # Extract tags from multi_select properties
         tags = self._extract_notion_tags(properties)
         
-        # Estimer les tokens basé sur le contenu réel si disponible
-        content = record.get("content", "")
-        if not content:
-            try:
-                page_id = record.get("id", "")
-                if page_id:
-                    content = self._retrieve_content(page_id, record)
-            except Exception:
-                pass  # Si échec, on utilisera l'estimation par défaut
-        
-        if content:
-            # Estimation basée sur le contenu réel
-            token_estimate = self._estimate_tokens(content)
+        # Estimation tokens
+        token_estimate: int
+        if eager_content:
+            if not content:
+                try:
+                    page_id = record.get("id", "")
+                    if page_id:
+                        content = self._retrieve_content(page_id, record)
+                except Exception:
+                    content = ""
+            token_estimate = self._estimate_tokens(content) if content else 0
         else:
-            # Fallback: estimation basée sur les propriétés
+            # Lightweight: estimation approximative basée sur propriétés uniquement
             summary_tokens = self._estimate_tokens(summary)
-            base_estimate = 800
+            base_estimate = 300  # léger pour lister rapidement
             property_count = len([p for p in properties.values() if self._has_content(p)])
-            property_bonus = property_count * 30
+            property_bonus = property_count * 15
             token_estimate = max(summary_tokens, base_estimate + property_bonus)
 
         return NotionPagePreview(
