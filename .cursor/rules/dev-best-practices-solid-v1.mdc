@@ -1,0 +1,32 @@
+---
+alwaysApply: true
+---
+# Bonnes pratiques de développement (agnostique) — inclut SOLID
+
+## Problème
+Les projets dérivent en dette technique lorsque les pratiques de conception/qualité ne sont pas explicites et partagées. Cela rend le code fragile, difficile à tester, à faire évoluer, et multiplie les régressions.
+
+## Décision
+Adopter un socle minimal de pratiques transverses, applicables à tout langage du dépôt, en particulier les principes SOLID, la lisibilité, la testabilité, et l'observabilité. Ces règles priment sur les préférences personnelles.
+
+## Checklist
+- [ ] Respecter **SOLID**:
+  - [ ] S — Single Responsibility: Une classe/module = une raison de changer
+  - [ ] O — Open/Closed: Ouvert à l’extension, fermé à la modification
+  - [ ] L — Liskov Substitution: Les sous-types conservent les invariants/contrats
+  - [ ] I — Interface Segregation: Petites interfaces orientées usage
+  - [ ] D — Dependency Inversion: Dépendre d’abstractions, injection de dépendances
+- [ ] **Lisibilité**: Noms explicites, fonctions courtes, early-returns, éviter la magie implicite
+- [ ] **Erreurs**: Éviter le contrôle par exceptions; propager des erreurs riches (message, cause, contexte)
+- [ ] **Tests**: Unités sur logique pure, intégration sur chemins critiques; mocks parcimonieux; cas limites couverts
+- [ ] **Observabilité**: Logs structurés (niveau, contexte), métriques clés, traces si dispo
+- [ ] **Sécurité**: Valider entrées, éviter secrets en clair, limiter surface d’exposition
+- [ ] **Automatisation**: Lint/format auto, CI rapide, revues de code systématiques
+- [ ] **Docs**: Docstrings/API commentées pour les décisions non évidentes; README courts orientés usage
+
+## Vérification
+- Lint/Format: ex. `ruff`/`black` (Python)
+- Tests: `pytest -q` ou équivalent; viser >80% sur logique critique
+- Revues: refuser code sans tests ou noms explicites
+- Exécution locale CI (rapide): lint → tests → build (si applicable)
+
