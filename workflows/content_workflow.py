@@ -7,7 +7,7 @@ import logging
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict, Iterator, Tuple
 
 # Ajouter le répertoire racine au path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -272,6 +272,67 @@ class ContentWorkflow:
         self.logger.info("Workflow terminé pour %s", self.domain_config.display_name)
 
         return final_state
+
+    def run_iter(self, brief: str, writer_config: WriterConfig = None, context: Dict[str, Any] = None) -> Iterator[Tuple[str, WorkflowState]]:
+        """
+        Exécute le workflow étape par étape et yield l'état après chaque nœud.
+
+        Args:
+            brief: Description du contenu à créer
+            writer_config: Configuration additionnelle pour le writer
+            context: Contexte Notion optionnel
+
+        Yields:
+            Tuples (step_name, state) après chaque étape: "writer", "reviewer", "corrector", "validator".
+        """
+        # Initialiser l'état (même logique que run)
+        state: WorkflowState = {
+            "domain": self.domain_config.domain,
+            "brief": brief,
+            "content": "",
+            "writer_metadata": {},
+            "reviewer_metadata": {},
+            "corrector_metadata": {},
+            "validator_metadata": {},
+            "review_issues": [],
+            "corrections": [],
+            "validation_errors": [],
+            "coherence_score": 0.0,
+            "completeness_score": 0.0,
+            "quality_score": 0.0,
+            "is_valid": False,
+            "ready_for_publication": False,
+            "context": context or self.writer.gather_context(),
+            "history": []
+        }
+
+        if writer_config:
+            self.writer.writer_config = writer_config
+
+        self.logger.info(
+            "Démarrage (itératif) du workflow %s",
+            self.domain_config.display_name,
+        )
+
+        # Étape: Writer
+        delta = self._writer_node(state)
+        state.update(delta)
+        yield ("writer", state)
+
+        # Étape: Reviewer
+        delta = self._reviewer_node(state)
+        state.update(delta)
+        yield ("reviewer", state)
+
+        # Étape: Corrector
+        delta = self._corrector_node(state)
+        state.update(delta)
+        yield ("corrector", state)
+
+        # Étape: Validator
+        delta = self._validator_node(state)
+        state.update(delta)
+        yield ("validator", state)
     
     def save_results(self, state: WorkflowState, output_dir: str = "outputs"):
         """

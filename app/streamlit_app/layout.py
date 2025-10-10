@@ -56,6 +56,7 @@ CUSTOM_CSS = """
     border-left: 4px solid #28a745;
     padding: 1rem;
     margin: 1rem 0;
+    color: #000; /* text on light background must be black for readability */
 }
 
 .warning-box {
@@ -63,6 +64,7 @@ CUSTOM_CSS = """
     border-left: 4px solid #ffc107;
     padding: 1rem;
     margin: 1rem 0;
+    color: #000; /* text on light background must be black for readability */
 }
 </style>
 """

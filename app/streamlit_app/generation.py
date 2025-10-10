@@ -181,14 +181,15 @@ def generate_content(
         hist = prior.get("avg_total_s", 30.0)
         return max(6.0, 0.5 * hist + 0.5 * (base + per_token) * model_factor)
 
-    # Use context token estimate if available
-    context_payload = _build_context_payload(context_summary)
+    # Use context token estimate if available (avoid double fetch)
     eta_seconds = _estimate_total_seconds(context_payload.get("token_estimate") if context_payload else None)
     time_estimate.text(f"⏱️ Temps estimé : ~{int(eta_seconds)}s")
 
     try:
         start_time = time.time()
 
+        # --- Exécution itérative avec mises à jour UI par étape ---
+        # Writer
         step_placeholders[0].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #667eea; color: white;'>
@@ -202,10 +203,8 @@ def generate_content(
         status_text.text("✍️ Writer : Génération du contenu initial...")
         progress_bar.progress(10)
 
-        writer_start = time.time()
-        result = workflow.run(brief, writer_config, context=context_payload)
-        writer_dur = time.time() - writer_start
-
+        iterator = workflow.run_iter(brief, writer_config, context=context_payload)
+        step_name, result = next(iterator)  # writer terminé
         step_placeholders[0].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
@@ -218,6 +217,7 @@ def generate_content(
         )
         progress_bar.progress(35)
 
+        # Reviewer
         step_placeholders[1].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #667eea; color: white;'>
@@ -229,8 +229,8 @@ def generate_content(
             unsafe_allow_html=True,
         )
         status_text.text("🔍 Reviewer : Analyse de cohérence narrative...")
-        progress_bar.progress(60)
-
+        progress_bar.progress(45)
+        step_name, result = next(iterator)  # reviewer terminé
         step_placeholders[1].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
@@ -243,6 +243,7 @@ def generate_content(
         )
         progress_bar.progress(65)
 
+        # Corrector
         step_placeholders[2].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #667eea; color: white;'>
@@ -254,8 +255,8 @@ def generate_content(
             unsafe_allow_html=True,
         )
         status_text.text("✏️ Corrector : Correction du style...")
-        progress_bar.progress(85)
-
+        progress_bar.progress(75)
+        step_name, result = next(iterator)  # corrector terminé
         step_placeholders[2].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
@@ -266,8 +267,9 @@ def generate_content(
         """,
             unsafe_allow_html=True,
         )
-        progress_bar.progress(95)
+        progress_bar.progress(90)
 
+        # Validator
         step_placeholders[3].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #667eea; color: white;'>
@@ -279,7 +281,8 @@ def generate_content(
             unsafe_allow_html=True,
         )
         status_text.text("✅ Validator : Validation finale...")
-
+        progress_bar.progress(95)
+        step_name, result = next(iterator)  # validator terminé
         step_placeholders[3].markdown(
             """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
@@ -375,7 +378,7 @@ def generate_content(
 
                     st.markdown(
                         f"""
-                    <div style="background-color: {box_color}; border-left: 4px solid {border_color}; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
+                    <div style="background-color: {box_color}; border-left: 4px solid {border_color}; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem; color: #000;">
                         {severity_icon} <b>{issue.get('category', 'General').capitalize()}</b><br>
                         {issue['description']}
                         {f"<br><i>💡 Suggestion: {issue['suggestion']}</i>" if issue.get('suggestion') else ""}
@@ -389,8 +392,8 @@ def generate_content(
                 for corr in result["corrections"]:
                     st.markdown(
                         f"""
-                    <div style="background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem;">
-                        <b>{corr['type']}</b>: <code>{corr['original']}</code> → <code>{corr['corrected']}</code>
+                    <div style="background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 1rem; margin: 0.5rem 0; border-radius: 0.3rem; color: #000;">
+                        <b>{corr['type']}</b>: <code style="background-color: #fffbe6; color: #000; padding: 0 4px; border-radius: 3px;">{corr['original']}</code> → <code style="background-color: #fffbe6; color: #000; padding: 0 4px; border-radius: 3px;">{corr['corrected']}</code>
                         {f"<br><i>{corr['explanation']}</i>" if corr.get('explanation') else ""}
                     </div>
                     """,
