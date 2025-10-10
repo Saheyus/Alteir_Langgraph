@@ -415,8 +415,9 @@ def generate_content(
 
         with col_export:
             st.write("")
+            export_feedback = st.empty()
             if st.button("📤 Exporter vers Notion", help="Créer une page dans Notion"):
-                export_to_notion(result)
+                export_to_notion(result, container=export_feedback)
 
             json_data = json_file.read_text(encoding="utf-8")
             st.download_button(

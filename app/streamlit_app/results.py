@@ -13,8 +13,16 @@ from .cache import list_output_files, load_result_file
 from config.notion_config import NotionConfig
 
 
-def export_to_notion(result):
-    """Exporte le résultat vers Notion (BAC À SABLE)."""
+def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None = None):
+    """Exporte le résultat vers Notion (BAC À SABLE) et affiche un feedback.
+
+    Args:
+        result: Dictionnaire de résultat à exporter.
+        container: Optionnel, un conteneur Streamlit (st.empty(), st.container(), colonne) pour afficher le feedback à l'endroit du bouton. Si None, utilise st (position globale).
+    Returns:
+        dict: Informations d'export (success, page_url, page_id, domain, nom, dry_run, error)
+    """
+    container = container or st
     try:
         with st.spinner("📤 Export vers Notion en cours..."):
             domain = result.get("domain", "personnages").lower()
@@ -474,7 +482,7 @@ def export_to_notion(result):
                         f""", {relation_stats['unresolved']} non trouvées"""
                     )
 
-            st.markdown(
+            container.markdown(
                 f"""
             <div style="background-color: #f0f9ff; border-left: 5px solid #0ea5e9; padding: 1.25rem; margin: 1rem 0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <div style="color: #0c4a6e; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">
@@ -539,9 +547,23 @@ def export_to_notion(result):
                 """
                 )
 
+            return {
+                "success": True,
+                "page_url": page_url,
+                "page_id": page_id,
+                "domain": domain,
+                "nom": nom,
+                "dry_run": NotionConfig.DRY_RUN,
+                "relations": relation_stats,
+            }
+
     except Exception as exc:  # pragma: no cover - network path
-        st.error(f"❌ Erreur lors de l'export : {exc}")
+        container.error(f"❌ Erreur lors de l'export : {exc}")
         st.exception(exc)
+        return {
+            "success": False,
+            "error": str(exc),
+        }
 
 
 def show_results():
@@ -588,12 +610,13 @@ def show_results():
     col_export, col_download = st.columns(2)
 
     with col_export:
+        export_feedback = st.empty()
         if st.button(
             "📤 Exporter vers Notion",
             help="Créer une page dans Notion",
             key=f"export_{selected_file}",
         ):
-            export_to_notion(data)
+            export_to_notion(data, container=export_feedback)
 
     with col_download:
         json_path = Path("outputs") / f"{selected_file}.json"
