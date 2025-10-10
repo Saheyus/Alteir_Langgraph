@@ -415,9 +415,8 @@ def generate_content(
 
         with col_export:
             st.write("")
-            export_feedback = st.empty()
-            if st.button("📤 Exporter vers Notion", help="Créer une page dans Notion"):
-                export_to_notion(result, container=export_feedback)
+            if st.button("📤 Exporter vers Notion", help="Créer une page dans Notion", key="export_btn_creation"):
+                st.session_state.trigger_export = True
 
             json_data = json_file.read_text(encoding="utf-8")
             st.download_button(
@@ -427,6 +426,13 @@ def generate_content(
                 mime="application/json",
                 key=f"download_json_{json_file.stem}",
             )
+
+        # Feedback OUTSIDE columns so it persists across reruns
+        export_feedback_area = st.container()
+        if st.session_state.get("trigger_export", False):
+            st.session_state.trigger_export = False
+            with export_feedback_area:
+                export_to_notion(result)
 
     except Exception as exc:  # pragma: no cover - UI feedback path
         st.error(f"❌ Erreur lors de la génération: {exc}")

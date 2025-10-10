@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
+from pydantic import BaseModel, Field
+from typing import List as _List
 
 # Ajouter le répertoire racine au path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -111,7 +113,7 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
         # Construire le prompt de validation
         user_prompt = self._build_validation_prompt(content, context)
         
-        # Valider avec le LLM
+        # Valider avec le LLM (Structured Outputs si dispo)
         system_prompt = self._build_system_prompt("validator")
         messages = [
             {"role": "system", "content": system_prompt},
@@ -120,11 +122,44 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
         
         try:
             self.logger.info("Validation finale en cours")
-            response = self.llm.invoke(messages)
-            validation_text = self._to_text(response.content if hasattr(response, 'content') else response)
+            # 1) Structured Outputs via LLMAdapter
+            from agents.base.llm_utils import LLMAdapter
 
-            # Parser les résultats de validation
-            errors, completeness, quality, is_valid, ready = self._parse_validation(validation_text)
+            class _VError(BaseModel):
+                field: str
+                error_type: str
+                description: str
+                severity: str
+
+            class _VSchema(BaseModel):
+                validation_errors: _List[_VError] = Field(default_factory=list)
+                completeness_score: float = 0.0
+                quality_score: float = 0.0
+                is_valid: bool = False
+                ready_for_publication: bool = False
+
+            adapter = LLMAdapter(self.llm)
+            try:
+                structured = adapter.get_structured_output(messages, _VSchema)
+                validation_text = ""
+                errors = [
+                    ValidationError(
+                        field=e.field,
+                        error_type=e.error_type,
+                        description=e.description,
+                        severity=e.severity,
+                    )
+                    for e in structured.validation_errors
+                ]
+                completeness = float(structured.completeness_score)
+                quality = float(structured.quality_score)
+                is_valid = bool(structured.is_valid)
+                ready = bool(structured.ready_for_publication)
+            except Exception:
+                # 2) Fallback: texte + parser existant
+                response = self.llm.invoke(messages)
+                validation_text = self._to_text(response.content if hasattr(response, 'content') else response)
+                errors, completeness, quality, is_valid, ready = self._parse_validation(validation_text)
 
             self.logger.debug(
                 "Validation complétée | errors=%d | completeness=%.2f | quality=%.2f | ready=%s",

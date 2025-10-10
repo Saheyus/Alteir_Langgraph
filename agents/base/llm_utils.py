@@ -2,7 +2,7 @@
 """
 Utilitaires LLM agnostiques du fournisseur
 """
-from typing import Any, Type, TypeVar, Optional
+from typing import Any, Type, TypeVar, Optional, List, Dict
 from pydantic import BaseModel
 from langchain_core.language_models import BaseChatModel
 
@@ -40,9 +40,9 @@ class LLMAdapter:
     
     def _check_structured_support(self) -> bool:
         """Vérifie si le LLM supporte structured outputs natifs"""
-        # OpenAI GPT-4+ supporte structured outputs
-        if self.provider == 'openai':
-            return hasattr(self.llm, 'with_structured_output')
+        # Support explicite si l'objet expose with_structured_output
+        if hasattr(self.llm, 'with_structured_output'):
+            return True
         
         # Anthropic Claude 3+ supporte JSON mode (similaire)
         if self.provider == 'anthropic':
@@ -51,16 +51,16 @@ class LLMAdapter:
         return False
     
     def get_structured_output(
-        self, 
-        prompt: str, 
+        self,
+        prompt: Any,
         schema: Type[T],
-        fallback_parser: Optional[callable] = None
+        fallback_parser: Optional[callable] = None,
     ) -> T:
         """
         Obtient une sortie structurée du LLM
         
         Args:
-            prompt: Prompt à envoyer
+            prompt: Prompt (str) ou messages (List[Dict]) à envoyer
             schema: Classe Pydantic définissant la structure
             fallback_parser: Parser de secours si structured outputs indisponible
             
@@ -70,10 +70,11 @@ class LLMAdapter:
         # 1. Structured Outputs natifs (OpenAI, Anthropic)
         if self.supports_structured:
             try:
-                if self.provider == 'openai':
+                # Prefer native structured outputs when available
+                if hasattr(self.llm, 'with_structured_output'):
                     structured_llm = self.llm.with_structured_output(schema)
                     return structured_llm.invoke(prompt)
-                
+
                 elif self.provider == 'anthropic':
                     # Anthropic utilise tool_choice avec JSON schema
                     from langchain_core.utils.function_calling import convert_to_anthropic_tool
@@ -91,7 +92,13 @@ class LLMAdapter:
         # 2. JSON mode générique (Mistral, Ollama, etc.)
         try:
             # Ajouter instruction JSON au prompt
-            json_prompt = f"""{prompt}
+            # Autoriser les messages en entrée
+            if isinstance(prompt, list):
+                prompt_text = self._messages_to_text(prompt)
+            else:
+                prompt_text = str(prompt)
+
+            json_prompt = f"""{prompt_text}
 
 IMPORTANT: Réponds UNIQUEMENT avec un JSON valide suivant ce schéma:
 {schema.model_json_schema()}
@@ -123,7 +130,9 @@ Ne pas ajouter de texte avant ou après le JSON."""
         # 3. Fallback sur parser manuel
         if fallback_parser:
             try:
-                content = self._extract_text(self.llm.invoke(prompt))
+                # Si messages, les passer tels quels
+                raw_response = self.llm.invoke(prompt)
+                content = self._extract_text(raw_response)
                 return fallback_parser(content, schema)
             except Exception as e:
                 print(f"[ERROR] Fallback parser failed: {e}")
@@ -150,6 +159,15 @@ Ne pas ajouter de texte avant ou après le JSON."""
                         parts.append(str(p))
                 return ''.join(parts)
         return str(response)
+
+    def _messages_to_text(self, messages: List[Dict[str, Any]]) -> str:
+        """Convertit une liste de messages {role, content} en texte concaténé pour JSON-mode."""
+        parts: List[str] = []
+        for m in messages:
+            role = m.get('role', 'user')
+            content = m.get('content', '')
+            parts.append(f"[{role.upper()}]\n{content}")
+        return "\n\n".join(parts)
 
 
 # Exemple d'utilisation

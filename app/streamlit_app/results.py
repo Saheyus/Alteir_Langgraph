@@ -22,10 +22,18 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
     Returns:
         dict: Informations d'export (success, page_url, page_id, domain, nom, dry_run, error)
     """
+    import logging
+    logger = logging.getLogger(__name__)
+    
     container = container or st
+    logger.info("🚀 Début export vers Notion")
+    logger.info(f"  - Domain: {result.get('domain', 'N/A')}")
+    logger.info(f"  - DRY_RUN: {NotionConfig.DRY_RUN}")
+    
     try:
         with st.spinner("📤 Export vers Notion en cours..."):
             domain = result.get("domain", "personnages").lower()
+            logger.info(f"  - Domain normalisé: {domain}")
             content = result.get("content", "")
 
             if domain == "lieux":
@@ -38,7 +46,9 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                 nom_property = "Nom"
 
             # Guardrails: sandbox only
+            logger.info(f"  - Database ID: {database_id}")
             NotionConfig.assert_sandbox_database_id(database_id)
+            logger.info("  ✓ Database sandbox validée")
 
             def extract_field(field_name: str, raw_content: str):
                 pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
@@ -66,6 +76,7 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                 return None
 
             nom = extract_field("Nom", content) or "Sans nom"
+            logger.info(f"  - Nom extrait: {nom}")
 
             notion_properties = {
                 nom_property: {"title": [{"text": {"content": nom}}]},
@@ -408,18 +419,24 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
 
             # Dry-run: ne pas écrire en mode DRY_RUN
             if NotionConfig.DRY_RUN:
+                logger.warning("⚠️ MODE DRY-RUN : aucune page créée")
                 page_id = "DRY-RUN"
                 page_url = "https://www.notion.so"
             else:
+                logger.info("  📡 Envoi requête POST à Notion API...")
+                logger.info(f"  - Payload properties: {list(notion_properties.keys())}")
                 response = requests.post(
                     "https://api.notion.com/v1/pages",
                     headers=headers,
                     json=payload,
                     timeout=30,
                 )
+                logger.info(f"  - Status code: {response.status_code}")
                 response.raise_for_status()
                 page_id = response.json()["id"]
                 page_url = response.json().get("url", "https://www.notion.so")
+                logger.info(f"  ✓ Page créée: {page_id}")
+                logger.info(f"  ✓ URL: {page_url}")
 
             blocks = []
             for line in content.split("\n"):
@@ -558,8 +575,9 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
             }
 
     except Exception as exc:  # pragma: no cover - network path
+        logger.error(f"❌ Erreur export: {exc}", exc_info=True)
         container.error(f"❌ Erreur lors de l'export : {exc}")
-        st.exception(exc)
+        container.exception(exc)
         return {
             "success": False,
             "error": str(exc),

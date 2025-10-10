@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
+from pydantic import BaseModel, Field
+from typing import List as _List
 
 # Ajouter le répertoire racine au path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -105,7 +107,7 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
         # Construire le prompt de relecture
         user_prompt = self._build_review_prompt(content, context)
         
-        # Analyser avec le LLM
+        # Analyser avec le LLM (Structured Outputs si dispo)
         system_prompt = self._build_system_prompt("reviewer")
         messages = [
             {"role": "system", "content": system_prompt},
@@ -114,14 +116,46 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
         
         try:
             self.logger.info("Analyse de cohérence en cours")
-            response = self.llm.invoke(messages)
-            review_text = self._to_text(response.content if hasattr(response, 'content') else response)
+            # 1) Essayer structured outputs via LLMAdapter
+            from agents.base.llm_utils import LLMAdapter
 
-            # Parser les issues et suggestions
-            issues, improvements, score = self._parse_review(review_text)
+            class _Issue(BaseModel):
+                severity: str = Field(description="critical|major|minor")
+                category: str = Field(description="coherence|structure|relations|lore|general")
+                description: str
+                suggestion: str | None = None
+
+            class _ReviewSchema(BaseModel):
+                issues: _List[_Issue] = Field(default_factory=list)
+                improvements: _List[str] = Field(default_factory=list)
+                coherence_score: float = 0.7
+                improved_content: str | None = None
+
+            adapter = LLMAdapter(self.llm)
+            try:
+                structured = adapter.get_structured_output(messages, _ReviewSchema)
+                review_text = ""  # optional
+                issues = [
+                    ReviewIssue(
+                        severity=i.severity,
+                        category=i.category,
+                        description=i.description,
+                        suggestion=i.suggestion,
+                    )
+                    for i in structured.issues
+                ]
+                improvements = list(structured.improvements)
+                score = float(structured.coherence_score)
+                improved_content = structured.improved_content or content
+            except Exception:
+                # 2) Fallback: texte + parser existant
+                response = self.llm.invoke(messages)
+                review_text = self._to_text(response.content if hasattr(response, 'content') else response)
+                issues, improvements, score = self._parse_review(review_text)
+                improved_content = self._generate_improvements(content, improvements) if improvements else content
 
             # Générer le contenu amélioré si pertinent
-            improved_content = self._generate_improvements(content, improvements) if improvements else content
+            # (déjà géré ci-dessus pour structured; conservé pour cohérence)
 
             self.logger.debug(
                 "Relecture réussie | issues=%d | score=%.2f",

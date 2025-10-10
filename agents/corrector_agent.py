@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
+from pydantic import BaseModel, Field
+from typing import List as _List
 
 # Ajouter le répertoire racine au path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -107,7 +109,7 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
         # Construire le prompt de correction
         user_prompt = self._build_correction_prompt(content, context)
         
-        # Corriger avec le LLM
+        # Corriger avec le LLM (Structured Outputs si dispo)
         system_prompt = self._build_system_prompt("corrector")
         messages = [
             {"role": "system", "content": system_prompt},
@@ -116,11 +118,40 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
         
         try:
             self.logger.info("Correction linguistique en cours")
-            response = self.llm.invoke(messages)
-            correction_text = self._to_text(response.content if hasattr(response, 'content') else response)
+            # 1) Structured Outputs via LLMAdapter
+            from agents.base.llm_utils import LLMAdapter
 
-            # Parser les corrections
-            corrected_content, corrections, summary = self._parse_corrections(content, correction_text)
+            class _Corr(BaseModel):
+                type: str
+                original: str
+                corrected: str
+                explanation: str | None = None
+
+            class _CorrSchema(BaseModel):
+                corrected_content: str
+                corrections: _List[_Corr] = Field(default_factory=list)
+                improvement_summary: str = ""
+
+            adapter = LLMAdapter(self.llm)
+            try:
+                structured = adapter.get_structured_output(messages, _CorrSchema)
+                correction_text = ""
+                corrected_content = structured.corrected_content or content
+                corrections = [
+                    Correction(
+                        type=c.type,
+                        original=c.original,
+                        corrected=c.corrected,
+                        explanation=c.explanation,
+                    )
+                    for c in structured.corrections
+                ]
+                summary = structured.improvement_summary or ""
+            except Exception:
+                # 2) Fallback: texte + parser existant
+                response = self.llm.invoke(messages)
+                correction_text = self._to_text(response.content if hasattr(response, 'content') else response)
+                corrected_content, corrections, summary = self._parse_corrections(content, correction_text)
 
             self.logger.debug(
                 "Corrections appliquées | total=%d", len(corrections)
