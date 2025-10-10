@@ -33,8 +33,8 @@ class NotionConfig:
     # Version stable pour appels DIRECTS HTTP (fallback sans MCP)
     DIRECT_API_VERSION = os.getenv("NOTION_DIRECT_API_VERSION", "2022-06-28")
 
-    # Mode dry-run pour toute écriture Notion (true par défaut)
-    DRY_RUN = os.getenv("NOTION_DRY_RUN", "true").lower() in ("1", "true", "yes")
+    # Mode dry-run pour toute écriture Notion (désactivé par défaut)
+    DRY_RUN = os.getenv("NOTION_DRY_RUN", "false").lower() in ("1", "true", "yes")
 
     # Bases sandbox autorisées à l'écriture (règle critique)
     SANDBOX_DATABASE_IDS = {
