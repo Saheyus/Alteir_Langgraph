@@ -10,6 +10,7 @@ import requests
 import streamlit as st
 
 from .cache import list_output_files, load_result_file
+from config.notion_config import NotionConfig
 
 
 def export_to_notion(result):
@@ -20,13 +21,16 @@ def export_to_notion(result):
             content = result.get("content", "")
 
             if domain == "lieux":
-                database_id = "2806e4d21b4580969f1cd7463a4c889c"
+                database_id = NotionConfig.get_sandbox_database_id("lieux")
                 domain_label = "Lieu"
                 nom_property = "Nom"
             else:
-                database_id = "2806e4d21b458012a744d8d6723c8be1"
+                database_id = NotionConfig.get_sandbox_database_id("personnages")
                 domain_label = "Personnage"
                 nom_property = "Nom"
+
+            # Guardrails: sandbox only
+            NotionConfig.assert_sandbox_database_id(database_id)
 
             def extract_field(field_name: str, raw_content: str):
                 pattern_bold = rf'^-?\s*\*\*{re.escape(field_name)}\*\*:\s*(.+)$'
@@ -386,27 +390,28 @@ def export_to_notion(result):
                             }
                         )
 
-            headers = {
-                "Authorization": f"Bearer {os.environ.get('NOTION_API_KEY', '')}",
-                "Notion-Version": "2022-06-28",
-                "Content-Type": "application/json",
-            }
+            # Headers depuis la configuration centralisée
+            headers = NotionConfig.get_headers()
 
             payload = {
                 "parent": {"database_id": database_id},
                 "properties": notion_properties,
             }
 
-            response = requests.post(
-                "https://api.notion.com/v1/pages",
-                headers=headers,
-                json=payload,
-                timeout=30,
-            )
-            response.raise_for_status()
-
-            page_id = response.json()["id"]
-            page_url = response.json().get("url", "https://www.notion.so")
+            # Dry-run: ne pas écrire en mode DRY_RUN
+            if NotionConfig.DRY_RUN:
+                page_id = "DRY-RUN"
+                page_url = "https://www.notion.so"
+            else:
+                response = requests.post(
+                    "https://api.notion.com/v1/pages",
+                    headers=headers,
+                    json=payload,
+                    timeout=30,
+                )
+                response.raise_for_status()
+                page_id = response.json()["id"]
+                page_url = response.json().get("url", "https://www.notion.so")
 
             blocks = []
             for line in content.split("\n"):
@@ -451,7 +456,7 @@ def export_to_notion(result):
                         }
                     )
 
-            if blocks:
+            if blocks and not NotionConfig.DRY_RUN:
                 requests.patch(
                     f"https://api.notion.com/v1/blocks/{page_id}/children",
                     headers=headers,
@@ -473,7 +478,7 @@ def export_to_notion(result):
                 f"""
             <div style="background-color: #f0f9ff; border-left: 5px solid #0ea5e9; padding: 1.25rem; margin: 1rem 0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <div style="color: #0c4a6e; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">
-                    ✅ {domain_label} exporté vers Notion (BAC À SABLE) !
+                    ✅ {domain_label} exporté vers Notion (BAC À SABLE){' — DRY-RUN' if NotionConfig.DRY_RUN else ''} !
                 </div>
                 <div style="color: #164e63; line-height: 1.8;">
                     📄 <b>Lien :</b> <a href="{page_url}" target="_blank" style="color: #0284c7; text-decoration: underline; font-weight: 600;">{nom}</a><br>

@@ -214,50 +214,30 @@ def render_context_selector(domain: str, brief: str) -> Dict[str, Any]:
     fetcher = _get_fetcher()
     matcher = _get_matcher(fetcher)
 
-    # Récupération des fiches avec feedback visuel et progression
-    progress_bar = st.progress(0)
+    # Récupération des fiches (utilise le cache interne du fetcher)
+    progress_bar = st.progress(10)
     status_text = st.empty()
-    previews_by_domain: Dict[str, List[NotionPagePreview]] = {d: [] for d in CONTEXT_DOMAINS}
-
     try:
-        # Déterminer les domaines effectivement configurés (avec database sandbox)
-        try:
-            sandbox_map = getattr(fetcher, "SANDBOX_DATABASES", {})
-        except Exception:
-            sandbox_map = {}
-
-        targets = [(d, sandbox_map.get(d)) for d in CONTEXT_DOMAINS]
-        targets = [(d, dbid) for d, dbid in targets if dbid]
-        total = max(1, len(targets))
-
-        for idx, (d, dbid) in enumerate(targets, start=1):
-            status_text.text(f"🔄 Récupération: {d.capitalize()} ({idx}/{total})")
-            try:
-                records = fetcher._list_database_pages(dbid)  # type: ignore[attr-defined]
-                # Mode léger: ne pas récupérer le contenu, juste propriétés/titres
-                previews = [fetcher._record_to_preview(rec, d, eager_content=False) for rec in records]  # type: ignore[attr-defined]
-                previews_by_domain[d] = previews
-                # Avancement intra-domaine retiré pour éviter plusieurs barres concurrentes
-            except NotionClientUnavailable:
-                st.warning("Connexion Notion indisponible (mode hors ligne)")
-                previews_by_domain[d] = []
-            except HTTPError as e:
-                st.error(f"❌ Erreur API Notion sur {d}: {e}")
-                previews_by_domain[d] = []
-            except Exception as e:  # pragma: no cover - robustesse UI
-                st.error(f"❌ Erreur inattendue sur {d}: {e}")
-                previews_by_domain[d] = []
-
-            pct = int(idx * 100 / total)
-            progress_bar.progress(min(100, pct))
-
+        status_text.text("🔄 Préchargement des fiches depuis le bac à sable…")
+        previews_by_domain = fetcher.fetch_all_databases(force_refresh=False, lightweight=True)
         total_pages = sum(len(pages) for pages in previews_by_domain.values())
-        status_text.text("")
         progress_bar.progress(100)
+        status_text.text("")
         st.info(f"✓ {total_pages} fiche(s) préchargée(s) pour la sélection")
-    except Exception as e:  # pragma: no cover - garde-fou global
+    except NotionClientUnavailable:
         status_text.text("")
         progress_bar.progress(0)
+        previews_by_domain = {d: [] for d in CONTEXT_DOMAINS}
+        st.warning("Connexion Notion indisponible (mode hors ligne)")
+    except HTTPError as e:
+        status_text.text("")
+        progress_bar.progress(0)
+        previews_by_domain = {d: [] for d in CONTEXT_DOMAINS}
+        st.error(f"❌ Erreur API Notion: {e}")
+    except Exception as e:  # pragma: no cover - robustesse UI
+        status_text.text("")
+        progress_bar.progress(0)
+        previews_by_domain = {d: [] for d in CONTEXT_DOMAINS}
         st.error(f"❌ Erreur lors de la récupération des fiches: {e}")
 
     _render_suggestions(brief, domain_key, matcher)

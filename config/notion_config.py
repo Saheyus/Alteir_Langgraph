@@ -26,8 +26,21 @@ class NotionConfig:
     # Token d'intégration (à définir dans .env)
     NOTION_TOKEN = os.getenv("NOTION_TOKEN", "")
     
-    # Version de l'API Notion (version stable actuelle)
-    API_VERSION = "2022-06-28"
+    # Version de l'API Notion (version projet)
+    # Voir règles: API_VERSION = "2025-09-03" (multi-source via MCP)
+    API_VERSION = "2025-09-03"
+
+    # Version stable pour appels DIRECTS HTTP (fallback sans MCP)
+    DIRECT_API_VERSION = os.getenv("NOTION_DIRECT_API_VERSION", "2022-06-28")
+
+    # Mode dry-run pour toute écriture Notion (true par défaut)
+    DRY_RUN = os.getenv("NOTION_DRY_RUN", "true").lower() in ("1", "true", "yes")
+
+    # Bases sandbox autorisées à l'écriture (règle critique)
+    SANDBOX_DATABASE_IDS = {
+        "personnages": "2806e4d21b458012a744d8d6723c8be1",
+        "lieux": "2806e4d21b4580969f1cd7463a4c889c",
+    }
     
     # Headers pour les requêtes API
     @classmethod
@@ -38,6 +51,36 @@ class NotionConfig:
             "Notion-Version": cls.API_VERSION,
             "Content-Type": "application/json"
         }
+
+    @classmethod
+    def get_direct_headers(cls) -> Dict[str, str]:
+        """Headers pour l'API Notion directe (sans MCP), version stable supportée publiquement."""
+        return {
+            "Authorization": f"Bearer {cls.NOTION_TOKEN}",
+            "Notion-Version": cls.DIRECT_API_VERSION,
+            "Content-Type": "application/json"
+        }
+
+    @classmethod
+    def is_sandbox_database_id(cls, database_id: str) -> bool:
+        """Vérifie si un database_id correspond à une base sandbox autorisée."""
+        return database_id in cls.SANDBOX_DATABASE_IDS.values()
+
+    @classmethod
+    def assert_sandbox_database_id(cls, database_id: str) -> None:
+        """Lève une exception si la base n'est pas autorisée à l'écriture."""
+        if not cls.is_sandbox_database_id(database_id):
+            raise PermissionError(
+                f"Écriture interdite sur la base {database_id}. Utiliser exclusivement les bases sandbox."
+            )
+
+    @classmethod
+    def get_sandbox_database_id(cls, domain: str) -> str:
+        """Retourne l'ID de la base sandbox pour un domaine connu (personnages/lieux)."""
+        key = domain.lower()
+        if key not in cls.SANDBOX_DATABASE_IDS:
+            raise KeyError(f"Aucune base sandbox configurée pour le domaine '{domain}'")
+        return cls.SANDBOX_DATABASE_IDS[key]
     
     # Bases de données principales (lecture seule pour commencer)
     DATABASES: Dict[str, NotionDatabase] = {
@@ -83,25 +126,24 @@ class NotionConfig:
             write_access=False,
             description="Événements historiques et timeline"
         ),
-        # Base de test pour l'écriture (Bac à sable)
-        # IMPORTANT: Utiliser cette database pour tous les tests jusqu'à validation
-        "tests": NotionDatabase(
-            id="2806e4d21b4580eab1a2def9831bdc80",  # Page "Bac à sable"
-            name="Bac à sable",
-            read_access=True,
-            write_access=True,
-            description="Base de test pour les agents multi-agents - TOUTES les créations se font ici",
-            data_sources=["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]  # Personnages (1)
-        ),
         # Database Personnages (1) dans le bac à sable - Pour export direct
         "personnages_sandbox": NotionDatabase(
-            id="2806e4d21b458012a744d8d6723c8be1",  # Personnages (1)
+            id=SANDBOX_DATABASE_IDS["personnages"],
             name="Personnages (1) - Bac à sable",
             read_access=True,
             write_access=True,
             description="Database Personnages dans le bac à sable - Utiliser pour exports",
             data_sources=["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]
-        )
+        ),
+        # Database Lieux (1) dans le bac à sable - Pour export direct
+        "lieux_sandbox": NotionDatabase(
+            id=SANDBOX_DATABASE_IDS["lieux"],
+            name="Lieux (1) - Bac à sable",
+            read_access=True,
+            write_access=True,
+            description="Database Lieux dans le bac à sable - Utiliser pour exports",
+            data_sources=["collection://2806e4d2-1b45-811b-b079-000bda28ed01"]
+        ),
     }
     
     @classmethod

@@ -14,6 +14,7 @@ import unicodedata
 from typing import Dict, List, Optional, Tuple
 from difflib import SequenceMatcher
 from dataclasses import dataclass
+from config.notion_config import NotionConfig
 
 
 @dataclass
@@ -48,9 +49,9 @@ class NotionRelationResolver:
         self.cache: Dict[str, Dict[str, str]] = {}  # {domain: {name_normalized: notion_id}}
         self.cache_metadata: Dict[str, Dict[str, dict]] = {}  # {domain: {notion_id: metadata}}
         
-        # Configuration Notion
-        self.notion_token = os.getenv("NOTION_TOKEN")
-        self.notion_version = "2022-06-28"
+        # Configuration Notion (centralisée)
+        self.notion_token = NotionConfig.NOTION_TOKEN or os.getenv("NOTION_TOKEN")
+        self.notion_version = NotionConfig.API_VERSION
         
         # Mapping domaines → Database IDs (PRINCIPALES pour relations)
         # Note: Les entités créées vont dans les sandbox,
@@ -262,7 +263,8 @@ class NotionRelationResolver:
         best_match = None
         best_score = 0.0
         
-        for normalized_name, notion_id in entities.items():
+        # Itérer de façon déterministe (ordre lexical)
+        for normalized_name, notion_id in sorted(entities.items(), key=lambda it: it[0]):
             score = self.calculate_similarity(normalized_query, normalized_name)
             if score > best_score:
                 best_score = score
@@ -293,9 +295,16 @@ class NotionRelationResolver:
         Returns:
             Liste de (name, EntityMatch or None)
         """
-        results = []
+        results: List[Tuple[str, Optional[EntityMatch]]] = []
+        seen_ids: set[str] = set()
         for name in names:
             match = self.find_match(name, domain)
+            if match and match.notion_id in seen_ids:
+                # Déduplication des relations sur l'ID Notion
+                results.append((name, None))
+                continue
+            if match:
+                seen_ids.add(match.notion_id)
             results.append((name, match))
         return results
     

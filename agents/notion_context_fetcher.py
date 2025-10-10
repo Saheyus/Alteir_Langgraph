@@ -110,7 +110,8 @@ class NotionContextFetcher:
                 """Direct Notion API client as fallback."""
                 
                 def __init__(self):
-                    self.headers = NotionConfig.get_headers()
+                    # Utiliser la version stable directe pour éviter erreurs 400
+                    self.headers = NotionConfig.get_direct_headers()
                     self.base_url = "https://api.notion.com/v1"
                     # HTTP session with retries for robustness (handles 429/5xx)
                     self.session = requests.Session()
