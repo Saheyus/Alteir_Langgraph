@@ -49,9 +49,16 @@ def test_create_personnage_basic(notion_headers):
 
 ## 🚀 Exécution
 
+**⚠️ TOUJOURS utiliser le chemin absolu du projet :**
+```powershell
+python "F:\Projets\Langgraph Alteir\tests\run_export_tests.py"
+```
+
+## Commandes
+
 ### Développement (quotidien)
-```bash
-python tests/run_export_tests.py quick
+```powershell
+python "F:\Projets\Langgraph Alteir\tests\run_export_tests.py" quick
 # 38 tests en < 1s, pas d'API
 ```
 

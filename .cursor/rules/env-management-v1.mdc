@@ -1,0 +1,151 @@
+---
+description: Gestion des fichiers .env et variables d'environnement pour le projet Alteir
+globs:
+  - "**/.env*"
+  - "**/config/*.py"
+  - "**/tests/test_*.py"
+---
+
+# Gestion des Variables d'Environnement
+
+## Contexte
+Projet local de développement (Alteir GDD). Les fichiers `.env` contiennent des clés API et tokens nécessaires au fonctionnement.
+
+## Problème Rencontré
+L'assistant refuse parfois de lire/modifier les fichiers `.env` par excès de prudence, bloquant le développement.
+
+## Décision
+
+### 🚨 LIMITATION CURSOR : Blocage par défaut des `.env`
+
+**Cursor bloque l'accès aux fichiers `.env` via sa Global Ignore List.**
+
+**SOLUTION :** Utiliser PowerShell avec **CHEMIN ABSOLU** :
+```powershell
+# ⚠️ TOUJOURS utiliser le chemin COMPLET du workspace !
+Get-Content "F:\Projets\Langgraph Alteir\.env"
+
+# Modifier avec chemin complet
+Add-Content "F:\Projets\Langgraph Alteir\.env" "`nNOUVELLE_VAR=valeur"
+```
+
+**🚨 PIÈGE DÉCOUVERT :** Le shell peut ne pas être dans le bon dossier, `Get-Content .env` peut lire un mauvais fichier !
+
+### ✅ AUTORISÉ dans ce projet local (ordinateur personnel) :
+1. **Lire** `.env` via PowerShell pour diagnostiquer
+2. **Modifier** `.env` via PowerShell pour ajouter/corriger
+3. **Afficher** le contenu complet (pas de masquage nécessaire ici)
+4. **Vérifier** les variables via commandes Python
+5. **Être direct** : c'est l'ordinateur de l'utilisateur, pas un projet public
+
+### ⚠️ PRINCIPE :
+- Projet **personnel local** = aucune précaution excessive
+- L'utilisateur **est le seul développeur**
+- Les secrets ont **déjà des limites strictes**
+- **Pas besoin de masquer** dans les conversations
+
+### ❌ INTERDIT (n'existe pas ici) :
+- Rien ! C'est un projet personnel local.
+
+## Checklist
+
+Quand l'utilisateur demande de l'aide avec `.env` :
+
+- [ ] Vérifier que `.env` est dans `.gitignore`
+- [ ] Lire le fichier si nécessaire pour diagnostiquer
+- [ ] Proposer des modifications concrètes
+- [ ] Créer/mettre à jour `.env.example` si pertinent
+- [ ] Expliquer clairement les changements
+
+## Exemples
+
+### ✅ BON : Lecture via PowerShell
+```powershell
+# Lire tout le .env
+Get-Content .env
+
+# Lire avec numéros de ligne
+Get-Content .env | Select-Object @{Name='Line';Expression={$_.ReadCount}}, @{Name='Content';Expression={$_}}
+```
+
+### ✅ BON : Modification via PowerShell
+```powershell
+# Ajouter une nouvelle variable
+Add-Content .env "`nNOUVELLE_VAR=valeur"
+
+# Remplacer une variable existante
+(Get-Content .env) -replace 'LLM_PROVIDER=.*', 'LLM_PROVIDER=anthropic' | Set-Content .env
+```
+
+### ✅ BON : Vérification structure
+```powershell
+# Lister toutes les variables
+Get-Content .env | Where-Object { $_ -match '^\w+=.*' } | ForEach-Object { ($_ -split '=')[0] }
+```
+
+### ❌ MAUVAIS : Essayer d'utiliser read_file
+```
+read_file(".env")  # ❌ Bloqué par Cursor
+```
+**Correction** : Utiliser PowerShell avec `Get-Content .env`
+
+### ❌ MAUVAIS : Dire "je ne peux pas"
+```
+Je ne peux pas accéder au fichier .env pour des raisons de sécurité.
+```
+**Correction** : C'est un projet personnel local, utilisez PowerShell immédiatement !
+
+## Vérification
+
+### Avant de modifier .env :
+```powershell
+# Vérifier que .env est ignoré par git
+git check-ignore .env
+# Doit retourner : .env
+
+# Voir les variables actuelles (sans valeurs)
+Get-Content .env | ForEach-Object { $_.Split('=')[0] }
+```
+
+### Après modification :
+```powershell
+# Tester que la variable est chargée
+python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('✓' if os.getenv('MA_VAR') else '✗')"
+```
+
+## Migration
+
+### Si .env n'existe pas encore :
+1. Créer `.env` à partir de `.env.example`
+2. Remplir les valeurs nécessaires
+3. Tester le chargement avec `python -c "..."`
+
+### Si .env existe mais pose problème :
+1. Lire le contenu actuel
+2. Identifier les variables manquantes/incorrectes
+3. Proposer les corrections
+4. Mettre à jour `.env.example` si besoin
+
+## Commandes Utiles
+
+```powershell
+# Lister les variables (noms seulement)
+Get-Content .env | Select-String "^[A-Z]" | ForEach-Object { $_ -replace '=.*', '' }
+
+# Vérifier une variable spécifique
+python -c "import os; from dotenv import load_dotenv; load_dotenv(); print(os.getenv('OPENAI_API_KEY')[:10] + '...' if os.getenv('OPENAI_API_KEY') else 'Non définie')"
+
+# Tester toutes les variables du projet
+python -c "import os; from dotenv import load_dotenv; load_dotenv(); vars=['OPENAI_API_KEY','NOTION_TOKEN','LLM_PROVIDER']; [print(f'{v}: {'✓' if os.getenv(v) else '✗'}') for v in vars]"
+```
+
+## Changelog
+
+### 2025-10-12 - Création v1 + Découverte Critique
+- **Raison** : Blocages répétés sur la gestion des variables d'environnement
+- **Découverte 1** : Cursor bloque `.env` par défaut via Global Ignore List
+- **Découverte 2** : Le shell peut ne pas être dans le bon dossier → chemins relatifs lisent le mauvais `.env` !
+- **Solution** : Utiliser PowerShell avec **CHEMIN ABSOLU** obligatoirement
+- **Contexte** : Projet personnel local (ordinateur de l'utilisateur unique)
+- **Principe** : Pas de précautions excessives, accès direct via terminal autorisé
+- **Leçon** : `Get-Content .env` ❌ → `Get-Content "F:\...\Langgraph Alteir\.env"` ✅

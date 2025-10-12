@@ -85,6 +85,22 @@ pwd
 # F:\Projets\Langgraph Alteir
 ```
 
+## 🚨 RÈGLE CRITIQUE : Toujours Utiliser Chemins Absolus
+
+**JAMAIS de chemins relatifs dans les commandes PowerShell.**
+
+```powershell
+# ❌ MAUVAIS
+Get-Content .env
+python tests/test_export.py
+
+# ✅ BON
+Get-Content "F:\Projets\Langgraph Alteir\.env"
+python "F:\Projets\Langgraph Alteir\tests\test_export.py"
+```
+
+**Raison :** Le shell peut ne pas être dans le bon dossier, même avec `.vscode/settings.json`.
+
 ## Notes Additionnelles
 
 - Le paramètre `terminal.integrated.defaultProfile.windows` garantit que PowerShell est utilisé
@@ -93,6 +109,9 @@ pwd
 
 ## Changelog
 
+- **2025-10-12**: Ajout règle chemins absolus obligatoires
+  - Problème récurrent 10+ fois : shell dans mauvais dossier
+  - Solution : **TOUJOURS** utiliser `F:\Projets\Langgraph Alteir\...` dans les commandes
 - **2025-10-03**: Création initiale (Résolution problème récurrent working directory)
   - Raison: Terminal démarrait dans USERPROFILE au lieu du projet
   - Solution: Ajout de `.vscode/settings.json` avec configuration explicite

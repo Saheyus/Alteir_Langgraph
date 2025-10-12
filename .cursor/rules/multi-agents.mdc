@@ -244,15 +244,15 @@ if __name__ == "__main__":
 ```
 
 ### Lancer les Tests
-```bash
+```powershell
 # Test spécifique
-python tests/test_narrative_template.py
+python "F:\Projets\Langgraph Alteir\tests\test_narrative_template.py"
 
 # Tous les tests d'intégration
-python tests/test_notion_integration.py
+python "F:\Projets\Langgraph Alteir\tests\test_notion_integration.py"
 
 # Tests avec vraies données
-python tests/test_real_data.py
+python "F:\Projets\Langgraph Alteir\tests\test_real_data.py"
 ```
 
 ## ✅ Bonnes Pratiques

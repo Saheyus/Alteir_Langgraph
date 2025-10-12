@@ -133,9 +133,9 @@ python agents/notion_relation_resolver.py
 ### Debugger un problème de fuzzy matching
 
 **❌ Mauvais :**
-```bash
+```powershell
 # Créer tests/debug_fuzzy.py
-python tests/debug_fuzzy.py
+python "F:\Projets\Langgraph Alteir\tests\debug_fuzzy.py"
 # Supprimer tests/debug_fuzzy.py
 ```
 
