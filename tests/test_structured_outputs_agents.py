@@ -85,3 +85,119 @@ def test_validator_structured_outputs():
     assert res.validation_errors and res.validation_errors[0].field == "Nom"
 
 
+# ============================================================================
+# TESTS AVEC LLM RÉEL
+# ============================================================================
+
+import pytest
+
+
+@pytest.mark.llm_api
+@pytest.mark.slow
+def test_reviewer_with_real_llm(test_llm):
+    """Test ReviewerAgent avec LLM réel pour structured outputs"""
+    content = """
+    # Test Personnage
+    
+    **Nom**: Test
+    **Type**: PNJ
+    **Genre**: Masculin
+    
+    Un personnage de test simple.
+    """
+    
+    agent = ReviewerAgent(PERSONNAGES_CONFIG, llm=test_llm)
+    res = agent.process(content)
+    
+    # Vérifier que structured outputs fonctionne
+    assert res.success
+    assert hasattr(res, 'coherence_score')
+    assert hasattr(res, 'issues')
+    assert hasattr(res, 'improvements')
+    
+    # Vérifier types
+    assert isinstance(res.coherence_score, (int, float))
+    assert isinstance(res.issues, list)
+    assert isinstance(res.improvements, list)
+    
+    print(f"\n✓ ReviewerAgent structured outputs OK")
+    print(f"  - Coherence: {res.coherence_score}")
+    print(f"  - Issues: {len(res.issues)}")
+    print(f"  - Improvements: {len(res.improvements)}")
+
+
+@pytest.mark.llm_api
+@pytest.mark.slow
+def test_corrector_with_real_llm(test_llm):
+    """Test CorrectorAgent avec LLM réel pour structured outputs"""
+    content = """
+    # Test Personage
+    
+    **Nom**: Test
+    **Type**: PNJ
+    
+    Un personage avec des erruer de frappe.
+    """
+    
+    agent = CorrectorAgent(PERSONNAGES_CONFIG, llm=test_llm)
+    res = agent.process(content)
+    
+    # Vérifier structured outputs
+    assert res.success
+    assert hasattr(res, 'content')  # Contenu corrigé
+    assert hasattr(res, 'corrections')
+    
+    # Vérifier types
+    assert isinstance(res.content, str)
+    assert isinstance(res.corrections, list)
+    
+    # Le contenu corrigé devrait être différent (ou identique si pas d'erreurs)
+    assert len(res.content) > 0
+    
+    print(f"\n✓ CorrectorAgent structured outputs OK")
+    print(f"  - Corrections appliquées: {len(res.corrections)}")
+
+
+@pytest.mark.llm_api
+@pytest.mark.slow
+def test_validator_with_real_llm(test_llm):
+    """Test ValidatorAgent avec LLM réel pour structured outputs"""
+    content = """
+    # Test Personnage
+    
+    **Nom**: Test Complet
+    **Type**: PNJ
+    **Genre**: Masculin
+    **Espèce**: Humain
+    **Âge**: 30 ans
+    
+    Un personnage de test complet avec tous les champs requis.
+    """
+    
+    agent = ValidatorAgent(PERSONNAGES_CONFIG, llm=test_llm)
+    res = agent.process(content)
+    
+    # Vérifier structured outputs
+    assert res.success
+    assert hasattr(res, 'is_valid')
+    assert hasattr(res, 'completeness_score')
+    assert hasattr(res, 'quality_score')
+    assert hasattr(res, 'validation_errors')
+    
+    # Vérifier types
+    assert isinstance(res.is_valid, bool)
+    assert isinstance(res.completeness_score, (int, float))
+    assert isinstance(res.quality_score, (int, float))
+    assert isinstance(res.validation_errors, list)
+    
+    # Scores devraient être entre 0 et 1
+    assert 0 <= res.completeness_score <= 1
+    assert 0 <= res.quality_score <= 1
+    
+    print(f"\n✓ ValidatorAgent structured outputs OK")
+    print(f"  - Valid: {res.is_valid}")
+    print(f"  - Completeness: {res.completeness_score}")
+    print(f"  - Quality: {res.quality_score}")
+    print(f"  - Errors: {len(res.validation_errors)}")
+
+

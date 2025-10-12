@@ -100,6 +100,7 @@ def build_notion_properties_lieu(content: str) -> dict:
 # TESTS - Payload Personnage
 # ============================================================================
 
+@pytest.mark.unit
 class TestPayloadPersonnage:
     """Tests de construction du payload Notion pour personnages"""
     
@@ -174,6 +175,7 @@ class TestPayloadPersonnage:
 # TESTS - Payload Lieu
 # ============================================================================
 
+@pytest.mark.unit
 class TestPayloadLieu:
     """Tests de construction du payload Notion pour lieux"""
     
@@ -208,6 +210,7 @@ class TestPayloadLieu:
 # TESTS - Validation structure
 # ============================================================================
 
+@pytest.mark.unit
 class TestPayloadStructure:
     """Tests de validation de la structure du payload"""
     
@@ -262,6 +265,7 @@ class TestPayloadStructure:
 # TESTS - Champs critiques présents
 # ============================================================================
 
+@pytest.mark.unit
 class TestChampsEssentiels:
     """Vérifie que tous les champs essentiels sont présents"""
     

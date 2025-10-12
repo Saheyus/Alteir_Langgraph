@@ -12,7 +12,12 @@ import os
 import sys
 import pytest
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
+
+try:
+    from langchain_openai import ChatOpenAI
+    LANGCHAIN_AVAILABLE = True
+except ImportError:
+    LANGCHAIN_AVAILABLE = False
 
 # Fix encoding pour Windows
 if sys.platform == 'win32':
@@ -21,6 +26,7 @@ if sys.platform == 'win32':
 load_dotenv()
 
 @pytest.mark.slow
+@pytest.mark.skipif(not LANGCHAIN_AVAILABLE, reason="langchain_openai not installed")
 def test_gpt5_reasoning():
     """Test GPT-5 avec reasoning"""
     print("\n" + "="*60)
@@ -78,6 +84,7 @@ def test_gpt5_reasoning():
 
 
 @pytest.mark.slow
+@pytest.mark.skipif(not LANGCHAIN_AVAILABLE, reason="langchain_openai not installed")
 def test_gpt4_temperature():
     """Test GPT-4 avec temperature (sans reasoning)"""
     print("\n" + "="*60)

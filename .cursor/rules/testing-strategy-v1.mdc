@@ -1,0 +1,334 @@
+---
+description: Stratégie de tests pour le système multi-agents GDD Alteir
+globs:
+  - "tests/**/*.py"
+  - "agents/**/*.py"
+  - "workflows/**/*.py"
+---
+
+# Stratégie de Tests - Système Multi-Agents
+
+Règles et conventions pour les tests du système multi-agents GDD Alteir.
+
+## Problème
+
+Sans stratégie de tests claire, on risque:
+- Tests trop lents qui bloquent le développement
+- Coûts LLM qui explosent (tests E2E à répétition)
+- Confusion sur quand lancer quels tests
+- Tests qui dupliquent la même fonctionnalité
+- Pas de cleanup → pollution des bases Notion
+
+## Décision
+
+### Pyramide de Tests
+
+```
+         🔺 E2E
+        /    \ 
+       / Intég \
+      /  (API)  \
+     /___________\
+    Unit (rapide)
+```
+
+**Ratio cible** : 70% Unit / 20% Integration / 10% E2E
+
+### Types de Tests
+
+#### 1. Unit (Rapides, Gratuits)
+- **Quoi** : Fonctions isolées, extraction, parsing
+- **Temps** : < 1 seconde par test
+- **Coût** : $0 (pas d'API)
+- **Marqueur** : `@pytest.mark.unit`
+- **Exemples** : `test_export_extraction.py`, `test_export_payload.py`
+
+#### 2. Integration (Moyens, Coût Modéré)
+- **Quoi** : Agents individuels, API Notion/LLM
+- **Temps** : 5-30 secondes par test
+- **Coût** : ~$0.003-0.01 par test
+- **Marqueurs** : `@pytest.mark.integration`, `@pytest.mark.llm_api`, `@pytest.mark.notion_api`
+- **Exemples** : `test_writer_agent.py`, `test_notion_api.py`
+
+#### 3. E2E (Lents, Coûteux)
+- **Quoi** : Workflow complet Brief → Export
+- **Temps** : 30-90 secondes par test
+- **Coût** : ~$0.01-0.02 par test
+- **Marqueurs** : `@pytest.mark.e2e`, `@pytest.mark.slow`
+- **Exemples** : `test_e2e_workflow_personnage.py`
+
+### Marqueurs Pytest
+
+**Marqueurs obligatoires** :
+
+```python
+@pytest.mark.e2e          # Tests end-to-end complets
+@pytest.mark.slow         # Tests lents (> 10 secondes)
+@pytest.mark.llm_api      # Utilise API LLM réelle
+@pytest.mark.notion_api   # Utilise API Notion réelle
+@pytest.mark.unit         # Tests unitaires rapides
+@pytest.mark.integration  # Tests d'intégration
+```
+
+**Règle** : Marquer TOUS les tests avec au moins un marqueur.
+
+## Checklist
+
+### Écrire un Nouveau Test
+
+- [ ] Choisir le bon niveau (Unit / Integration / E2E)
+- [ ] Ajouter les marqueurs appropriés
+- [ ] Utiliser fixtures du `conftest.py`
+- [ ] Docstring clair décrivant le test
+- [ ] Assertions avec messages d'erreur explicites
+- [ ] Cleanup automatique si création de ressources
+
+### Avant Commit
+
+- [ ] Lancer tests rapides: `python tests/run_e2e_tests.py quick`
+- [ ] Tests passent en < 2 secondes
+- [ ] Pas de régression sur tests existants
+
+### Avant Push/PR
+
+- [ ] Lancer E2E basiques: `python tests/run_e2e_tests.py e2e-basic`
+- [ ] Lancer suite complète: `python tests/run_e2e_tests.py full`
+- [ ] Tous les tests passent
+- [ ] Coût LLM acceptable (< $0.10)
+
+### Créer Test E2E
+
+- [ ] Utiliser fixture `test_llm` (pas de LLM hardcodé)
+- [ ] Utiliser fixture `notion_page_tracker` pour cleanup
+- [ ] Marqueurs: `@pytest.mark.e2e`, `@pytest.mark.slow`
+- [ ] Brief test court et représentatif
+- [ ] Vérifier scores (coherence, completeness, quality)
+- [ ] Temps < 2 minutes
+
+### Créer Test Integration
+
+- [ ] Tester agent individuellement (pas workflow complet)
+- [ ] Utiliser fixture `test_llm_fast` si possible
+- [ ] Marqueur: `@pytest.mark.integration`
+- [ ] Assertions sur format de sortie
+- [ ] Temps < 30 secondes
+
+### Créer Test Unit
+
+- [ ] Pas d'appel API externe
+- [ ] Utiliser mocks/fixtures pour données
+- [ ] Marqueur: `@pytest.mark.unit`
+- [ ] Test une seule fonctionnalité
+- [ ] Temps < 1 seconde
+
+## Exemples
+
+### ✅ BON - Test Unit
+
+```python
+@pytest.mark.unit
+def test_extract_field_personnage():
+    """Extraction d'un champ depuis markdown"""
+    content = "**Nom**: Drarus"
+    
+    result = extract_field("Nom", content)
+    
+    assert result == "Drarus"
+```
+
+**Pourquoi** :
+- Rapide (< 0.1s)
+- Pas d'API
+- Test isolé
+- Marqueur unit
+
+### ✅ BON - Test Integration
+
+```python
+@pytest.mark.integration
+@pytest.mark.llm_api
+@pytest.mark.slow
+def test_writer_generate_personnage(test_llm):
+    """WriterAgent génère un personnage valide"""
+    brief = "Marchand humain, 45 ans"
+    
+    writer = WriterAgent(PERSONNAGES_CONFIG, llm=test_llm)
+    result = writer.process(brief)
+    
+    assert result.success
+    assert len(result.content) > 100
+```
+
+**Pourquoi** :
+- Teste un agent individuel
+- Utilise fixture test_llm
+- Marqueurs appropriés
+- Temps raisonnable (~15s)
+
+### ✅ BON - Test E2E
+
+```python
+@pytest.mark.e2e
+@pytest.mark.slow
+@pytest.mark.llm_api
+@pytest.mark.notion_api
+def test_e2e_personnage_minimal(
+    test_llm,
+    notion_page_tracker,
+    temp_output_dir
+):
+    """Workflow complet: Brief → Export Notion"""
+    brief = "PNJ marchand, 45 ans"
+    
+    workflow = ContentWorkflow(PERSONNAGES_CONFIG, llm=test_llm)
+    state = workflow.run(brief)
+    
+    assert state["validator_metadata"]["is_valid"]
+    assert state["coherence_score"] > 0.5
+    
+    # Export Notion (avec cleanup)
+    page_id = export_to_notion(state, sandbox_db)
+    notion_page_tracker.append(page_id)
+```
+
+**Pourquoi** :
+- Teste workflow complet
+- Utilise fixtures (test_llm, notion_page_tracker)
+- Cleanup automatique
+- Marqueurs complets
+
+### ❌ MAUVAIS - Test E2E Trop Large
+
+```python
+def test_tout_le_systeme():  # ❌ Pas de marqueurs
+    """Test tout"""  # ❌ Docstring vague
+    
+    llm = ChatOpenAI(model="gpt-4o-mini")  # ❌ LLM hardcodé
+    
+    for brief in [brief1, brief2, brief3, brief4]:  # ❌ Trop de cas
+        workflow = ContentWorkflow(...)
+        state = workflow.run(brief)
+        
+        page = create_notion_page(...)  # ❌ Pas de cleanup
+```
+
+**Pourquoi c'est mauvais** :
+- Pas de marqueurs pytest
+- LLM hardcodé (pas de fixture)
+- Teste trop de choses en un test
+- Pas de cleanup → pollution Notion
+- Temps d'exécution trop long
+
+### ❌ MAUVAIS - Test Integration Comme E2E
+
+```python
+@pytest.mark.integration
+def test_writer_with_full_workflow(test_llm):  # ❌ Integration = pas workflow complet
+    """Test writer dans workflow complet"""
+    
+    workflow = ContentWorkflow(...)  # ❌ Devrait être E2E
+    state = workflow.run(brief)
+    
+    # ... teste workflow complet
+```
+
+**Pourquoi c'est mauvais** :
+- Marqué `integration` mais teste workflow complet (devrait être `e2e`)
+- Confusion niveau de test
+
+## Vérification
+
+### Lancer Tests par Niveau
+
+```bash
+# Unit seulement (rapide)
+pytest tests/ -m "unit" -v
+
+# Integration seulement
+pytest tests/ -m "integration" -v
+
+# E2E seulement
+pytest tests/ -m "e2e" -v
+
+# Tout sauf lents
+pytest tests/ -m "not slow" -v
+```
+
+### Vérifier Durée
+
+```bash
+# Afficher durée de chaque test
+pytest tests/ -v --durations=10
+```
+
+### Vérifier Coût Estimé
+
+**Règle approximative** :
+- 1 test E2E complet = ~$0.01
+- 1 test integration LLM = ~$0.003-0.005
+- 1 test unit = $0
+
+**Calcul avant lancer suite** :
+```python
+# E2E: 10 tests × $0.01 = $0.10
+# Integration: 20 tests × $0.005 = $0.10
+# Total: ~$0.20 pour suite complète
+```
+
+## Migration
+
+### Tests Existants sans Marqueurs
+
+**Avant** :
+```python
+def test_something():
+    # pas de marqueur
+    pass
+```
+
+**Après** :
+```python
+@pytest.mark.unit
+def test_something():
+    """Description claire"""
+    pass
+```
+
+### Tests E2E sans Cleanup
+
+**Avant** :
+```python
+def test_export():
+    page = create_page(...)
+    # pas de cleanup
+```
+
+**Après** :
+```python
+def test_export(notion_page_tracker):
+    page = create_page(...)
+    notion_page_tracker.append(page.id)
+    # cleanup automatique
+```
+
+### Tests avec LLM Hardcodé
+
+**Avant** :
+```python
+def test_writer():
+    llm = ChatOpenAI(model="gpt-4o-mini")
+    writer = WriterAgent(CONFIG, llm=llm)
+```
+
+**Après** :
+```python
+def test_writer(test_llm):
+    writer = WriterAgent(CONFIG, llm=test_llm)
+```
+
+## Changelog
+
+### 2025-10-12 - Version 1
+- **Raison** : Création suite tests E2E, besoin de stratégie claire
+- **Décision** : Pyramide Unit/Integration/E2E avec marqueurs obligatoires
+- **Impact** : Tous les nouveaux tests doivent suivre cette stratégie

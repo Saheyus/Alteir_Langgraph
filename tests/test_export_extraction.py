@@ -96,6 +96,7 @@ Le Marché des Placides Respirants est un hub commercial...
 # TESTS - Extraction basique
 # ============================================================================
 
+@pytest.mark.unit
 class TestExtractionBasique:
     """Tests d'extraction de champs simples"""
     
@@ -128,6 +129,7 @@ class TestExtractionBasique:
 # TESTS - Champs critiques pour relations
 # ============================================================================
 
+@pytest.mark.unit
 class TestExtractionRelations:
     """Tests d'extraction des champs de relations"""
     
@@ -148,6 +150,7 @@ class TestExtractionRelations:
 # TESTS - Champs multi-valeurs
 # ============================================================================
 
+@pytest.mark.unit
 class TestExtractionMultiValeurs:
     """Tests d'extraction des champs multi-select"""
     
@@ -172,6 +175,7 @@ class TestExtractionMultiValeurs:
 # TESTS - Rich text long
 # ============================================================================
 
+@pytest.mark.unit
 class TestExtractionRichText:
     """Tests d'extraction de champs rich text longs"""
     
@@ -185,6 +189,7 @@ class TestExtractionRichText:
 # TESTS - Lieux (format différent)
 # ============================================================================
 
+@pytest.mark.unit
 class TestExtractionLieux:
     """Tests d'extraction spécifiques aux lieux"""
     
@@ -214,6 +219,7 @@ class TestExtractionLieux:
 # TESTS - Parsing multi-valeurs
 # ============================================================================
 
+@pytest.mark.unit
 class TestParsingSplit:
     """Tests du parsing des valeurs multiples"""
     
