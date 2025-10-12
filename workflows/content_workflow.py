@@ -532,8 +532,21 @@ class ContentWorkflow:
         
         # Sauvegarder le JSON complet
         json_file = output_path / f"{filename_base}_{timestamp}.json"
+        # Ensure JSON-serializable (convert any unexpected objects)
+        def _sanitize(obj):
+            try:
+                json.dumps(obj)
+                return obj
+            except Exception:
+                if isinstance(obj, dict):
+                    return {k: _sanitize(v) for k, v in obj.items()}
+                if isinstance(obj, list):
+                    return [_sanitize(x) for x in obj]
+                return str(obj)
+
+        safe_state = _sanitize(state)
         with open(json_file, "w", encoding="utf-8") as f:
-            json.dump(state, f, indent=2, ensure_ascii=False)
+            json.dump(safe_state, f, indent=2, ensure_ascii=False)
         
         # Sauvegarder le contenu en Markdown
         md_file = output_path / f"{filename_base}_{timestamp}.md"

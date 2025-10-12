@@ -35,17 +35,27 @@ def get_outputs_count() -> int:
 
 @st.cache_data(ttl=30)
 def list_output_files():
-    """Retourne la liste triée des fichiers de sortie (cache 30s)."""
+    """Retourne la liste triée des fichiers de sortie valides (cache 30s)."""
     outputs_dir = Path("outputs")
     if not outputs_dir.exists():
         return []
 
-    json_files = sorted(
+    candidates = sorted(
         outputs_dir.glob("*.json"),
         key=lambda p: p.stat().st_mtime,
         reverse=True,
     )
-    return [f.stem for f in json_files]
+    valid_stems = []
+    for path in candidates:
+        try:
+            # Skip obviously truncated files without loading full content
+            with path.open("r", encoding="utf-8") as fh:
+                json.load(fh)
+            valid_stems.append(path.stem)
+        except Exception:
+            # Ignore corrupted JSON
+            continue
+    return valid_stems
 
 
 @st.cache_data
@@ -57,8 +67,12 @@ def load_result_file(file_stem: str):
     if not json_path.exists():
         return None
 
-    with open(json_path, "r", encoding="utf-8") as handle:
-        return json.load(handle)
+    try:
+        with open(json_path, "r", encoding="utf-8") as handle:
+            return json.load(handle)
+    except Exception:
+        # Skip corrupted/partial files gracefully
+        return None
 
 
 # ---------------------------------------------------------------------------

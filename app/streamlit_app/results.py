@@ -603,7 +603,7 @@ def show_results():
     data = load_result_file(selected_file)
 
     if not data:
-        st.error("Erreur lors du chargement du fichier")
+        st.error("Erreur lors du chargement du fichier (fichier invalide ou corrompu). Sélectionnez un autre résultat.")
         return
 
     col1, col2, col3 = st.columns(3)
