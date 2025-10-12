@@ -113,6 +113,9 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
             response = self.llm.invoke(messages)
             content_text = self._to_text(response.content if hasattr(response, 'content') else response)
 
+            if not content_text or not content_text.strip():
+                raise RuntimeError("Empty content returned by LLM")
+
             # Parser si nécessaire (pour l'instant, retourner le texte brut)
             structured = self._parse_content(content_text)
 
@@ -133,11 +136,15 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
             )
         except Exception as e:
             self.logger.exception("Erreur lors de la génération du contenu")
+            error_msg = str(e)
+            # Detect auth errors and surface them clearly
+            if "401" in error_msg or "Unauthorized" in error_msg or "invalid_api_key" in error_msg or "AuthenticationError" in str(type(e)):
+                error_msg = "❌ ERREUR D'AUTHENTIFICATION : Clé API invalide ou manquante. Vérifie ton fichier .env et relance l'app."
             return AgentResult(
                 success=False,
                 content="",
-                metadata={"domain": self.domain, "brief": brief},
-                errors=[str(e)]
+                metadata={"domain": self.domain, "brief": brief, "error": error_msg},
+                errors=[error_msg]
             )
     
     def process_stream(self, brief: str, context: Dict[str, Any] = None, include_reasoning: bool = False):
@@ -175,6 +182,10 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
                         yield {"text": delta}
 
             content_text = "".join(accumulated_parts)
+            # If streaming yielded nothing, fallback to non-streaming invocation
+            if not content_text.strip():
+                self.logger.warning("Streaming n'a renvoyé aucun texte; fallback non-streaming")
+                return self.process(brief, context)
             structured = self._parse_content(content_text)
             result = AgentResult(
                 success=True,

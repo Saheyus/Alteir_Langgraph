@@ -128,7 +128,7 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
                 explanation: str | None = None
 
             class _CorrSchema(BaseModel):
-                corrected_content: str
+                corrected_content: str | None = None
                 corrections: _List[_Corr] = Field(default_factory=list)
                 improvement_summary: str = ""
 

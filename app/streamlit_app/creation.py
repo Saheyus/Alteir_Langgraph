@@ -55,6 +55,11 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
     if "reasoning_effort" not in st.session_state:
         st.session_state.reasoning_effort = model_info.get("default_reasoning", "minimal")
 
+    # Default verbosity for GPT-5 family
+    if "verbosity" not in st.session_state:
+        # Defaults align with OpenAI docs: medium by default
+        st.session_state.verbosity = "medium"
+
     if "max_tokens" not in st.session_state:
         st.session_state.max_tokens = 5000
 
@@ -75,6 +80,7 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
         st.session_state.creativity = prefs.get("creativity", st.session_state.creativity)
         st.session_state.reasoning_effort = prefs.get("reasoning_effort", st.session_state.reasoning_effort)
         st.session_state.max_tokens = prefs.get("max_tokens", st.session_state.max_tokens)
+        st.session_state.verbosity = prefs.get("verbosity", st.session_state.verbosity)
         st.session_state._ui_prefs_loaded = True
 
 
@@ -285,8 +291,12 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     with col2:
         st.subheader("Paramètres Techniques")
 
-        if model_info.get("uses_reasoning"):
+        provider = model_info.get("provider")
+        uses_reasoning = bool(model_info.get("uses_reasoning"))
+
+        if provider == "OpenAI" and uses_reasoning:
             reasoning_options = ["minimal", "low", "medium", "high"]
+            verbosity_options = ["low", "medium", "high"]
 
             def randomize_reasoning():
                 st.session_state.reasoning_effort = _random_different(
@@ -313,7 +323,36 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                     key=f"reasoning_select_{st.session_state.random_seed}",
                 )
                 creativity = None
+
+            # Verbosity control (GPT-5 only)
+            def randomize_verbosity():
+                st.session_state.verbosity = _random_different(
+                    verbosity_options, st.session_state.verbosity
+                )
+                st.session_state.random_seed += 1
+
+            col_verbosity, col_verbosity_random = st.columns([4, 1])
+            with col_verbosity_random:
+                st.write("")
+                st.write("")
+                st.button(
+                    "🎲",
+                    key="random_verbosity",
+                    help="Valeur aléatoire",
+                    on_click=randomize_verbosity,
+                )
+            with col_verbosity:
+                verbosity = st.selectbox(
+                    "Verbosity (niveau de détail)",
+                    options=verbosity_options,
+                    index=verbosity_options.index(st.session_state.verbosity),
+                    help="low = concis | medium = équilibré | high = détaillé",
+                    key=f"verbosity_select_{st.session_state.random_seed}",
+                )
+            # Anthropic reasoning toggle not shown here
+            st.session_state.include_reasoning = True
         else:
+            # Temperature UI (Anthropic, Mistral, Ollama, or OpenAI non-reasoning)
             col_creativity, col_creativity_random = st.columns([4, 1])
             with col_creativity_random:
                 st.write("")
@@ -338,6 +377,15 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 )
                 reasoning_effort = None
 
+            # Anthropic: show optional reasoning toggle (if provider supports it)
+            if provider == "Anthropic":
+                st.checkbox(
+                    "Afficher le raisonnement (si disponible)",
+                    value=st.session_state.get("include_reasoning", True),
+                    key="include_reasoning",
+                    help="Affiche un flux de raisonnement si le modèle en renvoie. Ne change pas les paramètres du modèle.",
+                )
+
         st.write("")
         max_tokens = st.slider(
             "Max tokens (sortie)",
@@ -355,8 +403,9 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         else:
             config_lines.extend([f"- Niveau: `{level}`", f"- Dialogue: `{dialogue_mode}`"])
 
-        if model_info.get("uses_reasoning"):
+        if provider == "OpenAI" and uses_reasoning:
             config_lines.append(f"- Reasoning: `{reasoning_effort}`")
+            config_lines.append(f"- Verbosity: `{verbosity}`")
         else:
             config_lines.append(f"- Température: `{creativity}`")
 
@@ -371,8 +420,9 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     else:
         st.session_state.dialogue_mode = dialogue_mode
 
-    if model_info.get("uses_reasoning"):
+    if provider == "OpenAI" and uses_reasoning:
         st.session_state.reasoning_effort = reasoning_effort
+        st.session_state.verbosity = verbosity
     else:
         st.session_state.creativity = creativity
 
@@ -389,6 +439,7 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             "creativity": st.session_state.get("creativity"),
             "reasoning_effort": st.session_state.get("reasoning_effort"),
             "max_tokens": max_tokens,
+            "verbosity": st.session_state.get("verbosity"),
         })
         save_ui_prefs(prefs)
     except Exception:
@@ -413,6 +464,8 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         if not brief:
             st.error(error_text[domain])
         else:
+            # Ensure verbosity variable exists in all branches
+            _verbosity = verbosity if (provider == "OpenAI" and uses_reasoning) else None
             generate_content(
                 brief,
                 intent,
@@ -420,11 +473,13 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 dialogue_mode,
                 creativity if creativity is not None else st.session_state.creativity,
                 reasoning_effort,
+                _verbosity,
                 max_tokens,
                 selected_model,
                 model_info,
                 domain,
                 context_summary,
+                include_reasoning=st.session_state.get("include_reasoning") if model_info.get("provider") == "Anthropic" else True if (model_info.get("provider") == "OpenAI" and model_info.get("uses_reasoning")) else False,
             )
 
     # QoL: Reset parameters button

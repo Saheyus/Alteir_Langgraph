@@ -388,6 +388,13 @@ class ContentWorkflow:
             writer_result = None
         if writer_result is None:
             writer_result = self.writer.process(brief, state.get("context"))
+        # Robust fallback: if streaming returned but content is empty, retry non-streaming once
+        try:
+            if (getattr(writer_result, "content", None) is None) or (not str(getattr(writer_result, "content", "")).strip()):
+                self.logger.warning("Writer streaming produced empty content; retrying non-streaming invoke")
+                writer_result = self.writer.process(brief, state.get("context"))
+        except Exception:
+            pass
         # Update state (mirror _writer_node without re-invoking model)
         history_entry = {
             "step": "writer",
@@ -582,6 +589,40 @@ class ContentWorkflow:
                     f.write(f"{i}. [{err['severity']}] {err['field']}: {err['description']}\n")
         
         self.logger.info("Résultats sauvegardés | json=%s | markdown=%s", json_file, md_file)
+        try:
+            # Log a concise summary for quick inspection
+            content_len = len(state.get("content", ""))
+            num_issues = len(state.get("review_issues", []) or [])
+            num_corrections = len(state.get("corrections", []) or [])
+            ctx_pages = len((state.get("context") or {}).get("pages", []) or [])
+            ctx_tokens = (state.get("context") or {}).get("token_estimate")
+            model_used = state.get("model_used")
+            model_cfg = state.get("model_config") or {}
+            verbosity = None
+            # Try to surface verbosity from model kwargs (Responses API) or runtime
+            try:
+                verbosity = ((model_cfg.get("model_kwargs") or {}).get("verbosity")) or ((model_cfg.get("runtime") or {}).get("verbosity"))
+            except Exception:
+                verbosity = None
+
+            self.logger.info(
+                "OUTPUT SUMMARY | domain=%s | chars=%d | issues=%d | corrections=%d | scores=(coh=%.2f, comp=%.2f, qual=%.2f) | model=%s | reasoning=%s | verbosity=%s | ctx_pages=%d | ctx_tokens=%s",
+                state.get("domain"),
+                content_len,
+                num_issues,
+                num_corrections,
+                float(state.get("coherence_score", 0.0)),
+                float(state.get("completeness_score", 0.0)),
+                float(state.get("quality_score", 0.0)),
+                model_used,
+                (model_cfg.get("default_reasoning") or (state.get("reasoning_effort") if hasattr(state, "get") else None)),
+                verbosity,
+                ctx_pages,
+                ctx_tokens,
+            )
+        except Exception:
+            # Never fail saving due to logging
+            pass
 
         return json_file, md_file
 

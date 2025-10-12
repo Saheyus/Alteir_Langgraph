@@ -18,25 +18,80 @@ def create_llm(
     model_config: Dict[str, Any],
     creativity: float | None = None,
     reasoning_effort: str | None = None,
+    verbosity: str | None = None,
     max_tokens: int | None = None,
 ):
     """Crée une instance LLM selon le modèle choisi."""
+    import os
     from langchain_openai import ChatOpenAI
+    import streamlit as st
 
-    llm_config: Dict[str, Any] = {
-        "model": model_config["name"],
-        "max_tokens": max_tokens or model_config["max_tokens"],
-    }
+    provider = model_config.get("provider", "OpenAI")
+    
+    # Clamp max_tokens to model's limit to avoid 400 errors
+    model_max = model_config.get("max_tokens", 2000)
+    effective_max_tokens = min(max_tokens or model_max, model_max)
 
-    if model_config.get("uses_reasoning"):
-        llm_config["use_responses_api"] = True
-        llm_config["reasoning"] = {
-            "effort": reasoning_effort or model_config.get("default_reasoning", "minimal")
-        }
+    if provider == "OpenAI":
+        # Check OpenAI key early and fail fast with clear UI message
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key or api_key.startswith("your_") or api_key.startswith("sk-proj-YOUR"):
+            try:
+                st.error("⚠️ **OPENAI_API_KEY manquante ou invalide.** Ajoute ta clé OpenAI dans le fichier `.env` à la racine, puis relance l'app.")
+            except Exception:
+                pass
+            raise RuntimeError(f"Missing or invalid OPENAI_API_KEY for model {model_name}. Check your .env file.")
+        if model_config.get("uses_reasoning"):
+            # GPT-5 Responses API: reasoning effort passed via reasoning param, not extra_body
+            llm_config: Dict[str, Any] = {
+                "model": model_config["name"],
+                "use_responses_api": True,
+                "reasoning": {
+                    "effort": reasoning_effort or model_config.get("default_reasoning", "minimal")
+                },
+                "max_tokens": effective_max_tokens,
+            }
+            # Verbosity is a separate model_kwargs if needed
+            if verbosity:
+                llm_config["model_kwargs"] = {"verbosity": verbosity}
+            return ChatOpenAI(**llm_config)
+        else:
+            # Classic chat models (GPT-4, GPT-4o-mini)
+            llm_config: Dict[str, Any] = {
+                "model": model_config["name"],
+                "max_tokens": effective_max_tokens,
+                "temperature": creativity,
+            }
+            return ChatOpenAI(**llm_config)
+
+    elif provider == "Anthropic":
+        # Anthropic models are handled via ChatAnthropic
+        from langchain_anthropic import ChatAnthropic
+
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not api_key or api_key.startswith("your_") or api_key.startswith("sk-ant-YOUR"):
+            # Surface a clear UI error and stop here
+            try:
+                st.error("⚠️ **ANTHROPIC_API_KEY manquante ou invalide.** Ajoute ta clé Anthropic dans le fichier `.env` à la racine, puis relance l'app.")
+            except Exception:
+                pass
+            raise RuntimeError(f"Missing or invalid ANTHROPIC_API_KEY for model {model_name}. Check your .env file.")
+
+        # Claude does not use OpenAI Responses API; pass standard params
+        return ChatAnthropic(
+            model=model_config["name"],
+            temperature=(creativity if creativity is not None else 0.7),
+            max_tokens=effective_max_tokens,
+            api_key=api_key,
+        )
+
     else:
-        llm_config["temperature"] = creativity
-
-    return ChatOpenAI(**llm_config)
+        # Fallback: try OpenAI signature to avoid crashing
+        return ChatOpenAI(
+            model=model_config["name"],
+            temperature=creativity,
+            max_tokens=effective_max_tokens,
+        )
 
 
 def _build_context_payload(context_summary: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
@@ -104,11 +159,13 @@ def generate_content(
     dialogue_mode: str,
     creativity: float,
     reasoning_effort: str | None,
+    verbosity: str | None,
     max_tokens: int,
     model_name: str,
     model_config: Dict[str, Any],
     domain: str,
     context_summary: Optional[Dict[str, Any]] = None,
+    include_reasoning: bool = False,
 ):
     """Génère du contenu (personnage ou lieu) selon le domaine."""
 
@@ -118,6 +175,7 @@ def generate_content(
         model_config,
         creativity=creativity,
         reasoning_effort=reasoning_effort,
+        verbosity=verbosity,
         max_tokens=max_tokens,
     )
 
@@ -228,6 +286,12 @@ def generate_content(
     eta_seconds = _estimate_total_seconds(context_payload.get("token_estimate") if context_payload else None)
     time_estimate.text(f"⏱️ Temps estimé : ~{int(eta_seconds)}s")
 
+    # Resolve include_reasoning before entering try block
+    if model_config.get("provider") == "OpenAI":
+        include_reasoning = bool(model_config.get("uses_reasoning"))
+    else:
+        include_reasoning = bool(include_reasoning)
+
     try:
         start_time = time.time()
 
@@ -245,8 +309,6 @@ def generate_content(
         )
         status_text.text("✍️ Writer : Génération du contenu initial...")
         progress_bar.progress(10)
-
-        include_reasoning = bool(model_config.get("uses_reasoning"))
 
         # Collapsible draft area containing reasoning first, then live streams
         reason_writer = reason_reviewer = reason_corrector = reason_validator = None
@@ -416,6 +478,20 @@ def generate_content(
         progress_bar.progress(100)
 
         elapsed_time = time.time() - start_time
+        
+        # Check for auth/API errors in result metadata
+        if result and result.get("writer_metadata", {}).get("error"):
+            error_msg = result["writer_metadata"]["error"]
+            st.error(error_msg)
+            status_text.text(f"❌ Échec après {elapsed_time:.1f}s")
+            return  # Stop here, don't save empty result
+        
+        # Check for empty content (generation failed silently)
+        if not result or not result.get("content") or len(result.get("content", "").strip()) == 0:
+            st.error("❌ **Génération échouée** : le contenu est vide. Vérifie tes clés API dans `.env` et relance.")
+            status_text.text(f"❌ Échec après {elapsed_time:.1f}s")
+            return
+        
         status_text.text(f"✅ Terminé en {elapsed_time:.1f}s !")
         progress_bar.progress(100)
         time_estimate.text("")
@@ -431,11 +507,43 @@ def generate_content(
             pass
 
         result["model_used"] = model_name
-        result["model_config"] = model_config
+        # Enrich model_config with runtime knobs for auditability
+        # Clamp max_tokens to model's limit (same logic as in create_llm)
+        model_max = model_config.get("max_tokens", 2000)
+        effective_max_tokens = min(max_tokens or model_max, model_max)
+        
+        enriched_model_config = dict(model_config)
+        if model_config.get("uses_reasoning"):
+            # Surface reasoning effort and verbosity when available
+            enriched_model_config.setdefault("runtime", {})
+            enriched_model_config["runtime"].update({
+                "reasoning_effort": reasoning_effort,
+                "verbosity": (llm.model_kwargs.get("verbosity") if hasattr(llm, "model_kwargs") and isinstance(getattr(llm, "model_kwargs", None), dict) else None),
+                "max_tokens": effective_max_tokens,
+            })
+        else:
+            enriched_model_config.setdefault("runtime", {})
+            enriched_model_config["runtime"].update({
+                "temperature": creativity,
+                "max_tokens": effective_max_tokens,
+            })
+        result["model_config"] = enriched_model_config
         if context_payload:
             result["context"] = context_payload
 
         json_file, md_file = workflow.save_results(result)
+
+        # Log a concise output summary in Streamlit console too
+        try:
+            content_len = len(result.get("content", ""))
+            num_issues = len(result.get("review_issues", []) or [])
+            num_corrections = len(result.get("corrections", []) or [])
+            ctx_tokens = (result.get("context") or {}).get("token_estimate")
+            st.caption(
+                f"🧾 Résumé: {content_len} caractères | {num_issues} problèmes | {num_corrections} corrections | tokens contexte ≈ {ctx_tokens}"
+            )
+        except Exception:
+            pass
 
         success_msg = {
             "personnages": f"✅ Personnage généré avec succès ! (Modèle: {model_config['icon']} {model_name})",

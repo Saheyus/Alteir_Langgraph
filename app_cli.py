@@ -5,6 +5,12 @@ Interface CLI pour le système multi-agents GDD Alteir
 import sys
 import os
 from pathlib import Path
+try:
+    # Load .env for CLI runs as well
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    pass
 from typing import Optional
 
 from config.logging_config import get_logger

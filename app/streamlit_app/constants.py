@@ -36,6 +36,24 @@ MODELS = {
         "icon": "🔄",
         "uses_reasoning": False,
     },
+    "Claude Sonnet 4.5": {
+        "name": "claude-sonnet-4-5-20250929",
+        "provider": "Anthropic",
+        "description": "Best model for complex agents and coding (Sept 2025)",
+        "max_tokens": 64000,
+        "icon": "🧠",
+        "uses_reasoning": False,
+        "default_reasoning": None,
+    },
+    "Claude 3.5 Haiku": {
+        "name": "claude-3-5-haiku-20241022",
+        "provider": "Anthropic",
+        "description": "Fastest Claude model, blazing speed",
+        "max_tokens": 8192,
+        "icon": "⚡",
+        "uses_reasoning": False,
+        "default_reasoning": None,
+    },
 }
 
 DOMAIN_HEADERS = {

@@ -56,7 +56,7 @@ def correct_with_structured_output(text: str, provider: str = "openai"):
     elif provider == "anthropic":
         from langchain_anthropic import ChatAnthropic
         llm = ChatAnthropic(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-sonnet-4-5-20250929",  # Latest Claude Sonnet 4.5
             temperature=0.3
         )
     

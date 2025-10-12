@@ -38,10 +38,21 @@ ABOUT_MARKDOWN = """
 
 def run_app() -> None:
     """Entry point for the Streamlit UI."""
+    import os
 
     apply_page_config()
     inject_css()
     render_header()
+    
+    # Check API keys early and show warnings if missing
+    openai_key = os.getenv("OPENAI_API_KEY")
+    anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+    
+    if not openai_key or openai_key.startswith("your_") or openai_key.startswith("sk-proj-YOUR"):
+        st.warning("⚠️ **OPENAI_API_KEY manquante ou invalide** dans `.env`. Les modèles GPT ne fonctionneront pas.")
+    
+    if not anthropic_key or anthropic_key.startswith("your_") or anthropic_key.startswith("sk-ant-YOUR"):
+        st.warning("⚠️ **ANTHROPIC_API_KEY manquante ou invalide** dans `.env`. Les modèles Claude ne fonctionneront pas.")
 
     selected_model, model_info, domain = render_sidebar()
 

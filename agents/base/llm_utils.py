@@ -189,16 +189,19 @@ Ne pas ajouter de texte avant ou après le JSON."""
                     for part in content:
                         if isinstance(part, dict):
                             part_type = part.get("type") or part.get("role")
-                            # Common cases: {"type": "output_text", "text": "..."}
-                            if "text" in part and isinstance(part["text"], str):
+                            # Prefer text, but some providers include content instead
+                            maybe_text = part.get("text") if isinstance(part.get("text"), str) else None
+                            if maybe_text is None and isinstance(part.get("content"), str):
+                                maybe_text = part.get("content")
+
+                            if maybe_text:
                                 if part_type in ("output_text", "message", "text", None):
-                                    delta_text += part["text"]
+                                    delta_text += maybe_text
                                 elif include_reasoning and part_type in ("reasoning", "thought", "chain_of_thought"):
-                                    reasoning_delta += part["text"]
+                                    reasoning_delta += maybe_text
                             elif include_reasoning and part_type in ("reasoning", "thought"):
-                                # Some providers put reasoning in "content"
-                                if isinstance(part.get("content"), str):
-                                    reasoning_delta += part["content"]
+                                # Unknown structure: stringify as last resort
+                                reasoning_delta += str(part)
                         else:
                             # Unknown object; stringify
                             delta_text += str(part)

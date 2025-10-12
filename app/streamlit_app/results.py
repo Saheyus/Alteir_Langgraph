@@ -609,18 +609,18 @@ def show_results():
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric("Cohérence", f"{data['coherence_score']:.2f}")
+        st.metric("Cohérence", f"{float(data.get('coherence_score', 0.0)):.2f}")
     with col2:
-        st.metric("Complétude", f"{data['completeness_score']:.2f}")
+        st.metric("Complétude", f"{float(data.get('completeness_score', 0.0)):.2f}")
     with col3:
-        st.metric("Qualité", f"{data['quality_score']:.2f}")
+        st.metric("Qualité", f"{float(data.get('quality_score', 0.0)):.2f}")
 
     if data.get("model_used"):
         model_config = data.get("model_config", {})
         icon = model_config.get("icon", "🤖")
         st.info(f"{icon} **Modèle utilisé :** {data['model_used']}")
 
-    if data["ready_for_publication"]:
+    if bool(data.get("ready_for_publication", False)):
         st.success("✅ Prêt pour publication")
     else:
         st.warning("⚠️ Nécessite révision")
@@ -650,7 +650,7 @@ def show_results():
     st.divider()
 
     with st.expander("📄 Contenu", expanded=True):
-        st.markdown(data["content"])
+        st.markdown(data.get("content", ""))
 
     if data.get("review_issues"):
         with st.expander(f"⚠️ Problèmes identifiés ({len(data['review_issues'])})"):
@@ -694,4 +694,4 @@ def show_results():
                 )
 
     with st.expander("📊 Métadonnées"):
-        st.json(data["writer_metadata"])
+        st.json(data.get("writer_metadata") or data.get("metadata") or {})

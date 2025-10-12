@@ -1,0 +1,45 @@
+---
+description: Intégrer Claude 4.5 Sonnet (Anthropic) dans l'app et la fabrique LLM
+globs:
+  - app/streamlit_app/**
+  - agents/base/**
+---
+
+### Règle: Intégration Anthropic Claude
+
+## Problème
+Supporter Anthropic aux côtés d'OpenAI sans casser l'UI ni les structured outputs. Unifier l'instanciation LLM et exposer le modèle dans la sélection UI.
+
+## Décision
+- Ajouter `Claude Sonnet 4.5` et `Claude 3.5 Sonnet` dans `MODELS` avec `provider: Anthropic`, `uses_reasoning: false` (Claude n'utilise pas le système Responses API d'OpenAI).
+- Étendre `create_llm` pour retourner `ChatAnthropic` lorsque `provider == "Anthropic"`.
+- Utiliser `LLMAdapter` pour structured outputs (tools/JSON) et streaming.
+- Ajouter `ANTHROPIC_API_KEY` dans `.env` (chargé automatiquement au démarrage de l'app).
+
+## Checklist
+- [x] MODELS contient les entrées Anthropic avec noms officiels: `claude-sonnet-4-5-20250929` (Sept 2025, max_tokens=64000) et `claude-3-5-haiku-20241022` (rapide, max_tokens=8192).
+- [x] `create_llm` gère OpenAI et Anthropic proprement.
+- [x] UI affiche les contrôles appropriés: Reasoning/Verbosity pour OpenAI uniquement, température standard pour Anthropic.
+- [x] `.env` chargé automatiquement au démarrage (app_streamlit.py, app_cli.py).
+- [x] Exemple mis à jour vers `claude-sonnet-4-5-20250929`.
+
+## Exemples
+Bon:
+```python
+llm = create_llm("Claude 4.5 Sonnet", MODELS["Claude 4.5 Sonnet"], creativity=0.6)
+```
+Mauvais:
+```python
+from langchain_anthropic import ChatAnthropic; ChatAnthropic(model="claude", temperature=0.9)
+```
+
+## Vérification
+- `python -m pytest -k anthropic -q`
+- Démarrer l'app et générer avec le modèle `Claude 4.5 Sonnet`.
+
+## Migration
+- Aucune migration de données. Mettre à jour les variables d'environnement et redémarrer l'app.
+
+## Changelog
+- 2025-10-12: v1 — Ajout initial Claude 4.5 Sonnet (Anthropic)
+
