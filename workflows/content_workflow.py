@@ -334,6 +334,164 @@ class ContentWorkflow:
         state.update(delta)
         yield ("validator", state)
     
+    def run_iter_live(
+        self,
+        brief: str,
+        writer_config: WriterConfig = None,
+        context: Dict[str, Any] = None,
+        include_reasoning: bool = False,
+    ) -> Iterator[Tuple[str, Any]]:
+        """Runs the workflow and streams token deltas per step.
+        Yields tuples (event, payload):
+          - "writer:start" | None
+          - "writer:delta" | {"text", "reasoning"?}
+          - "writer:done"  | WorkflowState
+        And similarly for other steps: reviewer, corrector, validator.
+        """
+        state: WorkflowState = {
+            "domain": self.domain_config.domain,
+            "brief": brief,
+            "content": "",
+            "writer_metadata": {},
+            "reviewer_metadata": {},
+            "corrector_metadata": {},
+            "validator_metadata": {},
+            "review_issues": [],
+            "corrections": [],
+            "validation_errors": [],
+            "coherence_score": 0.0,
+            "completeness_score": 0.0,
+            "quality_score": 0.0,
+            "is_valid": False,
+            "ready_for_publication": False,
+            "context": context or self.writer.gather_context(),
+            "history": [],
+        }
+
+        if writer_config:
+            self.writer.writer_config = writer_config
+
+        # Writer
+        yield ("writer:start", None)
+        writer_result = None
+        try:
+            gen = self.writer.process_stream(brief, context=state.get("context"), include_reasoning=include_reasoning)
+            while True:
+                try:
+                    delta = next(gen)
+                    yield ("writer:delta", delta)
+                except StopIteration as stop:
+                    writer_result = stop.value
+                    break
+        except Exception:
+            # Already logged inside agent; fallback will be handled below
+            writer_result = None
+        if writer_result is None:
+            writer_result = self.writer.process(brief, state.get("context"))
+        # Update state (mirror _writer_node without re-invoking model)
+        history_entry = {
+            "step": "writer",
+            "timestamp": datetime.now().isoformat(),
+            "summary": f"Contenu genere ({len(writer_result.content)} chars)",
+        }
+        state.update({
+            "content": writer_result.content,
+            "writer_metadata": writer_result.metadata,
+            "history": state.get("history", []) + [history_entry],
+        })
+        yield ("writer:done", state)
+
+        # Reviewer
+        yield ("reviewer:start", None)
+        reviewer_result = None
+        try:
+            gen = self.reviewer.process_stream(state["content"], context=state.get("context"), include_reasoning=include_reasoning)
+            while True:
+                try:
+                    delta = next(gen)
+                    yield ("reviewer:delta", delta)
+                except StopIteration as stop:
+                    reviewer_result = stop.value
+                    break
+        except Exception:
+            reviewer_result = None
+        if reviewer_result is None:
+            reviewer_result = self.reviewer.process(state["content"], state.get("context"))
+        history_entry = {
+            "step": "reviewer",
+            "timestamp": datetime.now().isoformat(),
+            "summary": f"Score coherence: {getattr(reviewer_result, 'coherence_score', 0.0):.2f}, {len(getattr(reviewer_result, 'issues', []))} problemes",
+        }
+        state.update({
+            "content": reviewer_result.content,
+            "reviewer_metadata": reviewer_result.metadata,
+            "review_issues": [vars(issue) for issue in getattr(reviewer_result, 'issues', [])],
+            "coherence_score": float(getattr(reviewer_result, 'coherence_score', 0.0)),
+            "history": state.get("history", []) + [history_entry],
+        })
+        yield ("reviewer:done", state)
+
+        # Corrector
+        yield ("corrector:start", None)
+        corrector_result = None
+        try:
+            gen = self.corrector.process_stream(state["content"], context=state.get("context"), include_reasoning=include_reasoning)
+            while True:
+                try:
+                    delta = next(gen)
+                    yield ("corrector:delta", delta)
+                except StopIteration as stop:
+                    corrector_result = stop.value
+                    break
+        except Exception:
+            corrector_result = None
+        if corrector_result is None:
+            corrector_result = self.corrector.process(state["content"], state.get("context"))
+        history_entry = {
+            "step": "corrector",
+            "timestamp": datetime.now().isoformat(),
+            "summary": f"{len(getattr(corrector_result, 'corrections', []))} corrections effectuees",
+        }
+        state.update({
+            "content": corrector_result.content,
+            "corrector_metadata": corrector_result.metadata,
+            "corrections": [vars(c) for c in getattr(corrector_result, 'corrections', [])],
+            "history": state.get("history", []) + [history_entry],
+        })
+        yield ("corrector:done", state)
+
+        # Validator
+        yield ("validator:start", None)
+        validator_result = None
+        try:
+            gen = self.validator.process_stream(state["content"], context=state.get("context"), include_reasoning=include_reasoning)
+            while True:
+                try:
+                    delta = next(gen)
+                    yield ("validator:delta", delta)
+                except StopIteration as stop:
+                    validator_result = stop.value
+                    break
+        except Exception:
+            validator_result = None
+        if validator_result is None:
+            validator_result = self.validator.process(state["content"], state.get("context"))
+        history_entry = {
+            "step": "validator",
+            "timestamp": datetime.now().isoformat(),
+            "summary": f"Valide: {getattr(validator_result, 'is_valid', False)}, Publication: {getattr(validator_result, 'ready_for_publication', False)}",
+        }
+        state.update({
+            "validator_metadata": validator_result.metadata,
+            "validation_errors": [vars(e) for e in getattr(validator_result, 'validation_errors', [])],
+            "completeness_score": float(getattr(validator_result, 'completeness_score', 0.0)),
+            "quality_score": float(getattr(validator_result, 'quality_score', 0.0)),
+            "is_valid": bool(getattr(validator_result, 'is_valid', False)),
+            "ready_for_publication": bool(getattr(validator_result, 'ready_for_publication', False)),
+            "history": state.get("history", []) + [history_entry],
+        })
+        yield ("validator:done", state)
+    
     def save_results(self, state: WorkflowState, output_dir: str = "outputs"):
         """
         Sauvegarde les résultats du workflow

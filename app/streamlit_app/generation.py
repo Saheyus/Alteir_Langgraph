@@ -129,6 +129,35 @@ def generate_content(
     )
 
     context_payload = _build_context_payload(context_summary)
+    # Inject Vision page as primary context
+    try:
+        from config.notion_config import NotionConfig
+        from agents.notion_context_fetcher import NotionContextFetcher
+        vision_id = NotionConfig.VISION_PAGE_ID
+        fetcher = NotionContextFetcher()
+        vision_page = fetcher.fetch_page_full(vision_id, domain="vision")
+        if context_payload is None:
+            context_payload = {
+                "selected_ids": [vision_page.id],
+                "pages": [vision_page],
+                "formatted": fetcher.format_context_for_llm([vision_page]),
+                "token_estimate": vision_page.token_estimate,
+                "previews": [],
+            }
+        else:
+            # Prepend to pages and rebuild formatted/context tokens
+            pages = [vision_page] + context_payload.get("pages", [])
+            formatted = fetcher.format_context_for_llm(pages)
+            context_payload.update({
+                "selected_ids": [vision_page.id] + list(context_payload.get("selected_ids", [])),
+                "pages": pages,
+                "formatted": formatted,
+                "token_estimate": sum(p.token_estimate for p in pages),
+            })
+        st.caption("📌 Contexte primaire ajouté: Vision")
+    except Exception:
+        # Best-effort; continue without blocking UI
+        pass
     # Safety log for full context usage
     if context_payload and context_payload.get("pages"):
         st.caption(f"📚 Contexte chargé: {len(context_payload['pages'])} page(s) (~{context_payload.get('token_estimate', 0)} tokens)")
@@ -203,96 +232,168 @@ def generate_content(
         status_text.text("✍️ Writer : Génération du contenu initial...")
         progress_bar.progress(10)
 
-        iterator = workflow.run_iter(brief, writer_config, context=context_payload)
-        step_name, result = next(iterator)  # writer terminé
-        step_placeholders[0].markdown(
-            """
+        include_reasoning = bool(model_config.get("uses_reasoning"))
+
+        # Collapsible draft area containing reasoning first, then live streams
+        reason_writer = reason_reviewer = reason_corrector = reason_validator = None
+        with st.expander("📝 Ébauche (en direct)", expanded=True):
+            if include_reasoning:
+                reasoning_expander = st.expander("💭 Raisonnement (en direct)", expanded=False)
+                with reasoning_expander:
+                    reason_writer = st.empty()
+                    reason_reviewer = st.empty()
+                    reason_corrector = st.empty()
+                    reason_validator = st.empty()
+            stream_area = st.container()
+            live_writer = stream_area.empty()
+            live_reviewer = stream_area.empty()
+            live_corrector = stream_area.empty()
+            live_validator = stream_area.empty()
+
+        content_buffer = {"writer": [], "reviewer": [], "corrector": [], "validator": []}
+        reasoning_buffer = {"writer": [], "reviewer": [], "corrector": [], "validator": []}
+        result = None
+
+        for event, payload in workflow.run_iter_live(
+            brief,
+            writer_config,
+            context=context_payload,
+            include_reasoning=include_reasoning,
+        ):
+            if event == "writer:start":
+                status_text.text("✍️ Writer : Génération du contenu initial...")
+                progress_bar.progress(10)
+            elif event == "writer:delta":
+                text = payload.get("text", "")
+                if text:
+                    content_buffer["writer"].append(text)
+                live_writer.markdown("".join(content_buffer["writer"]) + " ▌")
+                if include_reasoning and payload.get("reasoning") and reason_writer is not None:
+                    reasoning_buffer["writer"].append(payload["reasoning"])
+                    reason_writer.markdown("".join(reasoning_buffer["writer"]))
+            elif event == "writer:done":
+                live_writer.markdown("".join(content_buffer["writer"]))
+                step_placeholders[0].markdown(
+                    """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
             <div style='font-size: 24px;'>✅</div>
             <div style='font-size: 12px; font-weight: bold;'>Writer</div>
             <div style='font-size: 10px;'>Terminé</div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        progress_bar.progress(35)
-
-        # Reviewer
-        step_placeholders[1].markdown(
-            """
+                    unsafe_allow_html=True,
+                )
+                progress_bar.progress(35)
+                result = payload
+            elif event == "reviewer:start":
+                step_placeholders[1].markdown(
+                    """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #667eea; color: white;'>
             <div style='font-size: 24px;'>🔍</div>
             <div style='font-size: 12px; font-weight: bold;'>Reviewer</div>
             <div style='font-size: 10px;'>En cours...</div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        status_text.text("🔍 Reviewer : Analyse de cohérence narrative...")
-        progress_bar.progress(45)
-        step_name, result = next(iterator)  # reviewer terminé
-        step_placeholders[1].markdown(
-            """
+                    unsafe_allow_html=True,
+                )
+                status_text.text("🔍 Reviewer : Analyse de cohérence narrative...")
+                progress_bar.progress(45)
+            elif event == "reviewer:delta":
+                text = payload.get("text", "")
+                if text:
+                    content_buffer["reviewer"].append(text)
+                live_reviewer.markdown("".join(content_buffer["reviewer"]) + " ▌")
+                if include_reasoning and payload.get("reasoning") and reason_reviewer is not None:
+                    reasoning_buffer["reviewer"].append(payload["reasoning"])
+                    reason_reviewer.markdown("".join(reasoning_buffer["reviewer"]))
+            elif event == "reviewer:done":
+                live_reviewer.markdown("".join(content_buffer["reviewer"]))
+                step_placeholders[1].markdown(
+                    """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
             <div style='font-size: 24px;'>✅</div>
             <div style='font-size: 12px; font-weight: bold;'>Reviewer</div>
             <div style='font-size: 10px;'>Terminé</div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        progress_bar.progress(65)
-
-        # Corrector
-        step_placeholders[2].markdown(
-            """
+                    unsafe_allow_html=True,
+                )
+                progress_bar.progress(65)
+                result = payload
+            elif event == "corrector:start":
+                step_placeholders[2].markdown(
+                    """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #667eea; color: white;'>
             <div style='font-size: 24px;'>✏️</div>
             <div style='font-size: 12px; font-weight: bold;'>Corrector</div>
             <div style='font-size: 10px;'>En cours...</div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        status_text.text("✏️ Corrector : Correction du style...")
-        progress_bar.progress(75)
-        step_name, result = next(iterator)  # corrector terminé
-        step_placeholders[2].markdown(
-            """
+                    unsafe_allow_html=True,
+                )
+                status_text.text("✏️ Corrector : Correction du style...")
+                progress_bar.progress(75)
+            elif event == "corrector:delta":
+                text = payload.get("text", "")
+                if text:
+                    content_buffer["corrector"].append(text)
+                live_corrector.markdown("".join(content_buffer["corrector"]) + " ▌")
+                if include_reasoning and payload.get("reasoning") and reason_corrector is not None:
+                    reasoning_buffer["corrector"].append(payload["reasoning"])
+                    reason_corrector.markdown("".join(reasoning_buffer["corrector"]))
+            elif event == "corrector:done":
+                live_corrector.markdown("".join(content_buffer["corrector"]))
+                step_placeholders[2].markdown(
+                    """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
             <div style='font-size: 24px;'>✅</div>
             <div style='font-size: 12px; font-weight: bold;'>Corrector</div>
             <div style='font-size: 10px;'>Terminé</div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        progress_bar.progress(90)
-
-        # Validator
-        step_placeholders[3].markdown(
-            """
+                    unsafe_allow_html=True,
+                )
+                progress_bar.progress(90)
+                result = payload
+            elif event == "validator:start":
+                step_placeholders[3].markdown(
+                    """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #667eea; color: white;'>
             <div style='font-size: 24px;'>✅</div>
             <div style='font-size: 12px; font-weight: bold;'>Validator</div>
             <div style='font-size: 10px;'>En cours...</div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
-        status_text.text("✅ Validator : Validation finale...")
-        progress_bar.progress(95)
-        step_name, result = next(iterator)  # validator terminé
-        step_placeholders[3].markdown(
-            """
+                    unsafe_allow_html=True,
+                )
+                status_text.text("✅ Validator : Validation finale...")
+                progress_bar.progress(95)
+            elif event == "validator:delta":
+                text = payload.get("text", "")
+                if text:
+                    content_buffer["validator"].append(text)
+                live_validator.markdown("".join(content_buffer["validator"]) + " ▌")
+                if include_reasoning and payload.get("reasoning") and reason_validator is not None:
+                    reasoning_buffer["validator"].append(payload["reasoning"])
+                    reason_validator.markdown("".join(reasoning_buffer["validator"]))
+            elif event == "validator:done":
+                live_validator.markdown("".join(content_buffer["validator"]))
+                step_placeholders[3].markdown(
+                    """
         <div style='text-align: center; padding: 10px; border-radius: 5px; background-color: #28a745; color: white;'>
             <div style='font-size: 24px;'>✅</div>
             <div style='font-size: 12px; font-weight: bold;'>Validator</div>
             <div style='font-size: 10px;'>Terminé</div>
         </div>
         """,
-            unsafe_allow_html=True,
-        )
+                    unsafe_allow_html=True,
+                )
+                result = payload
+                # No immediate break; loop will end naturally after last event
+        # Writer "done" card already updated in writer:done
+
+        # After live completes, result contains final state (from last :done)
+        progress_bar.progress(100)
 
         elapsed_time = time.time() - start_time
         status_text.text(f"✅ Terminé en {elapsed_time:.1f}s !")
@@ -356,7 +457,7 @@ def generate_content(
                 unsafe_allow_html=True,
             )
 
-        with st.expander("📄 Voir le contenu généré", expanded=True):
+        with st.expander("📄 Contenu final", expanded=True):
             st.markdown(result["content"])
 
         if result["review_issues"]:

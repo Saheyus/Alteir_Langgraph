@@ -30,6 +30,10 @@ class NotionConfig:
     # Voir règles: API_VERSION = "2025-09-03" (multi-source via MCP)
     API_VERSION = "2025-09-03"
 
+    # Page Vision (contexte primaire à injecter dans toutes les générations)
+    VISION_PAGE_ID = "1886e4d21b45811188d5edb08cafe956"
+    VISION_PAGE_URL = "https://www.notion.so/alteir/Vision-1886e4d21b45811188d5edb08cafe956"
+
     # Version stable pour appels DIRECTS HTTP (fallback sans MCP)
     DIRECT_API_VERSION = os.getenv("NOTION_DIRECT_API_VERSION", "2022-06-28")
 

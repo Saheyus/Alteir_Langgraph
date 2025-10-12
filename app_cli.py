@@ -152,9 +152,46 @@ def create_character():
 
     try:
         logger.info("Début de génération pour le domaine %s", PERSONNAGES_CONFIG.display_name)
-        result = workflow.run(brief, writer_config)
 
-        # Sauvegarder
+        # Streaming display (simple STDOUT live)
+        print("\n--- STREAMING ---\n")
+        # Inject Vision page into context for CLI as well
+        context_payload = None
+        try:
+            from config.notion_config import NotionConfig
+            from agents.notion_context_fetcher import NotionContextFetcher
+            fetcher = NotionContextFetcher()
+            vision_page = fetcher.fetch_page_full(NotionConfig.VISION_PAGE_ID, domain="vision")
+            context_payload = {
+                "selected_ids": [vision_page.id],
+                "pages": [vision_page],
+                "formatted": fetcher.format_context_for_llm([vision_page]),
+                "token_estimate": vision_page.token_estimate,
+                "previews": [],
+            }
+            print("\n[CTX] Contexte primaire ajouté: Vision")
+        except Exception:
+            pass
+
+        buffers = {"writer": [], "reviewer": [], "corrector": [], "validator": []}
+        for event, payload in workflow.run_iter_live(brief, writer_config, context=context_payload):
+            if event.endswith(":start"):
+                step = event.split(":")[0]
+                print(f"[{step.upper()}] En cours...")
+            elif event.endswith(":delta"):
+                step = event.split(":")[0]
+                text = payload.get("text", "")
+                if text:
+                    buffers[step].append(text)
+                    # Print last chunk without newline to simulate live
+                    print(text, end="", flush=True)
+            elif event.endswith(":done"):
+                step = event.split(":")[0]
+                print("\n")
+                # payload is the current state; keep it until loop ends
+                result = payload
+
+        # Persist once
         json_file, md_file = workflow.save_results(result)
         logger.info("Résultats enregistrés | json=%s | markdown=%s", json_file, md_file)
 
@@ -172,12 +209,11 @@ def create_character():
         print(f"\nFichiers:")
         print(f"  - JSON: {json_file}")
         print(f"  - Markdown: {md_file}")
-        
-        # Proposer d'ouvrir
+
         open_file = get_user_input("\nOuvrir le fichier Markdown? (o/N)", "n")
         if open_file.lower() == 'o':
             os.system(f'notepad {md_file}' if os.name == 'nt' else f'open {md_file}')
-        
+
     except Exception as e:
         logger.exception("Erreur lors de la génération CLI")
         print(f"\n[ERREUR] {e}")
