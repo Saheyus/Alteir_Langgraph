@@ -390,14 +390,24 @@ class NotionContextFetcher:
         return f"{raw_id[:8]}-{raw_id[8:12]}-{raw_id[12:16]}-{raw_id[16:20]}-{raw_id[20:]}"
 
     def _record_to_preview(self, record: Dict[str, Any], domain: str, *, eager_content: bool = False) -> NotionPagePreview:
-        """Convert a Notion API record to a preview object."""
+        """Convert a Notion API record to a preview object.
+
+        Supports both real Notion API shape (properties nested with types)
+        and simplified test/fixture shapes where fields are present at top-level
+        (e.g. ``title``, ``summary``, ``tags``) or property values are strings.
+        """
         properties = record.get("properties", {})
-        
-        # Extract title from Notion title property
+
+        # Extract title with graceful fallbacks
         title = self._extract_notion_title(properties)
-        
-        # Extract summary from rich_text properties (Alias, Description, etc.)
+        if not title:
+            # Fallback to top-level record field commonly used in tests
+            title = record.get("title", "Sans titre")
+
+        # Extract summary with graceful fallbacks
         summary = self._extract_notion_summary(properties)
+        if not summary:
+            summary = record.get("summary", "")
         
         # Si eager_content est demandé et summary vide, tenter un aperçu depuis le contenu
         content: str = record.get("content", "")
@@ -411,8 +421,10 @@ class NotionContextFetcher:
                 except Exception as e:
                     LOGGER.debug(f"Could not fetch content for preview summary: {e}")
         
-        # Extract tags from multi_select properties
+        # Extract tags from properties with fallback to top-level list
         tags = self._extract_notion_tags(properties)
+        if not tags:
+            tags = list(record.get("tags", []))
         
         # Estimation tokens
         token_estimate: int
@@ -445,66 +457,96 @@ class NotionContextFetcher:
     
     @staticmethod
     def _extract_notion_title(properties: Dict[str, Any]) -> str:
-        """Extract title from Notion properties (Nom, Name, or first title property)."""
-        # Try common title property names
+        """Extract title from Notion properties or return empty string if unavailable.
+
+        Handles both full Notion property objects and simplified string values.
+        """
+        if not isinstance(properties, dict):
+            return ""
+
+        # Try common title property names (full Notion shape)
         for prop_name in ["Nom", "Name", "Titre", "Title"]:
             if prop_name in properties:
                 prop = properties[prop_name]
-                if prop.get("type") == "title" and prop.get("title"):
+                # Simplified shape: direct string
+                if isinstance(prop, str):
+                    return prop
+                # Notion shape
+                if isinstance(prop, dict) and prop.get("type") == "title" and prop.get("title"):
                     title_array = prop["title"]
                     if title_array and len(title_array) > 0:
                         return title_array[0].get("plain_text", "Sans titre")
-        
+
         # Fallback: find any title property
         for prop_name, prop in properties.items():
-            if prop.get("type") == "title" and prop.get("title"):
+            if isinstance(prop, dict) and prop.get("type") == "title" and prop.get("title"):
                 title_array = prop["title"]
                 if title_array and len(title_array) > 0:
                     return title_array[0].get("plain_text", "Sans titre")
-        
-        return "Sans titre"
+
+        return ""
     
     @staticmethod
     def _extract_notion_summary(properties: Dict[str, Any]) -> str:
-        """Extract summary from rich_text properties (Alias, Description, etc.)."""
-        # Try common summary properties
+        """Extract summary from rich_text properties with support for simplified shapes."""
+        if not isinstance(properties, dict):
+            return ""
+
         for prop_name in ["Alias", "Description", "Résumé", "Summary"]:
             if prop_name in properties:
                 prop = properties[prop_name]
-                if prop.get("type") == "rich_text" and prop.get("rich_text"):
+                # Simplified: direct string
+                if isinstance(prop, str):
+                    return prop
+                # Notion rich_text
+                if isinstance(prop, dict) and prop.get("type") == "rich_text" and prop.get("rich_text"):
                     text_array = prop["rich_text"]
                     if text_array and len(text_array) > 0:
                         return text_array[0].get("plain_text", "")
-        
+
         return ""
     
     @staticmethod
     def _extract_notion_tags(properties: Dict[str, Any]) -> List[str]:
-        """Extract tags from multi_select properties."""
-        tags = []
-        
+        """Extract tags from properties (multi_select/select) or simplified strings."""
+        tags: List[str] = []
+
+        if not isinstance(properties, dict):
+            return tags
+
         # Collect from all multi_select properties
         for prop_name, prop in properties.items():
-            if prop.get("type") == "multi_select" and prop.get("multi_select"):
+            if isinstance(prop, dict) and prop.get("type") == "multi_select" and prop.get("multi_select"):
                 for item in prop["multi_select"]:
                     tag_name = item.get("name")
                     if tag_name:
                         tags.append(tag_name)
-        
+
         # Also include select properties (single select)
         for prop_name in ["Type", "État", "Status", "Catégorie"]:
             if prop_name in properties:
                 prop = properties[prop_name]
-                if prop.get("type") == "select" and prop.get("select"):
+                # Simplified: direct string treated as tag
+                if isinstance(prop, str):
+                    tags.append(prop)
+                elif isinstance(prop, dict) and prop.get("type") == "select" and prop.get("select"):
                     tag_name = prop["select"].get("name")
                     if tag_name:
                         tags.append(tag_name)
-        
+
         return tags
 
     @staticmethod
     def _has_content(prop: Dict[str, Any]) -> bool:
         """Check if a property has actual content."""
+        # Support simplified shapes used in tests
+        if isinstance(prop, str):
+            return bool(prop.strip())
+        if isinstance(prop, (list, tuple)):
+            return len(prop) > 0
+        if not isinstance(prop, dict):
+            return prop is not None
+
         prop_type = prop.get("type")
         if prop_type in ["title", "rich_text"]:
             content = prop.get(prop_type, [])

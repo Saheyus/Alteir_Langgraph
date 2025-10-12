@@ -41,32 +41,36 @@ def _get_matcher(fetcher: NotionContextFetcher) -> NotionContextMatcher:
 def _init_session_state() -> None:
     if "context_selection" not in st.session_state:
         st.session_state.context_selection = {
-            "selected_ids": set(),
+            # Use list for Streamlit state stability across reruns
+            "selected_ids": [],
             "previews": {},
             "suggestions": [],
         }
 
     # Ensure mutable structures exist
     selection = st.session_state.context_selection
-    selection.setdefault("selected_ids", set())
+    selection.setdefault("selected_ids", [])
     selection.setdefault("previews", {})
     selection.setdefault("suggestions", [])
 
-    if not isinstance(selection["selected_ids"], set):
-        selection["selected_ids"] = set(selection["selected_ids"])
+    # Normalize storage to list for persistence
+    if isinstance(selection["selected_ids"], set):
+        selection["selected_ids"] = list(selection["selected_ids"])
 
 
 def _toggle_selection(page: NotionPagePreview, checked: bool) -> None:
     selection = st.session_state.context_selection
-    selected_ids: set = selection["selected_ids"]
+    current: list = selection["selected_ids"]
+    selected_ids = set(current)
     if checked:
         selected_ids.add(page.id)
         selection["previews"][page.id] = page
     else:
         selected_ids.discard(page.id)
+    selection["selected_ids"] = list(selected_ids)
 
 
-def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatcher) -> None:
+def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatcher, previews_by_domain: Dict[str, List[NotionPagePreview]]) -> None:
     selection = st.session_state.context_selection
 
     st.subheader("🤖 Auto-suggestion")
@@ -81,8 +85,24 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
             targets = DOMAIN_SUGGESTION_TARGETS.get(domain_key, CONTEXT_DOMAINS)
             try:
                 with st.spinner("Génération des suggestions..."):
-                    suggestions = matcher.suggest_context(brief, domains=targets)
+                    # Ultra-rapide: suggestions basées uniquement sur les titres/métadonnées
+                    # Réutilise les aperçus déjà préchargés au lancement (aucun refetch)
+                    available = [p for d in targets for p in previews_by_domain.get(d, [])]
+                    suggestions = matcher.suggest_context(
+                        brief,
+                        domains=targets,
+                        use_full_content=False,
+                        available_pages=available,
+                    )
                 selection["suggestions"] = suggestions
+                # Commit immediate auto-selected suggestions to the persistent selection
+                # so that a user can cliquer "Générer" sans retoucher les cases.
+                selected_set = set(selection.get("selected_ids", []))
+                for s in suggestions:
+                    if isinstance(s, MatchSuggestion) and s.auto_select:
+                        selected_set.add(s.page.id)
+                        selection["previews"][s.page.id] = s.page
+                selection["selected_ids"] = list(selected_set)
                 st.info(f"✓ {len(suggestions)} suggestion(s) trouvée(s)")
             except NotionClientUnavailable:
                 st.warning("Connexion Notion indisponible : suggestions automatiques désactivées.")
@@ -105,7 +125,7 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
     for suggestion in selection["suggestions"]:
         assert isinstance(suggestion, MatchSuggestion)
         page = suggestion.page
-        checked = page.id in selection["selected_ids"] or suggestion.auto_select
+        checked = (page.id in set(selection["selected_ids"])) or suggestion.auto_select
         checkbox = st.checkbox(
             f"{page.title} — {int(suggestion.score * 100)}%",
             value=checked,
@@ -159,7 +179,7 @@ def _render_manual_selection(previews_by_domain: Dict[str, List[NotionPagePrevie
 
 def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
     selection = st.session_state.context_selection
-    selected_ids = list(selection["selected_ids"])
+    selected_ids = list(selection["selected_ids"]) 
 
     st.subheader(f"✅ Contexte sélectionné ({len(selected_ids)} fiches)")
 
@@ -240,7 +260,7 @@ def render_context_selector(domain: str, brief: str) -> Dict[str, Any]:
         previews_by_domain = {d: [] for d in CONTEXT_DOMAINS}
         st.error(f"❌ Erreur lors de la récupération des fiches: {e}")
 
-    _render_suggestions(brief, domain_key, matcher)
+    _render_suggestions(brief, domain_key, matcher, previews_by_domain)
     _render_manual_selection(previews_by_domain)
     summary = _render_selected_summary(fetcher)
 

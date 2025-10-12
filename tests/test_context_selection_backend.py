@@ -194,6 +194,17 @@ def test_matcher_suggest_context_prioritises_scores(fake_fetcher: NotionContextF
     assert any(s.auto_select for s in suggestions)
 
 
+def test_matcher_always_includes_topN_and_appends_above_threshold(fake_fetcher: NotionContextFetcher):
+    matcher = NotionContextMatcher(fetcher=fake_fetcher)
+    # Force domains to include both personnages and lieux
+    brief = "Titre qui ne matche rien explicitement"
+    suggestions = matcher.suggest_context(brief, max_fiches=2, domains=["personnages", "lieux"], use_full_content=False)
+    # Should include at least 2 candidates regardless of thresholds
+    assert len(suggestions) >= 2
+    # And order should start with the highest-scored ones (rough order)
+    scores = [s.score for s in suggestions[:2]]
+    assert scores[0] >= scores[1]
+
 
 def test_build_context_payload(monkeypatch):
     import sys

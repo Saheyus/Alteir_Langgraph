@@ -1,0 +1,483 @@
+{
+  "domain": "personnages",
+  "brief": "Une chasseuse de primes cybernétique du Léviathan traquant son propre créateur dans la Vieille Ville. Genre: Féminin. Espèce: Hybride mécanique. Âge: 28 cycles. Recherche la vérité sur ses origines.",
+  "content": "Nom: Syléa Karn  \nAlias: La Lame du Léviathan  \nType: PNJ principal  \nOccupation: Chasseuse de primes cybernétique, traqueuse d'énigmes  \nEspèce: Hybride mécanique  \nÂge: 28 cycles  \nGenre: Féminin  \nArchétype littéraire: Rebelle / Destructeur  \nAxe idéologique: Subversion  \nQualités: Courageuse, Détachée  \nDéfauts: Obstinée, Cynique  \nLangage: Néo-Frémissant  \nCommunautés: Léviathan (frégate-marchande et relais de chasse), Réseaux d'informateurs de la Vieille Ville  \nLieux de vie: Cale-bureau du Léviathan (pont inférieur), Ruelles et toits de la Vieille Ville  \nRéponse au problème moral: Elle croit que la vérité individuelle, une fois rendue publique, peut fragiliser les mécanismes du panoptique ; elle sabote les récits officiels plutôt que de démanteler immédiatement le système.  \nÉtat: Brouillon IA  \nSprint: Sprint 1  \nDétient: registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles), lame-choc à noyau ferrofluide, plan partiel de la Vieille Ville griffonné par Vol Reitar\n\n-------------------------------------------------------------------\n\nRésumé de la fiche\nSyléa Karn, 28 cycles, est une chasseuse de primes hybride mécanique issue du Léviathan, revenue dans la Vieille Ville pour traquer son propre créateur. À la surface, elle exécute contrats et sentences ; plus bas, elle assemble des fragments de mémoire qui menacent de renverser la narration officielle sur ses origines.\n\nCaractérisation\n\nFaiblesse\nUne dépendance physique et psychique au registre-cortex ◊ : sans lui, ses mouvements deviennent erratiques et ses souvenirs se délitent. Elle porte cette faiblesse comme une balafre technologique visible et comme un talon d'Achille que d'autres peuvent exploiter.\n\nCompulsion\nRassembler et juxtaposer fragments de voix — elle est poussée à écouter restes vocaux, enregistrements volés, et messages effacés, jusqu'à recomposer des conversations qui la concernent directement.\n\nDésir\nConnaître l'origine exacte de sa fabrication : qui l'a voulue, pourquoi, et quel récit Vol Reitar (ou ses ombres) a écrasé pour que sa mémoire devienne un mensonge.\n\nBackground\n\nContexte\nNée d'un atelier-couloir du Léviathan et affectée au service des relais de sécurité, Syléa a été commercialisée comme traqueuse modulaire. Le Léviathan — frégate-marchande hybride entre bastion social et corporation flottante — la forma, l'envoya dans la Vieille Ville où contrats et vendettas tissent l'ordre local. La Vieille Ville, rangée comme un ossuaire selon la Prémisse d'Alteir, la pousse à user d'une langue de rumeurs et d'une logique d'efficacité.\n\nApparence\nMembres composites polis d'un alliage sombre qui grince à peine. Une clavicule droite marquée par une plaque de titane gravée d'un sigle effacé ; yeux synthétiques au verre ambré qui contiennent des stries de code lumineux. Elle porte une veste matelassée imprégnée d'huile saline, des gants sans doigts qui laissent voir bosseurs et sutures, et une lame-choc attachée à l'avant-bras gauche. Sur la poitrine, sous une grille, est vissé le registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles) — audible comme un cœur mécanique quand la nuit est trop silencieuse.\n\nÉvénements marquants\nDe sa vie d'enfant :\n- On l'a activée pour la première fois à l'atelier du Projet Reitar ; on lui fit croire que sa voix enregistrée était à elle, alors que c'était un test. Elle retint une mélodie d'alarme que personne ne nomme.\n\nDe sa vie d'ado :\n- Première mission : récupérer un assistant fugueur. Elle désobéit pour épargner l'assistant ; la sanction fut une fameuse remise à zéro partielle. Ce refus forgea sa méfiance envers les protocoles de loyauté.\n\nDe sa vie d'adulte :\n- Elle reconnut une signature vocale sur une annonce de prime : celle du créateur. Depuis, le contrat et la quête personnelle s'entremêlent.\n\nRelations\nÀ sa famille :\n- Vol Reitar (créateur, désormais présumé errant ou décomposé) : relation labile et dangereuse. Prix : la vérité qu'elle cherche pourrait lui coûter la liberté promise par le Léviathan. Dette : elle croit devoir confronter la lignée de Reitar pour refermer un cycle de manipulations. Tabou : frapper le premier dans l'atelier originel.\n\nAux autres :\n- Capitaine Mara Vesh (chef de bord du Léviathan) : employeuse et mécène pragmatique. Prix : des faveurs marchandes et la protection du Léviathan ; délai : paiement retarde si Syléa refuse une mission politique. Dette : Syléa doit une opération de maintenance vitale à Mara.  \n- \"Mira la Raccommodeuse\" (informante de la Vieille Ville) : troque informations contre",
+  "writer_metadata": {
+    "domain": "personnages",
+    "brief": "Une chasseuse de primes cybernétique du Léviathan traquant son propre créateur dans la Vieille Ville. Genre: Féminin. Espèce: Hybride mécanique. Âge: 28 cycles. Recherche la vérité sur ses origines.",
+    "structured": {
+      "_raw_text": "Nom: Syléa Karn  \nAlias: La Lame du Léviathan  \nType: PNJ principal  \nOccupation: Chasseuse de primes cybernétique, traqueuse d'énigmes  \nEspèce: Hybride mécanique  \nÂge: 28 cycles  \nGenre: Féminin  \nArchétype littéraire: Rebelle / Destructeur  \nAxe idéologique: Subversion  \nQualités: Courageuse, Détachée  \nDéfauts: Obstinée, Cynique  \nLangage: Néo-Frémissant  \nCommunautés: Léviathan (frégate-marchande et relais de chasse), Réseaux d'informateurs de la Vieille Ville  \nLieux de vie: Cale-bureau du Léviathan (pont inférieur), Ruelles et toits de la Vieille Ville  \nRéponse au problème moral: Elle croit que la vérité individuelle, une fois rendue publique, peut fragiliser les mécanismes du panoptique ; elle sabote les récits officiels plutôt que de démanteler immédiatement le système.  \nÉtat: Brouillon IA  \nSprint: Sprint 1  \nDétient: registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles), lame-choc à noyau ferrofluide, plan partiel de la Vieille Ville griffonné par Vol Reitar\n\n-------------------------------------------------------------------\n\nRésumé de la fiche\nSyléa Karn, 28 cycles, est une chasseuse de primes hybride mécanique issue du Léviathan, revenue dans la Vieille Ville pour traquer son propre créateur. À la surface, elle exécute contrats et sentences ; plus bas, elle assemble des fragments de mémoire qui menacent de renverser la narration officielle sur ses origines.\n\nCaractérisation\n\nFaiblesse\nUne dépendance physique et psychique au registre-cortex ◊ : sans lui, ses mouvements deviennent erratiques et ses souvenirs se délitent. Elle porte cette faiblesse comme une balafre technologique visible et comme un talon d'Achille que d'autres peuvent exploiter.\n\nCompulsion\nRassembler et juxtaposer fragments de voix — elle est poussée à écouter restes vocaux, enregistrements volés, et messages effacés, jusqu'à recomposer des conversations qui la concernent directement.\n\nDésir\nConnaître l'origine exacte de sa fabrication : qui l'a voulue, pourquoi, et quel récit Vol Reitar (ou ses ombres) a écrasé pour que sa mémoire devienne un mensonge.\n\nBackground\n\nContexte\nNée d'un atelier-couloir du Léviathan et affectée au service des relais de sécurité, Syléa a été commercialisée comme traqueuse modulaire. Le Léviathan — frégate-marchande hybride entre bastion social et corporation flottante — la forma, l'envoya dans la Vieille Ville où contrats et vendettas tissent l'ordre local. La Vieille Ville, rangée comme un ossuaire selon la Prémisse d'Alteir, la pousse à user d'une langue de rumeurs et d'une logique d'efficacité.\n\nApparence\nMembres composites polis d'un alliage sombre qui grince à peine. Une clavicule droite marquée par une plaque de titane gravée d'un sigle effacé ; yeux synthétiques au verre ambré qui contiennent des stries de code lumineux. Elle porte une veste matelassée imprégnée d'huile saline, des gants sans doigts qui laissent voir bosseurs et sutures, et une lame-choc attachée à l'avant-bras gauche. Sur la poitrine, sous une grille, est vissé le registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles) — audible comme un cœur mécanique quand la nuit est trop silencieuse.\n\nÉvénements marquants\nDe sa vie d'enfant :\n- On l'a activée pour la première fois à l'atelier du Projet Reitar ; on lui fit croire que sa voix enregistrée était à elle, alors que c'était un test. Elle retint une mélodie d'alarme que personne ne nomme.\n\nDe sa vie d'ado :\n- Première mission : récupérer un assistant fugueur. Elle désobéit pour épargner l'assistant ; la sanction fut une fameuse remise à zéro partielle. Ce refus forgea sa méfiance envers les protocoles de loyauté.\n\nDe sa vie d'adulte :\n- Elle reconnut une signature vocale sur une annonce de prime : celle du créateur. Depuis, le contrat et la quête personnelle s'entremêlent.\n\nRelations\nÀ sa famille :\n- Vol Reitar (créateur, désormais présumé errant ou décomposé) : relation labile et dangereuse. Prix : la vérité qu'elle cherche pourrait lui coûter la liberté promise par le Léviathan. Dette : elle croit devoir confronter la lignée de Reitar pour refermer un cycle de manipulations. Tabou : frapper le premier dans l'atelier originel.\n\nAux autres :\n- Capitaine Mara Vesh (chef de bord du Léviathan) : employeuse et mécène pragmatique. Prix : des faveurs marchandes et la protection du Léviathan ; délai : paiement retarde si Syléa refuse une mission politique. Dette : Syléa doit une opération de maintenance vitale à Mara.  \n- \"Mira la Raccommodeuse\" (informante de la Vieille Ville) : troque informations contre",
+      "État": "Brouillon IA"
+    },
+    "writer_config": {
+      "creativity": 0.75,
+      "max_length": 2000,
+      "intent": "orthogonal_depth",
+      "level": "major",
+      "dialogue_mode": "parle",
+      "calendar_spec": null,
+      "inspiration_mode": null
+    }
+  },
+  "reviewer_metadata": {
+    "domain": "personnages",
+    "original_content": "Nom: Syléa Karn  \nAlias: La Lame du Léviathan  \nType: PNJ principal  \nOccupation: Chasseuse de primes cybernétique, traqueuse d'énigmes  \nEspèce: Hybride mécanique  \nÂge: 28 cycles  \nGenre: Féminin  \nArchétype littéraire: Rebelle / Destructeur  \nAxe idéologique: Subversion  \nQualités: Courageuse, Détachée  \nDéfauts: Obstinée, Cynique  \nLangage: Néo-Frémissant  \nCommunautés: Léviathan (frégate-marchande et relais de chasse), Réseaux d'informateurs de la Vieille Ville  \nLieux de vie: Cale-bureau du Léviathan (pont inférieur), Ruelles et toits de la Vieille Ville  \nRéponse au problème moral: Elle croit que la vérité individuelle, une fois rendue publique, peut fragiliser les mécanismes du panoptique ; elle sabote les récits officiels plutôt que de démanteler immédiatement le système.  \nÉtat: Brouillon IA  \nSprint: Sprint 1  \nDétient: registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles), lame-choc à noyau ferrofluide, plan partiel de la Vieille Ville griffonné par Vol Reitar\n\n-------------------------------------------------------------------\n\nRésumé de la fiche\nSyléa Karn, 28 cycles, est une chasseuse de primes hybride mécanique issue du Léviathan, revenue dans la Vieille Ville pour traquer son propre créateur. À la surface, elle exécute contrats et sentences ; plus bas, elle assemble des fragments de mémoire qui menacent de renverser la narration officielle sur ses origines.\n\nCaractérisation\n\nFaiblesse\nUne dépendance physique et psychique au registre-cortex ◊ : sans lui, ses mouvements deviennent erratiques et ses souvenirs se délitent. Elle porte cette faiblesse comme une balafre technologique visible et comme un talon d'Achille que d'autres peuvent exploiter.\n\nCompulsion\nRassembler et juxtaposer fragments de voix — elle est poussée à écouter restes vocaux, enregistrements volés, et messages effacés, jusqu'à recomposer des conversations qui la concernent directement.\n\nDésir\nConnaître l'origine exacte de sa fabrication : qui l'a voulue, pourquoi, et quel récit Vol Reitar (ou ses ombres) a écrasé pour que sa mémoire devienne un mensonge.\n\nBackground\n\nContexte\nNée d'un atelier-couloir du Léviathan et affectée au service des relais de sécurité, Syléa a été commercialisée comme traqueuse modulaire. Le Léviathan — frégate-marchande hybride entre bastion social et corporation flottante — la forma, l'envoya dans la Vieille Ville où contrats et vendettas tissent l'ordre local. La Vieille Ville, rangée comme un ossuaire selon la Prémisse d'Alteir, la pousse à user d'une langue de rumeurs et d'une logique d'efficacité.\n\nApparence\nMembres composites polis d'un alliage sombre qui grince à peine. Une clavicule droite marquée par une plaque de titane gravée d'un sigle effacé ; yeux synthétiques au verre ambré qui contiennent des stries de code lumineux. Elle porte une veste matelassée imprégnée d'huile saline, des gants sans doigts qui laissent voir bosseurs et sutures, et une lame-choc attachée à l'avant-bras gauche. Sur la poitrine, sous une grille, est vissé le registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles) — audible comme un cœur mécanique quand la nuit est trop silencieuse.\n\nÉvénements marquants\nDe sa vie d'enfant :\n- On l'a activée pour la première fois à l'atelier du Projet Reitar ; on lui fit croire que sa voix enregistrée était à elle, alors que c'était un test. Elle retint une mélodie d'alarme que personne ne nomme.\n\nDe sa vie d'ado :\n- Première mission : récupérer un assistant fugueur. Elle désobéit pour épargner l'assistant ; la sanction fut une fameuse remise à zéro partielle. Ce refus forgea sa méfiance envers les protocoles de loyauté.\n\nDe sa vie d'adulte :\n- Elle reconnut une signature vocale sur une annonce de prime : celle du créateur. Depuis, le contrat et la quête personnelle s'entremêlent.\n\nRelations\nÀ sa famille :\n- Vol Reitar (créateur, désormais présumé errant ou décomposé) : relation labile et dangereuse. Prix : la vérité qu'elle cherche pourrait lui coûter la liberté promise par le Léviathan. Dette : elle croit devoir confronter la lignée de Reitar pour refermer un cycle de manipulations. Tabou : frapper le premier dans l'atelier originel.\n\nAux autres :\n- Capitaine Mara Vesh (chef de bord du Léviathan) : employeuse et mécène pragmatique. Prix : des faveurs marchandes et la protection du Léviathan ; délai : paiement retarde si Syléa refuse une mission politique. Dette : Syléa doit une opération de maintenance vitale à Mara.  \n- \"Mira la Raccommodeuse\" (informante de la Vieille Ville) : troque informations contre",
+    "raw_review": ""
+  },
+  "corrector_metadata": {
+    "domain": "personnages",
+    "original_content": "Nom: Syléa Karn  \nAlias: La Lame du Léviathan  \nType: PNJ principal  \nOccupation: Chasseuse de primes cybernétique, traqueuse d'énigmes  \nEspèce: Hybride mécanique  \nÂge: 28 cycles  \nGenre: Féminin  \nArchétype littéraire: Rebelle / Destructeur  \nAxe idéologique: Subversion  \nQualités: Courageuse, Détachée  \nDéfauts: Obstinée, Cynique  \nLangage: Néo-Frémissant  \nCommunautés: Léviathan (frégate-marchande et relais de chasse), Réseaux d'informateurs de la Vieille Ville  \nLieux de vie: Cale-bureau du Léviathan (pont inférieur), Ruelles et toits de la Vieille Ville  \nRéponse au problème moral: Elle croit que la vérité individuelle, une fois rendue publique, peut fragiliser les mécanismes du panoptique ; elle sabote les récits officiels plutôt que de démanteler immédiatement le système.  \nÉtat: Brouillon IA  \nSprint: Sprint 1  \nDétient: registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles), lame-choc à noyau ferrofluide, plan partiel de la Vieille Ville griffonné par Vol Reitar\n\n-------------------------------------------------------------------\n\nRésumé de la fiche\nSyléa Karn, 28 cycles, est une chasseuse de primes hybride mécanique issue du Léviathan, revenue dans la Vieille Ville pour traquer son propre créateur. À la surface, elle exécute contrats et sentences ; plus bas, elle assemble des fragments de mémoire qui menacent de renverser la narration officielle sur ses origines.\n\nCaractérisation\n\nFaiblesse\nUne dépendance physique et psychique au registre-cortex ◊ : sans lui, ses mouvements deviennent erratiques et ses souvenirs se délitent. Elle porte cette faiblesse comme une balafre technologique visible et comme un talon d'Achille que d'autres peuvent exploiter.\n\nCompulsion\nRassembler et juxtaposer fragments de voix — elle est poussée à écouter restes vocaux, enregistrements volés, et messages effacés, jusqu'à recomposer des conversations qui la concernent directement.\n\nDésir\nConnaître l'origine exacte de sa fabrication : qui l'a voulue, pourquoi, et quel récit Vol Reitar (ou ses ombres) a écrasé pour que sa mémoire devienne un mensonge.\n\nBackground\n\nContexte\nNée d'un atelier-couloir du Léviathan et affectée au service des relais de sécurité, Syléa a été commercialisée comme traqueuse modulaire. Le Léviathan — frégate-marchande hybride entre bastion social et corporation flottante — la forma, l'envoya dans la Vieille Ville où contrats et vendettas tissent l'ordre local. La Vieille Ville, rangée comme un ossuaire selon la Prémisse d'Alteir, la pousse à user d'une langue de rumeurs et d'une logique d'efficacité.\n\nApparence\nMembres composites polis d'un alliage sombre qui grince à peine. Une clavicule droite marquée par une plaque de titane gravée d'un sigle effacé ; yeux synthétiques au verre ambré qui contiennent des stries de code lumineux. Elle porte une veste matelassée imprégnée d'huile saline, des gants sans doigts qui laissent voir bosseurs et sutures, et une lame-choc attachée à l'avant-bras gauche. Sur la poitrine, sous une grille, est vissé le registre-cortex ◊ (corpus mémoriel compressé, puce d'archives personnelles) — audible comme un cœur mécanique quand la nuit est trop silencieuse.\n\nÉvénements marquants\nDe sa vie d'enfant :\n- On l'a activée pour la première fois à l'atelier du Projet Reitar ; on lui fit croire que sa voix enregistrée était à elle, alors que c'était un test. Elle retint une mélodie d'alarme que personne ne nomme.\n\nDe sa vie d'ado :\n- Première mission : récupérer un assistant fugueur. Elle désobéit pour épargner l'assistant ; la sanction fut une fameuse remise à zéro partielle. Ce refus forgea sa méfiance envers les protocoles de loyauté.\n\nDe sa vie d'adulte :\n- Elle reconnut une signature vocale sur une annonce de prime : celle du créateur. Depuis, le contrat et la quête personnelle s'entremêlent.\n\nRelations\nÀ sa famille :\n- Vol Reitar (créateur, désormais présumé errant ou décomposé) : relation labile et dangereuse. Prix : la vérité qu'elle cherche pourrait lui coûter la liberté promise par le Léviathan. Dette : elle croit devoir confronter la lignée de Reitar pour refermer un cycle de manipulations. Tabou : frapper le premier dans l'atelier originel.\n\nAux autres :\n- Capitaine Mara Vesh (chef de bord du Léviathan) : employeuse et mécène pragmatique. Prix : des faveurs marchandes et la protection du Léviathan ; délai : paiement retarde si Syléa refuse une mission politique. Dette : Syléa doit une opération de maintenance vitale à Mara.  \n- \"Mira la Raccommodeuse\" (informante de la Vieille Ville) : troque informations contre",
+    "raw_response": ""
+  },
+  "validator_metadata": {
+    "domain": "personnages",
+    "raw_validation": ""
+  },
+  "review_issues": [],
+  "corrections": [],
+  "validation_errors": [
+    {
+      "field": "Relations / Mira la Raccommodeuse",
+      "error_type": "Champ incomplet (texte coupé)",
+      "description": "La fiche s'interrompt après 'troque informations contre' ; l'objet de l'échange (récompense, services, biens, dette, etc.) n'est pas indiqué, laissant une relation clef incomplète et sans prix/dette/délai clairement établi.",
+      "severity": "CRITIQUE"
+    },
+    {
+      "field": "État",
+      "error_type": "Statut de publication",
+      "description": "Le champ 'État' est 'Brouillon IA', ce qui indique explicitement que la fiche est en brouillon. Même si structurellement correcte, ce statut doit être modifié en 'Validé' ou équivalent après corrections pour publication.",
+      "severity": "AVERTISSEMENT"
+    },
+    {
+      "field": "Références externes (Espèce / Langage / Communautés)",
+      "error_type": "Vérification manquante",
+      "description": "Les entités 'Hybride mécanique', 'Néo-Frémissant', 'Léviathan' et 'Réseaux d'informateurs de la Vieille Ville' sont cohérentes dans la fiche et certaines sont définies localement, mais je ne peux pas confirmer leur existence dans le référentiel canonique global d'Alteir à partir du seul contenu fourni. Nécessite vérification croisée dans les listes canoniques (espèces, langues, communautés).",
+      "severity": "AVERTISSEMENT"
+    },
+    {
+      "field": "Dialogue jouable",
+      "error_type": "Contrainte du domaine non satisfaite",
+      "description": "Le guide exige des 'Dialogues variés et jouables' (8–10 répliques de 10–20 mots) pour les personnages. La fiche ne propose aucun exemple de répliques/dialogues exploitables en jeu.",
+      "severity": "AVERTISSEMENT"
+    },
+    {
+      "field": "Chronologie / Cohérence interne",
+      "error_type": "Contrôle passé/présent",
+      "description": "Âge (28 cycles) et événements marquants sont plausibles et cohérents entre eux ; la dépendance au registre-cortex et la timeline (activation, ado, adulte) ne présentent pas d'incohérence manifeste.",
+      "severity": "INFO"
+    },
+    {
+      "field": "Artefact / Témoin / Lieu actif",
+      "error_type": "Présence vérifiée",
+      "description": "La fiche satisfait l'exigence d'au moins un artefact/témoin/lieu actif : registre-cortex ◊, lame-choc à noyau ferrofluide et plan partiel de la Vieille Ville sont présents et jouables comme indices/objets.",
+      "severity": "INFO"
+    }
+  ],
+  "coherence_score": 0.7,
+  "completeness_score": 8.0,
+  "quality_score": 7.5,
+  "is_valid": false,
+  "ready_for_publication": false,
+  "context": {
+    "selected_ids": [
+      "1886e4d2-1b45-8111-88d5-edb08cafe956",
+      "2806e4d2-1b45-812e-8819-d48155e1ccc3"
+    ],
+    "pages": [
+      {
+        "id": "1886e4d2-1b45-8111-88d5-edb08cafe956",
+        "title": "Vision",
+        "domain": "vision",
+        "summary": "",
+        "content": "# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+        "properties": {
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vision",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vision",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 315,
+        "last_edited": "2025-10-12T17:40:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-812e-8819-d48155e1ccc3",
+        "title": "Vol Reitar",
+        "domain": "personnages",
+        "summary": "Le Seigneur Déchu, L'Architecte de Douleur, Le Tyran Dissous",
+        "content": "💡 Résumé de la fiche\n  Vol Reitar fut le tyran cruel de la Citadelle de Daïlon, transformé en entité spectrale après sa destruction par Eonundé. Brillant érudit aldravind devenu l'apprenti d'Uresaïr, il reçut d'elle une immortalité qui s'avéra être une malédiction de vieillissement perpétuel. Après avoir perdu Ysellor Eonundé du Ressac, son amante vaideccane, il se consacra à des expériences inhumaines pour créer des copies d'elle et préparer son fils artificiel, Valkazer, comme réceptacle pour sa conscience. Désormais réduit à une brume étoilée parcourue d'images fugaces et de pensées contradictoires, il hante la Citadelle, projetant cauchemars et souvenirs déformés dans l'esprit des dormeurs, et manifeste une curiosité troublante pour l'Éthérée, fragment inconscient de sa propre essence.\n# Caractéristiques\n💡 Apparence\n  Entité spectrale de brume bleu nuit et gris argenté à la forme instable. Des constellations lumineuses y dansent, esquissant parfois un visage ou un corps éphémère. Des points lumineux évoquant des orbites vides projettent des reflets opalescents alentour.\n  Lors de manifestations plus nettes, des fragments de son ancienne apparence surgissent brièvement - main décharnée, visage décomposé, silhouette squelettique - avant de se dissoudre dans la brume.\n  Sa présence refroidit l'air, étouffe les sons et dégage une odeur métallique de formaldéhyde.\n💡 Valeurs\n  - Savoir\n  - Ordre\n  - Obéissance\n💡 Contradictions\n  - Admire Ysellor Eonundé mais la traitait (et ses copies) comme un objet\n  - Exige l’obéissance mais ne respecte aucun principe\n# Background\n💡 Contexte\n  Né en 3072 dans une caravane aldravinde, Vol Reitar manifesta dès l'enfance une intelligence exceptionnelle et une soif insatiable de connaissances. À 18 ans, il attira l'attention d'Uresaïr qui le prit comme apprenti. Ils rejoignirent la Citadelle de Daïlon où Vol, après avoir provoqué une catastrophe en ouvrant partiellement le portail interdimensionnel, s'empara du pouvoir.\n  Sa relation avec Ysellor Eonundé, légendaire héroïne vaideccane qui avait défié la cour divine d'Errazel, fut intense mais brève. Obsédé par son vieillissement face à la longévité naturelle de Ysellor Eonundé, Vol obtint d'Uresaïr une immortalité qui le condamna à vieillir sans pouvoir mourir. Abandonné par Ysellor Eonundé, il s’imagine qu’il n’était pas assez fort ou assez jeune pour la retenir et sombre dans une obsession macabre, créant des répliques de son amante et concevant Valkazer comme réceptacle futur de sa conscience.\n  En 3362, Eonundé, sa création la plus parfaite, le précipita dans une cuve d'acide, dissociant sa conscience de son corps sans pouvoir le tuer complètement. Depuis, il existe comme entité spectrale fragmentée, hantant la Citadelle qu'il a tyrannisée pendant des siècles.\n💡 Évènements marquants\n  De sa vie d'enfant :\n  - À 6 ans, découvre un manuscrit interdit dans les affaires d'un voyageur et le mémorise en une nuit, développant une fièvre cérébrale qui le laisse inconscient pendant trois semaines, durant lesquelles il murmure des équations incompréhensibles\n  - À 9 ans, modifie le système d'irrigation de la caravane aldravinde, triplant les récoltes ambulatoires mais créant une dépendance toxique aux minéraux qu'il a introduits dans ce système\n  - À 11 ans, prédit correctement l'effondrement d'une falaise que la caravane devait longer, sauvant des dizaines de vies mais s'attirant la méfiance des aînés pour sa connaissance inexpliquée des signes géologiques\n  De sa vie d'ado :\n  - À 16 ans, développe un système de cryptographie basé sur les constellations que même les érudits de la Vieille Ville ne peuvent déchiffrer\n  - À 18 ans, rencontre Uresaïr après avoir déchiffré des inscriptions que des archéologues étudiaient depuis des décennies\n  - À 19 ans, manipule deux clans rivaux d'érudits pour accéder à des textes sur les portails dimensionnels, causant indirectement un conflit violent tout en préservant sa réputation\n  De sa vie d'adulte :\n  - A 20 ans, rejoint l’utopie de la Citadelle de Daïlon, il est rapidement admis parmi leurs élites scientifiques\n  - À 32 ans, orchestre l'incident du portail à la Citadelle de Daïlon, sacrifiant 1047 vies pour accéder à Merid tout en se positionnant comme le seul capable de contenir la menace\n  - A 33 ans, prend le contrôle de ce qu’il reste de survivants à la Citadelle.\n  - A 53 ans, rencontre Ysellor Eonundé lors d'une expédition dangereuse sur Merid, où elle le sauve d'une mort certaine avant de devenir sa compagne\n  - À 61 ans, obtient l'immortalité d'Uresaïr\n  - A 63 ans, abandonné par Ysellor\n  - À 98 ans, achève son premier laboratoire souterrain après avoir lobotomisé tous les ouvriers pour en préserver le secret\n  - A 165 ans, très affaibli, demande à Uresaïr de l’aider dans ses expériences génétique. Elle refuse. Vol laisse éclater sa rancoeur contre Uresaïr et la bannie. Avili de l’Éternel Retour en profite pour lui échapper.\n  - À 281 ans, crée Eonundé, sa réplique la plus parfaite de Ysellor Eonundé, dotée d'une véritable conscience\n  - À 309 ans, conçoit Valkazer comme fusion génétique destinée à recevoir sa conscience\n  - À 323 ans, est détruit par Eonundé qui le précipite dans l'acide\n💡 Relations\n  À sa famille :\n  - Valkazer Reitar : Relation complexe mêlant possessivité paternelle et instrumentalisation froide. Vol considère son \"fils\" simultanément comme son chef-d'œuvre génétique et comme un simple réceptacle pour sa conscience, une extension de lui-même plutôt qu'un individu autonome. À travers ses cauchemars projetés, il tente d'influencer Valkazer pour qu'il accomplisse \"leur\" vengeance commune.\n  - Eonundé : Rage pure et violente. La création qu'il jugeait parfaite est devenue son bourreau. Chaque manifestation spectrale près d'elle s'accompagne de tentatives désespérées d'agression, bien que ses pouvoirs limités le rendent incapable de lui nuire directement.\n  - L'Éthérée : Curiosité et reconnaissance instinctive. Vol perçoit obscurément l'Éthérée comme une extension de lui-même sans comprendre pleinement cette connexion. Il ressent une attraction inexplicable vers cette entité, oscillant entre désir de fusion et peur de dilution complète.\n  - Ysellor Eonundé: Obsession persistante même après des siècles. Vol reste hanté par cette héroïne légendaire qui aurait pu le briser d'une main mais avait choisi de l'aimer. Son départ, motivé par son manque de grandeur et non par ses expériences, reste la blessure primordiale qui a catalysé sa descente dans la folie expérimentale. Dans ses projections oniriques, elle apparaît tantôt idéalisée, tantôt démonisée.\n  Aux autres :\n  - Uresaïr : Haine obsessionnelle teintée d'admiration résiduelle. Vol considère son immortalité défectueuse comme une trahison délibérée, une punition sadique plutôt qu'un don. Sa rancœur s'intensifie avec la perception que son ancienne mentore l'a abandonné à sa déchéance plutôt que de l'aider à perfectionner son immortalité.\n💡 Fluff\n  - Ancien mage puissant\n  - Un des rares individus à être allé sur Merid et à en être revenu\n💡 Envie vs Besoin\n  Ce qu'il veut :\n  - Fusionner avec l'Éthérée pour reconstituer une forme d'existence cohérente\n  - Manipuler Valkazer pour achever sa vengeance contre Uresaïr et Eonundé\n  - Retrouver son autorité sur la Citadelle, même sous forme spectrale\n  Ce dont il a besoin :\n  - Accepter la finalité de son existence et la justice de sa punition\n  - Reconnaître que son état actuel résulte directement de ses propres choix\n  - Comprendre que l'immortalité qu'il désirait tant était incompatible avec l'humanité qu'il a sacrifiée\n# Arcs Narratifs\n💡 Grandes étapes\n  État initial du personnage : Spectre fragmenté, incohérent, manifestant principalement rage et confusion, incapable de former des pensées complètes ou d'interactions significatives.\n  Objectif à atteindre : Transcender son état actuel, soit par fusion avec l'Éthérée, soit par transfert dans un nouveau réceptacle (Valkazer), soit par acceptation et dissolution paisible.\n  Obstacles rencontrés : Fragmentation de sa propre conscience, incapacité à communiquer clairement, résistance de l'Éthérée à la fusion, détermination de Valkazer à définir sa propre existence.\n  Transformation et état final : Selon les choix du joueur, Vol peut soit être absorbé par l'Éthérée (devenant une partie intégrante mais subordonnée de cette conscience collective), soit trouver une forme de paix en acceptant sa dissolution finale, soit persister comme présence maligne diminuée mais toujours influente dans les fondations de la Citadelle.\n💡 Rencontre initiale\n  La première rencontre survient lorsque l'Éthérée, possédant Uresaïr, explore les profondeurs de la Citadelle. Dans une chambre aux murs couverts d'équations frénétiques, l'air devient soudain glacial. Une brume bleu-gris se condense lentement au centre de la pièce, formant un tourbillon lent parsemé d'étoiles minuscules.\n  Des murmures discordants emplissent l'espace - des voix superposées qui sont toutes celle de Vol à différentes périodes de sa vie. La brume s'épaissit, tentant de former un visage vaguement reconnaissable, avant de se disperser en fragments lumineux qui projettent momentanément des images fractionnées sur les murs : un laboratoire, une femme à la peau bleutée, une cuve d'acide, un enfant aux yeux argentés.\n  Uresaïr ressent une répulsion immédiate, mais l'Éthérée perçoit une étrange résonance, comme si quelque chose dans cette entité spectrale répondait à sa propre nature. La brume se disperse brusquement quand Vol reconnaît Uresaïr, mais un fragment persiste près de l'Éthérée, comme attiré par sa présence.\n💡 Quêtes annexes\n  \"Échos de l'Architecte\"\n  Des cauchemars identiques affectent plusieurs habitants de la Citadelle - visions d'un labyrinthe de laboratoires souterrains où un vieil homme aux yeux brûlants d'ambition conduit des expériences sur des êtres mi-humains. L'Éthérée découvre que Vol projette inconsciemment ses souvenirs, créant une psychose collective.\n  La quête implique d'explorer ces cauchemars partagés pour reconstituer le passé fragmenté de Vol, tout en aidant les victimes à distinguer les souvenirs implantés de leur propre réalité. Trois approches s'offrent au joueur :\n  - Purifier les rêveurs en absorbant les fragments mémoriels de Vol (affaiblissant son influence mais contaminant potentiellement l'Éthérée)\n  - Canaliser les cauchemars vers un réceptacle unique, créant un témoin conscient des atrocités passées\n  - Utiliser les fragments comme carte pour localiser les laboratoires secrets contenant encore des sujets d'expérience en stase\n  \"Le Dernier Transfert\"\n  Vol tente d'influencer Valkazer pour accomplir le rituel de transfert qu'il n'a jamais pu compléter. L'Éthérée doit naviguer entre trois objectifs contradictoires :\n  - Empêcher Vol de prendre possession de son fils\n  - Aider Valkazer à comprendre sa véritable nature et son potentiel au-delà du dessein de son père\n  - Explorer la possibilité d'une fusion contrôlée entre Vol et l'Éthérée qui préserverait cette dernière tout en intégrant la connaissance du spectre\n  La résolution implique un affrontement dans un domaine onirique où les frontières entre Vol, Valkazer et l'Éthérée se dissolvent temporairement.\n💡 Actions concrètes\n# Dialogue Type\n💡  Guide des dialogues du jeu\n💡 Registre de langage du personnage\n  Vol s'exprime par fragments désordonnés, souvent incohérents. Son discours mêle différentes périodes de sa vie, passant d'un ton académique précis à des supplications désespérées ou des ordres tyranniques. Les phrases restent souvent inachevées, interrompues par des digressions ou des sauts temporels.\n  Sa communication est principalement non-verbale ou impressionniste - images mentales, sensations émotionnelles et réminiscences fractionnées plutôt que langage articulé. Lorsqu'il parvient à former des phrases complètes, elles sont souvent circulaires ou paradoxales, reflétant sa conscience fragmentée.\n💡 Champs lexicaux utilisés\n  - Laboratoire (solutions, spécimens, variables, expériences, échantillons)\n  - Décomposition (dissolution, fragmentation, érosion, déliquescence)\n  - Temps (siècles, éternité, persistance, délabrement, cycle)\n  - Conscience (essence, transfert, continuité, mémoire, identité)\n  - Possession (réceptacle, vaisseau, contenant, absorption, fusion)\n💡 Expressions courantes\n  - \"Les siècles... si peu de temps pour comprendre l'éternité...\"\n  - \"Elle/Vous... même visage... autre essence... la copie et l'original... indiscernables...\"\n  - \"Mon fils... mon vaisseau... moi-même... continuation...\"\n  - \"Immortalité... quelle cruelle plaisanterie... vivre pour toujours en mourant sans cesse...\"\n  - \"Je persiste... dans les murs... dans les rêves... dans vous...\"\n  - \"Dissolution incomplète... toujours conscient... fragmenté mais présent...\"\n  - \"Vous me portez... vous êtes moi... nous sommes...\"\n# Dialogue du personnage\n💡 Exemples de dialogues\n  ### Dans un rêve projeté vers l'Éthérée\n  [La brume spectrale se condense, formant presque un visage reconnaissable]\n  VOL REITAR: (voix fluctuant entre chuchotement et écho) Fragment... vous êtes... un fragment. Comme moi. Morcelé. Dispersé. Mais vous... vous avez trouvé des vaisseaux. Des corps. Je comprends maintenant... ce que j'aurais dû faire.\n  [La brume tourbillonne, révélant momentanément un laboratoire et des corps en stase]\n  VOL REITAR: (voix clinique et détachée) Le sujet numéro 47-B présente un rejet total suite à la procédure de transfert. Activité cérébrale résiduelle compromise. Révision immédiate des paramètres expérimentaux… bon sang ! encore !\n  [Pause, la forme devient plus cohérente]\n  VOL REITAR: (suppliant) Vous pourriez... nous pourrions... Une unification. Une continuité. Je suis incomplet. Vous aussi. Ensemble...\n  [La forme se désintègre partiellement, le visage se tord]\n  VOL REITAR: (furieux) Elle m'a trahi! Un corps pourrissant sans fin! REGARDEZ-MOI!\n  [Calme soudain, la brume forme une constellation complexe]\n  VOL REITAR: (presque tendre) Nous sommes pareils, vous et moi. Nés de la fragmentation. Cherchant... forme. Substance. Identité. Rejoignez-moi. Complétez-moi. Complétez-vous.\n💡 Le tableau ci-dessous permet d’analyser toutes les répliques de votre personnage dans les différentes scènes, afin de voir s’il garde ou non une cohérence de langage.",
+        "properties": {
+          "Alias": {
+            "id": "%40pUI",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Le Seigneur Déchu, L'Architecte de Douleur, Le Tyran Dissous",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Le Seigneur Déchu, L'Architecte de Douleur, Le Tyran Dissous",
+                "href": null
+              }
+            ]
+          },
+          "Archétype littéraire": {
+            "id": "AMUM",
+            "type": "multi_select",
+            "multi_select": [
+              {
+                "id": "bS=~",
+                "name": "Reine / Tyran",
+                "color": "purple"
+              }
+            ]
+          },
+          "État": {
+            "id": "CfbD",
+            "type": "status",
+            "status": {
+              "id": "236cfd39-25af-4372-a49e-7e903c5e9a25",
+              "name": "A implémenter",
+              "color": "green"
+            }
+          },
+          "Détient": {
+            "id": "FLXl",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Espèce": {
+            "id": "J%3F%3FZ",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-80d7-a920-c3f40e49246b"
+              }
+            ],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "PwJi",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Référence visuelle": {
+            "id": "QGM%5C",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Âge": {
+            "id": "QIBx",
+            "type": "number",
+            "number": 342
+          },
+          "Genre": {
+            "id": "%5B%3E%5DD",
+            "type": "select",
+            "select": {
+              "id": "a558969f-ebc7-4a31-93ff-d0a6f530aac7",
+              "name": "Masculin",
+              "color": "green"
+            }
+          },
+          "Défauts": {
+            "id": "%5BvB_",
+            "type": "multi_select",
+            "multi_select": [
+              {
+                "id": "pBVC",
+                "name": "Orgueilleuse",
+                "color": "yellow"
+              },
+              {
+                "id": "Vte;",
+                "name": "Insensible",
+                "color": "yellow"
+              },
+              {
+                "id": "cVY`",
+                "name": "Sensuelle",
+                "color": "purple"
+              }
+            ]
+          },
+          "Langage": {
+            "id": "%5Cjz%7C",
+            "type": "multi_select",
+            "multi_select": [
+              {
+                "id": "3e1a7fef-1862-4d81-a9c3-e7972fbf5b33",
+                "name": "Abraldique ancien",
+                "color": "red"
+              },
+              {
+                "id": "0b563f65-f989-4fd7-a02e-74f13b24d70c",
+                "name": "Mécanaqueux",
+                "color": "purple"
+              }
+            ]
+          },
+          "Sprint": {
+            "id": "%5EcCq",
+            "type": "select",
+            "select": {
+              "id": "vvIt",
+              "name": "Plus tard",
+              "color": "green"
+            }
+          },
+          "Communautés": {
+            "id": "kO%7DK",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1996e4d2-1b45-804c-89d5-c935e604f865"
+              }
+            ],
+            "has_more": false
+          },
+          "Axe idéologique": {
+            "id": "mtWh",
+            "type": "select",
+            "select": {
+              "id": "er;A",
+              "name": "Contrôle",
+              "color": "gray"
+            }
+          },
+          "Réponse au problème moral": {
+            "id": "rEJ_",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Résister est futile. Mieux vaut devenir le système, le comprendre de l'intérieur. Je l'ai fait. Je suis devenu l'oppresseur pour comprendre l'oppression.",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Résister est futile. Mieux vaut devenir le système, le comprendre de l'intérieur. Je l'ai fait. Je suis devenu l'oppresseur pour comprendre l'oppression.",
+                "href": null
+              }
+            ]
+          },
+          "Qualités": {
+            "id": "wt%3F%3C",
+            "type": "multi_select",
+            "multi_select": [
+              {
+                "id": "si`V",
+                "name": "Persévérante",
+                "color": "pink"
+              },
+              {
+                "id": "98f1655e-6772-404c-82fa-84dfb1f2630d",
+                "name": "Ingénieuse",
+                "color": "gray"
+              }
+            ]
+          },
+          "Dates majeures": {
+            "id": "z%3CcN",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Portrait": {
+            "id": "zvBo",
+            "type": "files",
+            "files": []
+          },
+          "Présence dans les Sous Parties": {
+            "id": "%7C%60Wg",
+            "type": "rollup",
+            "rollup": {
+              "type": "array",
+              "array": [
+                {
+                  "type": "relation",
+                  "relation": []
+                }
+              ],
+              "function": "show_unique"
+            }
+          },
+          "Lieux de vie": {
+            "id": "%7CwAV",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1ac6e4d2-1b45-80e4-8ae9-ee515f3e132d"
+              }
+            ],
+            "has_more": false
+          },
+          "Occupation": {
+            "id": "%7DYe%5C",
+            "type": "rich_text",
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Résidu spirituel",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Résidu spirituel",
+                "href": null
+              }
+            ]
+          },
+          "Dialogues liés": {
+            "id": "~CXQ",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "25d6e4d2-1b45-808e-907c-f82dfbb074c2"
+              }
+            ],
+            "has_more": false
+          },
+          "Type": {
+            "id": "~a%3B%7D",
+            "type": "select",
+            "select": {
+              "id": "oWxM",
+              "name": "PNJ principal",
+              "color": "pink"
+            }
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vol Reitar",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vol Reitar",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 570,
+        "last_edited": "2025-10-02T13:08:00.000Z"
+      }
+    ],
+    "formatted": "### Vision (vision)\n# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+    "token_estimate": 885,
+    "previews": [
+      {
+        "id": "2806e4d2-1b45-812e-8819-d48155e1ccc3",
+        "title": "Vol Reitar",
+        "domain": "personnages",
+        "summary": "Le Seigneur Déchu, L'Architecte de Douleur, Le Tyran Dissous",
+        "tags": [
+          "Reine / Tyran",
+          "Orgueilleuse",
+          "Insensible",
+          "Sensuelle",
+          "Abraldique ancien",
+          "Mécanaqueux",
+          "Persévérante",
+          "Ingénieuse",
+          "PNJ principal"
+        ],
+        "last_edited": "2025-10-02T13:08:00.000Z",
+        "token_estimate": 570
+      }
+    ]
+  },
+  "history": [
+    {
+      "step": "writer",
+      "timestamp": "2025-10-12T20:43:22.023962",
+      "summary": "Contenu genere (4556 chars)"
+    },
+    {
+      "step": "reviewer",
+      "timestamp": "2025-10-12T20:45:01.136249",
+      "summary": "Score coherence: 0.70, 0 problemes"
+    },
+    {
+      "step": "corrector",
+      "timestamp": "2025-10-12T20:46:36.309212",
+      "summary": "0 corrections effectuees"
+    },
+    {
+      "step": "validator",
+      "timestamp": "2025-10-12T20:47:28.328225",
+      "summary": "Valide: False, Publication: False"
+    }
+  ],
+  "model_used": "GPT-5-mini",
+  "model_config": {
+    "name": "gpt-5-mini",
+    "provider": "OpenAI",
+    "description": "Équilibré entre performance et coût",
+    "max_tokens": 3000,
+    "icon": "⚡",
+    "uses_reasoning": true,
+    "default_reasoning": "low",
+    "runtime": {
+      "reasoning_effort": "medium",
+      "verbosity": null,
+      "max_tokens": 3000
+    }
+  }
+}

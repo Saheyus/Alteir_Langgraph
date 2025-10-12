@@ -1,0 +1,41 @@
+description: Streamlit AppTest patterns, snapshots, and UI assertions for E2E
+globs: ["tests/streamlit/**.py"]
+
+## Streamlit E2E Testing (AppTest v1)
+
+## Problème
+Les tests existants ne valident pas ce que l'UI affiche réellement (info/success/warning/error/caption/markdown), ce qui laisse passer des divergences entre `session_state` et l'affichage.
+
+## Décision
+Utiliser `streamlit.testing.v1.AppTest` pour exécuter l'app sans serveur, capturer tous les messages visibles et les comparer à l'état interne. Sauvegarder un snapshot JSON complet en cas d'échec.
+
+## Checklist
+- Utiliser `AppTest.from_file("app_streamlit.py").run()` comme runner.
+- Extraire messages avec un util `extract_messages(at)` couvrant info/success/warning/error/caption/markdown.
+- Vérifier cohérence entre affichage (ex: "✅ Contexte sélectionné (N fiches)") et `len(session_state.context_selection.selected_ids)`.
+- Activer `NOTION_DRY_RUN=true` pour les tests d'export UI.
+- En cas d'échec: `dump_snapshot(test_name, at, extra)` → `tests/artifacts/streamlit_snapshots/*.json`.
+
+## Exemples
+Bon:
+```python
+msgs = extract_messages(at)
+assert any("préchargée(s)" in m["text"] for m in msgs if m["type"]=="info")
+```
+Mauvais:
+```python
+# Parsing HTML brut du DOM (fragile)
+assert "<div class=\"alert\">" in str(at)
+```
+
+## Vérification
+- Lancer: `pytest -q tests/streamlit -m "ui and e2e"`
+- En cas d'échec, ouvrir les snapshots: `tests/artifacts/streamlit_snapshots/*.json`
+
+## Migration
+- Ne pas dupliquer les tests de write Notion: conservés dans `tests/test_e2e_personnage_with_notion_export`.
+- Les nouveaux tests UI se concentrent sur l'affichage et la cohérence `session_state`.
+
+## Changelog
+- 2025-10-12: v1 – Introduction AppTest, snapshots JSON, règles d'assertion UI.
+

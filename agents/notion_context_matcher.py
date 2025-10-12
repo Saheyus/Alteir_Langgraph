@@ -98,19 +98,30 @@ class NotionContextMatcher:
 
     @staticmethod
     def fuzzy_match_pages(keywords: Sequence[str], pages: Iterable[NotionPagePreview]) -> List[MatchCandidate]:
-        """Score every page according to keyword overlap and fuzzy ratio."""
+        """Score pages using token overlaps to avoid spurious substring hits.
 
-        joined_keywords = " ".join(keywords)
+        - Exact token matches only (no substring like 'age' in 'personnage')
+        - Weighted by overlap with title/summary tokens
+        """
+
+        keyword_tokens = list(keywords)
+        keyword_set = set(keyword_tokens)
         candidates: List[MatchCandidate] = []
         for page in pages:
-            haystack = _normalise_text(f"{page.title} {page.summary} {' '.join(page.tags)}")
-            matches = [kw for kw in keywords if kw in haystack]
-            keyword_ratio = len(matches) / len(keywords) if keywords else 0.0
+            title_norm = _normalise_text(page.title)
+            summary_norm = _normalise_text(page.summary)
+            tags_norm = _normalise_text(" ".join(page.tags))
 
-            title_ratio = SequenceMatcher(None, joined_keywords, _normalise_text(page.title)).ratio() if joined_keywords else 0.0
-            summary_ratio = SequenceMatcher(None, joined_keywords, _normalise_text(page.summary)).ratio() if joined_keywords else 0.0
+            haystack_tokens = set((title_norm + " " + summary_norm + " " + tags_norm).split())
+            matches = [kw for kw in keyword_tokens if kw in haystack_tokens]
+            keyword_ratio = len(matches) / len(keyword_tokens) if keyword_tokens else 0.0
 
-            score = 0.5 * max(title_ratio, summary_ratio) + 0.5 * keyword_ratio
+            title_tokens = set(title_norm.split())
+            summary_tokens = set(summary_norm.split())
+            title_overlap = len(title_tokens & keyword_set) / len(keyword_set) if keyword_set else 0.0
+            summary_overlap = len(summary_tokens & keyword_set) / len(keyword_set) if keyword_set else 0.0
+
+            score = 0.6 * max(title_overlap, summary_overlap) + 0.4 * keyword_ratio
             candidates.append(MatchCandidate(page=page, score=score, matched_keywords=matches))
         return candidates
 
@@ -142,40 +153,139 @@ class NotionContextMatcher:
         min_score: float = 0.5,
         auto_select_threshold: float = 0.7,
         domains: Optional[Sequence[str]] = None,
+        use_full_content: bool = False,
+        available_pages: Optional[Sequence[NotionPagePreview]] = None,
     ) -> List[MatchSuggestion]:
         """Return the most relevant context pages for a given brief."""
 
         keywords = self.extract_keywords(brief)
         brief_norm = _normalise_text(brief)
-        available_pages = self._load_available_pages(domains)
+        brief_tokens_set = set(brief_norm.split()) if brief_norm else set()
+        if available_pages is None:
+            available_pages = self._load_available_pages(domains)
+        else:
+            # Optionally filter by domains if provided
+            if domains:
+                available_pages = [p for p in available_pages if p.domain in domains]
         rough_candidates = self.fuzzy_match_pages(keywords, available_pages)
 
+        # Decide scoring thresholds. When avoiding full-content fetches,
+        # relax the minimum score a bit to avoid filtering out relevant
+        # metadata-only matches.
+        effective_min_score = min_score if use_full_content else min(min_score, 0.3)
+
+        # Refine with full-content scoring only for the top candidates if
+        # explicitly requested. By default we operate on previews only to keep
+        # the UI extremely responsive.
+        TOP_K_REFINE = max(10, max_fiches * 5) if use_full_content else 0
+        rough_candidates.sort(key=lambda c: c.score, reverse=True)
+        refine_pool = rough_candidates[:TOP_K_REFINE]
+
         suggestions: List[MatchSuggestion] = []
+        added_ids: Dict[str, None] = {}
+
+        # Always include candidates whose title appears (even partially) in the brief,
+        # with a strong boost. This guarantees pages like "Léviathan Pétrifié" show up
+        # when the brief contains "Léviathan".
+        if brief_norm:
+            for candidate in rough_candidates:
+                page_title_norm = _normalise_text(candidate.page.title)
+                if page_title_norm:
+                    title_tokens = [t for t in page_title_norm.split() if t not in STOP_WORDS and len(t) >= 4]
+                    if not title_tokens:
+                        continue
+                    tokens_in_brief = set(title_tokens) & brief_tokens_set
+                    if not tokens_in_brief:
+                        continue
+                    # Full phrase mention → max score
+                    if page_title_norm in brief_norm:
+                        boosted_score = 1.0
+                        auto = True
+                    else:
+                        # Partial mention → moderated boost (avoid 100% for a single token like "mecanique")
+                        m = len(tokens_in_brief)
+                        boosted_score = min(0.9, max(0.6 + 0.1 * min(m, 3), 0.0))
+                        auto = m >= 2
+                    if candidate.page.id not in added_ids:
+                        suggestions.append(
+                            MatchSuggestion(
+                                page=candidate.page,
+                                score=boosted_score,
+                                matched_keywords=candidate.matched_keywords,
+                                auto_select=auto,
+                            )
+                        )
+                        added_ids[candidate.page.id] = None
+                        if len(suggestions) >= max_fiches:
+                            break
+        if TOP_K_REFINE > 0 and len(suggestions) < max_fiches:
+            for candidate in refine_pool:
+                if candidate.page.id in added_ids:
+                    continue
+                refined_score = candidate.score
+                try:
+                    page_payload = self.fetcher.fetch_page_full(candidate.page.id, domain=candidate.page.domain)
+                except Exception:  # pragma: no cover - integration fallback
+                    page_payload = None
+                if isinstance(page_payload, NotionPageContent):
+                    refined_score = max(refined_score, self.score_relevance(brief, page_payload.content))
+                if refined_score < effective_min_score:
+                    continue
+
+                title_hit = _normalise_text(candidate.page.title) in brief_norm if brief_norm else False
+                auto_select = refined_score >= auto_select_threshold or title_hit
+
+                suggestions.append(
+                    MatchSuggestion(
+                        page=candidate.page,
+                        score=min(refined_score, 1.0),
+                        matched_keywords=candidate.matched_keywords,
+                        auto_select=auto_select,
+                    )
+                )
+                added_ids[candidate.page.id] = None
+                if len(suggestions) >= max_fiches:
+                    break
+
+        # Always include the top-N candidates (metadata-only) regardless of thresholds
+        # to guarantee non-empty, high-coverage suggestions.
         for candidate in rough_candidates:
-            refined_score = candidate.score
-            try:
-                page_payload = self.fetcher.fetch_page_full(candidate.page.id, domain=candidate.page.domain)
-            except Exception:  # pragma: no cover - integration fallback
-                page_payload = None
-            if isinstance(page_payload, NotionPageContent):
-                refined_score = max(refined_score, self.score_relevance(brief, page_payload.content))
-            if refined_score < min_score:
+            if len(suggestions) >= max_fiches:
+                break
+            if candidate.page.id in added_ids:
                 continue
-
             title_hit = _normalise_text(candidate.page.title) in brief_norm if brief_norm else False
-            auto_select = refined_score >= auto_select_threshold or title_hit
-
+            auto_select = candidate.score >= auto_select_threshold or title_hit
             suggestions.append(
                 MatchSuggestion(
                     page=candidate.page,
-                    score=min(refined_score, 1.0),
+                    score=min(candidate.score, 1.0),
                     matched_keywords=candidate.matched_keywords,
                     auto_select=auto_select,
                 )
             )
+            added_ids[candidate.page.id] = None
+
+        # Then append any additional candidates above the threshold (positions 6+)
+        for candidate in rough_candidates:
+            if candidate.page.id in added_ids:
+                continue
+            if candidate.score < effective_min_score:
+                continue
+            title_hit = _normalise_text(candidate.page.title) in brief_norm if brief_norm else False
+            auto_select = candidate.score >= auto_select_threshold or title_hit
+            suggestions.append(
+                MatchSuggestion(
+                    page=candidate.page,
+                    score=min(candidate.score, 1.0),
+                    matched_keywords=candidate.matched_keywords,
+                    auto_select=auto_select,
+                )
+            )
+            added_ids[candidate.page.id] = None
 
         suggestions.sort(key=lambda item: item.score, reverse=True)
-        return suggestions[:max_fiches]
+        return suggestions
 
     # ------------------------------------------------------------------
     # Internal helpers
