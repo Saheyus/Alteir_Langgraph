@@ -162,9 +162,19 @@ def create_character():
             from agents.notion_context_fetcher import NotionContextFetcher
             fetcher = NotionContextFetcher()
             vision_page = fetcher.fetch_page_full(NotionConfig.VISION_PAGE_ID, domain="vision")
+            vision_page_dict = {
+                "id": vision_page.id,
+                "title": vision_page.title,
+                "domain": vision_page.domain,
+                "summary": vision_page.summary,
+                "content": vision_page.content,
+                "properties": vision_page.properties,
+                "token_estimate": vision_page.token_estimate,
+                "last_edited": vision_page.last_edited,
+            }
             context_payload = {
                 "selected_ids": [vision_page.id],
-                "pages": [vision_page],
+                "pages": [vision_page_dict],
                 "formatted": fetcher.format_context_for_llm([vision_page]),
                 "token_estimate": vision_page.token_estimate,
                 "previews": [],

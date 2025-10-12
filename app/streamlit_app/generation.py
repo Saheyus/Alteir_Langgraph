@@ -136,23 +136,37 @@ def generate_content(
         vision_id = NotionConfig.VISION_PAGE_ID
         fetcher = NotionContextFetcher()
         vision_page = fetcher.fetch_page_full(vision_id, domain="vision")
+        # Convert to plain dict to ensure JSON-serializable context
+        vision_page_dict = {
+            "id": vision_page.id,
+            "title": vision_page.title,
+            "domain": vision_page.domain,
+            "summary": vision_page.summary,
+            "content": vision_page.content,
+            "properties": vision_page.properties,
+            "token_estimate": vision_page.token_estimate,
+            "last_edited": vision_page.last_edited,
+        }
         if context_payload is None:
             context_payload = {
                 "selected_ids": [vision_page.id],
-                "pages": [vision_page],
+                "pages": [vision_page_dict],
                 "formatted": fetcher.format_context_for_llm([vision_page]),
                 "token_estimate": vision_page.token_estimate,
                 "previews": [],
             }
         else:
             # Prepend to pages and rebuild formatted/context tokens
-            pages = [vision_page] + context_payload.get("pages", [])
-            formatted = fetcher.format_context_for_llm(pages)
+            existing_pages = context_payload.get("pages", [])
+            # formatted needs NotionPageContent objects, so use a temp list
+            temp_pages_for_format = [vision_page]
+            formatted = fetcher.format_context_for_llm(temp_pages_for_format)
+            pages = [vision_page_dict] + existing_pages
             context_payload.update({
                 "selected_ids": [vision_page.id] + list(context_payload.get("selected_ids", [])),
                 "pages": pages,
                 "formatted": formatted,
-                "token_estimate": sum(p.token_estimate for p in pages),
+                "token_estimate": sum(p.get("token_estimate", 0) for p in pages),
             })
         st.caption("📌 Contexte primaire ajouté: Vision")
     except Exception:
@@ -236,7 +250,8 @@ def generate_content(
 
         # Collapsible draft area containing reasoning first, then live streams
         reason_writer = reason_reviewer = reason_corrector = reason_validator = None
-        with st.expander("📝 Ébauche (en direct)", expanded=True):
+        draft_expander = st.expander("📝 Ébauche (en direct)", expanded=True)
+        with draft_expander:
             if include_reasoning:
                 reasoning_expander = st.expander("💭 Raisonnement (en direct)", expanded=False)
                 with reasoning_expander:
@@ -390,6 +405,11 @@ def generate_content(
                 )
                 result = payload
                 # No immediate break; loop will end naturally after last event
+                try:
+                    # Auto-collapse draft after completion
+                    draft_expander.empty()
+                except Exception:
+                    pass
         # Writer "done" card already updated in writer:done
 
         # After live completes, result contains final state (from last :done)
