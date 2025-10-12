@@ -174,13 +174,13 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
                 content=content,
                 metadata={
                     "domain": self.domain,
-                    "raw_validation": validation_text
+                    "raw_validation": validation_text if 'validation_text' in locals() else "",
                 },
                 is_valid=is_valid,
                 validation_errors=errors,
                 completeness_score=completeness,
                 quality_score=quality,
-                ready_for_publication=ready
+                ready_for_publication=ready,
             )
         except Exception as e:
             self.logger.exception("Erreur lors de la validation")
@@ -189,9 +189,67 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
                 content=content,
                 metadata={"domain": self.domain},
                 errors=[str(e)],
-                is_valid=False,
-                ready_for_publication=False
             )
+    
+    def process_stream(self, content: str, context: Dict[str, Any] = None, include_reasoning: bool = False):
+        """Stream validation text deltas when not using structured outputs.
+        Yields dict events {"text", "reasoning"?} and finally returns ValidationResult.
+        """
+        if context is None:
+            self.logger.debug("Contexte absent pour le validateur, récupération automatique")
+            context = self.gather_context()
+
+        user_prompt = self._build_validation_prompt(content, context)
+        system_prompt = self._build_system_prompt("validator")
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        try:
+            from agents.base.llm_utils import LLMAdapter
+            adapter = LLMAdapter(self.llm)
+            if adapter.supports_structured:
+                return self.process(content, context)
+
+            accumulated_parts: list[str] = []
+            for delta in adapter.stream_text(messages, include_reasoning=include_reasoning):
+                if isinstance(delta, dict):
+                    text_part = delta.get("text", "")
+                    reasoning_part = delta.get("reasoning")
+                    if text_part:
+                        accumulated_parts.append(text_part)
+                    yield {"text": text_part, **({"reasoning": reasoning_part} if reasoning_part else {})}
+                else:
+                    if delta:
+                        accumulated_parts.append(delta)
+                        yield {"text": delta}
+
+            validation_text = "".join(accumulated_parts)
+            errors, completeness, quality, is_valid, ready = self._parse_validation(validation_text)
+            return ValidationResult(
+                success=True,
+                content=content,
+                metadata={"domain": self.domain},
+                is_valid=is_valid,
+                validation_errors=errors,
+                completeness_score=completeness,
+                quality_score=quality,
+                ready_for_publication=ready,
+            )
+        except Exception as e:
+            self.logger.exception("Erreur lors du streaming de validation; fallback non-streaming")
+            try:
+                return self.process(content, context)
+            except Exception as e2:
+                return ValidationResult(
+                    success=False,
+                    content=content,
+                    metadata={"domain": self.domain},
+                    errors=[str(e), str(e2)],
+                    is_valid=False,
+                    ready_for_publication=False,
+                )
     
     def _build_validation_prompt(self, content: str, context: Dict[str, Any]) -> str:
         """Construit le prompt de validation"""

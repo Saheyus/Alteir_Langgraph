@@ -156,17 +156,16 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
             self.logger.debug(
                 "Corrections appliquées | total=%d", len(corrections)
             )
-
             return CorrectionResult(
                 success=True,
                 content=corrected_content,
                 metadata={
                     "domain": self.domain,
                     "original_content": content,
-                    "raw_response": correction_text
+                    "raw_response": correction_text,
                 },
                 corrections=corrections,
-                improvement_summary=summary
+                improvement_summary=summary,
             )
         except Exception as e:
             self.logger.exception("Erreur lors de la correction")
@@ -174,8 +173,64 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
                 success=False,
                 content=content,
                 metadata={"domain": self.domain},
-                errors=[str(e)]
+                errors=[str(e)],
             )
+    
+    def process_stream(self, content: str, context: Dict[str, Any] = None, include_reasoning: bool = False):
+        """Stream correction text deltas when not using structured outputs.
+        Yields dict events {"text", "reasoning"?} and finally returns CorrectionResult.
+        """
+        if context is None:
+            self.logger.debug("Contexte absent pour le correcteur, récupération automatique")
+            context = self.gather_context()
+
+        user_prompt = self._build_correction_prompt(content, context)
+        system_prompt = self._build_system_prompt("corrector")
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        try:
+            from agents.base.llm_utils import LLMAdapter
+            adapter = LLMAdapter(self.llm)
+            if adapter.supports_structured:
+                return self.process(content, context)
+
+            accumulated_parts: list[str] = []
+            for delta in adapter.stream_text(messages, include_reasoning=include_reasoning):
+                if isinstance(delta, dict):
+                    text_part = delta.get("text", "")
+                    reasoning_part = delta.get("reasoning")
+                    if text_part:
+                        accumulated_parts.append(text_part)
+                    yield {"text": text_part, **({"reasoning": reasoning_part} if reasoning_part else {})}
+                else:
+                    if delta:
+                        accumulated_parts.append(delta)
+                        yield {"text": delta}
+
+            correction_text = "".join(accumulated_parts)
+            corrected_content, corrections, summary = self._parse_corrections(content, correction_text)
+            return CorrectionResult(
+                success=True,
+                content=corrected_content,
+                metadata={"domain": self.domain, "original_content": content, "raw_response": correction_text},
+                corrections=corrections,
+                improvement_summary=summary,
+            )
+        except Exception as e:
+            self.logger.exception("Erreur lors du streaming de correction; fallback non-streaming")
+            try:
+                return self.process(content, context)
+            except Exception as e2:
+                return CorrectionResult(
+                    success=False,
+                    content=content,
+                    metadata={"domain": self.domain},
+                    errors=[str(e), str(e2)],
+                )
+
     
     def _build_correction_prompt(self, content: str, context: Dict[str, Any]) -> str:
         """Construit le prompt de correction"""

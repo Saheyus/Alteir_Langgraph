@@ -169,11 +169,11 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
                 metadata={
                     "domain": self.domain,
                     "original_content": content,
-                    "raw_review": review_text
+                    "raw_review": review_text,
                 },
                 issues=issues,
                 improvements=improvements,
-                coherence_score=score
+                coherence_score=score,
             )
         except Exception as e:
             self.logger.exception("Erreur lors de la relecture")
@@ -182,8 +182,69 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
                 content=content,
                 metadata={"domain": self.domain},
                 errors=[str(e)],
-                coherence_score=0.0
+                coherence_score=0.0,
             )
+
+    def process_stream(self, content: str, context: Dict[str, Any] = None, include_reasoning: bool = False):
+        """Stream review text deltas when not using structured outputs.
+        Yields dict events {"text", "reasoning"?} and finally returns ReviewResult.
+        """
+        if context is None:
+            self.logger.debug("Contexte manquant pour la relecture, récupération automatique")
+            context = self.gather_context()
+
+        user_prompt = self._build_review_prompt(content, context)
+        system_prompt = self._build_system_prompt("reviewer")
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        # If we have native structured outputs, skip streaming to preserve structure
+        try:
+            from agents.base.llm_utils import LLMAdapter
+            adapter = LLMAdapter(self.llm)
+            if adapter.supports_structured:
+                return self.process(content, context)
+
+            accumulated_parts: list[str] = []
+            for delta in adapter.stream_text(messages, include_reasoning=include_reasoning):
+                if isinstance(delta, dict):
+                    text_part = delta.get("text", "")
+                    reasoning_part = delta.get("reasoning")
+                    if text_part:
+                        accumulated_parts.append(text_part)
+                    yield {"text": text_part, **({"reasoning": reasoning_part} if reasoning_part else {})}
+                else:
+                    if delta:
+                        accumulated_parts.append(delta)
+                        yield {"text": delta}
+
+            review_text = "".join(accumulated_parts)
+            issues, improvements, score = self._parse_review(review_text)
+            improved_content = self._generate_improvements(content, improvements) if improvements else content
+            return ReviewResult(
+                success=True,
+                content=improved_content,
+                metadata={"domain": self.domain, "original_content": content, "raw_review": review_text},
+                issues=issues,
+                improvements=improvements,
+                coherence_score=score,
+            )
+        except Exception as e:
+            self.logger.exception("Erreur lors du streaming de relecture")
+            # Fallback to non-streaming so we still produce a result
+            try:
+                return self.process(content, context)
+            except Exception as e2:
+                return ReviewResult(
+                    success=False,
+                    content=content,
+                    metadata={"domain": self.domain},
+                    errors=[str(e), str(e2)],
+                    coherence_score=0.0,
+                )
+        
     
     def _build_review_prompt(self, content: str, context: Dict[str, Any]) -> str:
         """Construit le prompt de relecture"""

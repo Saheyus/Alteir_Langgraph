@@ -140,6 +140,66 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
                 errors=[str(e)]
             )
     
+    def process_stream(self, brief: str, context: Dict[str, Any] = None, include_reasoning: bool = False):
+        """Stream incremental content tokens while generating.
+        Yields dict events {"text", "reasoning"?} and finally returns AgentResult.
+        """
+        # Récupérer le contexte si non fourni
+        if context is None:
+            self.logger.debug("Aucun contexte fourni, récupération automatique pour %s", self.domain)
+            context = self.gather_context()
+
+        user_prompt = self._build_prompt(brief, context)
+        system_prompt = self._build_system_prompt("writer")
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        # For writer, we stream plain text (no structured schema expected)
+        from agents.base.llm_utils import LLMAdapter
+        adapter = LLMAdapter(self.llm)
+
+        accumulated_parts: list[str] = []
+        try:
+            for delta in adapter.stream_text(messages, include_reasoning=include_reasoning):
+                if isinstance(delta, dict):
+                    text_part = delta.get("text", "")
+                    reasoning_part = delta.get("reasoning")
+                    if text_part:
+                        accumulated_parts.append(text_part)
+                    yield {"text": text_part, **({"reasoning": reasoning_part} if reasoning_part else {})}
+                else:
+                    if delta:
+                        accumulated_parts.append(delta)
+                        yield {"text": delta}
+
+            content_text = "".join(accumulated_parts)
+            structured = self._parse_content(content_text)
+            result = AgentResult(
+                success=True,
+                content=content_text,
+                metadata={
+                    "domain": self.domain,
+                    "brief": brief,
+                    "structured": structured,
+                    "writer_config": vars(self.writer_config),
+                },
+            )
+            return result
+        except Exception as e:
+            self.logger.exception("Erreur lors du streaming de génération; fallback non-streaming")
+            try:
+                return self.process(brief, context)
+            except Exception as e2:
+                result = AgentResult(
+                    success=False,
+                    content="".join(accumulated_parts),
+                    metadata={"domain": self.domain, "brief": brief},
+                    errors=[str(e), str(e2)],
+                )
+                return result
+    
     def _build_prompt(self, brief: str, context: Dict[str, Any]) -> str:
         """Construit le prompt utilisateur avec le brief et le contexte"""
         

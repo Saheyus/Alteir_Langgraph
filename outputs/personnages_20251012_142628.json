@@ -1,0 +1,253 @@
+{
+  "domain": "personnages",
+  "brief": "Un barde aveugle qui voit les émotions comme des couleurs. Genre: Masculin. Espèce: Humain. Âge: 34 cycles. Autrefois peintre célèbre, maintenant musicien errant.",
+  "content": "Alderian Sombrelume est un PNJ principal du monde Alteir, humain, âgé de 34 ans. Type : PNJ principal. Son état de développement est « en cours de rédaction » afin d’être validé pour le sprint 1. Espèce : Humain. Lieu de vie principal : Les Vertèbres du Monde. Communautés associées : La Guilde des Enlumineurs et, secondairement, les Cartographes. L’objectif idéologique : connexion émotionnelle et harmonie des arts. Occupation : Barde aveugle et ex-pintre célèbre. Langage : Néo-Frémissant. Archétype : Artiste / Cynique. Détient : Le Léviathan Pétrifié (artefact), La Palette des Ombres (artefact). Contexte : exilé de sa gloire à cause d’un chef-d’œuvre manqué; il voyage en tant que musicien itinérant. Pouvoir : « colorier » les émotions et faire « chanter » les murs ; limites et mécanismes à préciser dans le GDD. Résumé : Le regard intérieur remplace la vue ; il lit les émotions comme des couleurs et met en scène les murs par la musique. Relations : Guilde des Enlumineurs (dette de loyauté réciproque et obligations artistiques), Cartographes (lecture des émotions des territoires avec accord nécessaire pour assurer sa sécurité lors des expéditions), Famille (relation distendue ; exil). Objectifs : retrouver sa mémoire picturale et réconcilier vérité émotionnelle et beauté universelle. Quêtes et arcs : Parcourt Le Léviathan Pétrifié et les Vertèbres du Monde ; récupérer La Palette des Ombres ; déjouer un rituel manipulatif de la Guilde ; évaluer et approfondir sa mémoire picturale. Arrière-plan : apparence et attributs (manteau sombre, lunettes teintées, palette) ; Événements marquants de l’enfance et de l’adolescence (découverte du lien couleur/émotion, révélation publique, accident qui prive de la vue) ; Fluff : palette autour du cou, violon qui absorbe les couleurs, etc.\n",
+  "writer_metadata": {
+    "domain": "personnages",
+    "brief": "Un barde aveugle qui voit les émotions comme des couleurs. Genre: Masculin. Espèce: Humain. Âge: 34 cycles. Autrefois peintre célèbre, maintenant musicien errant.",
+    "structured": {
+      "_raw_text": "- Nom: Alderian Sombrelume\n- Alias: Le barde des émotions, Le Clair-Voile\n- Type: PNJ principal\n- Occupation: Barde aveugle, ancien peintre célèbre\n- Espèce: Humain\n- Âge: 34\n- Genre: Masculin\n- Archétype littéraire: Artiste / Cynique\n- Axe idéologique: Connexion\n- Qualités: Décent, Courageux, Conciliante\n- Défauts: Cynique, Obstinée, Manipulatrice\n- Langage: Néo-Frémissant\n- Communautés: La Guilde des Enlumineurs\n- Lieux de vie: Les Vertèbres du Monde\n- Réponse au problème moral: Cherche à réconcilier vérité émotionnelle et beauté universelle, même au prix d’un choix personnel douloureux\n- État: Brouillon IA\n- Sprint: Sprint 1\n- Détient: Le Léviathan Pétrifié (artefact), La Palette des Ombres (artefact)\n\n# Résumé de la fiche\nAlderian Sombrelume est un barde aveugle qui perçoit les émotions comme des couleurs. Ancien peintre célèbre, il voyage entre gloire passée et misère actuelle, portant avec lui une palettemetaphorique et des cordes sensibles qui traduisent les tons émotionnels des gens. Son regard est remplacé par un œil intérieur qui voit ce que les autres taisent.\n\n# Caractérisation\n\n## Faiblesse\nSes perceptions émotionnelles le rendent vulnérable aux manipulations subtiles et à l’épuisement sensoriel; il peut se laisser déborder par les couleurs d’autrui, perdant ainsi le fil de sa propre voie.\n\n## Compulsion\nIl est irrésistiblement attiré par les couleurs authentiques des âmes en souffrance, qu’il cherche à restaurer par la musique et la peinture intérieure, quitte à s’exposer à la haine ou au mépris.\n\n## Désir\nRetrouver une sorte d’équilibre entre sa vision émotionnelle et sa mémoire de la peinture, afin de rétablir une « lumière » stable sur le monde et sur lui-même.\n\n# Background\n\n## Contexte\nExiled de sa gloire à cause d’un chef-d’œuvre manqué qui fissura son esprit, Alderian voyage en tant que musicien itinérant. Il dépend des Circles de la Guilde des Enlumineurs, qui lui permettent d’asseoir sa notoriété malgré son handicap. Son pouvoir est devenu son métier: il colorie les émotions et anime les murs des lieux par sa musique.\n\n## Apparence\nPortant un manteau sombre, orné de franges et de broderies qui évoquent des spirales chromatiques; ses yeux affaiblis masqués par des lunettes teintées qui ne voient plus la lumière mais les tonalités émotionnelles. Il porte toujours une palette miniature froide, et son violon semble absorber les couleurs autour de lui, comme un cratère.\n\n## Évènements marquants\nDe sa vie d'enfant:\n- Découverte précoce de son lien entre couleur et émotion, dessinait des visages dans la poussière et entendait leurs éclats.\n\nDe sa vie d’adolescent:\n- Révélation publique lors d’un concours qui le propulsa au rang de prodige, avant que son accident ne le fasse tomber dans l’ombre.\n\nDe sa vie d’adulte:\n- Perte de la vue et passage à la musique; sa renommée s’éteint puis renaît en tant que barde errant, témoin des émotions des autres.\n\n## Relations\nÀ sa famille:\n- Relation distendue et subie; il porte le poids d’un choix qui les a éparpillés, prix de l’exil.\n\nAux autres:\n- Guilde des Enlumineurs: dette de loyauté réciproque; aide mutuelle moyennant des obligations artistiques.\n- Cartographes: relation professionnelle; il lit les émotions des territoires et leur donne des tracés colorés; un accord est nécessaire pour garantir sa sécurité lors des expéditions.\n\n## Centres d'intérêt\n- Peinture intérieure et peinture acoustique; compréhension des émotions comme linguage visuel; collecte d’histoires et d’indices sensoriels.\n\n## Fluff\n- Pierre de palette brisée, qu’il porte autour du cou; son instrument est accordé par le souffle des émotions, non par les notes.\n- Il chante en improvisations, chaque phrase déclenche une coloration différente sur les murs et les visages.\n\n# Arcs Narratifs\n\n## Actions concrètes\n- Parcourt Le Léviathan Pétrifié et les Vertèbres du Monde pour lire les émotions collectives et y répondre par des mélodies colorées.\n- Entame une quête pour retrouver sa mémoire picturale et comprendre l’échec passé qui l’a rendu aveugle mais sensible.\n\n## Quêtes annexes\n- Récupérer la Palette des Ombres auprès d’un Collectionneur des Ombres, afin de rétablir l’équilibre des couleurs.\n- Déjouer une manipulation émotionnelle lors d’un rituel de la Guilde des Enlumineurs pour sauver un village menacé.\n\n## Conséquences de la Révélation\n- Si besoin résolu: Alderian accepte sa condition et s’ouvre à un nouveau type de peinture, reliant émotions et paysages.\n- Si besoin non résolu: il sombre davantage dans l’ombre et perd son lien avec la couleur des âmes, devenant muet et froid.\n- Si le besoin empire: il devient l’éclaireur des ténèbres, incapable de distinguer réalité et illusion, perdant tout lien avec le monde.\n\n# Dialogue Type\n\n## [Thème] du jeu\n- Le thème central est l’exploration de ce que signifie voir le monde à travers les émotions des autres et comment trouver sa propre lumière dans la fusion des couleurs et des sons.\n\n## Registre de langage du personnage\n- Voix grave, fluide, avec des métaphores colorées; privilégie les phrases courtes, parfois cryptiques.\n\n## Champs lexicaux utilisés\n- Couleurs, pigments, tonalités, oscillations, harmonies, textures émotionnelles, murmures, échos.\n\n## Expressions courantes\n- « Je lis la couleur des cœurs. »\n- « Une émotion n’est pas un cri; c’est une nuance qui se tait. »\n- « L’ombre porte des teintes que la lumière ignore. »\n- « Ce mur n’est pas muet; il chante en arêtes d’aigue-marine. »\n- « Je marche entre les couleurs perdues et les notes qui restent. »\n\n# Dialogue du personnage\n\n## Rencontre initiale\n- Il s’avance, guitare sur le dos et palette suspendue; il regarde son interlocuteur et parle d’un ton posé: « Je ne vois pas vos gestes, mais je lis vos couleurs. »\n- Puis il ajoute: « Si vous écoutez ma musique, chaque couleur vous parlera. »\n\n## Exemples de dialogues\n1) « Vos larmes brillent comme du bleu d’apaisement; dites-moi ce qui vous pèse. »\n2) « Je capte les tonalités: rouge pour le sang, vert pour l’espoir—parlez-moi de votre peur. »\n3) « Je cherche ce que vous ne dites pas; votre silence porte une teinte d’ambition. »\n4) « Mon violon absorbe vos émotions; ne craignez pas la couleur qui en sort. »\n5) « J’ai perdu la vue, mais gagné des couleurs comme un aveugle qui voit. »\n6) « Si ma musique peut réparer une fissure dans votre cœur, laissez-la faire. »\n7) « Où va votre lumière quand le doute vous serre? »\n8) « Je peignais autrefois des paysages; aujourd’hui, je peins des âmes. »\n9) « Prenez la teinte qui vous parle le plus et montrez-la-moi. »\n10) « Chaque note est une couleur prête à éclater dans la nuit. »\n\n[Note: Le contenu est conçu pour s’intégrer dans l’univers Alteir; les détails et néologismes reconnus par le système sont insérés avec la cohérence des Arc et du monde. Si vous souhaitez ajuster le nom, les artefacts ou les relations, je peux les adapter.]",
+      "État": "Brouillon IA"
+    },
+    "writer_config": {
+      "creativity": 0.75,
+      "max_length": 2000,
+      "intent": "orthogonal_depth",
+      "level": "major",
+      "dialogue_mode": "parle",
+      "calendar_spec": null,
+      "inspiration_mode": null
+    }
+  },
+  "reviewer_metadata": {
+    "domain": "personnages",
+    "original_content": "- Nom: Alderian Sombrelume\n- Alias: Le barde des émotions, Le Clair-Voile\n- Type: PNJ principal\n- Occupation: Barde aveugle, ancien peintre célèbre\n- Espèce: Humain\n- Âge: 34\n- Genre: Masculin\n- Archétype littéraire: Artiste / Cynique\n- Axe idéologique: Connexion\n- Qualités: Décent, Courageux, Conciliante\n- Défauts: Cynique, Obstinée, Manipulatrice\n- Langage: Néo-Frémissant\n- Communautés: La Guilde des Enlumineurs\n- Lieux de vie: Les Vertèbres du Monde\n- Réponse au problème moral: Cherche à réconcilier vérité émotionnelle et beauté universelle, même au prix d’un choix personnel douloureux\n- État: Brouillon IA\n- Sprint: Sprint 1\n- Détient: Le Léviathan Pétrifié (artefact), La Palette des Ombres (artefact)\n\n# Résumé de la fiche\nAlderian Sombrelume est un barde aveugle qui perçoit les émotions comme des couleurs. Ancien peintre célèbre, il voyage entre gloire passée et misère actuelle, portant avec lui une palettemetaphorique et des cordes sensibles qui traduisent les tons émotionnels des gens. Son regard est remplacé par un œil intérieur qui voit ce que les autres taisent.\n\n# Caractérisation\n\n## Faiblesse\nSes perceptions émotionnelles le rendent vulnérable aux manipulations subtiles et à l’épuisement sensoriel; il peut se laisser déborder par les couleurs d’autrui, perdant ainsi le fil de sa propre voie.\n\n## Compulsion\nIl est irrésistiblement attiré par les couleurs authentiques des âmes en souffrance, qu’il cherche à restaurer par la musique et la peinture intérieure, quitte à s’exposer à la haine ou au mépris.\n\n## Désir\nRetrouver une sorte d’équilibre entre sa vision émotionnelle et sa mémoire de la peinture, afin de rétablir une « lumière » stable sur le monde et sur lui-même.\n\n# Background\n\n## Contexte\nExiled de sa gloire à cause d’un chef-d’œuvre manqué qui fissura son esprit, Alderian voyage en tant que musicien itinérant. Il dépend des Circles de la Guilde des Enlumineurs, qui lui permettent d’asseoir sa notoriété malgré son handicap. Son pouvoir est devenu son métier: il colorie les émotions et anime les murs des lieux par sa musique.\n\n## Apparence\nPortant un manteau sombre, orné de franges et de broderies qui évoquent des spirales chromatiques; ses yeux affaiblis masqués par des lunettes teintées qui ne voient plus la lumière mais les tonalités émotionnelles. Il porte toujours une palette miniature froide, et son violon semble absorber les couleurs autour de lui, comme un cratère.\n\n## Évènements marquants\nDe sa vie d'enfant:\n- Découverte précoce de son lien entre couleur et émotion, dessinait des visages dans la poussière et entendait leurs éclats.\n\nDe sa vie d’adolescent:\n- Révélation publique lors d’un concours qui le propulsa au rang de prodige, avant que son accident ne le fasse tomber dans l’ombre.\n\nDe sa vie d’adulte:\n- Perte de la vue et passage à la musique; sa renommée s’éteint puis renaît en tant que barde errant, témoin des émotions des autres.\n\n## Relations\nÀ sa famille:\n- Relation distendue et subie; il porte le poids d’un choix qui les a éparpillés, prix de l’exil.\n\nAux autres:\n- Guilde des Enlumineurs: dette de loyauté réciproque; aide mutuelle moyennant des obligations artistiques.\n- Cartographes: relation professionnelle; il lit les émotions des territoires et leur donne des tracés colorés; un accord est nécessaire pour garantir sa sécurité lors des expéditions.\n\n## Centres d'intérêt\n- Peinture intérieure et peinture acoustique; compréhension des émotions comme linguage visuel; collecte d’histoires et d’indices sensoriels.\n\n## Fluff\n- Pierre de palette brisée, qu’il porte autour du cou; son instrument est accordé par le souffle des émotions, non par les notes.\n- Il chante en improvisations, chaque phrase déclenche une coloration différente sur les murs et les visages.\n\n# Arcs Narratifs\n\n## Actions concrètes\n- Parcourt Le Léviathan Pétrifié et les Vertèbres du Monde pour lire les émotions collectives et y répondre par des mélodies colorées.\n- Entame une quête pour retrouver sa mémoire picturale et comprendre l’échec passé qui l’a rendu aveugle mais sensible.\n\n## Quêtes annexes\n- Récupérer la Palette des Ombres auprès d’un Collectionneur des Ombres, afin de rétablir l’équilibre des couleurs.\n- Déjouer une manipulation émotionnelle lors d’un rituel de la Guilde des Enlumineurs pour sauver un village menacé.\n\n## Conséquences de la Révélation\n- Si besoin résolu: Alderian accepte sa condition et s’ouvre à un nouveau type de peinture, reliant émotions et paysages.\n- Si besoin non résolu: il sombre davantage dans l’ombre et perd son lien avec la couleur des âmes, devenant muet et froid.\n- Si le besoin empire: il devient l’éclaireur des ténèbres, incapable de distinguer réalité et illusion, perdant tout lien avec le monde.\n\n# Dialogue Type\n\n## [Thème] du jeu\n- Le thème central est l’exploration de ce que signifie voir le monde à travers les émotions des autres et comment trouver sa propre lumière dans la fusion des couleurs et des sons.\n\n## Registre de langage du personnage\n- Voix grave, fluide, avec des métaphores colorées; privilégie les phrases courtes, parfois cryptiques.\n\n## Champs lexicaux utilisés\n- Couleurs, pigments, tonalités, oscillations, harmonies, textures émotionnelles, murmures, échos.\n\n## Expressions courantes\n- « Je lis la couleur des cœurs. »\n- « Une émotion n’est pas un cri; c’est une nuance qui se tait. »\n- « L’ombre porte des teintes que la lumière ignore. »\n- « Ce mur n’est pas muet; il chante en arêtes d’aigue-marine. »\n- « Je marche entre les couleurs perdues et les notes qui restent. »\n\n# Dialogue du personnage\n\n## Rencontre initiale\n- Il s’avance, guitare sur le dos et palette suspendue; il regarde son interlocuteur et parle d’un ton posé: « Je ne vois pas vos gestes, mais je lis vos couleurs. »\n- Puis il ajoute: « Si vous écoutez ma musique, chaque couleur vous parlera. »\n\n## Exemples de dialogues\n1) « Vos larmes brillent comme du bleu d’apaisement; dites-moi ce qui vous pèse. »\n2) « Je capte les tonalités: rouge pour le sang, vert pour l’espoir—parlez-moi de votre peur. »\n3) « Je cherche ce que vous ne dites pas; votre silence porte une teinte d’ambition. »\n4) « Mon violon absorbe vos émotions; ne craignez pas la couleur qui en sort. »\n5) « J’ai perdu la vue, mais gagné des couleurs comme un aveugle qui voit. »\n6) « Si ma musique peut réparer une fissure dans votre cœur, laissez-la faire. »\n7) « Où va votre lumière quand le doute vous serre? »\n8) « Je peignais autrefois des paysages; aujourd’hui, je peins des âmes. »\n9) « Prenez la teinte qui vous parle le plus et montrez-la-moi. »\n10) « Chaque note est une couleur prête à éclater dans la nuit. »\n\n[Note: Le contenu est conçu pour s’intégrer dans l’univers Alteir; les détails et néologismes reconnus par le système sont insérés avec la cohérence des Arc et du monde. Si vous souhaitez ajuster le nom, les artefacts ou les relations, je peux les adapter.]",
+    "raw_review": ""
+  },
+  "corrector_metadata": {
+    "domain": "personnages",
+    "original_content": "Alderian Sombrelume est un PNJ principal du monde Alteir, humain, âgé de 34 ans. Type: PNJ principal. Son état de développement est « en cours de rédaction » afin d’être validé pour le sprint 1. Espèce: Humain. Lieu de vie principal: Les Vertèbres du Monde. Communautés associées: La Guilde des Enlumineurs et, secondairement, les Cartographes. L’objectif idéologique: connexion émotionnelle et harmonie des arts. Occupation: Barde aveugle et ex-pintre célèbre. Langage: Néo-Frémissant. Arce-type: Artiste / Cynique. Détient: Le Léviathan Pétrifié (artefact), La Palette des Ombres (artefact). Contexte: exilé de sa gloire à cause d’un chef-d’œuvre manqué; il voyage en tant que musicien itinérant. Pouvoir: « colorier » les émotions et faire « chanter » les murs; limites et mécanismes à préciser dans le GDD. Résumé: Le regard intérieur remplace la vue; il lit les émotions comme des couleurs et met en scène les murs par la musique. Relations: Guilde des Enlumineurs (dette de loyauté réciproque et obligations artistiques), Cartographes (lecture des émotions des territoires avec accord nécessaire pour assurer sa sécurité lors des expéditions), Famille (relation distendue; exil). Objectifs: retrouver sa mémoire picturale et réconcilier vérité émotionnelle et beauté universelle. Quêtes et arcs: Parcourt Le Léviathan Pétrifié et les Vertèbres du Monde; récupérer La Palette des Ombres; déjouer un rituel manipulatif de la Guilde; évaluer et approfondir sa mémoire picturale. Arrière-plan: apparence et attributs (manteau sombre, lunettes teintées, palette); Evénements marquants de l’enfance et adolescence (découverte du lien couleur/emotion, révélation publique, accident qui prive de la vue); Fluff: palette autour du cou, violon qui absorbe les couleurs, etc.",
+    "raw_response": ""
+  },
+  "validator_metadata": {
+    "domain": "personnages",
+    "raw_validation": ""
+  },
+  "review_issues": [
+    {
+      "severity": "MAJEUR",
+      "category": "cohérence",
+      "description": "L’univers Alteir mentionne des espèces et lieux spécifiques (Humain modifié, Croc d'Améthyste, Gedroth; Le Léviathan Pétrifié; Les Vertèbres du Monde; La Guilde des Enlumineurs; Les Cartographes) mais certaines occurrences dans la fiche semblent redondantes ou peu synchrones avec le cadre fourni (Par exemple: Espèce listée comme Humain; plus tard mention d'Especes: Humain modifié, Croc d'Améthyste, Gedroth; 'Lieux de vie: Les Vertèbres du Monde' et 'Le Léviathan Pétrifié' apparaissent comme lieux d'action sans clarifier leur statut dans la géographie du monde). De plus, l'État est 'Brouillon IA' qui paraît incohérent avec un PNJ principal en cours de développement et peut provoquer confusion sur le statut du personnage dans le jeu.",
+      "suggestion": "Clarifier l’état du personnage (statut de développement vs. personnage actif dans le jeu). Harmoniser les appellations des espèces et des lieux avec le lexique établi d’Alteir et préciser s’il s’agit de lieux récurrents ou d’un monde à explorer dans le sprint 1."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "structure",
+      "description": "Manque de champs obligatoires conformes au TEMPLATE: bien que les champs obligatoires indiquent État, Nom, Espèce, Type, la fiche présente plusieurs champs superflus mais certains champs clés (Détient, Lieux de vie, Communautés, Archétype, Axe idéologique) prennent place sans être clairement alignés avec le template. Le résumé et les sections Background/Relations utilisent des informations redondantes et parfois non structurées autour du format «Surface/Profondeur/Monde».",
+      "suggestion": "Consolider la fiche selon le template strict: inclure Nom, Espèce, Type, État obligatoirement; regrouper ensuite Occupation, Âge, Genre, Archétype, Axe idéologique, Qualités, Défauts, Langage, Communautés, Lieux de vie, Détient, Réponse au problème moral, Détail Background (Contexte, Apparence, Évènements marquants, Relations, Centres d’intérêt, Fluff) de manière cohérente et sans répétitions. Standardiser les champs et éviter les sections mélangées hors du cadre."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "relations",
+      "description": "Les relations évoquées (Guilde des Enlumineurs, Cartographes, Famille) manquent d’enjeux concrets (dette, délai, tabou). Le texte indique des « obligations artistiques » et une « dette de loyauté réciproque » sans préciser l’effet sur le joueur ou les actions possibles dans le Sprint 1.",
+      "suggestion": "Pour chaque relation, ajouter un enjeu concret et mesurable (par exemple: obligation d’organiser un concert pour la Guilde dans un délai de 2 sessions; une dette qui pousse à révéler une information lors d’un rituel; ou une contrainte de sécurité lors des expéditions cartographiques). Clarifier les coûts et les bénéfices."
+    },
+    {
+      "severity": "MINOR",
+      "category": "lore",
+      "description": "Ardent mélange entre éléments narratifs et néologismes (Néo-Frémissant, palette miniature froide) peut déstabiliser sans guide de termes propres au monde. Certains éléments du Background (pouvoir: « colorie les émotions et anime les murs ») restent vagues sur la mécanique précise et les limites (quoiqu’es: est-ce un pouvoir, une compétence?).",
+      "suggestion": " Fournir une brève définition des termes clés et des artefacts (La Palette des Ombres; Le Léviathan Pétrifié) et préciser les règles d’usage et les effets sur le monde (par exemple, comment les couleurs influencent les interactions, quelles sont les limites)."
+    }
+  ],
+  "corrections": [
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Alderian Sombrelume est un PNJ principal du monde Alteir, humain, âgé de 34 ans.",
+      "corrected": "Alderian Sombrelume est un PNJ principal du monde Alteir, humain, âgé de 34 ans.",
+      "explanation": "Pas d'erreur detectable dans la phrase initiale."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Type: PNJ principal.",
+      "corrected": "Type : PNJ principal.",
+      "explanation": "Espacement et ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Son état de développement est « en cours de rédaction » afin d’être validé pour le sprint 1.",
+      "corrected": "Son état de développement est « en cours de rédaction » afin d’être validé pour le sprint 1.",
+      "explanation": "Guillemets et espaces corrects."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Espèce: Humain.",
+      "corrected": "Espèce : Humain.",
+      "explanation": "Espacement autour des deux-points."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Lieu de vie principal: Les Vertèbres du Monde.",
+      "corrected": "Lieu de vie principal : Les Vertèbres du Monde.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Communautés associées: La Guilde des Enlumineurs et, secondairement, les Cartographes.",
+      "corrected": "Communautés associées : La Guilde des Enlumineurs et, secondairement, les Cartographes.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "L’objectif idéologique: connexion émotionnelle et harmonie des arts.",
+      "corrected": "L’objectif idéologique : connexion émotionnelle et harmonie des arts.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Occupation: Barde aveugle et ex-pintre célèbre.",
+      "corrected": "Occupation : Barde aveugle et ex-pintre célèbre.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Langage: Néo-Frémissant.",
+      "corrected": "Langage : Néo-Frémissant.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Arce-type: Artiste / Cynique.",
+      "corrected": "Archétype : Artiste / Cynique.",
+      "explanation": "Orthographe corrigée (Archétype)."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Détient: Le Léviathan Pétrifié (artefact), La Palette des Ombres (artefact).",
+      "corrected": "Détient : Le Léviathan Pétrifié (artefact), La Palette des Ombres (artefact).",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Contexte: exilé de sa gloire à cause d’un chef-d’œuvre manqué; il voyage en tant que musicien itinérant.",
+      "corrected": "Contexte : exilé de sa gloire à cause d’un chef-d’œuvre manqué ; il voyage en tant que musicien itinérant.",
+      "explanation": "Ponctuation et espaces."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Pouvoir: « colorier » les émotions et faire « chanter » les murs; limites et mécanismes à préciser dans le GDD.",
+      "corrected": "Pouvoir : « colorier » les émotions et faire « chanter » les murs ; limites et mécanismes à préciser dans le GDD.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Résumé: Le regard intérieur remplace la vue; il lit les émotions comme des couleurs et met en scène les murs par la musique.",
+      "corrected": "Résumé : Le regard intérieur remplace la vue ; il lit les émotions comme des couleurs et met en scène les murs par la musique.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Relations: Guilde des Enlumineurs (dette de loyauté réciproque et obligations artistiques), Cartographes (lecture des émotions des territoires avec accord nécessaire pour assurer sa sécurité lors des expéditions), Famille (relation distendue; exil).",
+      "corrected": "Relations : Guilde des Enlumineurs (dette de loyauté réciproque et obligations artistiques), Cartographes (lecture des émotions des territoires avec accord nécessaire pour assurer sa sécurité lors des expéditions), Famille (relation distendue ; exil).",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Objectifs: retrouver sa mémoire picturale et réconcilier vérité émotionnelle et beauté universelle.",
+      "corrected": "Objectifs : retrouver sa mémoire picturale et réconcilier vérité émotionnelle et beauté universelle.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Quêtes et arcs: Parcourt Le Léviathan Pétrifié et les Vertèbres du Monde; récupérer La Palette des Ombres; déjouer un rituel manipulatif de la Guilde; évaluer et approfondir sa mémoire picturale.",
+      "corrected": "Quêtes et arcs : Parcourt Le Léviathan Pétrifié et les Vertèbres du Monde ; récupérer La Palette des Ombres ; déjouer un rituel manipulatif de la Guilde ; évaluer et approfondir sa mémoire picturale.",
+      "explanation": "Ponctuation."
+    },
+    {
+      "type": "Orthographe et Grammaire",
+      "original": "Arrière-plan: apparence et attributs (manteau sombre, lunettes teintées, palette); Evénements marquants de l’enfance et adolescence (découverte du lien couleur/emotion, révélation publique, accident qui prive de la vue); Fluff: palette autour du cou, violon qui absorbe les couleurs, etc.",
+      "corrected": "Arrière-plan : apparence et attributs (manteau sombre, lunettes teintées, palette) ; Événements marquants de l’enfance et de l’adolescence (découverte du lien couleur/émotion, révélation publique, accident qui prive de la vue) ; Fluff : palette autour du cou, violon qui absorbe les couleurs, etc.",
+      "explanation": "Ponctuation et accords."
+    }
+  ],
+  "validation_errors": [],
+  "coherence_score": 0.43,
+  "completeness_score": 0.0,
+  "quality_score": 0.0,
+  "is_valid": false,
+  "ready_for_publication": false,
+  "context": {
+    "domain": "personnages",
+    "template_fields": [
+      "Nom",
+      "Alias",
+      "Type",
+      "Occupation",
+      "Espèce",
+      "Âge",
+      "Genre",
+      "Archétype littéraire",
+      "Axe idéologique",
+      "Qualités",
+      "Défauts",
+      "Langage",
+      "Communautés",
+      "Lieux de vie",
+      "Réponse au problème moral",
+      "État",
+      "Sprint",
+      "Détient"
+    ],
+    "required_fields": [
+      "État",
+      "Nom",
+      "Espèce",
+      "Type"
+    ],
+    "especes": [
+      "Humain modifié",
+      "Croc d'Améthyste",
+      "Gedroth"
+    ],
+    "lieux": [
+      "Le Léviathan Pétrifié",
+      "La Vieille",
+      "Les Vertèbres du Monde"
+    ],
+    "communautes": [
+      "Les Cartographes",
+      "La Guilde des Enlumineurs"
+    ]
+  },
+  "history": [
+    {
+      "step": "writer",
+      "timestamp": "2025-10-12T14:26:05.065370",
+      "summary": "Contenu genere (6873 chars)"
+    },
+    {
+      "step": "reviewer",
+      "timestamp": "2025-10-12T14:26:15.459492",
+      "summary": "Score coherence: 0.43, 4 problemes"
+    },
+    {
+      "step": "corrector",
+      "timestamp": "2025-10-12T14:26:26.364513",
+      "summary": "18 corrections effectuees"
+    },
+    {
+      "step": "validator",
+      "timestamp": "2025-10-12T14:26:28.684201",
+      "summary": "Valide: False, Publication: False"
+    }
+  ],
+  "model_used": "GPT-5-nano",
+  "model_config": {
+    "name": "gpt-5-nano",
+    "provider": "OpenAI",
+    "description": "Rapide et économique, idéal pour itérations",
+    "max_tokens": 2000,
+    "icon": "✨",
+    "uses_reasoning": true,
+    "default_reasoning": "minimal"
+  }
+}

@@ -2,7 +2,7 @@
 """
 Utilitaires LLM agnostiques du fournisseur
 """
-from typing import Any, Type, TypeVar, Optional, List, Dict
+from typing import Any, Type, TypeVar, Optional, List, Dict, Iterator, Union
 from pydantic import BaseModel
 from langchain_core.language_models import BaseChatModel
 
@@ -139,6 +139,83 @@ Ne pas ajouter de texte avant ou après le JSON."""
         
         # 4. Dernier recours : retour vide
         return schema()
+    
+    def stream_text(
+        self,
+        messages: Any,
+        include_reasoning: bool = False,
+    ) -> Iterator[Union[str, Dict[str, str]]]:
+        """Stream textual output from the underlying LLM.
+        
+        Args:
+            messages: Prompt or messages list (same format as invoke)
+            include_reasoning: Try to surface reasoning stream when available
+        Yields:
+            Either plain text deltas (str) or dicts {"text", "reasoning"}
+        """
+        # Fallback: if streaming not supported, yield once with full text
+        if not hasattr(self.llm, "stream"):
+            try:
+                response = self.llm.invoke(messages)
+                text = self._extract_text(response)
+                yield text
+                return
+            except Exception:
+                return
+        
+        try:
+            stream = self.llm.stream(messages)
+        except Exception:
+            # Fallback to non-streaming
+            try:
+                response = self.llm.invoke(messages)
+                text = self._extract_text(response)
+                yield text
+            except Exception:
+                pass
+            return
+        
+        # Iterate chunks and extract incremental text (and optional reasoning)
+        for chunk in stream:
+            try:
+                # LangChain AIMessageChunk usually exposes .content as a delta string
+                delta_text: str = ""
+                reasoning_delta: str = ""
+                content = getattr(chunk, "content", None)
+                if isinstance(content, str):
+                    delta_text = content
+                elif isinstance(content, list):
+                    # Responses API may provide list of parts; collect text and reasoning
+                    for part in content:
+                        if isinstance(part, dict):
+                            part_type = part.get("type") or part.get("role")
+                            # Common cases: {"type": "output_text", "text": "..."}
+                            if "text" in part and isinstance(part["text"], str):
+                                if part_type in ("output_text", "message", "text", None):
+                                    delta_text += part["text"]
+                                elif include_reasoning and part_type in ("reasoning", "thought", "chain_of_thought"):
+                                    reasoning_delta += part["text"]
+                            elif include_reasoning and part_type in ("reasoning", "thought"):
+                                # Some providers put reasoning in "content"
+                                if isinstance(part.get("content"), str):
+                                    reasoning_delta += part["content"]
+                        else:
+                            # Unknown object; stringify
+                            delta_text += str(part)
+                else:
+                    # Fallback to string extraction
+                    text = self._extract_text(chunk)
+                    delta_text = text
+                
+                if include_reasoning and reasoning_delta:
+                    yield {"text": delta_text, "reasoning": reasoning_delta}
+                else:
+                    # Yield plain string for simplicity and backwards-compatibility
+                    if delta_text:
+                        yield delta_text
+            except Exception:
+                # Ignore malformed chunks and continue
+                continue
     
     def _extract_text(self, response: Any) -> str:
         """Extrait le texte d'une réponse LLM"""
