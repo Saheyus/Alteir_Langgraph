@@ -9,7 +9,7 @@ BRIEF_TEMPLATES = {
         "simple": (
             "Rédige un personnage de type [TYPE], de l'espèce [ESPÈCE], vivant à [LIEU]. "
             "Il/Elle occupe la fonction de [OCCUPATION] au sein de [FACTION]. "
-            "Sa personnalité se caractérise par [QUALITÉS], mais souffre aussi de [DÉFAUTS]."
+            "Sa personnalité se caractérise par [QUALITÉS], mais souffre aussi de [DÉFAUTS]. Genre: [GENRE]."
         ),
         "complexe": (
             "Rédige un personnage de type [TYPE], de genre [GENRE], faisant partie de l'espèce [ESPÈCE], [CATÉGORIE_ÂGE]. "

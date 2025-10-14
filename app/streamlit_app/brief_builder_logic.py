@@ -65,8 +65,17 @@ def roll_tags(
 
     for cat in needed:
         if locked.get(cat):
-            # keep previous or override externally
-            selections[cat] = (user_overrides or {}).get(cat, selections.get(cat, ""))
+            # Keep previous or external override; if none, choose a deterministic value
+            override_value = (user_overrides or {}).get(cat)
+            if override_value is not None and override_value != "":
+                selections[cat] = override_value
+                continue
+            prev_value = selections.get(cat)
+            if prev_value is not None and prev_value != "":
+                selections[cat] = prev_value
+                continue
+            opts = _get_options(domain, cat)
+            selections[cat] = (rng.choice(opts) if opts else "")
             continue
         opts = _get_options(domain, cat)
         selections[cat] = rng.choice(opts) if opts else ""

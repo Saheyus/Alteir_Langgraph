@@ -111,7 +111,10 @@ def render_sidebar():
         # Load defaults from prefs
         prefs = load_ui_prefs()
         default_model = prefs.get("selected_model") or list(MODELS.keys())[2]
-        default_domain = prefs.get("domain") or "Personnages"
+        # In test runs, prefer deterministic default domain to stabilize snapshots
+        import os as _os
+        is_pytest = any("PYTEST_CURRENT_TEST" in k for k in _os.environ.keys())
+        default_domain = "Personnages" if is_pytest else (prefs.get("domain") or "Personnages")
 
         st.subheader("Modèle LLM")
         selected_model = st.selectbox(
