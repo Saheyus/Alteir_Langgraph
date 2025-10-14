@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // DIAGNOSTIC: Log to parent console
+      function log(msg) {
+        console.log('[BriefBuilder]', msg);
+        if (window.parent !== window) {
+          window.parent.postMessage({ type: 'component-log', msg: '[BriefBuilder] ' + msg }, '*');
+        }
+      }
+      
+      log('Script start');
+      
+      // Streamlit component shim (no CDN dependency)
+      (function(){
+        log('Initializing Streamlit shim');
+        
+        function send(msg){
+          if (window.parent && window.parent.postMessage) {
+            window.parent.postMessage({ isStreamlitMessage: true, ...msg }, "*");
+          }
+        }
+        
+        // Always use our shim (CDN unreliable)
+        window.Streamlit = {
+          COMPONENT_API_VERSION: 1,
+          RENDER_EVENT: "streamlit:render",
+          events: {
+            addEventListener: function(evt, handler){
+              log('addEventListener: ' + evt);
+              window.addEventListener("message", function(e){
+                const d = e.data || {};
+                if (d.type === "streamlit:render") {
+                  log('Received render event');
+                  handler({ detail: d });
+                }
+              });
+            }
+          },
+          setComponentReady: function(){ 
+            log('setComponentReady called');
+            send({ type: "streamlit:componentReady", apiVersion: 1 }); 
+          },
+          setComponentValue: function(v){ 
+            log('setComponentValue: ' + JSON.stringify(v));
+            send({ type: "streamlit:setComponentValue", value: v }); 
+          },
+          setFrameHeight: function(h){ 
+            log('setFrameHeight: ' + h);
+            send({ type: "streamlit:setFrameHeight", height: h }); 
+          }
+        };
+        
+        log('Streamlit shim ready, API_VERSION=' + window.Streamlit.COMPONENT_API_VERSION);
+      })();
+    </script>
+    <style>
+      :root { --bg: transparent; --text: #e5e7eb; --muted: #9ca3af; }
+      html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); }
+      .builder { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; line-height: 1.6; }
+      .txt { white-space: pre; opacity: .9; }
+      .tag { position: relative; display: inline-flex; align-items: center; max-width: 360px; min-width: 160px; }
+      .tag select { appearance: none; -webkit-appearance: none; background: #1f2937; color: var(--text); border: 1px solid #374151; border-radius: 10px; padding: 8px 28px 8px 12px; font-size: 14px; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .tag:after { content: "▾"; position: absolute; right: 8px; color: var(--muted); pointer-events: none; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" class="builder"></div>
+    <script>
+      function setHeight(){ 
+        const h=Math.max(48, document.body.scrollHeight); 
+        log('Setting height: ' + h);
+        Streamlit.setFrameHeight(h); 
+      }
+      
+      function onRender(ev){ 
+        log('onRender called');
+        const data=ev.detail; 
+        log('Render data template: ' + (data.args?.template || '').substring(0, 100));
+        log('Render data selections: ' + JSON.stringify(data.args?.selections || {}));
+        
+        const { template, options, selections, version } = data.args; 
+        // Synchronize local version counter with server if provided
+        if (typeof version === 'number') {
+          window.__bbVersion = Math.max(window.__bbVersion || 0, version);
+          log('Synced version from server: ' + window.__bbVersion);
+        } else {
+          window.__bbVersion = window.__bbVersion || 0;
+        }
+        // Track local pending overrides per category with versioned writes
+        window.__bbPending = window.__bbPending || {}; // { cat: { value, version } }
+        const root=document.getElementById('root'); 
+        root.innerHTML='';
+        
+        const tokens = String(template||'').split(/(\[[A-ZÉÈÀÂÙÏÇ_ ]+\])/g); 
+        const state = Object.assign({}, selections||{});
+        
+        tokens.forEach(tok=>{ 
+          if(/^\[[A-ZÉÈÀÂÙÏÇ_ ]+\]$/.test(tok||'')){ 
+            const cat=tok.replace(/^[\[]|[\]]$/g,''); 
+            const opts=(options&&options[cat])||['']; 
+            const wrap=document.createElement('span'); 
+            wrap.className='tag'; 
+            const sel=document.createElement('select');
+            
+            // Compute selected value: prefer pending if newer than server version
+            const hasPending = !!window.__bbPending[cat];
+            const pending = window.__bbPending[cat];
+            const usePending = hasPending && typeof version === 'number' && pending.version > version;
+            const selectedValue = usePending ? pending.value : (state[cat] || opts[0]);
+            if (!usePending && hasPending && typeof version === 'number' && pending.version <= version) {
+              // Server has acknowledged this category; clear pending
+              delete window.__bbPending[cat];
+              log('Cleared pending for ' + cat + ' at version ' + version);
+            }
+
+            opts.forEach(o=>{ 
+              const opt=document.createElement('option'); 
+              opt.value=o; 
+              opt.textContent=o; 
+              if(selectedValue===o) opt.selected=true; 
+              sel.appendChild(opt); 
+            });
+            
+            // CRITICAL: Use IIFE or function parameter to capture 'cat' correctly
+            // Avoid closure bug where all listeners share the last 'cat' value
+            (function(category, selectElement) {
+              selectElement.addEventListener('change', function() {
+                const newValue = selectElement.value;
+                state[category] = newValue;
+                log('Selection changed: ' + category + ' = ' + newValue);
+                // Send ONLY the changed key to avoid stale overwrites
+                const payload = {};
+                payload[category] = newValue;
+                // Increment local version and attach to payload
+                window.__bbVersion = (window.__bbVersion || 0) + 1;
+                payload.__version = window.__bbVersion;
+                // Stash pending override until server acknowledges by bumping version
+                window.__bbPending[category] = { value: newValue, version: window.__bbVersion };
+                log('Emitting payload with version ' + window.__bbVersion + ': ' + JSON.stringify(payload));
+                Streamlit.setComponentValue(payload);
+              });
+            })(cat, sel);
+            
+            wrap.appendChild(sel); 
+            root.appendChild(wrap);
+          } else if(tok){ 
+            const span=document.createElement('span'); 
+            span.className='txt'; 
+            span.textContent=tok; 
+            root.appendChild(span);
+          } 
+        });
+        
+        log('Initial render complete (NOT sending state to avoid rerun loop)');
+        // NE PAS setComponentValue ici, sinon boucle infinie de reruns
+        // Streamlit utilise le "default" passé au declare_component
+        setTimeout(setHeight, 0); 
+      }
+
+      log('Attaching render listener');
+      Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender);
+      
+      log('Calling setComponentReady');
+      Streamlit.setComponentReady();
+      
+      log('Initial setHeight');
+      setHeight();
+      
+      log('Initialization complete');
+    </script>
+  </body>
+  </html>
+
+

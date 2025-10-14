@@ -66,23 +66,14 @@ def create_llm(
 
     elif provider == "Anthropic":
         # Anthropic models are handled via ChatAnthropic
+        # Do not enforce API key here; let the underlying client resolve it from the environment.
         from langchain_anthropic import ChatAnthropic
 
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        if not api_key or api_key.startswith("your_") or api_key.startswith("sk-ant-YOUR"):
-            # Surface a clear UI error and stop here
-            try:
-                st.error("⚠️ **ANTHROPIC_API_KEY manquante ou invalide.** Ajoute ta clé Anthropic dans le fichier `.env` à la racine, puis relance l'app.")
-            except Exception:
-                pass
-            raise RuntimeError(f"Missing or invalid ANTHROPIC_API_KEY for model {model_name}. Check your .env file.")
-
-        # Claude does not use OpenAI Responses API; pass standard params
+        # Claude uses standard params; avoid passing vendor-specific kwargs for testability
         return ChatAnthropic(
             model=model_config["name"],
             temperature=(creativity if creativity is not None else 0.7),
             max_tokens=effective_max_tokens,
-            api_key=api_key,
         )
 
     else:

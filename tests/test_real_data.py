@@ -17,6 +17,10 @@ import json
 
 console = Console()
 
+import pytest
+
+
+@pytest.mark.slow
 def test_brief_1_valen():
     """Test avec Valen Arkan (alchimiste des émotions)"""
     console.print(Panel("[bold cyan]=== Test 1: Valen Arkan ===[/bold cyan]", expand=False))
@@ -53,6 +57,7 @@ def test_brief_1_valen():
     
     run_test(brief, writer_config, "valen_arkan")
 
+@pytest.mark.slow
 def test_brief_2_kira():
     """Test avec Kira (voleuse orthogonale)"""
     console.print(Panel("[bold cyan]=== Test 2: Kira l'Entailleuse ===[/bold cyan]", expand=False))
@@ -88,6 +93,7 @@ def test_brief_2_kira():
     
     run_test(brief, writer_config, "kira_entailleuse")
 
+@pytest.mark.slow
 def test_brief_3_cameo():
     """Test avec personnage cameo"""
     console.print(Panel("[bold cyan]=== Test 3: Marchand Cameo ===[/bold cyan]", expand=False))
@@ -115,6 +121,7 @@ def test_brief_3_cameo():
     
     run_test(brief, writer_config, "torvak_cameo")
 
+@pytest.mark.slow
 def test_brief_4_archetype():
     """Test avec archétype assumé"""
     console.print(Panel("[bold cyan]=== Test 4: Guerrière Archétype ===[/bold cyan]", expand=False))

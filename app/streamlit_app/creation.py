@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import random
+import re
 
 import streamlit as st
 
@@ -19,6 +20,10 @@ from .context_selector import render_context_selector
 from .generation import generate_content
 from .layout import get_domain_header
 from .cache import load_ui_prefs, save_ui_prefs
+from .brief_builder_logic import compose_brief_text, roll_tags, swap_tag
+from config.tags_registry import TAGS_REGISTRY
+from app.components.brief_builder import render_brief_builder
+from config.brief_templates import BRIEF_TEMPLATES
 
 
 def _random_different(options, current):
@@ -94,23 +99,130 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     if "brief" not in st.session_state:
         st.session_state.brief = ""
 
+    # Tabs state
+    if "brief_mode" not in st.session_state:
+        st.session_state.brief_mode = "free"  # free | random_simple | random_complex
+    if "random_simple_state" not in st.session_state:
+        st.session_state.random_simple_state = {"seed": 0, "locked": {}, "selections": {}}
+    if "random_complex_state" not in st.session_state:
+        st.session_state.random_complex_state = {"seed": 0, "locked": {}, "selections": {}}
+
     brief_placeholder = BRIEF_PLACEHOLDERS[domain]
 
-    col_brief_label, col_example_btn = st.columns([4, 1])
-    with col_brief_label:
-        brief_label = "Description du lieu" if domain == "Lieux" else "Description du personnage"
-        st.markdown(f"**{brief_label}**")
-    with col_example_btn:
-        if st.button("🎲 Brief aléatoire", help="Charger un exemple de brief"):
-            st.session_state.brief = random.choice(brief_examples)
+    def _render_free_tab() -> str:
+        col_brief_label, col_example_btn = st.columns([4, 1])
+        with col_brief_label:
+            brief_label = "Description du lieu" if domain == "Lieux" else "Description du personnage"
+            st.markdown(f"**{brief_label}**")
+        with col_example_btn:
+            if st.button("🎲 Exemple", help="Charger un exemple de brief"):
+                st.session_state.brief = random.choice(brief_examples)
 
-    brief = st.text_area(
-        brief_label,
-        placeholder=brief_placeholder,
-        height=100,
-        label_visibility="collapsed",
-        key="brief",
-    )
+        value = st.text_area(
+            brief_label,
+            placeholder=brief_placeholder,
+            height=100,
+            label_visibility="collapsed",
+            key="brief",
+        )
+        return value
+
+    def _render_random_tab(mode_key: str, mode_name: str) -> str:
+        state = st.session_state[mode_key]
+        # When this tab is visible, consider its brief as active
+        st.session_state.brief_mode = "random_simple" if mode_name == "simple" else "random_complex"
+        template_available = BRIEF_TEMPLATES.get(domain, {}).get(mode_name)
+        if not template_available:
+            st.info("Brief aléatoire non disponible pour ce domaine.")
+            return ""
+        # Initialize selections on first render
+        if not state["selections"]:
+            state["selections"] = roll_tags(domain, mode_name, seed=state["seed"], locked=state["locked"], user_overrides={})
+
+        colA, colB = st.columns(2)
+        with colA:
+            if st.button("Regénérer", key=f"regen_{mode_key}"):
+                state["seed"] += 1
+                # Reroll everything (ignores locks)
+                state["selections"] = roll_tags(
+                    domain,
+                    mode_name,
+                    seed=state["seed"],
+                    locked={},
+                    user_overrides={},
+                )
+        with colB:
+            if st.button("Regénérer (non verrouillés)", key=f"regen_unlocked_{mode_key}"):
+                state["seed"] += 1
+                # Only keep locked values as overrides
+                locked_overrides = {k: v for k, v in state["selections"].items() if state["locked"].get(k)}
+                state["selections"] = roll_tags(
+                    domain,
+                    mode_name,
+                    seed=state["seed"],
+                    locked=state["locked"],
+                    user_overrides=locked_overrides,
+                )
+
+        # Inline prompt builder with dropdowns per tag
+        template = BRIEF_TEMPLATES.get(domain, {}).get(mode_name, "")
+        if template:
+            options_by_category = {k: v for k, v in TAGS_REGISTRY.get(domain, {}).items()}
+            # Render HTML/CSS component for perfect inline flow
+            updated = render_brief_builder(template, options_by_category, state["selections"])
+            if isinstance(updated, dict) and updated:
+                # Merge delta only (component now emits single-key updates)
+                changed_keys = []
+                for k, v in updated.items():
+                    if state["selections"].get(k) != v:
+                        state["selections"][k] = v
+                        changed_keys.append(k)
+                st.session_state[f"_bb_ok_{mode_key}"] = True
+            else:
+                st.session_state[f"_bb_ok_{mode_key}"] = st.session_state.get(f"_bb_ok_{mode_key}", False)
+
+            # Fallback inline builder if component not ready
+            if not st.session_state.get(f"_bb_ok_{mode_key}"):
+                import re as _re
+                tokens = _re.split(r"(\[[A-ZÉÈÀÂÙÏÇ_ ]+\])", template)
+                weights = []
+                for tok in tokens:
+                    if _re.fullmatch(r"\[[A-ZÉÈÀÂÙÏÇ_ ]+\]", tok or ""):
+                        weights.append(6)
+                    else:
+                        w = max(1, int(len(tok) / 12))
+                        weights.append(w)
+                cols = st.columns(weights) if tokens else [st]
+                for i, tok in enumerate(tokens):
+                    with cols[i]:
+                        if _re.fullmatch(r"\[[A-ZÉÈÀÂÙÏÇ_ ]+\]", tok or ""):
+                            cat = tok.strip("[]")
+                            opts = options_by_category.get(cat, [])
+                            cur = state["selections"].get(cat, opts[0] if opts else "")
+                            sel = st.selectbox("", opts or [""], index=(opts.index(cur) if cur in opts else 0), label_visibility="collapsed", key=f"fallback_{mode_key}_{cat}")
+                            state["selections"][cat] = sel
+                        else:
+                            st.markdown(f"<div style='padding-top:26px; white-space:nowrap'>{tok}</div>", unsafe_allow_html=True)
+
+        # Expose selections and locks for tests/debug
+        if mode_name == "simple":
+            st.session_state._random_simple_selections = dict(state["selections"])  # shallow copy
+            st.session_state._random_simple_locked = dict(state["locked"])  # shallow copy
+        else:
+            st.session_state._random_complex_selections = dict(state["selections"])  # shallow copy
+            st.session_state._random_complex_locked = dict(state["locked"])  # shallow copy
+
+        brief_text = compose_brief_text(domain, mode_name, state["selections"])  # compact display for now
+        # Retirer l'aperçu lecture seule
+        return brief_text
+
+    tabs = st.tabs(["Écriture libre", "Aléatoire", "Aléatoire complexe"])
+    with tabs[0]:
+        free_text = _render_free_tab()
+    with tabs[1]:
+        brief_random_simple = _render_random_tab("random_simple_state", "simple")
+    with tabs[2]:
+        brief_random_complex = _render_random_tab("random_complex_state", "complexe")
 
     _ensure_session_defaults(domain, model_info)
 
@@ -445,9 +557,19 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     except Exception:
         pass
 
+    # Determine active brief text based on selected mode
+    if st.session_state.brief_mode == "free":
+        active_brief_text = free_text
+    elif st.session_state.brief_mode == "random_simple":
+        active_brief_text = brief_random_simple
+    else:
+        active_brief_text = brief_random_complex
+
     st.subheader("📚 Contexte Notion")
     with st.expander("Sélectionner du contexte depuis Notion", expanded=True):
-        context_summary = render_context_selector(domain, brief)
+        # Expose active brief to session for testability (no UI impact)
+        st.session_state._active_brief_text = active_brief_text
+        context_summary = render_context_selector(domain, active_brief_text)
         st.session_state.selected_context_summary = context_summary
 
     button_text = {
@@ -461,13 +583,13 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
 
     trigger = st.session_state.pop("trigger_generate", False)
     if st.button(button_text[domain], type="primary", use_container_width=True) or trigger:
-        if not brief:
+        if not active_brief_text:
             st.error(error_text[domain])
         else:
             # Ensure verbosity variable exists in all branches
             _verbosity = verbosity if (provider == "OpenAI" and uses_reasoning) else None
             generate_content(
-                brief,
+                active_brief_text,
                 intent,
                 level,
                 dialogue_mode,

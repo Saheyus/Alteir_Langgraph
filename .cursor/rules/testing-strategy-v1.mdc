@@ -85,14 +85,15 @@ Sans stratégie de tests claire, on risque:
 
 ### Avant Commit
 
-- [ ] Lancer tests rapides: `python tests/run_e2e_tests.py quick`
+- [ ] Lancer tests rapides: `.\lancer_tests_rapides.cmd` ou `python tests/run_e2e_tests.py quick` (OBLIGATOIRE — exécuté par le dev, pas par l'utilisateur)
 - [ ] Tests passent en < 2 secondes
 - [ ] Pas de régression sur tests existants
+- [ ] **Hook pre-commit automatique** : `.githooks/pre-commit` bloque le commit si tests rapides échouent (installer: `.\installer_hooks.cmd`)
 
 ### Avant Push/PR
 
-- [ ] Lancer E2E basiques: `python tests/run_e2e_tests.py e2e-basic`
-- [ ] Lancer suite complète: `python tests/run_e2e_tests.py full`
+- [ ] Lancer E2E basiques: `python tests/run_e2e_tests.py e2e-basic` (par le dev)
+- [ ] Lancer suite complète: `python tests/run_e2e_tests.py full` (par le dev)
 - [ ] Tous les tests passent
 - [ ] Coût LLM acceptable (< $0.10)
 

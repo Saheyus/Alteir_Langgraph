@@ -1,0 +1,19 @@
+#!/bin/sh
+# Pre-commit hook: run quick tests and block commit on failure
+
+echo "🔎 Running quick pytest suite (not slow)..."
+
+# Use repo python if available; fallback to system python
+PYTHON_BIN="python"
+
+$PYTHON_BIN -m pytest -q -m "not slow" || {
+  echo "❌ Tests failed. Commit aborted."
+  echo "Tip: run 'python -m pytest -q -m \"not slow\"' locally to inspect failures."
+  exit 1
+}
+
+echo "✅ Tests passed. Proceeding with commit."
+exit 0
+
+
+

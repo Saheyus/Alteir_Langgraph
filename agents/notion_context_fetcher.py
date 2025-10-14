@@ -324,7 +324,8 @@ class NotionContextFetcher:
 
         record = self._retrieve_page(page_id)
         detected_domain = domain or record.get("domain") or "inconnu"
-        preview = self._record_to_preview(record, detected_domain)
+        # Use eager mode for single-page preview to allow content-based summary
+        preview = self._record_to_preview(record, detected_domain, eager_content=True)
         context_cache.set("preview", page_id, preview)
         return preview
 
@@ -420,6 +421,16 @@ class NotionContextFetcher:
                         summary = self._extract_first_words(content, max_chars=150)
                 except Exception as e:
                     LOGGER.debug(f"Could not fetch content for preview summary: {e}")
+        # If still empty summary, attempt a content-based summary only when eager
+        if eager_content and not summary:
+            try:
+                page_id = record.get("id", "")
+                if page_id:
+                    content = content or self._retrieve_content(page_id, record)
+                if content:
+                    summary = self._extract_first_words(content, max_chars=150)
+            except Exception:
+                pass
         
         # Extract tags from properties with fallback to top-level list
         tags = self._extract_notion_tags(properties)

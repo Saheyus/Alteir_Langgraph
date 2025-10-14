@@ -8,15 +8,15 @@ alwaysApply: true
 
 ```markdown
 ---
-description: Description courte pour l'IA
+description: Description pour l'IA (sans contrainte de concision)
 globs: ["**/*.py", "tests/**"]
 alwaysApply: false
 ---
 
 # Contenu de la règle en Markdown
 
-- Instructions claires
-- Exemples concrets
+- Instructions précises
+- Exemples complets
 ```
 
 ### Types de Règles (via métadonnées)

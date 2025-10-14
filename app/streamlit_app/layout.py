@@ -66,6 +66,15 @@ CUSTOM_CSS = """
     margin: 1rem 0;
     color: #000; /* text on light background must be black for readability */
 }
+
+/* Inline brief builder: make selects compact and aligned with text */
+.stSelectbox > label { display: none; }
+.stSelectbox div[data-baseweb="select"] {
+    min-height: 34px;
+    border-radius: 8px;
+}
+.stSelectbox { margin-top: 0.2rem; }
+.stColumns { gap: 6px !important; }
 </style>
 """
 

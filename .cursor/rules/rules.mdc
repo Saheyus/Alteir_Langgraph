@@ -250,13 +250,6 @@ Développer un système multi-agents local pour l'écriture, la relecture et la 
 
 ## 🔧 Configuration et Environnement
 
-### Variables d'Environnement
-```bash
-OPENAI_API_KEY=your_key_here
-NOTION_TOKEN=your_notion_token
-LANGGRAPH_API_KEY=optional_for_studio
-```
-
 ### Dépendances Principales
 - `langgraph` : Framework multi-agents
 - `langchain-openai` : Intégration OpenAI

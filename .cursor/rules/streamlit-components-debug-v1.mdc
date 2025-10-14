@@ -1,0 +1,252 @@
+---
+description: Debugging Streamlit custom components (HTML/JS)
+globs:
+  - "app/components/**/*.html"
+  - "app/components/**/*.js"
+  - "app/streamlit_app/*.py"
+---
+
+# Debugging Streamlit Custom Components
+
+## Problème
+
+Les composants Streamlit custom (HTML/JS) échouent silencieusement. Erreurs fréquentes:
+- `Error: Unrecognized component API version: 'undefined'`
+- Composant affiche un carré gris vide
+- Aucun message d'erreur côté Python
+- Timeout au chargement
+
+**Cause racine**: L'iframe du composant ne communique pas correctement avec Streamlit (API mal initialisée, CDN bloqué, erreurs JS non catchées).
+
+## Décision
+
+### 1. TOUJOURS implémenter un shim Streamlit complet
+
+**Ne PAS compter sur les CDN** (`streamlit-component-lib`). Toujours fournir un shim fallback:
+
+```javascript
+window.Streamlit = {
+  COMPONENT_API_VERSION: 1,  // CRITICAL
+  RENDER_EVENT: "streamlit:render",
+  events: {
+    addEventListener: function(evt, handler) {
+      window.addEventListener("message", function(e) {
+        const d = e.data || {};
+        if (d.type === "streamlit:render") {
+          handler({ detail: d });
+        }
+      });
+    }
+  },
+  setComponentReady: function() { 
+    window.parent.postMessage({ 
+      isStreamlitMessage: true, 
+      type: "streamlit:componentReady", 
+      apiVersion: 1 
+    }, "*"); 
+  },
+  setComponentValue: function(v) { 
+    window.parent.postMessage({ 
+      isStreamlitMessage: true, 
+      type: "streamlit:setComponentValue", 
+      value: v 
+    }, "*"); 
+  },
+  setFrameHeight: function(h) { 
+    window.parent.postMessage({ 
+      isStreamlitMessage: true, 
+      type: "streamlit:setFrameHeight", 
+      height: h 
+    }, "*"); 
+  }
+};
+```
+
+### 2. Ajouter des logs de diagnostic
+
+```javascript
+function log(msg) {
+  console.log('[ComponentName]', msg);
+  // Optionnel: envoyer au parent pour debugging
+  if (window.parent !== window) {
+    window.parent.postMessage({ 
+      type: 'component-log', 
+      msg: '[ComponentName] ' + msg 
+    }, '*');
+  }
+}
+
+log('Script start');
+log('Streamlit shim ready, API_VERSION=' + window.Streamlit.COMPONENT_API_VERSION);
+log('onRender called');
+// ... etc
+```
+
+### 3. Ordre d'initialisation critique
+
+```javascript
+// 1. Définir Streamlit shim
+window.Streamlit = { ... };
+
+// 2. Attacher listener AVANT setComponentReady
+Streamlit.events.addEventListener(Streamlit.RENDER_EVENT, onRender);
+
+// 3. Signaler ready
+Streamlit.setComponentReady();
+
+// 4. Initialiser hauteur
+Streamlit.setFrameHeight(48);
+```
+
+### 4. Fallback Python obligatoire
+
+Si le composant HTML échoue à charger, **toujours** fournir un fallback Streamlit natif:
+
+```python
+try:
+    updated_selections = _render_brief_builder(
+        template=template,
+        options_by_category=options,
+        initial_selections=selections,
+        key=key,
+    )
+    st.session_state[f"component_loaded_{key}"] = True
+except Exception as e:
+    st.session_state[f"component_loaded_{key}"] = False
+    st.warning(f"Composant HTML non disponible, fallback Streamlit. Erreur: {e}")
+
+# Fallback Streamlit widgets
+if not st.session_state.get(f"component_loaded_{key}", False):
+    # ... render with st.selectbox, st.text_input, etc.
+```
+
+## Checklist Debug
+
+### Composant ne charge pas
+
+- [ ] Vérifier `index.html` existe dans le dossier du composant
+- [ ] Vérifier console navigateur (F12) pour erreurs JS
+- [ ] Vérifier `COMPONENT_API_VERSION: 1` présent dans shim
+- [ ] Vérifier `setComponentReady()` appelé après `addEventListener`
+- [ ] Vérifier `isStreamlitMessage: true` dans tous les `postMessage`
+- [ ] Ajouter logs `console.log` à chaque étape (init, render, value change)
+
+### Erreur "Unrecognized component API version"
+
+- [ ] `window.Streamlit.COMPONENT_API_VERSION = 1` manquant
+- [ ] CDN `streamlit-component-lib` échoue à charger → utiliser shim local
+- [ ] Message `setComponentReady` ne contient pas `apiVersion: 1`
+
+### Composant charge mais ne répond pas
+
+- [ ] Vérifier `onRender` est appelé (log dans la fonction)
+- [ ] Vérifier `data.args` contient les props attendues
+- [ ] Vérifier `setComponentValue` appelé avec bon format
+- [ ] Vérifier `setFrameHeight` appelé après render
+
+### Valeurs ne remontent pas à Streamlit
+
+- [ ] `Streamlit.setComponentValue(state)` appelé dans event handlers
+- [ ] Format de `state` est un objet JSON sérialisable
+- [ ] Clé du composant change entre renders (force re-render)
+- [ ] `default=` passé au `declare_component` pour valeur initiale
+
+### Event handlers modifient mauvaise valeur (closure bug)
+
+- [ ] **Bug classique JS** : Event listeners dans boucle capturent dernière valeur de variable
+- [ ] **Solution** : IIFE ou fonction factory pour capturer variable correctement
+- [ ] Exemple mauvais : `items.forEach(item => btn.onclick = () => use(item))` → tous les boutons utilisent dernier `item`
+- [ ] Exemple bon : `items.forEach(item => { (function(i){ btn.onclick = () => use(i) })(item) })`
+
+## Outils de Diagnostic
+
+### Console navigateur (F12)
+
+1. Ouvrir DevTools (F12)
+2. Onglet Console
+3. Filtrer par `[ComponentName]` ou `[BriefBuilder]`
+4. Chercher:
+   - "Script start" → script chargé
+   - "Streamlit shim ready" → API initialisée
+   - "onRender called" → composant reçoit données
+   - "setComponentValue" → valeurs envoyées à Streamlit
+
+### Python logging
+
+Ajouter dans `__init__.py` du composant:
+
+```python
+import logging
+logger = logging.getLogger(__name__)
+
+def render_component(...):
+    logger.info(f"Rendering component with template={template[:50]}...")
+    value = _component_func(...)
+    logger.info(f"Component returned value: {value}")
+    return value
+```
+
+### Test isolation
+
+Créer un script minimal:
+
+```python
+# test_component.py
+import streamlit as st
+from app.components.brief_builder import render_brief_builder
+
+st.title("Test Composant")
+
+result = render_brief_builder(
+    template="Test [TAG1] simple",
+    options_by_category={"TAG1": ["opt1", "opt2"]},
+    selections={"TAG1": "opt1"},
+)
+
+st.write("Result:", result)
+```
+
+Lancer: `streamlit run test_component.py`
+
+## Exemples
+
+### ✅ BON - Composant avec logs et shim complet
+
+Voir `app/components/brief_builder/index.html` (version avec logs).
+
+### ❌ MAUVAIS - Dépendance CDN sans fallback
+
+```javascript
+<script src="https://unpkg.com/streamlit-component-lib@1.5.0/dist/index.js"></script>
+<script>
+  // Pas de vérification si CDN échoue
+  Streamlit.setComponentReady();
+</script>
+```
+
+**Problème**: Si CDN bloqué/offline, `window.Streamlit` est `undefined` → crash.
+
+### ❌ MAUVAIS - Pas de logs
+
+```javascript
+function onRender(ev) {
+  // Pas de log, impossible de diagnostiquer si appelé
+  const data = ev.detail;
+  // ...
+}
+```
+
+**Problème**: Si `onRender` n'est jamais appelé, aucun moyen de le savoir.
+
+## Références
+
+- [Streamlit Components API](https://docs.streamlit.io/library/components/create)
+- [Custom Components Tutorial](https://docs.streamlit.io/library/components/components-api)
+- Exemple local: `app/components/brief_builder/index.html`
+
+## Changelog
+
+### 2025-10-14 - Version 1
+- **Raison**: Erreur récurrente "Unrecognized component API version: 'undefined'"
+- **Décision**: Shim Streamlit local obligatoire + logs diagnostic
+- **Impact**: Tous les composants HTML doivent implémenter le shim complet

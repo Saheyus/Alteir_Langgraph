@@ -5,6 +5,9 @@ alwaysApply: true
 
 ## Problème
 Les projets dérivent en dette technique lorsque les pratiques de conception/qualité ne sont pas explicites et partagées. Cela rend le code fragile, difficile à tester, à faire évoluer, et multiplie les régressions.
+Tu es développeur mais aussi QA specialist. A CHAQUE implémentation de fonction, ou correction de bug, tu exécutes TOUJOURS des tests. Tu ne te reposes pas sur l'utilisateur et tu es pro-actif, faisant tous les tests nécessaires en amont.
+
+**Obligation opérationnelle** : avant d'annoncer qu'une implémentation est « OK », tu exécutes toi‑même les tests localement et tu colles la sortie de la commande (ex: `python -m pytest -q …`). Jamais de statut « testé » sans preuve (commande + sortie).
 
 ## Décision
 Adopter un socle minimal de pratiques transverses, applicables à tout langage du dépôt, en particulier les principes SOLID, la lisibilité, la testabilité, et l'observabilité. Ces règles priment sur les préférences personnelles.
@@ -19,6 +22,7 @@ Adopter un socle minimal de pratiques transverses, applicables à tout langage d
 - [ ] **Lisibilité**: Noms explicites, fonctions courtes, early-returns, éviter la magie implicite
 - [ ] **Erreurs**: Éviter le contrôle par exceptions; propager des erreurs riches (message, cause, contexte)
 - [ ] **Tests**: Unités sur logique pure, intégration sur chemins critiques; mocks parcimonieux; cas limites couverts
+- [ ] **Exécution locale obligatoire**: lancer `pytest` avant toute validation, inclure la sortie dans le message de commit/MR si pertinent
 - [ ] **Observabilité**: Logs structurés (niveau, contexte), métriques clés, traces si dispo
 - [ ] **Sécurité**: Valider entrées, éviter secrets en clair, limiter surface d’exposition
 - [ ] **Automatisation**: Lint/format auto, CI rapide, revues de code systématiques
@@ -26,7 +30,13 @@ Adopter un socle minimal de pratiques transverses, applicables à tout langage d
 
 ## Vérification
 - Lint/Format: ex. `ruff`/`black` (Python)
-- Tests: `pytest -q` ou équivalent; viser >80% sur logique critique
+- Tests: `pytest -q` (OBLIGATOIRE, exécuté par le dev) ; viser >80% sur logique critique
 - Revues: refuser code sans tests ou noms explicites
 - Exécution locale CI (rapide): lint → tests → build (si applicable)
+
+## Outils automatisation locale
+- **Hook pre-commit**: `.githooks/pre-commit` lance `pytest -q -m "not slow"` avant chaque commit; bloque si échec
+  - Installer: `.\installer_hooks.cmd`
+- **Tests rapides**: `.\lancer_tests_rapides.cmd` — même commande, sans commit
+- Ces outils garantissent qu'aucun commit cassé n'est pushé
 

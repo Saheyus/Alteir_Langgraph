@@ -29,7 +29,7 @@ assert "<div class=\"alert\">" in str(at)
 ```
 
 ## Vérification
-- Lancer: `pytest -q tests/streamlit -m "ui and e2e"`
+- Lancer (par le dev): `pytest -q tests/streamlit -m "ui and e2e"` et coller la sortie dans la MR si pertinent
 - En cas d'échec, ouvrir les snapshots: `tests/artifacts/streamlit_snapshots/*.json`
 
 ## Migration

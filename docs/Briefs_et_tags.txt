@@ -1,0 +1,372 @@
+PERSONNAGE (avancé)
+
+Rédige un personnage de type [TYPE], de genre [GENRE], faisant partie de l'espèce [ESPÈCE], [CATÉGORIE_ÂGE]. Il/Elle est originaire de [ORIGINE] et vit actuellement à [LIEU]. Son apparence est [APPARENCE]. Il/Elle occupe la fonction de [OCCUPATION] au sein de [FACTION]. Son état de santé : [ÉTAT_SANTÉ]. Sa classe sociale : [CLASSE_SOCIALE]. Son niveau d'éducation : [ÉDUCATION]. Son statut social : [STATUT_SOCIAL]. Sa personnalité se caractérise par [QUALITÉS], mais souffre aussi de [DÉFAUTS]. Sa principale faiblesse : [FAIBLESSE]. Ce qu'il/elle désire par-dessus tout : [DÉSIR], alors qu'en réalité il/elle a besoin de [BESOIN]. Son axe idéologique face à Jast : [AXE_IDÉOLOGIQUE]. Il/Elle incarne l'archétype littéraire de John Truby : [ARCHÉTYPE]. Il/Elle s'exprime principalement en [REGISTRE_LANGUE]. Face à la question "Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance ?", il/elle [POSTURE_MORALE].
+
+PERSONNAGES (simple)
+
+Rédige un personnage de type [TYPE], de l'espèce [ESPÈCE], vivant à [LIEU]. Il/Elle occupe la fonction de [OCCUPATION] au sein de [FACTION]. Sa personnalité se caractérise par [QUALITÉS], mais souffre aussi de [DÉFAUTS].
+
+LIEUX (avancé)
+
+Rédige un lieu de type [RÔLE], de taille [TAILLE], situé dans [LIEU]. Son apparence générale est [APPARENCE_LIEU]. L'atmosphère générale est [ATMOSPHÈRE]. Les communautés présentes : [FACTION]. Les espèces dominantes : [ESPÈCE]. Son accessibilité : [ACCESSIBILITÉ]. Son niveau de danger : [DANGER]. Sa particularité physique ou magique : [PARTICULARITÉ]. Les lois physiques locales : [LOIS_PHYSIQUES]. Sa fonction principale dans l'histoire : [FONCTION_NARRATIVE]. 
+
+LIEUX (simple)
+
+Rédige un lieu de type [RÔLE], de taille [TAILLE], situé dans [LIEU]. L'atmosphère générale est [ATMOSPHÈRE]. Les communautés présentes : [FACTION]. Particularité physique ou magique notable : [PARTICULARITÉ].
+
+TAGS
+
+[TYPE]
+- PJ (Personnage Joueur)
+- PNJ principal
+- PNJ recrutable
+- PNJ secondaire
+- PNJ historique
+- Entité supérieure
+
+[GENRE]
+- Féminin
+- Masculin
+- Non défini
+- Non Binaire
+- Pluriel
+
+[ESPÈCE]
+- Van'Doei
+- Cen'Doei
+- Qadul'Doei
+- Rash'Doei
+- Aedres
+- Imuins
+- Vaideccans
+- Humains
+- Rêveurs primordiaux
+- Seigneurs Originels
+- Aberrations Bouffies
+- Moribandons
+- Umcut
+- Railleurs
+- Vohars
+- Kephrasites
+- Construits
+- Autre (à inventer)
+
+[CATÉGORIE_ÂGE]
+- Enfant
+- Adolescent
+- Jeune adulte
+- Adulte
+- Âge mûr
+- Vénérable
+- Ancestral
+
+[LIEU]
+- Vieille Ville
+- Léviathan pétrifié
+- Couronnes intermédiaires
+- Périphéries
+- Citadelle de Daïlon
+- Merid
+- Désert des Echos Perdus
+- Forêts de Corail
+- Puits céleste
+- Océan de Ténèbres
+- Plaines de l'Exuvie
+- Marché automaton
+- Fosse aux Idoles déchues
+- Antichambre des Impossibles
+- Steppe des Éteignoirs
+- Cité Labiale
+- Tombeau des lueurs dissidentes
+- Jungle Vivarcade
+- Escelion
+- Xyriad Achromatique
+- Ciel de Roche
+- Océan mécanique
+- Autre (à inventer)
+
+[APPARENCE]
+- Émaciée
+- Imposante
+- Délicate
+- Commune
+
+[OCCUPATION]
+- Artisan
+- Guerrier/Combattant
+- Érudit/Chercheur
+- Prêtre/Exégète
+- Marchand
+- Cartographe
+- Archiviste
+- Thaumaturge
+- Courtisan
+- Esclave
+- Paria/Exilé
+- Garde/Soldat
+- Artiste
+- Guérisseur
+- Espion
+- Prophète
+- Architecte
+- Alchimiste
+- Diplomate
+- Sans occupation
+- Autre (à inventer)
+
+[FACTION]
+- Culte de l'Anentropie
+- Barvasinkul
+- Murmurateurs
+- Symbiotisme
+- Paradigme Ésothrope
+- Aldravinds
+- Indépendant/Paria
+- Autre (à inventer)
+
+[ÉTAT_SANTÉ]
+- Valide
+- Handicap physique
+- Handicap sensoriel
+- Maladie chronique
+- Condition mentale
+- Mourant/Affaibli
+
+[CLASSE_SOCIALE]
+- Privilégié
+- Classe moyenne
+- Précaire
+- Miséreux
+- Paria
+
+[ÉDUCATION]
+- Aucune (analphabète)
+- Faible (autodidacte)
+- Moyenne
+- Importante
+- Avancée (érudit)
+
+[STATUT_SOCIAL]
+- Respecté
+- Neutre
+- Craint
+- Méprisé
+- Stigmatisé
+
+[QUALITÉS]
+- Confiante
+- Conciliante
+- Courageuse
+- Décent
+- Détachée
+- Diplomate
+- Discrète
+- Empathique
+- Energique
+- Fiable
+- Généreuse
+- Honnête
+- Humble
+- Ingénieuse
+- Lucide
+- Idéaliste
+- Loyale
+- Modeste
+- Organisée
+- Ouverte
+- Patiente
+- Persévérante
+- Posée
+- Prudente
+- Rigoureuse
+- Respectueuse
+- Responsable
+- Sincère
+- Tempérée
+- Tolérante
+
+[DÉFAUTS]
+- Autoritaire
+- Colérique
+- Cynique
+- Manipulatrice
+- Obstinée
+- Désordonnée
+- Égoïste
+- Incompétent
+- Provocatrice
+- Prétentieuse
+- Insensible
+- Défaitiste
+- Irresponsable
+- Intolérante
+- Indiscrète
+- Imprudente
+- Irrespectueuse
+- Impatiente
+- Instable
+- Lâche
+- Malhonnête
+- Méfiante
+- Naïve
+- Négligente
+- Orgueilleuse
+- Paresseuse
+- Sensuelle
+- Susceptible
+- Traîtresse
+
+[FAIBLESSE]
+- Obsession
+- Traumatisme non résolu
+- Dépendance
+- Attachement toxique
+- Orgueil démesuré
+- Peur paralysante
+- Dissociation
+- Rigidité mentale
+- Autre (à inventer)
+
+[DÉSIR]
+- Pouvoir
+- Connaissance
+- Vengeance
+- Rédemption
+- Liberté
+- Reconnaissance
+- Préservation
+- Transformation
+- Connexion
+- Destruction
+- Autre (à inventer)
+
+[BESOIN]
+- Acceptation
+- Lâcher-prise
+- Connexion authentique
+- Pardon
+- Vulnérabilité
+- Sens
+- Confrontation
+- Changement
+- Autre (à inventer)
+
+[AXE_IDÉOLOGIQUE]
+- Retrait
+- Rébellion
+- Destruction
+- Subversion
+- Connexion
+- Contrôle
+
+[ARCHÉTYPE]
+- Artiste / Cynique
+- Amoureuse / Faire-valoir
+- Magicienne / Sorcier
+- Rebelle / Destructeur
+- Guerrière / Surhomme
+- Friponne / Menteur
+- Mentor / Gourou
+- Reine / Tyran
+
+[REGISTRE_LANGUE]
+- Abraldique ancien
+- Principit
+- Kesh-Varash
+- Néo-Frémissant
+- Langage vertébral
+- Mécanaqueux
+- Acqueux
+- Abyssal
+- Commun
+- Autre (à inventer)
+
+[POSTURE_MORALE]
+- Résiste activement
+- Subvertit de l'intérieur
+- Relativise/Philosophe
+- Accepte/S'adapte
+- Fait partie de l'oppression
+- Se retire/Fuit
+
+[RÔLE]
+- Ville
+- Lieu unique
+- Lieu militaire
+- Lieu de culte
+- Zone magique
+- Zone naturelle
+- Lieu commercial
+- Lieu artisanal
+
+[TAILLE]
+- Monde
+- Pays
+- Région
+- District
+- Secteur
+- Site
+- Point d'intérêt
+
+[ATMOSPHÈRE]
+- Oppressante
+- Paisible
+- Chaotique
+- Sacrée
+- Abandonnée
+- Vivante/Grouillante
+- Mélancolique
+- Inquiétante
+- Émerveillement
+
+[APPARENCE_LIEU]
+- Ruines anciennes
+- Architecture organique
+- Structure géométrique
+- Formation naturelle
+- Hybride (nature/architecture)
+- Minérale/Cristalline
+- Osseuse/Fossile
+- Mécanique
+- Éthérée/Immatérielle
+
+[ACCESSIBILITÉ]
+- Ouvert à tous
+- Accès restreint
+- Secret/Caché
+- Dangereux d'accès
+- Inaccessible sans aide
+
+[DANGER]
+- Sûr
+- Risques mineurs
+- Dangereux
+- Mortel
+- Variable/Imprévisible
+
+[PARTICULARITÉ]
+- Distorsion temporelle
+- Gravité altérée
+- Échos mémoriels
+- Bioluminescence
+- Anomalie spatiale
+- Conscience résiduelle
+- Cycles inhabituels
+- Résonance psychique
+- Aucune
+
+[LOIS_PHYSIQUES]
+- Stables (comme ailleurs)
+- Légèrement altérées
+- Fortement altérées
+- Incompatibles (zone limitrophe)
+- Instables/Variables
+
+[FONCTION_NARRATIVE]
+- Refuge/Base
+- Lieu de confrontation
+- Source de mystère
+- Objectif à atteindre
+- Passage obligé
+- Zone d'exploration libre
+- Lieu de révélation

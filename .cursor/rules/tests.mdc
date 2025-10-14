@@ -227,7 +227,7 @@ Pour des tests de debug **temporaires** :
 
 - [ ] Tous les fichiers de test sont dans `tests/`
 - [ ] Aucun fichier `test_*.py` à la racine
-- [ ] Tests passent avec `pytest tests/`
+- [ ] Tests passent avec `pytest tests/` (OBLIGATOIRE — exécuté par le dev; coller la sortie si pertinent)
 - [ ] Coverage acceptable (optionnel)
 - [ ] Pas de tests de debug temporaires committés
 

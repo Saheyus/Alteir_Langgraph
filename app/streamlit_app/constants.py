@@ -45,6 +45,16 @@ MODELS = {
         "uses_reasoning": False,
         "default_reasoning": None,
     },
+    # Alias key maintained for backward-compatibility with tests/configs
+    "Claude 4.5 Sonnet": {
+        "name": "claude-sonnet-4-5-20250929",
+        "provider": "Anthropic",
+        "description": "Best model for complex agents and coding (Sept 2025)",
+        "max_tokens": 64000,
+        "icon": "🧠",
+        "uses_reasoning": False,
+        "default_reasoning": None,
+    },
     "Claude 3.5 Haiku": {
         "name": "claude-3-5-haiku-20241022",
         "provider": "Anthropic",
