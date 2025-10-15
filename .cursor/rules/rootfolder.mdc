@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+When running terminal commands:
+- Always change directory to "F:\Projets\Langgraph Alteir" before executing anything.

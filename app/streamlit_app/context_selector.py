@@ -94,6 +94,7 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
                     available = [p for d in targets for p in previews_by_domain.get(d, [])]
                     suggestions = matcher.suggest_context(
                         brief,
+                        max_fiches=9,
                         domains=targets,
                         use_full_content=False,
                         available_pages=available,
@@ -116,7 +117,7 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
                 st.error(f"❌ Erreur inattendue pendant la suggestion: {e}")
     with col_info:
         st.write(
-            "Sélectionne jusqu'à 5 fiches pertinentes en fonction du brief."
+            "Sélectionne jusqu'à 9 fiches pertinentes en fonction du brief."
             if brief.strip()
             else "Renseigne un brief pour activer l'auto-sélection."
         )
@@ -126,38 +127,40 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
         return
 
     st.markdown("#### Suggestions")
-    for suggestion in selection["suggestions"]:
+    cols = st.columns(3)
+    for idx, suggestion in enumerate(selection["suggestions"]):
         assert isinstance(suggestion, MatchSuggestion)
         page = suggestion.page
-        checked = (page.id in set(selection["selected_ids"])) or suggestion.auto_select
-        checkbox_key = f"suggestion_{page.id}"
-        checkbox = st.checkbox(
-            f"{page.title} — {int(suggestion.score * 100)}%",
-            value=checked,
-            key=checkbox_key,
-            help=page.summary or "",
-        )
-        # Record mapping for force-commit later
-        try:
-            st.session_state._context_checkbox_index[checkbox_key] = {
-                "id": page.id,
-                "title": page.title,
-                "domain": page.domain,
-                "summary": page.summary,
-                # Fixed coarse estimate per fiche
-                "token_estimate": 3000,
-                "last_edited": page.last_edited,
-                "tags": getattr(page, "tags", []) or [],
-            }
-        except Exception:
-            pass
-        _toggle_selection(page, checkbox)
+        with cols[idx % 3]:
+            checked = (page.id in set(selection["selected_ids"])) or suggestion.auto_select
+            checkbox_key = f"suggestion_{page.id}"
+            checkbox = st.checkbox(
+                f"{page.title} — {int(suggestion.score * 100)}%",
+                value=checked,
+                key=checkbox_key,
+                help=page.summary or "",
+            )
+            # Record mapping for force-commit later
+            try:
+                st.session_state._context_checkbox_index[checkbox_key] = {
+                    "id": page.id,
+                    "title": page.title,
+                    "domain": page.domain,
+                    "summary": page.summary,
+                    # Retirer l'estimation de tokens des fiches
+                    "token_estimate": 0,
+                    "last_edited": page.last_edited,
+                    "tags": getattr(page, "tags", []) or [],
+                }
+            except Exception:
+                pass
+            _toggle_selection(page, checkbox)
 
-        with st.expander(f"Détails · {page.domain.capitalize()} · ~3000 tokens", expanded=False):
-            st.markdown(f"**Résumé :** {page.summary or '—'}")
-            if suggestion.matched_keywords:
-                keywords = ", ".join(suggestion.matched_keywords)
-                st.caption(f"Correspondances : {keywords}")
+            with st.expander(f"Détails · {page.domain.capitalize()}", expanded=False):
+                st.markdown(f"**Résumé :** {page.summary or '—'}")
+                if suggestion.matched_keywords:
+                    keywords = ", ".join(suggestion.matched_keywords)
+                    st.caption(f"Correspondances : {keywords}")
 
 
 def _render_manual_selection(previews_by_domain: Dict[str, List[NotionPagePreview]]) -> None:
@@ -185,30 +188,32 @@ def _render_manual_selection(previews_by_domain: Dict[str, List[NotionPagePrevie
 
             filtered = [page for page in pages if _match(page, search)]
 
-            for page in filtered[:80]:
-                checked = page.id in st.session_state.context_selection["selected_ids"]
-                checkbox_key = f"manual_{domain}_{page.id}"
-                checkbox = st.checkbox(
-                    f"{page.title} · ~3000 tokens",
-                    value=checked,
-                    key=checkbox_key,
-                    help=page.summary or "Sans aperçu",
-                )
-                # Record mapping for force-commit later
-                try:
-                    st.session_state._context_checkbox_index[checkbox_key] = {
-                        "id": page.id,
-                        "title": page.title,
-                        "domain": page.domain,
-                        "summary": page.summary,
-                        # Fixed coarse estimate per fiche
-                        "token_estimate": 3000,
-                        "last_edited": page.last_edited,
-                        "tags": getattr(page, "tags", []) or [],
-                    }
-                except Exception:
-                    pass
-                _toggle_selection(page, checkbox)
+            cols = st.columns(4)
+            for idx, page in enumerate(filtered[:80]):
+                with cols[idx % 4]:
+                    checked = page.id in st.session_state.context_selection["selected_ids"]
+                    checkbox_key = f"manual_{domain}_{page.id}"
+                    checkbox = st.checkbox(
+                        f"{page.title}",
+                        value=checked,
+                        key=checkbox_key,
+                        help=page.summary or "Sans aperçu",
+                    )
+                    # Record mapping for force-commit later
+                    try:
+                        st.session_state._context_checkbox_index[checkbox_key] = {
+                            "id": page.id,
+                            "title": page.title,
+                            "domain": page.domain,
+                            "summary": page.summary,
+                            # Retirer l'estimation de tokens des fiches
+                            "token_estimate": 0,
+                            "last_edited": page.last_edited,
+                            "tags": getattr(page, "tags", []) or [],
+                        }
+                    except Exception:
+                        pass
+                    _toggle_selection(page, checkbox)
 
 
 def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
@@ -244,20 +249,20 @@ def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
                     summary=preview.get("summary", ""),
                     tags=preview.get("tags", []) or [],
                     last_edited=preview.get("last_edited"),
-                    token_estimate=int(preview.get("token_estimate", 3000) or 3000),
+                    token_estimate=0,
                 )
                 previews_cache[page_id] = preview
             except Exception:
                 # Skip malformed entries silently to avoid breaking UI
                 continue
         ordered_previews.append(preview)
-        # Fixed coarse estimate per fiche
-        total_tokens += 3000
+        # Estimation supprimée (fixe et non nécessaire)
+        total_tokens += 0
 
     for preview in ordered_previews:
         col_label, col_remove = st.columns([6, 1])
         with col_label:
-            st.markdown(f"**{preview.title}** · {preview.domain.capitalize()} · ~3000 tokens")
+            st.markdown(f"**{preview.title}** · {preview.domain.capitalize()}")
             if preview.summary:
                 st.caption(preview.summary)
         with col_remove:
@@ -265,9 +270,7 @@ def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
                 _toggle_selection(preview, False)
                 st.experimental_rerun()
 
-    st.metric("Total estimé", f"~{total_tokens} tokens")
-    if total_tokens > 50000:
-        st.warning("⚠️ Contexte volumineux : envisager de réduire en dessous de 50 000 tokens.")
+    # Estimation totale retirée, non pertinente dans ce flux
 
     return {
         "selected_ids": selected_ids,

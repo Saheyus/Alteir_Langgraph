@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import random
+import html as _html
 import re
 
 import streamlit as st
@@ -22,8 +23,10 @@ from .layout import get_domain_header
 from .cache import load_ui_prefs, save_ui_prefs
 from .brief_builder_logic import compose_brief_text, roll_tags, swap_tag
 from config.tags_registry import TAGS_REGISTRY
-from app.components.brief_builder import render_brief_builder
 from config.brief_templates import BRIEF_TEMPLATES
+from config.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 def _random_different(options, current):
@@ -31,6 +34,11 @@ def _random_different(options, current):
         return options[0] if options else current
     available = [opt for opt in options if opt != current]
     return random.choice(available)
+
+
+def _humanize_category(raw_name: str) -> str:
+    """Turn registry/template category identifiers into human-readable labels."""
+    return raw_name.replace("_", " ").strip().title()
 
 
 def _ensure_session_defaults(domain: str, model_info: dict) -> None:
@@ -93,6 +101,15 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     """Render the creation tab for the given domain and model."""
 
     st.header(get_domain_header(domain))
+    try:
+        logger.info(
+            "[creation] render_creation_tab domain=%s model=%s brief_mode=%s",
+            domain,
+            selected_model,
+            st.session_state.get("brief_mode"),
+        )
+    except Exception:
+        pass
 
     brief_examples = BRIEF_EXAMPLES[domain]
 
@@ -103,9 +120,9 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     if "brief_mode" not in st.session_state:
         st.session_state.brief_mode = "free"  # free | random_simple | random_complex
     if "random_simple_state" not in st.session_state:
-        st.session_state.random_simple_state = {"seed": 0, "locked": {}, "selections": {}}
+        st.session_state.random_simple_state = {"seed": 0, "render_nonce": 0, "locked": {}, "selections": {}}
     if "random_complex_state" not in st.session_state:
-        st.session_state.random_complex_state = {"seed": 0, "locked": {}, "selections": {}}
+        st.session_state.random_complex_state = {"seed": 0, "render_nonce": 0, "locked": {}, "selections": {}}
 
     brief_placeholder = BRIEF_PLACEHOLDERS[domain]
 
@@ -138,71 +155,159 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         # Initialize selections on first render
         if not state["selections"]:
             state["selections"] = roll_tags(domain, mode_name, seed=state["seed"], locked=state["locked"], user_overrides={})
-
-        colA, colB = st.columns(2)
-        with colA:
-            if st.button("Regénérer", key=f"regen_{mode_key}"):
-                state["seed"] += 1
-                # Reroll everything (ignores locks)
-                state["selections"] = roll_tags(
-                    domain,
+            try:
+                logger.info(
+                    "[creation] init selections mode_key=%s mode=%s seed=%s locked=%s selections=%s",
+                    mode_key,
                     mode_name,
-                    seed=state["seed"],
-                    locked={},
-                    user_overrides={},
+                    state["seed"],
+                    dict(state["locked"]),
+                    dict(state["selections"]),
                 )
-        with colB:
-            if st.button("Regénérer (non verrouillés)", key=f"regen_unlocked_{mode_key}"):
-                state["seed"] += 1
-                # Only keep locked values as overrides
-                locked_overrides = {k: v for k, v in state["selections"].items() if state["locked"].get(k)}
-                state["selections"] = roll_tags(
-                    domain,
-                    mode_name,
-                    seed=state["seed"],
-                    locked=state["locked"],
-                    user_overrides=locked_overrides,
-                )
+            except Exception:
+                pass
 
-        # Inline prompt builder with dropdowns per tag
+        # Deux zones: contrôles à gauche, aperçu à droite
         template = BRIEF_TEMPLATES.get(domain, {}).get(mode_name, "")
-        if template:
-            options_by_category = {k: v for k, v in TAGS_REGISTRY.get(domain, {}).items()}
-            # Render HTML/CSS component for perfect inline flow
-            updated = render_brief_builder(template, options_by_category, state["selections"])
-            if isinstance(updated, dict) and updated:
-                # Merge delta only (component now emits single-key updates)
-                changed_keys = []
-                for k, v in updated.items():
-                    if state["selections"].get(k) != v:
-                        state["selections"][k] = v
-                        changed_keys.append(k)
-                st.session_state[f"_bb_ok_{mode_key}"] = True
-            else:
-                st.session_state[f"_bb_ok_{mode_key}"] = st.session_state.get(f"_bb_ok_{mode_key}", False)
+        options_by_category = {k: v for k, v in TAGS_REGISTRY.get(domain, {}).items()}
 
-            # Fallback inline builder if component not ready
-            if not st.session_state.get(f"_bb_ok_{mode_key}"):
-                import re as _re
-                tokens = _re.split(r"(\[[A-ZÉÈÀÂÙÏÇ_ ]+\])", template)
-                weights = []
-                for tok in tokens:
-                    if _re.fullmatch(r"\[[A-ZÉÈÀÂÙÏÇ_ ]+\]", tok or ""):
-                        weights.append(6)
-                    else:
-                        w = max(1, int(len(tok) / 12))
-                        weights.append(w)
-                cols = st.columns(weights) if tokens else [st]
-                for i, tok in enumerate(tokens):
-                    with cols[i]:
-                        if _re.fullmatch(r"\[[A-ZÉÈÀÂÙÏÇ_ ]+\]", tok or ""):
-                            cat = tok.strip("[]")
-                            opts = options_by_category.get(cat, [])
-                            cur = state["selections"].get(cat, opts[0] if opts else "")
-                            sel = st.selectbox("", opts or [""], index=(opts.index(cur) if cur in opts else 0), label_visibility="collapsed", key=f"fallback_{mode_key}_{cat}")
+        col_left, col_right = st.columns([2, 1])
+
+        with col_left:
+            st.subheader("Paramètres du prompt")
+            cats = []
+            for m in re.findall(r"\[([A-ZÉÈÀÂÙÏÇ_ ]+)\]", template):
+                if m not in cats:
+                    cats.append(m)
+            try:
+                logger.debug(
+                    "[creation] categories mode_key=%s: %s",
+                    mode_key,
+                    ", ".join(cats),
+                )
+            except Exception:
+                pass
+
+            # Afficher deux étiquettes par rangée avec largeur réduite
+            for i in range(0, len(cats), 2):
+                cat_cols = st.columns(2)
+                pair = [cats[i], cats[i + 1] if i + 1 < len(cats) else None]
+                for col_idx, cat in enumerate(pair):
+                    if not cat:
+                        continue
+                    with cat_cols[col_idx]:
+                        opts = options_by_category.get(cat, [])
+                        cur = state["selections"].get(cat, opts[0] if opts else "")
+                        # Afficher le titre de la catégorie
+                        label = _humanize_category(cat)
+                        # Tout sur une seule ligne: Label : Selectbox [Checkbox] 🔒
+                        row_label, row_sel, row_lock = st.columns([1, 3, 0.6])
+                        with row_label:
+                            st.markdown(f'<div style="margin-right: 4px;"><strong>{label} :</strong></div>', unsafe_allow_html=True)
+                        with row_sel:
+                            sel = st.selectbox(
+                                label,
+                                opts or [""],
+                                index=(opts.index(cur) if cur in opts else 0) if opts else 0,
+                                key=f"{mode_key}_{cat}_select_{state.get('render_nonce', 0)}",
+                                label_visibility="collapsed",
+                            )
                             state["selections"][cat] = sel
-                        else:
-                            st.markdown(f"<div style='padding-top:26px; white-space:nowrap'>{tok}</div>", unsafe_allow_html=True)
+                        with row_lock:
+                            locked = bool(state["locked"].get(cat))
+                            col_checkbox, col_lock_icon = st.columns([1, 1])
+                            with col_checkbox:
+                                new_locked = st.checkbox(
+                                    "lock",
+                                    value=locked,
+                                    key=f"{mode_key}_{cat}_lock",
+                                    label_visibility="collapsed",
+                                )
+                                state["locked"][cat] = new_locked
+                            with col_lock_icon:
+                                if new_locked:
+                                    st.markdown('<span style="color: #FFD700; font-size: 1.2em; margin-right: 15px;">🔒</span>', unsafe_allow_html=True)
+                                else:
+                                    st.markdown('<span style="color: #666; font-size: 1.2em; margin-right: 15px;">🔓</span>', unsafe_allow_html=True)
+
+        with col_right:
+            st.subheader("Aperçu")
+            brief_text = compose_brief_text(domain, mode_name, state["selections"])
+            # Cadre esthétique autour de l'aperçu avec texte à l'intérieur
+            _escaped = _html.escape(brief_text).replace("\n", "<br>")
+            st.markdown(
+                f"""
+                <div style=\"border:1px solid rgba(120,120,120,0.35); border-radius:10px; padding:16px; background: rgba(0,0,0,0.03);\">{_escaped}</div>
+                """,
+                unsafe_allow_html=True,
+            )
+            # Petit espace entre l'aperçu et le bouton Regénérer
+            st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+            
+            # Bouton Regénérer sous l'aperçu
+            if st.button("🎲 Regénérer", key=f"regen_{mode_key}", use_container_width=True):
+                # Increment seed
+                before_seed = st.session_state[mode_key]["seed"]
+                st.session_state[mode_key]["seed"] += 1
+                st.session_state[mode_key]["render_nonce"] = int(st.session_state[mode_key].get("render_nonce", 0)) + 1
+                new_seed = st.session_state[mode_key]["seed"]
+                before_sel = dict(st.session_state[mode_key]["selections"])  # shallow copy
+                before_locked = dict(st.session_state[mode_key]["locked"])  # shallow copy
+                
+                # Get template and needed categories
+                template = BRIEF_TEMPLATES.get(domain, {}).get(mode_name, "")
+                needed = []
+                for m in re.findall(r"\[([A-ZÉÈÀÂÙÏÇ_ ]+)\]", template):
+                    if m not in needed:
+                        needed.append(m)
+                
+                # Generate new random selections respecting locks
+                rng = random.Random(new_seed)
+                changed = {}
+                for cat in needed:
+                    if st.session_state[mode_key]["locked"].get(cat):
+                        # Keep locked value - don't change it
+                        continue
+                    else:
+                        # Pick a different value from current to avoid repeating
+                        opts = TAGS_REGISTRY.get(domain, {}).get(cat, [])
+                        current = st.session_state[mode_key]["selections"].get(cat)
+                        if len(opts) > 1:
+                            available = [opt for opt in opts if opt != current]
+                            new_val = rng.choice(available) if available else rng.choice(opts)
+                            st.session_state[mode_key]["selections"][cat] = new_val
+                            # Sync widget state so UI reflects the new value
+                            st.session_state[f"{mode_key}_{cat}_select"] = new_val
+                            if new_val != current:
+                                changed[cat] = (current, new_val)
+                        elif opts:
+                            new_val = rng.choice(opts)
+                            st.session_state[mode_key]["selections"][cat] = new_val
+                            st.session_state[f"{mode_key}_{cat}_select"] = new_val
+                            if new_val != current:
+                                changed[cat] = (current, new_val)
+                
+                # Force Streamlit to rerun to show new values
+                # Try modern st.rerun() first, fallback to experimental if needed
+                try:
+                    logger.info(
+                        "[creation] regenerate clicked mode_key=%s seed %s->%s nonce=%s changed=%s locked=%s",
+                        mode_key,
+                        before_seed,
+                        new_seed,
+                        st.session_state[mode_key]["render_nonce"],
+                        {k: f"{v[0]}→{v[1]}" for k, v in changed.items()},
+                        {k: v for k, v in before_locked.items() if v},
+                    )
+                    st.rerun()
+                except AttributeError:
+                    try:
+                        logger.warning("[creation] st.rerun() missing, falling back to experimental_rerun()")
+                        st.experimental_rerun()
+                    except AttributeError:
+                        # Fallback: set a flag to trigger rerun on next render
+                        logger.error("[creation] No rerun method available; setting _force_rerun flag")
+                        st.session_state._force_rerun = True
 
         # Expose selections and locks for tests/debug
         if mode_name == "simple":
@@ -212,8 +317,6 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             st.session_state._random_complex_selections = dict(state["selections"])  # shallow copy
             st.session_state._random_complex_locked = dict(state["locked"])  # shallow copy
 
-        brief_text = compose_brief_text(domain, mode_name, state["selections"])  # compact display for now
-        # Retirer l'aperçu lecture seule
         return brief_text
 
     tabs = st.tabs(["Écriture libre", "Aléatoire", "Aléatoire complexe"])
@@ -501,28 +604,15 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         st.write("")
         max_tokens = st.slider(
             "Max tokens (sortie)",
-            min_value=1000,
-            max_value=30000,
+            min_value=50000,
+            max_value=300000,
             value=st.session_state.max_tokens,
-            step=1000,
-            help="Limite de tokens pour la réponse (1000-30000). ⚠️ GPT-5 utilise des tokens pour le reasoning !",
+            step=10000,
+            help="Limite de tokens pour la réponse (50000-300000). ⚠️ GPT-5 utilise des tokens pour le reasoning !",
             key=f"max_tokens_slider_{st.session_state.random_seed}",
         )
 
-        config_lines = [f"- Intent: `{intent}`"]
-        if domain == "Lieux":
-            config_lines.extend([f"- Échelle: `{level}`", f"- Atmosphère: `{atmosphere}`"])
-        else:
-            config_lines.extend([f"- Niveau: `{level}`", f"- Dialogue: `{dialogue_mode}`"])
-
-        if provider == "OpenAI" and uses_reasoning:
-            config_lines.append(f"- Reasoning: `{reasoning_effort}`")
-            config_lines.append(f"- Verbosity: `{verbosity}`")
-        else:
-            config_lines.append(f"- Température: `{creativity}`")
-
-        config_lines.append(f"- Max tokens: `{max_tokens}`")
-        st.info("**Configuration:**\n" + "\n".join(config_lines))
+        # Encadré de configuration retiré (doublon avec la barre latérale)
 
     st.session_state.intent = intent
     st.session_state.level = level

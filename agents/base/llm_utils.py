@@ -192,20 +192,46 @@ Ne pas ajouter de texte avant ou après le JSON."""
                     # Responses API may provide list of parts; collect text and reasoning
                     for part in content:
                         if isinstance(part, dict):
-                            part_type = part.get("type") or part.get("role")
-                            # Prefer text, but some providers include content instead
-                            maybe_text = part.get("text") if isinstance(part.get("text"), str) else None
-                            if maybe_text is None and isinstance(part.get("content"), str):
+                            # Normalize part type; Responses API may use dotted types like "output_text.delta"
+                            part_type_raw = part.get("type") or part.get("role")
+                            base_type = None
+                            if isinstance(part_type_raw, str):
+                                base_type = part_type_raw.split(".")[0]
+                            # Prefer explicit text field; some providers use "content"
+                            maybe_text = None
+                            txt = part.get("text")
+                            if isinstance(txt, str):
+                                maybe_text = txt
+                            elif isinstance(part.get("content"), str):
                                 maybe_text = part.get("content")
 
-                            if maybe_text:
-                                if part_type in ("output_text", "message", "text", None):
+                            if maybe_text is not None:
+                                # Route reasoning separately; if not requested, ignore reasoning parts entirely
+                                if base_type in ("reasoning", "thought", "chain_of_thought"):
+                                    if include_reasoning:
+                                        reasoning_delta += maybe_text
+                                    # else: ignore reasoning chunk to avoid polluting output text
+                                else:
                                     delta_text += maybe_text
-                                elif include_reasoning and part_type in ("reasoning", "thought", "chain_of_thought"):
-                                    reasoning_delta += maybe_text
-                            elif include_reasoning and part_type in ("reasoning", "thought"):
-                                # Unknown structure: stringify as last resort
-                                reasoning_delta += str(part)
+                            else:
+                                # If no direct text fields, last-resort stringify known shapes
+                                if base_type in ("reasoning", "thought", "chain_of_thought"):
+                                    if include_reasoning:
+                                        reasoning_delta += str(part)
+                                    # else ignore
+                                else:
+                                    # Avoid stalling: try to recover any displayable text
+                                    # Common nested shapes: {type: ..., "output_text": {"content": "..."}}
+                                    nested = part.get("output_text") or part.get("message") or part.get("delta")
+                                    nested_text = None
+                                    if isinstance(nested, dict):
+                                        ct = nested.get("content") or nested.get("text")
+                                        if isinstance(ct, str):
+                                            nested_text = ct
+                                    if isinstance(nested_text, str):
+                                        delta_text += nested_text
+                                    else:
+                                        delta_text += str(part)
                         else:
                             # Unknown object; stringify
                             delta_text += str(part)
@@ -215,7 +241,12 @@ Ne pas ajouter de texte avant ou après le JSON."""
                     delta_text = text
                 
                 if include_reasoning and reasoning_delta:
-                    yield {"text": delta_text, "reasoning": reasoning_delta}
+                    # Prefer emitting both fields when available; avoid empty text dicts
+                    if delta_text:
+                        yield {"text": delta_text, "reasoning": reasoning_delta}
+                    else:
+                        # If only reasoning arrives, still yield a dict, but keep text empty to not break consumers
+                        yield {"text": "", "reasoning": reasoning_delta}
                 else:
                     # Yield plain string for simplicity and backwards-compatibility
                     if delta_text:

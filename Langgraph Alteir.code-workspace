@@ -1,6 +1,6 @@
 {
   "folders": [
-    { "path": "F:\\Projets\\Langgraph Alteir" }
+    { "path": "F:\\Projets\\LanggraphAlteir" }
   ],
   "settings": {
     "terminal.integrated.cwd": "${workspaceFolder}",

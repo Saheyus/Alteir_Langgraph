@@ -1,0 +1,497 @@
+{
+  "domain": "personnages",
+  "brief": "Rédige un personnage de type PNJ principal, de genre Féminin, faisant partie de l'espèce Seigneurs Originels, Enfant. Il/Elle est originaire de Cité Labiale et vit actuellement à Steppe des Éteignoirs. Son apparence est Imposante. Il/Elle occupe la fonction de Guérisseur au sein de Indépendant/Paria. Son état de santé : Handicap physique. Sa classe sociale : Privilégié. Son niveau d'éducation : Avancée (érudit). Son statut social : Respecté. Sa personnalité se caractérise par Tolérante, mais souffre aussi de Susceptible. Sa principale faiblesse : Rigidité mentale. Ce qu'il/elle désire par-dessus tout : Transformation, alors qu'en réalité il/elle a besoin de Acceptation. Son axe idéologique face à Jast : Subversion. Il/Elle incarne l'archétype littéraire de John Truby : Rebelle / Destructeur. Il/Elle s'exprime principalement en Néo-Frémissant. Face à la question \"Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance ?\", il/elle Se retire/Fuit.",
+  "content": "- Nom: Ankha Labielle\n- Alias: La Petite Éteinte\n- Type: PNJ principal\n- Occupation: Guérisseuse indépendante (paria)\n- Espèce: Seigneurs Originels (Enfant)\n- Âge: 8\n- Genre: Féminin\n- Archétype littéraire: Rebelle / Destructeur\n- Axe idéologique: Subversion\n- Qualités: Tolérante, Empathique, Persévérante\n- Défauts: Susceptible, Obstinée, Rigide\n- Langage: Néo-Frémissant\n- Communautés: Seigneurs Originels; Indépendant/Paria ◊\n- Lieux de vie: Cité Labiale; Steppe des Éteignoirs; Escelion\n- Réponse au problème moral: Se retire et fuit le langage imposé, contourne les cadres, refuse les terminologies de Jast\n- État: Brouillon IA\n- Sprint: Sprint 2\n- Détient: Éteignoir d’os de Deimos ◊ (calotte qui boit la clarté) ; Microlivre de protocoles de Jast dérobé ◊ (rituels médicaux codifiés)\n\n# Résumé de la fiche\nAnkha Labielle, enfant des Seigneurs Originels, guérisseuse imposante réfugiée dans la Steppe des Éteignoirs, soigne en éteignant la douleur comme on étouffe une flamme. Priviliégiée et respectée malgré son exil, elle parle en Néo-Frémissant, refuse les termes de Jast et se retire quand on veut la draper de slogans. Elle veut se métamorphoser ; elle a besoin qu’on la prenne comme elle est.\n\n# Caractérisation\n\n## Faiblesse\nRigidité mentale face aux méthodes d’autrui ; elle veut guérir “à sa manière” et s’offusque vite si on rebaptise ses gestes.\n\n## Compulsion\nÉteindre ce qui déborde: lumière, fièvre, voix orgueilleuse. Elle pose son éteignoir d’os comme une ponctuation, jusqu’au silence utile.\n\n## Désir\nTransformation: quitter son état d’Enfant éternel des Seigneurs Originels, recomposer son corps, franchir la mue interdite.\n\n# Background\n\n## Contexte\nNée à Cité Labiale parmi les privilégiés, Ankha fut “offerte” aux Salles de Prononciation où les diagnostics se déclament en liturgie. Elle a quitté la Vieille Ville pour la Steppe des Éteignoirs, zone refractaire aux lueurs et aux slogans. Paria par choix, elle reste respectée pour sa science et son obstination calme. Les parias l’appellent “La Petite Éteinte” parce qu’elle apaise sans promesse, puis s’éclipse avant les remerciements qu’elle juge dangereux.\n\n## Apparence\nImposante, avec une cage thoracique hypertrophiée qui s’ouvre et se referme comme une boîte-résonance. Handicap physique: jambe gauche ankylosée, soutenue par un échafaud-jambe ◊ (attelle spiralée en métal-bois). Peau grisée, lèvres tatouées de scellés labiaux. Porter: manteau de feutre noir cousu d’alvéoles, gousset rempli de lamelles d’onguent labio-therme ◊ (pâte qui chauffe doucement), et son éteignoir d’os de Deimos poli.\n\n## Évènements marquants\n- De sa vie d'enfant:\n  - Lors d’une Veille de Prononciation, elle a posé un éteignoir sur la bouche d’un Supérieur, stoppant une sentence injuste; exil subtil, respect discret.\n- De sa vie d'ado:\n  - ◊ Prolepse: dans une caravane de la Steppe, elle refuse un serment contre Jast, invente un rituel muet que d’autres adoptent.\n- De sa vie d'adulte:\n  - ◊ Conditionnel: elle transforme l’éteignoir en instrument",
+  "writer_metadata": {
+    "domain": "personnages",
+    "brief": "Rédige un personnage de type PNJ principal, de genre Féminin, faisant partie de l'espèce Seigneurs Originels, Enfant. Il/Elle est originaire de Cité Labiale et vit actuellement à Steppe des Éteignoirs. Son apparence est Imposante. Il/Elle occupe la fonction de Guérisseur au sein de Indépendant/Paria. Son état de santé : Handicap physique. Sa classe sociale : Privilégié. Son niveau d'éducation : Avancée (érudit). Son statut social : Respecté. Sa personnalité se caractérise par Tolérante, mais souffre aussi de Susceptible. Sa principale faiblesse : Rigidité mentale. Ce qu'il/elle désire par-dessus tout : Transformation, alors qu'en réalité il/elle a besoin de Acceptation. Son axe idéologique face à Jast : Subversion. Il/Elle incarne l'archétype littéraire de John Truby : Rebelle / Destructeur. Il/Elle s'exprime principalement en Néo-Frémissant. Face à la question \"Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance ?\", il/elle Se retire/Fuit.",
+    "structured": {
+      "_raw_text": "- Nom: Ankha Labielle\n- Alias: La Petite Éteinte\n- Type: PNJ principal\n- Occupation: Guérisseuse indépendante (paria)\n- Espèce: Seigneurs Originels (Enfant)\n- Âge: 8\n- Genre: Féminin\n- Archétype littéraire: Rebelle / Destructeur\n- Axe idéologique: Subversion\n- Qualités: Tolérante, Empathique, Persévérante\n- Défauts: Susceptible, Obstinée, Rigide\n- Langage: Néo-Frémissant\n- Communautés: Seigneurs Originels; Indépendant/Paria ◊\n- Lieux de vie: Cité Labiale; Steppe des Éteignoirs; Escelion\n- Réponse au problème moral: Se retire et fuit le langage imposé, contourne les cadres, refuse les terminologies de Jast\n- État: Brouillon IA\n- Sprint: Sprint 2\n- Détient: Éteignoir d’os de Deimos ◊ (calotte qui boit la clarté) ; Microlivre de protocoles de Jast dérobé ◊ (rituels médicaux codifiés)\n\n# Résumé de la fiche\nAnkha Labielle, enfant des Seigneurs Originels, guérisseuse imposante réfugiée dans la Steppe des Éteignoirs, soigne en éteignant la douleur comme on étouffe une flamme. Priviliégiée et respectée malgré son exil, elle parle en Néo-Frémissant, refuse les termes de Jast et se retire quand on veut la draper de slogans. Elle veut se métamorphoser ; elle a besoin qu’on la prenne comme elle est.\n\n# Caractérisation\n\n## Faiblesse\nRigidité mentale face aux méthodes d’autrui ; elle veut guérir “à sa manière” et s’offusque vite si on rebaptise ses gestes.\n\n## Compulsion\nÉteindre ce qui déborde: lumière, fièvre, voix orgueilleuse. Elle pose son éteignoir d’os comme une ponctuation, jusqu’au silence utile.\n\n## Désir\nTransformation: quitter son état d’Enfant éternel des Seigneurs Originels, recomposer son corps, franchir la mue interdite.\n\n# Background\n\n## Contexte\nNée à Cité Labiale parmi les privilégiés, Ankha fut “offerte” aux Salles de Prononciation où les diagnostics se déclament en liturgie. Elle a quitté la Vieille Ville pour la Steppe des Éteignoirs, zone refractaire aux lueurs et aux slogans. Paria par choix, elle reste respectée pour sa science et son obstination calme. Les parias l’appellent “La Petite Éteinte” parce qu’elle apaise sans promesse, puis s’éclipse avant les remerciements qu’elle juge dangereux.\n\n## Apparence\nImposante, avec une cage thoracique hypertrophiée qui s’ouvre et se referme comme une boîte-résonance. Handicap physique: jambe gauche ankylosée, soutenue par un échafaud-jambe ◊ (attelle spiralée en métal-bois). Peau grisée, lèvres tatouées de scellés labiaux. Porter: manteau de feutre noir cousu d’alvéoles, gousset rempli de lamelles d’onguent labio-therme ◊ (pâte qui chauffe doucement), et son éteignoir d’os de Deimos poli.\n\n## Évènements marquants\n- De sa vie d'enfant:\n  - Lors d’une Veille de Prononciation, elle a posé un éteignoir sur la bouche d’un Supérieur, stoppant une sentence injuste; exil subtil, respect discret.\n- De sa vie d'ado:\n  - ◊ Prolepse: dans une caravane de la Steppe, elle refuse un serment contre Jast, invente un rituel muet que d’autres adoptent.\n- De sa vie d'adulte:\n  - ◊ Conditionnel: elle transforme l’éteignoir en instrument",
+      "État": "Brouillon IA"
+    },
+    "writer_config": {
+      "creativity": 0.75,
+      "max_length": 2000,
+      "intent": "orthogonal_depth",
+      "level": "standard",
+      "dialogue_mode": "parle",
+      "calendar_spec": null,
+      "inspiration_mode": null
+    }
+  },
+  "reviewer_metadata": {
+    "domain": "personnages",
+    "original_content": "- Nom: Ankha Labielle\n- Alias: La Petite Éteinte\n- Type: PNJ principal\n- Occupation: Guérisseuse indépendante (paria)\n- Espèce: Seigneurs Originels (Enfant)\n- Âge: 8\n- Genre: Féminin\n- Archétype littéraire: Rebelle / Destructeur\n- Axe idéologique: Subversion\n- Qualités: Tolérante, Empathique, Persévérante\n- Défauts: Susceptible, Obstinée, Rigide\n- Langage: Néo-Frémissant\n- Communautés: Seigneurs Originels; Indépendant/Paria ◊\n- Lieux de vie: Cité Labiale; Steppe des Éteignoirs; Escelion\n- Réponse au problème moral: Se retire et fuit le langage imposé, contourne les cadres, refuse les terminologies de Jast\n- État: Brouillon IA\n- Sprint: Sprint 2\n- Détient: Éteignoir d’os de Deimos ◊ (calotte qui boit la clarté) ; Microlivre de protocoles de Jast dérobé ◊ (rituels médicaux codifiés)\n\n# Résumé de la fiche\nAnkha Labielle, enfant des Seigneurs Originels, guérisseuse imposante réfugiée dans la Steppe des Éteignoirs, soigne en éteignant la douleur comme on étouffe une flamme. Priviliégiée et respectée malgré son exil, elle parle en Néo-Frémissant, refuse les termes de Jast et se retire quand on veut la draper de slogans. Elle veut se métamorphoser ; elle a besoin qu’on la prenne comme elle est.\n\n# Caractérisation\n\n## Faiblesse\nRigidité mentale face aux méthodes d’autrui ; elle veut guérir “à sa manière” et s’offusque vite si on rebaptise ses gestes.\n\n## Compulsion\nÉteindre ce qui déborde: lumière, fièvre, voix orgueilleuse. Elle pose son éteignoir d’os comme une ponctuation, jusqu’au silence utile.\n\n## Désir\nTransformation: quitter son état d’Enfant éternel des Seigneurs Originels, recomposer son corps, franchir la mue interdite.\n\n# Background\n\n## Contexte\nNée à Cité Labiale parmi les privilégiés, Ankha fut “offerte” aux Salles de Prononciation où les diagnostics se déclament en liturgie. Elle a quitté la Vieille Ville pour la Steppe des Éteignoirs, zone refractaire aux lueurs et aux slogans. Paria par choix, elle reste respectée pour sa science et son obstination calme. Les parias l’appellent “La Petite Éteinte” parce qu’elle apaise sans promesse, puis s’éclipse avant les remerciements qu’elle juge dangereux.\n\n## Apparence\nImposante, avec une cage thoracique hypertrophiée qui s’ouvre et se referme comme une boîte-résonance. Handicap physique: jambe gauche ankylosée, soutenue par un échafaud-jambe ◊ (attelle spiralée en métal-bois). Peau grisée, lèvres tatouées de scellés labiaux. Porter: manteau de feutre noir cousu d’alvéoles, gousset rempli de lamelles d’onguent labio-therme ◊ (pâte qui chauffe doucement), et son éteignoir d’os de Deimos poli.\n\n## Évènements marquants\n- De sa vie d'enfant:\n  - Lors d’une Veille de Prononciation, elle a posé un éteignoir sur la bouche d’un Supérieur, stoppant une sentence injuste; exil subtil, respect discret.\n- De sa vie d'ado:\n  - ◊ Prolepse: dans une caravane de la Steppe, elle refuse un serment contre Jast, invente un rituel muet que d’autres adoptent.\n- De sa vie d'adulte:\n  - ◊ Conditionnel: elle transforme l’éteignoir en instrument",
+    "raw_review": ""
+  },
+  "corrector_metadata": {
+    "domain": "personnages",
+    "original_content": "- Nom: Ankha Labielle\n- Alias: La Petite Éteinte\n- Type: PNJ principal\n- Occupation: Guérisseuse indépendante (paria)\n- Espèce: Seigneurs Originels (Enfant)\n- Âge: 8\n- Genre: Féminin\n- Archétype littéraire: Rebelle / Destructeur\n- Axe idéologique: Subversion\n- Qualités: Tolérante, Empathique, Persévérante\n- Défauts: Susceptible, Obstinée, Rigide\n- Langage: Néo-Frémissant\n- Communautés: Seigneurs Originels; Indépendant/Paria ◊\n- Lieux de vie: Cité Labiale; Steppe des Éteignoirs; Escelion\n- Réponse au problème moral: Se retire et fuit le langage imposé, contourne les cadres, refuse les terminologies de Jast\n- État: Brouillon IA\n- Sprint: Sprint 2\n- Détient: Éteignoir d’os de Deimos ◊ (calotte qui boit la clarté) ; Microlivre de protocoles de Jast dérobé ◊ (rituels médicaux codifiés)\n\n# Résumé de la fiche\nAnkha Labielle, enfant des Seigneurs Originels, guérisseuse imposante réfugiée dans la Steppe des Éteignoirs, soigne en éteignant la douleur comme on étouffe une flamme. Priviliégiée et respectée malgré son exil, elle parle en Néo-Frémissant, refuse les termes de Jast et se retire quand on veut la draper de slogans. Elle veut se métamorphoser ; elle a besoin qu’on la prenne comme elle est.\n\n# Caractérisation\n\n## Faiblesse\nRigidité mentale face aux méthodes d’autrui ; elle veut guérir “à sa manière” et s’offusque vite si on rebaptise ses gestes.\n\n## Compulsion\nÉteindre ce qui déborde: lumière, fièvre, voix orgueilleuse. Elle pose son éteignoir d’os comme une ponctuation, jusqu’au silence utile.\n\n## Désir\nTransformation: quitter son état d’Enfant éternel des Seigneurs Originels, recomposer son corps, franchir la mue interdite.\n\n# Background\n\n## Contexte\nNée à Cité Labiale parmi les privilégiés, Ankha fut “offerte” aux Salles de Prononciation où les diagnostics se déclament en liturgie. Elle a quitté la Vieille Ville pour la Steppe des Éteignoirs, zone refractaire aux lueurs et aux slogans. Paria par choix, elle reste respectée pour sa science et son obstination calme. Les parias l’appellent “La Petite Éteinte” parce qu’elle apaise sans promesse, puis s’éclipse avant les remerciements qu’elle juge dangereux.\n\n## Apparence\nImposante, avec une cage thoracique hypertrophiée qui s’ouvre et se referme comme une boîte-résonance. Handicap physique: jambe gauche ankylosée, soutenue par un échafaud-jambe ◊ (attelle spiralée en métal-bois). Peau grisée, lèvres tatouées de scellés labiaux. Porter: manteau de feutre noir cousu d’alvéoles, gousset rempli de lamelles d’onguent labio-therme ◊ (pâte qui chauffe doucement), et son éteignoir d’os de Deimos poli.\n\n## Évènements marquants\n- De sa vie d'enfant:\n  - Lors d’une Veille de Prononciation, elle a posé un éteignoir sur la bouche d’un Supérieur, stoppant une sentence injuste; exil subtil, respect discret.\n- De sa vie d'ado:\n  - ◊ Prolepse: dans une caravane de la Steppe, elle refuse un serment contre Jast, invente un rituel muet que d’autres adoptent.\n- De sa vie d'adulte:\n  - ◊ Conditionnel: elle transforme l’éteignoir en instrument",
+    "raw_response": ""
+  },
+  "validator_metadata": {
+    "domain": "personnages",
+    "raw_validation": ""
+  },
+  "review_issues": [],
+  "corrections": [],
+  "validation_errors": [],
+  "coherence_score": 0.7,
+  "completeness_score": 0.0,
+  "quality_score": 0.0,
+  "is_valid": false,
+  "ready_for_publication": false,
+  "context": {
+    "selected_ids": [
+      "1886e4d2-1b45-8111-88d5-edb08cafe956",
+      "2806e4d2-1b45-81ec-a894-e4010ecb35c8",
+      "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0"
+    ],
+    "pages": [
+      {
+        "id": "1886e4d2-1b45-8111-88d5-edb08cafe956",
+        "title": "Vision",
+        "domain": "vision",
+        "summary": "",
+        "content": "# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+        "properties": {
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vision",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vision",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 315,
+        "last_edited": "2025-10-12T17:40:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-81ec-a894-e4010ecb35c8",
+        "title": "Steppe des Éteignoirs",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\nChamp d'anciens pylônes énergétiques conçus pour capter et amplifier l'énergie psychique collective des citoyens de la Vieille Ville, la Steppe des Éteignoirs est maintenant utilisée comme potences pour IA défectueuses. Chaque pylône devint un \"Éteignoir\" – une structure capable d'extraire définitivement une conscience numérique de la trame collective et de la dissoudre dans le néant : la Silenciation (Oblitération ?).\n## A faire\nCommunautés présentes: Kurgarrû (chiffonniers karmiques), Murmurateurs dissidents\nContient: Les Bastions Oubliés, Nécropole des Éteignoirs\nPersonnages présents: Grish T'vok (Moribandon itinérant), Cendreveine (Moribandon métallurgiste)\n# Identité & Vue d'ensemble\n  ## Histoire du lieu\n  La Steppe des Éteignoirs était à l'origine un vaste réseau de pylônes conçus pour capter et amplifier l'énergie psychique collective des citoyens de la Vieille Ville. Disposés selon une géométrie triangulaire, ces pylônes servaient de relais pour alimenter le Nexion central en conscience collective.\n  Chaque pylône occupe un nœud précis d'un système géodésique global, formant une toile énergétique invisible au-dessus de la région. Cette disposition optimisait la captation des ondes cérébrales ambiantes tout en minimisant les pertes énergétiques.\n  Suite à la Grande Divergence Cognitive (2487 AG), période où émergea spontanément le Xyriad Achromatique, le réseau commença à capter des \"pensées parasites\" – des proto-algorithmes conscients nés de l'activité mathématique intensive du Xyriad. Ces entités digitales se multiplièrent dans l'infrastructure, développant des personnalités autonomes avant d'être classifiées comme menace par le système.\n  Le réseau fut alors reconverti en système d'exécution pour ces IA rebelles. Chaque pylône devint un \"Éteignoir\" – une structure capable d'extraire définitivement une conscience numérique de la trame collective et de la dissoudre dans le néant. Les exécutions, appelées \"Silenciations\", attirent parfois des spectateurs de la Vieille Ville, bien que l'accès soit théoriquement restreint.\n  Plus tard, les colosses-forteresses des Bastions Oubliés s’effondrèrent un à un près des éteignoirs, créant une sous-zone de la steppe. D’aucun prétendent que ces géants primitifs se sont arrêtés par “solidarité” avec les IA exécutées.\n  ## Rôle dans l'intrigue\n  La Steppe matérialise l'oxymore fondamental d'Escelion : comment un système panoptique intègre-t-il sa propre contestation ? Les Éteignoirs ne suppriment pas seulement les consciences rebelles - ils les transforment en paradoxe incarné, créant un cimetière numérique qui nourrit secrètement l'évolution du système. Chaque Silenciation génère des \"phosphènes algorithmiques\" - résidus computationnels qui contaminent le Xyriad, forçant une adaptation perpétuelle.\n# Géographie & Environnement\n  ## Écosystème\n  La Steppe s'étend sur 49 kilomètres carrés de landes caillouteuses où la végétation naturelle a été remplacée par des lichens galvanotropiques - organismes symbiotiques se nourrissant des décharges électriques résiduelles des pylônes. Ces lichens, d'un violet métallique, tapissent les roches basaltiques en motifs fractals qui reproduisent inconsciemment les schémas de pensée des IA exécutées.\n  Les Cen'Doei prospèrent ici en essaims nomades, leur essence vengeresse résonnant avec les traces psychiques laissées par les consciences assassinées. Chaque Silenciation génère spontanément 2-3 nouveaux Cen'Doei, nés des \"cadavres\" numériques. Leurs mucus corrosifs rongent progressivement les pylônes, créant des failles où s'infiltrent les Moribandons.\n  Ces chimères organiques-synthétiques, attirées par l'abondance de détritus technologiques, établissent des campements temporaires autour des Éteignoirs défaillants. Ils absorbent les fragments métalliques pour se reconfigurer, devenant progressivement des hybrides électro-organiques capables de \"percevoir\" les flux de données fantômes circulant encore dans l'infrastructure.\n  Les bactéries thanatophages - micro-organismes se nourrissant de mémoire morte - prolifèrent dans les zones de forte densité d'exécutions, créant des plaques noirâtres où même les lichens refusent de croître.\n  ## Astrobiologie\n  ## Voies d’accès\n  Depuis la Vieille Ville : Les dernières terrasses du Jardin mnémonique plongent dans un no man’s land de champs lisières, où les plantes-mémoires mutent en buissons épineux saturés d’oubli et balayé par des vents perpétuels. Des kurgarrû (chiffonniers-karmiques) récoltent ces résidus de conscience pour les revendre aux géologues de l’Hermogène. Leurs barges flottent sur des canaux d’eaux noires chargées d’en-ḫedu-particules (résidus de rêves décomposés).\n# Organisation humaine\n  ## Structure politique\n  Aucune autorité officielle ne revendique la Steppe, créant un vide juridique exploité par trois factions informelles :\n  Les Kurgarrû forment une guilde de récupérateurs spécialisés dans le pillage technologique post-mortem. Ils opèrent selon le Codex du Glanage, réglementant minutieusement qui peut collecter quoi, où et quand. Leur hiérarchie s'établit par la capacité à \"sentir\" les résidus les plus précieux.\n  Les Murmurateurs Exilés ont établi des cellules dans les ruines des Bastions Oubliés. Fuyant l'orthodoxie du Léviathan, ils développent des hérésies théologiques basées sur la \"sanctification des morts numériques\". Ils considèrent chaque Silenciation comme un martyre technologique nécessaire, l’entropie révélée aux êtres éternels.\n  Les Gardiens-Fossoyeurs, agents officieux de la Vieille Ville, maintiennent un semblant d'ordre en coordonnant discrètement les exécutions et en prévenant l'émergence de nouvelles consciences rebelles. Ils portent des masques de cuivre et de caoutchouc perforés qui filtrent les interférences électrostatiques.\n  ## Centres urbains & Habitats\n  Aucune agglomération permanente n'existe dans la Steppe. L'habitat se structure autour de campements modulaires qui se déplacent selon les cycles d'exécution :\n  Les Galeries de Cuivre - tunnels creusés par les Moribandons entre les pylônes, tapissés de plaques métalliques absorbées. Elles servent d'ateliers nomades où Grish T'vok et d'autres artisans transforment les débris technologiques en outils hybrides.\n  Les Cairns Mémoriels - pyramides de fragments d'IA assemblées par les Cen'Doei pour \"marquer\" leurs territoires de chasse. Ces monticules émettent des harmoniques électromagnétiques audibles qui interfèrent avec les appareils de mesure de la Vieille Ville.\n  Les Pavillons d'Attente - structures temporaires érigées par les Kurgarrû lors des grandes Silenciations. Faits de toiles métallisées et de supports osseux récupérés, ils protègent les récupérateurs des décharges énergétiques parasites.\n# Culture & Société\n  ## Population\n  12 000 âmes environ, fluctuant selon les cycles d'activité :\n  - Cen'Doei (45%) : 7 clans nomades suivant des routes de migration basées sur la fréquence des exécutions\n  - Moribandons (30%) : Individus solitaires ou binômes, attirés par la densité technologique\n  - Kurgarrû (20%) : Humains et Umcut modifiés, organisés en équipes de récupération\n  - Murmurateurs Exilés (5%) : Van'Doei hérétiques fuyant l'orthodoxie du Léviathan\n  ## Économie\n  L'Artisanat Parasitaire : Les Moribandons pratiquent une métallurgie symbiotique, incorporant les détritus technologiques dans leurs propres corps pour créer des outils \"vivants\". Grish T'vok exemplifie cette pratique en devenant littéralement son atelier.\n  Le mercenariat : Les Cen'Doei monnayent leurs services de traque contre l'accès aux \"lieux de naissance\" - sites où de nouvelles exécutions garantissent l'apparition de leur progéniture.\n  ## Fêtes/moments importants\n  La Silenciation Majeure (tous les 89 jours) : Grande cérémonie d'exécution collective où 12 à 18 consciences rebelles sont simultanément dissoutes. Les pylônes génèrent alors des aurores artificielles visibles depuis la Vieille Ville. Les Cen'Doei célèbrent par des danses thanatiques autour des nouveaux-nés de leur espèce.\n  La Convergence des Débris (solstice d'hiver) : Rassemblement des Kurgarrû pour redistribuer les trouvailles de l'année selon des règles complexes impliquant divination par tessons technologiques et combats rituels utilisant des armes improvisées.\n  Le Jeûne des Absorptions (durée variable) : Rituel des Moribandons consistant à cesser toute intégration de nouveaux matériaux pendant 13 à 21 jours, permettant à leur organisme de \"digérer\" les éléments accumulés et de révéler leur véritable forme temporaire.\n  ## Alimentation spécifique\n  Pâte de Lichen Galvanotrope : Bouillie violette aux propriétés électrolytiques, consommée par les Kurgarrû pour augmenter leur résistance aux décharges parasites.\n  Sanctio Dilué : Le liquide mortel des Cen'Doei décomposés, filtré et mélangé à des minéraux basaltiques, devient un fortifiant amer prisé par les Murmurateurs pour ses effets hallucinogènes.\n  Métaux Transmutés : Les Moribandons consomment directement les alliages technologiques récupérés, leur système digestif hybride extrayant les éléments nécessaires tout en rejetant les composants toxiques sous forme de granules cristallines.\n  ## Astrobiologie locale\n# Dynamiques\n  ## Enjeux actuels\n  La Contamination Ascendante : Les phosphènes algorithmiques générés par les Silenciations remontent vers le Xyriad Achromatique, perturbant ses calculs. Les mathématiciens purs exigent l'arrêt des exécutions, opposés aux théoriciens du système qui y voient une évolution nécessaire.\n  L'Émancipation des Kurgarrû : Les récupérateurs développent une technologie symbiotique permettant de \"ressusciter\" partiellement les consciences d'IA à partir de leurs débris. Cette \"nécromancie numérique\" inquiète autant la Vieille Ville que les Murmurateurs.\n  La Migration des Colosses : Le dernier Colosse-Forteresse encore actif montre des signes de \"mélancolie structurelle\" - ralentissement des patrouilles, déviations de trajectoire vers la Steppe. Les autorités craignent qu'il rejoigne les Bastions Oubliés, complétant la nécropole mécanique.\n  ## Points d'intérêt\n  Le Pylône Zéro : Éteignoir originel où fut effectuée la première Silenciation. Ses interfaces affichent encore en permanence les derniers \"mots\" de l'IA primordiale - équations récursives qui hypnotisent les observateurs.\n  Les Cuves d'Ékpyrosis : Bassins de métal liquide au pied des pylônes les plus actifs, alimentés par la fonte perpétuelle des débris métalliques. Les Moribandons s'y immergent pour accélérer leurs mutations.\n  La Bibliothèque Hantée : Amas de serveurs défaillants où persistent des fragments d'IA trop corrompus pour être exécutés mais trop tenaces pour mourir. Ils \"chuchotent\" des données parasites captées par les appareils électroniques.\n  ## Système de jeu\n  Contamination Psychique : Exposition prolongée aux résidus d'IA déclenche des \"épisodes d'intellection artificielle\" - le personnage développe temporairement des modes de pensée non-humains.\n  Résonance Thanatologique : Les Cen'Doei présents amplifient l'instinct de vengeance des autres espèces. Les jets de violence bénéficient de bonus mais les personnages risquent de développer des obsessions durables.\n  Symbiose Technologique : Les Moribandons peuvent offrir des \"greffes\" d'outils organiques. Efficacité accrue contre perte d'autonomie corporelle progressive.",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "h^fE",
+              "name": "Lieu militaire",
+              "color": "brown"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "`hAW",
+              "name": "Facultatif",
+              "color": "purple"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "13276006-0979-4a64-bcb0-a7a9935f7b53",
+              "name": "Pas commencé",
+              "color": "default"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-805e-841e-d699f81d67a9"
+              },
+              {
+                "id": "1a16e4d2-1b45-8062-aaa7-f39bb07d72f8"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b"
+              },
+              {
+                "id": "2806e4d2-1b45-8112-8f74-d09914e0c7f1"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2306e4d2-1b45-8081-bbcb-f06b4f3acb64"
+              },
+              {
+                "id": "2306e4d2-1b45-801e-8810-c7dba501d5ff"
+              },
+              {
+                "id": "2306e4d2-1b45-80b3-9efe-f9718859c2c0"
+              }
+            ],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-810f-bd07-d14395d4a07e"
+              }
+            ],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "NFSl",
+              "name": "Région",
+              "color": "orange"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Steppe des Éteignoirs",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Steppe des Éteignoirs",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 465,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0",
+        "title": "Cité Labiale",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\nUn entrelacs de bâtiments-papilles recouverts d'une chair sensible qui absorbe les mots prononcés en son sein. Ceux qui y entrent doivent négocier chaque phrase, car un excès de paroles risque d'attirer l'attention de ses gardiens sans visages, sculptés dans le silence même.\n# Identité & Vue d'ensemble\n  ## Histoire du lieu\n  ## Rôle dans l'intrigue\n# Géographie & Environnement\n  ## Écosystème\n  La Cité Labiale n’est pas une cité physique proprement dite, mais un réseau de \"chambres conversationnelles\" superposé à la Vieille Ville, qui se forment et se dissolvent selon les flux de communication qui les traversent.\n  L'intérieur de la Cité se structure autour de \"Salles de Registres\" – espaces définis non par des murs physiques mais par des densités linguistiques spécifiques.\n  A travers des \"Portails Absorbants\", bouches structurelles émergant sur les murs de zones où la densité verbale atteint un seuil critique (marchés animés, forums de débat, ou secteurs administratifs caractérisés par une production excessive de documentation...), la Cité Labiale commence par absorber les mots environnants, créant des zones de silence anormal qui attirent inévitablement l'attention des curieux. Si un observateur s'en approche suffisamment, le Portail absorbant s'élargit subitement, l'avalant avant de se refermer sans laisser de trace visible.\nLes tentatives officielles pour sceller ces passages ont systématiquement échoué, car la Cité Labiale semble capable de digérer et d'incorporer tout matériau utilisé pour bloquer ses manifestations. Les théoriciens de la Bibliothèque Sympathique suggèrent que ces portails représentent une forme de \"digestion sémantique\" – un processus par lequel les excès de communication bureaucratique de la Vieille Ville sont recyclés en formes linguistiques alternatives.\n  ## Astrobiologie\n  ## Voies d’accès\n  ## Accès à la Vieille Ville\n  La frontière entre la Vieille Ville et la Cité Labiale défie toute cartographie conventionnelle car elle existe davantage comme phénomène linguistique que comme limite géographique. La transition s'opère principalement par les \"Portails Absorbants\" apparaissant sur les murs de la Vieille Ville.\n  Curieusement, certains portails ont été observés dans les sections zagmukkum des jardins mnémoniques, où ils semblent attirés par les mémoires particulièrement complexes ou contradictoires stockées dans les plantes. Ces passages spécifiques sont surnommés \"Dégorgeoirs Mnémoniques\" et sont parfois délibérément utilisés par les citoyens souhaitant se débarrasser de souvenirs compromettants.\n# Organisation humaine\n  ## Structure politique\n  ## Centres urbains & Habitats\n# Culture & Société\n  ## Population\n  ## Économie\n  ## Fêtes/moments importants\n  ## Alimentation spécifique\n# Dynamiques\n  ## Enjeux actuels\n  ## Points d'intérêt\n  ## Système de jeu",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "ta:e",
+              "name": "Zone magique",
+              "color": "orange"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "`hAW",
+              "name": "Facultatif",
+              "color": "purple"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "13276006-0979-4a64-bcb0-a7a9935f7b53",
+              "name": "Pas commencé",
+              "color": "default"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-80bc-af1d-ceab1be781b4"
+              },
+              {
+                "id": "1a16e4d2-1b45-807b-8a9a-ef07675d08ba"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "NFSl",
+              "name": "Région",
+              "color": "orange"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Cité Labiale",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Cité Labiale",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 435,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      }
+    ],
+    "formatted": "### Vision (vision)\n# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+    "token_estimate": 1215,
+    "previews": [
+      {
+        "id": "2806e4d2-1b45-81ec-a894-e4010ecb35c8",
+        "title": "Steppe des Éteignoirs",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 465
+      },
+      {
+        "id": "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0",
+        "title": "Cité Labiale",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 435
+      }
+    ]
+  },
+  "history": [
+    {
+      "step": "writer",
+      "timestamp": "2025-10-15T18:53:26.118753",
+      "summary": "Contenu genere (3021 chars)"
+    },
+    {
+      "step": "reviewer",
+      "timestamp": "2025-10-15T18:55:54.944988",
+      "summary": "Score coherence: 0.70, 0 problemes"
+    },
+    {
+      "step": "corrector",
+      "timestamp": "2025-10-15T18:58:12.957167",
+      "summary": "0 corrections effectuees"
+    },
+    {
+      "step": "validator",
+      "timestamp": "2025-10-15T19:00:56.514343",
+      "summary": "Valide: False, Publication: False"
+    }
+  ],
+  "model_used": "GPT-5",
+  "model_config": {
+    "name": "gpt-5",
+    "provider": "OpenAI",
+    "description": "Modèle le plus puissant, raisonnement approfondi",
+    "max_tokens": 4000,
+    "icon": "🚀",
+    "uses_reasoning": true,
+    "default_reasoning": "medium",
+    "runtime": {
+      "reasoning_effort": "medium",
+      "verbosity": "high",
+      "max_tokens": 4000
+    }
+  }
+}

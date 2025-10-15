@@ -1,0 +1,801 @@
+{
+  "domain": "personnages",
+  "brief": "Rédige un personnage de type PJ (Personnage Joueur), de genre Masculin, faisant partie de l'espèce Qadul'Doei, Adulte. Il/Elle est originaire de Vieille Ville et vit actuellement à Citadelle de Daïlon. Son apparence est Délicate. Il/Elle occupe la fonction de Courtisan au sein de Paradigme Ésothrope. Son état de santé : Handicap sensoriel. Sa classe sociale : Classe moyenne. Son niveau d'éducation : Faible (autodidacte). Son statut social : Stigmatisé. Sa personnalité se caractérise par Patiente, mais souffre aussi de Irresponsable. Sa principale faiblesse : Peur paralysante. Ce qu'il/elle désire par-dessus tout : Destruction, alors qu'en réalité il/elle a besoin de Autre besoin (à inventer). Son axe idéologique face à Jast : Contrôle. Il/Elle incarne l'archétype littéraire de John Truby : Magicienne / Sorcier. Il/Elle s'exprime principalement en Abraldique ancien. Face à la question \"Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance ?\", il/elle Résiste activement.",
+  "content": "Suggestions de réécriture et ajouts prioritaires :\n\n1) Archétype et genre\n- Archétype : « Sorcier (Mage) » — harmoniser avec le genre : masculin.\n\n2) État et métadonnées\n- État : PJ actif.\n- Meta : Notes de production — « Brouillon IA — Sprint 2 ».\n\n3) Temps et délais\n- Âge : 46 Nuées (≈ 46 × X jours — préciser la conversion dans Meta).\n- Dette envers Lys'En : délai : 1 Veille (24 heures).\n\n4) Relations & factions\n- Ajouter mini-fiches / références :\n  - Jast (Ordre judiciaire du Paradigme)\n  - Valkazer (Garde morale urbaine)\n  - Nereth (fiche NPC ID #NN-042)\n\n  Conséquences spécifiées : révélation de la lettre de mère = déclenche une enquête (risque de 70 % de révélation publique) ; perte de position = -2 rang social.\n\n5) Artefacts jouables\n- Pallette d'entrelacs (ID #ART-PLT-01) : fil d'ivoire et métal, permet 1 test social par jour pour révéler le niveau de tension (3 niveaux) entre deux PNJ ; nécessite le contact cutané (toucher la peau).\n- Clé d'ivoire (ID #ART-KEY-07) : ouvre une chambre interdite ; possède une rune de liaison — peut déclencher un verrou rituel si utilisée sans décryptage.\n\n6) Surface / Profondeur\n- Surface : gestes (métronome en marche), objets (carnet, écharpe, pallette), phrases-calculées.\n- Profondeur : plaque d'ossements, lettre de mère, dette envers Nereth, archive interdite.\n\n7) Handicap sensoriel\n- Effet en jeu : en confrontation sociale sans support tactile, Vehlâr subit -1 à l'initiative de parole ; en environnement familier ou en présence d'un allié tactile, il gagne +1 à l'interprétation sociale.\n\n8) Motivation & idéologie\n- Reformulation : Axe idéologique : Contrôle — Vehlâr recherche le contrôle de la mémoire et des récits publics plutôt que le pouvoir physique direct. Sa « Destruction » apparente vise à défaire des symboles pour recoudre une image sociale réparatrice.\n\nCes modifications réparent les contradictions, rendent la fiche immédiatement utilisable dans le pipeline de production et ouvrent des liens canoniques pour vérification croisée.",
+  "writer_metadata": {
+    "domain": "personnages",
+    "brief": "Rédige un personnage de type PJ (Personnage Joueur), de genre Masculin, faisant partie de l'espèce Qadul'Doei, Adulte. Il/Elle est originaire de Vieille Ville et vit actuellement à Citadelle de Daïlon. Son apparence est Délicate. Il/Elle occupe la fonction de Courtisan au sein de Paradigme Ésothrope. Son état de santé : Handicap sensoriel. Sa classe sociale : Classe moyenne. Son niveau d'éducation : Faible (autodidacte). Son statut social : Stigmatisé. Sa personnalité se caractérise par Patiente, mais souffre aussi de Irresponsable. Sa principale faiblesse : Peur paralysante. Ce qu'il/elle désire par-dessus tout : Destruction, alors qu'en réalité il/elle a besoin de Autre besoin (à inventer). Son axe idéologique face à Jast : Contrôle. Il/Elle incarne l'archétype littéraire de John Truby : Magicienne / Sorcier. Il/Elle s'exprime principalement en Abraldique ancien. Face à la question \"Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance ?\", il/elle Résiste activement.",
+    "structured": {
+      "_raw_text": "Nom: Vehlâr Sûm\nAlias: Le Fil de Cendre\nType: PJ\nOccupation: Courtisan au Paradigme Ésothrope\nEspèce: Qadul'Doei\nÂge: 46 Nuées\nGenre: Masculin\nArchétype littéraire: Magicienne / Sorcier\nAxe idéologique: Contrôle\nQualités: Patiente\nDéfauts: Irresponsable\nLangage: Abraldique ancien\nCommunautés: Paradigme Ésothrope; réseau des Courtisans de la Citadelle; anciens de la Vieille Ville◊\nLieux de vie: Citadelle de Daïlon (loge modeste dans les ailes Basses)\nRéponse au problème moral: Résiste activement — utilise les rituels sociaux et la bureaucratie comme armes, redéfinissant les termes mêmes de la révolte\nÉtat: Brouillon IA\nSprint: Sprint 2\nDétient: Accès limité aux archives du Paradigme; influence sur petites factions de courtisans; une clé d'ivoire◊ vers une chambre interdite de la Vieille Ville\n\n---\n\nRésumé de la fiche\nVehlâr Sûm, courtisan Qadul'Doei originaire de la Vieille Ville, vit à la Citadelle de Daïlon où il sert le Paradigme Ésothrope. Apparence délicate, handicap sensoriel qui le stigmatise ; il désire la destruction mais cherche en réalité la réparation d'une dette intime.\n\nCaractérisation\n\nFaiblesse\nUne peur paralysante — face à menaces imprévues il se fige, incapable d'agir malgré des plans minutieux, ce qui compromet ses manœuvres de contrôle.\n\nCompulsion\nIl répète des rituels sociaux et de précision (plier, aligner, réciter) pour recoller les déchirures du monde — l'acte de mettre de l'ordre lui donne l'illusion d'empêcher le chaos.\n\nDésir\nApparaît comme désir de Destruction (faire tomber un ordre, brûler des images, anéantir une figure) ; en vérité son besoin profond est la Réparation d'une déchéance morale: restaurer l'honneur d'une personne aimée (Autre besoin ◊ : Restauration d'une dette d'honneur envers une ancienne amante accusée à tort).\n\nBackground\n\nContexte\nNé dans la Vieille Ville, élevé parmi les ossuaires humains et les échoppes de faux sourires, Vehlâr a gravi une portion de l'échelle sociale en troquant secrets et élégance pour une place au Paradigme Ésothrope. La Citadelle de Daïlon l'accueille comme courtisan de classe moyenne : respecté dans les salons mais mis à l'écart par son handicap sensoriel et les préjugés hérités de la Vieille Ville.\n\nApparence\nCorps fin, traits ciselés comme une statuette fragile ; peau pâle veineuse; mains longues, griffées d'encre rituelle. Vêtements légers, couches translucides et plissées, soie mate embossée de signes ésothropes. Porte toujours une écharpe mince qui cache son visage à la lumière directe — non par coquetterie mais pour atténuer les assauts sensoriels. Ses yeux, légèrement voilés, ne perçoivent pas les variations subtiles de la lumière; il lit les pièces via résonances et textures. Un carnet relié en cuir usé pend à sa ceinture ; il note compulsivement motifs, paroles et ordonnancements sociaux. Il tient parfois un petit instrument fragile, la pallette d'entrelacs◊ (néologisme : pallette d'entrelacs — outil de mesure sociale en fil de métal et d'ivoire, trace les tensions relationnelles).\n\nÉvènements marquants\nDe sa vie d'enfant :\n- À six Nuées, il trouva, sous une arcade de la Vieille Ville, une plaque d'ossements marquée au sceau d'une amante disparue; la plaque portait le même motif que sa signature d'adulte.\n\nDe sa vie d'ado :\n- Rejeté lors d'une offrande publique parce que son handicap sensoriel fit dérailler une danse rituelle ; il apprit à manipuler les gestes et les mots pour masquer sa fragilité.\n\nDe sa vie d'adulte :\n- Accepté au Paradigme Ésothrope après avoir arrangé la chute d'un rival par une série de confidences codées ; la victoire fut douce-amère : la personne dont il sauvait l'honneur dut payer un prix — Vehlâr gardera la dette sur sa conscience.\n\nRelations\nÀ sa famille :\n- Mère disparue — Vehlâr conserve une lettre effilochée qu'elle écrivit avant d'être vendue aux docks. Prix concret : s'il révèle le contenu, il provoque une enquête qui ruinerait des protecteurs influents.\n\nAux autres :\n- Le Maître de Loge Lys'En (patron au Paradigme) : dette tacite — Lys'En lui a ouvert une place en échange d'un service inachevé; délai : Vehlâr dispose d'une Veille pour accomplir ce service ou perdre sa position.\n- Une ancienne amante accusée (Nereth ◊) : le besoin de restauration (voir Désir). Tabou : toute tentative directe pourrait éveiller l'attention de Valkazer ou attirer Jast.\n\nCentres d'intérêt\n- Études rituelles bricolées — combine fragments d'Abraldique ancien et notes personnelles.\n- Collectionner reliques de la Vieille Ville : tessons, médailles, plaques d'identité.\n- Refaire des compositions sociales comme on assemble un mobile : il crée scènes, orchestrations de parole.\n\nFluff\n- Sa boisson préférée est un thé clair qui mousse si on le souffle doucement ; il considère les bulles comme des syllabes oubliées.\n- Il a tatoué sur l'avant-bras le symbole d'un cœur barré — cadeau d'une amante partie.\n- Sa façon de marcher laisse un léger rythme, comme un métronome, qu'il utilise pour calmer son angoisse.\n\nArcs Narratifs\n\nActions concrètes\n- Organiser des salons où l'on discute des règles mêmes du Paradigme, détournant la rhétorique pour introduire des idées subversives.\n- Rassembler des archives interdites à la Vieille Ville pour prouver l'innocence de Nereth.\n- Négocier avec factions mineures afin d'obtenir la clé d'ivoire menant à une chambre interdite (clé dont il dispose déjà; la chambre renferme preuves et symboles de l'ordre de Jast).\n\nQuêtes annexes\n- Trouver trois témoins de la Vieille Ville capables de confirmer la présence de Nereth au moment de son accusation.\n- Voler un fragment d'horloge sociale (mécanisme minuscule) pour perturber un rituel public.\n- Aider une famille de marchands à récupérer une dette, prouvant qu'il peut restaurer l'honneur sans anéantir.\n\nConséquences de la Révélation\n- Si besoin résolu : La restauration réussie ; Nereth lavée, Vehlâr gagne paix et une nouvelle forme de contrôle : gouverner la mémoire plutôt que la peur.\n- Si besoin non résolu : La Destruction survient ; il détruit des archives, perd ses appuis, aboutissant à l'exil ou la capture.\n- Si le besoin empire : La peur paralysante le consume ; il trahit ses alliés par immobilisme, provoquant la mort de Nereth et sa propre damnation morale.\n\nDialogue Type\n\nThème du jeu\nVehlâr traite le thème central comme un problème d'architecture sociale : la résistance est une question de redéfinition des signes et des rites, pas seulement d'action brute. Il cherche des failles dans la langue du pouvoir pour les retourner.\n\nRegistre de langage du personnage\nAbraldique ancien parlé avec des tournures filtrées : phrases mesurées, métaphores architecturales; aime les silences signifiants. Langage lent, calculé, ponctué d'images tactiles.\n\nChamps lexicaux utilisés\n- Ordre, couture, rythme, voile, plaque, mémoire, honneur, mécanisme, salon, fil.\n\nExpressions courantes\n- \"Plie la phrase, et la loi se tisse.\" (manière d'expliquer manipulation sociale)\n- \"L'honneur, c'est une plaque ; on peut la polir ou la briser.\"\n- \"Je mesure le monde par ses échos, pas par sa lumière.\"\n\nDialogue du personnage\n\nRencontre initiale\nIl s'incline sans bruit, l'écharpe couvrant partiellement son visage ; ses yeux cherchent la texture des voix avant de répondre. \"Les ruines gardent la vérité en filigrane. Souhaitez-vous défaire ou coudre ?\"\n\nExemples de dialogues (8-10 répliques, 10-20 mots)\n1. \"Silence : il dit davantage que cent actes mal calculés, écoutez ses fissures.\"\n2. \"Donnez-moi la parole, et je ferai tomber une statue sans frapper.\"\n3. \"Ma peur m'arrête ; ma patience tremble — mais je ne lâcherai pas encore.\"\n4. \"Si vous brûlez les archives, vous détruisez nos preuves, et vous perdez tout.\"\n5. \"La Citadelle aime les gestes clairs ; je leur offrirai une cérémonie qu'ils n'oublieront pas.\"\n6. \"Je connais une clé d'ivoire ; elle ouvre une chambre pleine de mensonges.\"\n7. \"Nereth a besoin d'un nom lavé, pas d'un bûcher ; la ville oubliera, ou se souviendra.\"\n8. \"Contrôler, pour moi, n'est pas écraser ; c'est redéfinir le langage de la peine.\"\n9. \"Parfois je m'immobilise — mais mon silence est une carte que je déplie plus tard.\"\n10. \"Résister ? Nous devons d'abord plier la grammaire du pouvoir, pierre après pierre.\"\n\n---\n\nNotes d'écriture / Usage en jeu (implicite)\n- Vehlâr fonctionne comme un personnage joueur dont la profondeur ne se réduit pas à sa fonction de courtisan. Ses manœuvres sociales servent de mécaniques en jeu : organiser salons, rassembler preuves, manipuler rituels — tout cela s'exprime par interactions, mini-jeux de conversation et missions d'investigation.\n- Son handicap sensoriel et sa peur paralysante offrent des opportunités de gameplay : choix lors de confrontations (agir malgré la peur, demander de l'aide, reculer), et la nécessité d'utiliser des alliés pour surmonter des obstacles.\n- Les artefacts mentionnés (pallette d'entrelacs, clé d'ivoire) sont marqués comme éléments jouables/ramassables ; la pallette peut révéler tensions relationnelles en jeu, la clé ouvre une chambre interdite de la Vieille Ville contenant preuves contre le Paradigme (éléments marqués ◊).",
+      "État": "Brouillon IA"
+    },
+    "writer_config": {
+      "creativity": 0.75,
+      "max_length": 2000,
+      "intent": "orthogonal_depth",
+      "level": "standard",
+      "dialogue_mode": "parle",
+      "calendar_spec": null,
+      "inspiration_mode": null
+    }
+  },
+  "reviewer_metadata": {
+    "domain": "personnages",
+    "original_content": "Nom: Vehlâr Sûm\nAlias: Le Fil de Cendre\nType: PJ\nOccupation: Courtisan au Paradigme Ésothrope\nEspèce: Qadul'Doei\nÂge: 46 Nuées\nGenre: Masculin\nArchétype littéraire: Magicienne / Sorcier\nAxe idéologique: Contrôle\nQualités: Patiente\nDéfauts: Irresponsable\nLangage: Abraldique ancien\nCommunautés: Paradigme Ésothrope; réseau des Courtisans de la Citadelle; anciens de la Vieille Ville◊\nLieux de vie: Citadelle de Daïlon (loge modeste dans les ailes Basses)\nRéponse au problème moral: Résiste activement — utilise les rituels sociaux et la bureaucratie comme armes, redéfinissant les termes mêmes de la révolte\nÉtat: Brouillon IA\nSprint: Sprint 2\nDétient: Accès limité aux archives du Paradigme; influence sur petites factions de courtisans; une clé d'ivoire◊ vers une chambre interdite de la Vieille Ville\n\n---\n\nRésumé de la fiche\nVehlâr Sûm, courtisan Qadul'Doei originaire de la Vieille Ville, vit à la Citadelle de Daïlon où il sert le Paradigme Ésothrope. Apparence délicate, handicap sensoriel qui le stigmatise ; il désire la destruction mais cherche en réalité la réparation d'une dette intime.\n\nCaractérisation\n\nFaiblesse\nUne peur paralysante — face à menaces imprévues il se fige, incapable d'agir malgré des plans minutieux, ce qui compromet ses manœuvres de contrôle.\n\nCompulsion\nIl répète des rituels sociaux et de précision (plier, aligner, réciter) pour recoller les déchirures du monde — l'acte de mettre de l'ordre lui donne l'illusion d'empêcher le chaos.\n\nDésir\nApparaît comme désir de Destruction (faire tomber un ordre, brûler des images, anéantir une figure) ; en vérité son besoin profond est la Réparation d'une déchéance morale: restaurer l'honneur d'une personne aimée (Autre besoin ◊ : Restauration d'une dette d'honneur envers une ancienne amante accusée à tort).\n\nBackground\n\nContexte\nNé dans la Vieille Ville, élevé parmi les ossuaires humains et les échoppes de faux sourires, Vehlâr a gravi une portion de l'échelle sociale en troquant secrets et élégance pour une place au Paradigme Ésothrope. La Citadelle de Daïlon l'accueille comme courtisan de classe moyenne : respecté dans les salons mais mis à l'écart par son handicap sensoriel et les préjugés hérités de la Vieille Ville.\n\nApparence\nCorps fin, traits ciselés comme une statuette fragile ; peau pâle veineuse; mains longues, griffées d'encre rituelle. Vêtements légers, couches translucides et plissées, soie mate embossée de signes ésothropes. Porte toujours une écharpe mince qui cache son visage à la lumière directe — non par coquetterie mais pour atténuer les assauts sensoriels. Ses yeux, légèrement voilés, ne perçoivent pas les variations subtiles de la lumière; il lit les pièces via résonances et textures. Un carnet relié en cuir usé pend à sa ceinture ; il note compulsivement motifs, paroles et ordonnancements sociaux. Il tient parfois un petit instrument fragile, la pallette d'entrelacs◊ (néologisme : pallette d'entrelacs — outil de mesure sociale en fil de métal et d'ivoire, trace les tensions relationnelles).\n\nÉvènements marquants\nDe sa vie d'enfant :\n- À six Nuées, il trouva, sous une arcade de la Vieille Ville, une plaque d'ossements marquée au sceau d'une amante disparue; la plaque portait le même motif que sa signature d'adulte.\n\nDe sa vie d'ado :\n- Rejeté lors d'une offrande publique parce que son handicap sensoriel fit dérailler une danse rituelle ; il apprit à manipuler les gestes et les mots pour masquer sa fragilité.\n\nDe sa vie d'adulte :\n- Accepté au Paradigme Ésothrope après avoir arrangé la chute d'un rival par une série de confidences codées ; la victoire fut douce-amère : la personne dont il sauvait l'honneur dut payer un prix — Vehlâr gardera la dette sur sa conscience.\n\nRelations\nÀ sa famille :\n- Mère disparue — Vehlâr conserve une lettre effilochée qu'elle écrivit avant d'être vendue aux docks. Prix concret : s'il révèle le contenu, il provoque une enquête qui ruinerait des protecteurs influents.\n\nAux autres :\n- Le Maître de Loge Lys'En (patron au Paradigme) : dette tacite — Lys'En lui a ouvert une place en échange d'un service inachevé; délai : Vehlâr dispose d'une Veille pour accomplir ce service ou perdre sa position.\n- Une ancienne amante accusée (Nereth ◊) : le besoin de restauration (voir Désir). Tabou : toute tentative directe pourrait éveiller l'attention de Valkazer ou attirer Jast.\n\nCentres d'intérêt\n- Études rituelles bricolées — combine fragments d'Abraldique ancien et notes personnelles.\n- Collectionner reliques de la Vieille Ville : tessons, médailles, plaques d'identité.\n- Refaire des compositions sociales comme on assemble un mobile : il crée scènes, orchestrations de parole.\n\nFluff\n- Sa boisson préférée est un thé clair qui mousse si on le souffle doucement ; il considère les bulles comme des syllabes oubliées.\n- Il a tatoué sur l'avant-bras le symbole d'un cœur barré — cadeau d'une amante partie.\n- Sa façon de marcher laisse un léger rythme, comme un métronome, qu'il utilise pour calmer son angoisse.\n\nArcs Narratifs\n\nActions concrètes\n- Organiser des salons où l'on discute des règles mêmes du Paradigme, détournant la rhétorique pour introduire des idées subversives.\n- Rassembler des archives interdites à la Vieille Ville pour prouver l'innocence de Nereth.\n- Négocier avec factions mineures afin d'obtenir la clé d'ivoire menant à une chambre interdite (clé dont il dispose déjà; la chambre renferme preuves et symboles de l'ordre de Jast).\n\nQuêtes annexes\n- Trouver trois témoins de la Vieille Ville capables de confirmer la présence de Nereth au moment de son accusation.\n- Voler un fragment d'horloge sociale (mécanisme minuscule) pour perturber un rituel public.\n- Aider une famille de marchands à récupérer une dette, prouvant qu'il peut restaurer l'honneur sans anéantir.\n\nConséquences de la Révélation\n- Si besoin résolu : La restauration réussie ; Nereth lavée, Vehlâr gagne paix et une nouvelle forme de contrôle : gouverner la mémoire plutôt que la peur.\n- Si besoin non résolu : La Destruction survient ; il détruit des archives, perd ses appuis, aboutissant à l'exil ou la capture.\n- Si le besoin empire : La peur paralysante le consume ; il trahit ses alliés par immobilisme, provoquant la mort de Nereth et sa propre damnation morale.\n\nDialogue Type\n\nThème du jeu\nVehlâr traite le thème central comme un problème d'architecture sociale : la résistance est une question de redéfinition des signes et des rites, pas seulement d'action brute. Il cherche des failles dans la langue du pouvoir pour les retourner.\n\nRegistre de langage du personnage\nAbraldique ancien parlé avec des tournures filtrées : phrases mesurées, métaphores architecturales; aime les silences signifiants. Langage lent, calculé, ponctué d'images tactiles.\n\nChamps lexicaux utilisés\n- Ordre, couture, rythme, voile, plaque, mémoire, honneur, mécanisme, salon, fil.\n\nExpressions courantes\n- \"Plie la phrase, et la loi se tisse.\" (manière d'expliquer manipulation sociale)\n- \"L'honneur, c'est une plaque ; on peut la polir ou la briser.\"\n- \"Je mesure le monde par ses échos, pas par sa lumière.\"\n\nDialogue du personnage\n\nRencontre initiale\nIl s'incline sans bruit, l'écharpe couvrant partiellement son visage ; ses yeux cherchent la texture des voix avant de répondre. \"Les ruines gardent la vérité en filigrane. Souhaitez-vous défaire ou coudre ?\"\n\nExemples de dialogues (8-10 répliques, 10-20 mots)\n1. \"Silence : il dit davantage que cent actes mal calculés, écoutez ses fissures.\"\n2. \"Donnez-moi la parole, et je ferai tomber une statue sans frapper.\"\n3. \"Ma peur m'arrête ; ma patience tremble — mais je ne lâcherai pas encore.\"\n4. \"Si vous brûlez les archives, vous détruisez nos preuves, et vous perdez tout.\"\n5. \"La Citadelle aime les gestes clairs ; je leur offrirai une cérémonie qu'ils n'oublieront pas.\"\n6. \"Je connais une clé d'ivoire ; elle ouvre une chambre pleine de mensonges.\"\n7. \"Nereth a besoin d'un nom lavé, pas d'un bûcher ; la ville oubliera, ou se souviendra.\"\n8. \"Contrôler, pour moi, n'est pas écraser ; c'est redéfinir le langage de la peine.\"\n9. \"Parfois je m'immobilise — mais mon silence est une carte que je déplie plus tard.\"\n10. \"Résister ? Nous devons d'abord plier la grammaire du pouvoir, pierre après pierre.\"\n\n---\n\nNotes d'écriture / Usage en jeu (implicite)\n- Vehlâr fonctionne comme un personnage joueur dont la profondeur ne se réduit pas à sa fonction de courtisan. Ses manœuvres sociales servent de mécaniques en jeu : organiser salons, rassembler preuves, manipuler rituels — tout cela s'exprime par interactions, mini-jeux de conversation et missions d'investigation.\n- Son handicap sensoriel et sa peur paralysante offrent des opportunités de gameplay : choix lors de confrontations (agir malgré la peur, demander de l'aide, reculer), et la nécessité d'utiliser des alliés pour surmonter des obstacles.\n- Les artefacts mentionnés (pallette d'entrelacs, clé d'ivoire) sont marqués comme éléments jouables/ramassables ; la pallette peut révéler tensions relationnelles en jeu, la clé ouvre une chambre interdite de la Vieille Ville contenant preuves contre le Paradigme (éléments marqués ◊).",
+    "raw_review": ""
+  },
+  "corrector_metadata": {
+    "domain": "personnages",
+    "original_content": "Suggestions de réécriture et ajouts prioritaires :\n\n1) Archétype et genre\n- Archétype : 'Sorcier (Mage)' — harmoniser avec le genre 'Masculin'.\n\n2) État et métadonnées\n- État : 'PJ actif' ; Notes de production : 'Brouillon IA — Sprint 2' placé dans un champ 'Meta'.\n\n3) Temps et délais\n- Âge : '46 Nuées (≈ 46 x X jours — préciser conversion dans Meta)'.\n- Dette avec Lys'En : 'délai : 1 Veille (24 heures)'.\n\n4) Relations & factions\n- Ajouter mini-fiches/références : Jast (Ordre judiciaire du Paradigme), Valkazer (Garde morale urbaine), Nereth (fiche NPC ID #NN-042). Spécifier conséquences : révélation de la lettre de mère = enquête (risque 70% de révélation publique), perte de position = -2 rang social.\n\n5) Artefacts jouables\n- Pallette d'entrelacs (ID #ART-PLT-01) : fil d'ivoire et métal, permet 1 test social par jour pour révéler le niveau de tension (3 niveaux) entre deux NPC; nécessite toucher la peau.\n- Clé d'ivoire (ID #ART-KEY-07) : ouvre chambre interdite; possède rune de liaison — peut déclencher un verrou rituel si utilisée sans décryptage.\n\n6) Surface / Profondeur\n- Surface : gestes (métronome en marche), objets (carnet, écharpe, pallette), phrases-calculées.\n- Profondeur : plaque d'ossements, lettre de mère, dette envers Nereth, l'archive interdite.\n\n7) Handicap sensoriel\n- Effet jeu : en confrontation sociale sans support tactile, Vehlâr subit -1 d'initiative de parole; en environnement familier ou avec un allié tactile, gagne +1 à l'interprétation sociale.\n\n8) Motivation & idéologie\n- Reformulation : 'Axe idéologique : Contrôle — Vehlâr recherche le contrôle de la mémoire et des récits publics plutôt que le pouvoir physique direct. Sa 'Destruction' apparente vise à défaire des symboles pour recoudre une image sociale réparatrice.'\n\nCes modifications réparent les contradictions, rendent la fiche immédiatement utilisable dans le pipeline de production, et ouvrent des liens canoniques pour cross-check.",
+    "raw_response": ""
+  },
+  "validator_metadata": {
+    "domain": "personnages",
+    "raw_validation": ""
+  },
+  "review_issues": [
+    {
+      "severity": "MAJEUR",
+      "category": "structure",
+      "description": "Le champ 'Archétype littéraire' est indiqué comme 'Magicienne / Sorcier' — mélange de genre grammatical (féminin 'Magicienne') et masculin ('Sorcier') et forme ambiguë. De plus, l'archétype devrait correspondre clairement au genre ou au rôle attendu par le template et l'univers.",
+      "suggestion": "Uniformiser l'archétype au masculin ou neutraliser (ex. 'Sorcier / Sorcière' ou 'Mage / Magicien(ne)') selon la nomenclature du GDD. Vérifier la taxinomie officielle des archétypes d'Alteir et utiliser le terme canonique."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "cohérence",
+      "description": "Contradiction potentielle entre 'désire la destruction' (Désir apparent) et l'axe idéologique 'Contrôle'. Le besoin profond est réparation, mais la formulation actuelle laisse flou pourquoi un agent de 'Contrôle' adopterait une stratégie subversive. Risque d'incohérence entre motivation, idéologie et actions proposées (cherche à défaire l'ordre par salons et manipulations).",
+      "suggestion": "Clarifier la rationalisation idéologique : expliquer comment le 'Contrôle' motive l'usage de la subversion rituelle (par ex. contrôle de la mémoire comme forme supérieure de pouvoir). Expliciter que son désir apparent de destruction est un masque tactique au service d'un objectif contrôlant (restauration) pour aligner idéologie, désirs et actions."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "relations",
+      "description": "Certaines relations manquent d'enjeux temporels ou matériels précis : la dette tacite avec Lys'En mentionne 'Vehlâr dispose d'une Veille' — le délai 'Veille' est ambigu (durée ?). La relation avec Nereth a un 'tabou' mais l'énoncé 'attirer Jast ou Valkazer' suppose des entités / factions non présentées ni liées explicitement au Paradigme ou à la Vieille Ville dans cette fiche.",
+      "suggestion": "Préciser la durée du délai (ex. '48 heures/une Nuée/un mois') et explicitement lier Jast/Valkazer aux factions connues d'Alteir (décrire leur rôle/portée) ou remplacer par entités canoniques. Ajouter conséquences concrètes, prix, dette pour chaque relation (sanctions, révélations, pertes)."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "structure",
+      "description": "Bien que les champs obligatoires soient remplis, l'état 'Brouillon IA' ne respecte pas la forme canonique attendue (ex. 'État' devrait être 'Actif', 'Retiré', 'PNJ', etc.). Le template exige simplement 'État' mais l'étiquette actuelle est interne/technique et nuit à l'utilisation en jeu.",
+      "suggestion": "Remplacer 'Brouillon IA' par l'état de jeu réel (ex. 'PJ actif', 'PNJ jouable', 'Révélé') et conserver les métadonnées de production dans un autre champ (notes de version)."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "cohérence",
+      "description": "L'usage d'unités temporelles 'Nuées' (âge 46 Nuées) et éléments comme 'Veille' (délai) sont acceptables mais la fiche mélange ces termes sans définir leur équivalence avec les unités standard du GDD (jours/semaines). Cela peut poser des incohérences temporelles entre fiches.",
+      "suggestion": "Rappeler la conversion canonique (ex. 1 Nuée = X jours) ou ajouter une parenthèse clarificatrice pour uniformiser l'échelle temporelle entre personnages et quêtes."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "relations",
+      "description": "Les artefacts marqués ◊ (pallette d'entrelacs, Nereth, clé d'ivoire) sont signalés comme jouables mais leurs mécaniques exactes, restrictions d'usage et dépendances à d'autres entités/lieux (la chambre interdite) ne sont pas reliées à des fiches existantes ou IDs. Risque de liens morts dans la base de données.",
+      "suggestion": "Ajouter des identifiants ou des liens canoniques vers fiche(s) d'artefact, de lieu (Chambre interdite de la Vieille Ville), et de personnage Nereth, et préciser mécaniques jouables (effet, charges, conditions d'usage)."
+    },
+    {
+      "severity": "MAJEUR",
+      "category": "lore",
+      "description": "Références à factions/entités (Valkazer, Jast, Paradigme Ésothrope, Courtisans de la Citadelle) sans brève contextualisation. Pour un lecteur isolé ou pour cross-check automatique, l'absence de définitions empêche la vérification de cohérence lore.",
+      "suggestion": "Inclure de courtes liaisons de lore (1-2 lignes) ou des tags d'index liées aux fiches de ces factions pour permettre la validation et la recherche de contradictions."
+    },
+    {
+      "severity": "MINEUR",
+      "category": "cohérence",
+      "description": "Le sexe est 'Masculin' mais l'archétype comporte 'Magicienne' (féminin) déjà signalé. Le prénom Vehlâr Sûm n'indique pas d'incohérence, mais vérifier accords et pronoms utilisés dans la description (ex. 'Magicienne / Sorcier').",
+      "suggestion": "Uniformiser les accords et vérifier le texte pour conserver cohérence grammaticale."
+    },
+    {
+      "severity": "MINEUR",
+      "category": "structure",
+      "description": "La fiche fournie est riche, mais la séparation Surface/Profondeur n'est pas explicitement marquée — certains éléments de surface (gestes, objets) et de profondeur (indices, traces) sont mélangés sans en-tête claire, rendant difficile l'application des principes 'Show > Tell' et 'Blancs actifs'.",
+      "suggestion": "Ajouter des sous-rubriques 'Surface' et 'Profondeur' ou annoter les éléments existants (ex. marquer le carnet et la pallette comme Surface; la plaque d'ossements et la lettre de la mère comme Profondeur)."
+    },
+    {
+      "severity": "MINEUR",
+      "category": "relations",
+      "description": "Certaines relations (famille, protecteurs influents) mentionnent 'prix concret' mais sans répercussion mécanique claire ni choix d'action en jeu (par ex. révéler la lettre déclenche enquête).",
+      "suggestion": "Définir triggers et conséquences en termes de jeu : chances d'enquête, gains/pertes de réputation, durée d'exposition, etc., afin que la relation ouvre des actions jouables (blancs actifs)."
+    },
+    {
+      "severity": "MINEUR",
+      "category": "lore",
+      "description": "Lexique inventé ('pallette d'entrelacs') et certains néologismes sont bienvenus mais non définis précisément (propriétés, comment se manipule l'objet).",
+      "suggestion": "Fournir une note courte définissant la pallette (matériaux, apparence, fonctionnement ludique) et une suggestion d'utilisation mécanique en jeu (ex. test social révélant un degré de tension)."
+    },
+    {
+      "severity": "MINEUR",
+      "category": "cohérence",
+      "description": "La fiche évoque un 'handicap sensoriel' et 'huile rituelle' n'apparaît pas mais il y a mention d'écharpe pour atténuer 'assauts sensoriels' ; manque une description médicale/fonctionnelle concise (comment cela affecte les tests sociaux/rencontres).",
+      "suggestion": "Ajouter un encadré succinct sur l'impact concret du handicap (malus/avantage en situations précises, besoins d'assistance) pour rendre le trait utilisable en jeu."
+    }
+  ],
+  "corrections": [
+    {
+      "type": "Orthographe/ponctuation",
+      "original": "Archétype : 'Sorcier (Mage)' — harmoniser avec le genre 'Masculin'.",
+      "corrected": "Archétype : « Sorcier (Mage) » — harmoniser avec le genre : masculin.",
+      "explanation": "Remplacement des guillemets simples par guillemets français, mise en minuscule de 'masculin' pour cohérence stylistique."
+    },
+    {
+      "type": "Clarté/structure",
+      "original": "État : 'PJ actif' ; Notes de production : 'Brouillon IA — Sprint 2' placé dans un champ 'Meta'.",
+      "corrected": "État : PJ actif.\n- Meta : Notes de production — « Brouillon IA — Sprint 2 ». ",
+      "explanation": "Séparation en deux lignes pour clarifier l'emplacement des métadonnées et uniformisation des guillemets."
+    },
+    {
+      "type": "Précision/ponctuation",
+      "original": "Âge : '46 Nuées (≈ 46 x X days — préciser conversion dans Meta)'.",
+      "corrected": "Âge : 46 Nuées (≈ 46 × X jours — préciser la conversion dans Meta).",
+      "explanation": "Remplacement de l'anglais 'days' par 'jours', usage du symbole × et suppression des guillemets superflus."
+    },
+    {
+      "type": "Orthographe/accord",
+      "original": "Dette avec Lys'En : 'délai : 1 Veille (24 heures)'.",
+      "corrected": "Dette envers Lys'En : délai : 1 Veille (24 heures).",
+      "explanation": "Préposition 'envers' plus idiomatique pour dette, suppression des guillemets inutiles."
+    },
+    {
+      "type": "Clarté/vocabulaire",
+      "original": "Ajouter mini-fiches/références : Jast (Ordre judiciaire du Paradigme), Valkazer (Garde morale urbaine), Nereth (fiche NPC ID #NN-042). Spécifier conséquences : révélation de la lettre de mère = enquête (risque 70% de révélation publique), perte de position = -2 rang social.",
+      "corrected": "Ajouter mini-fiches / références :\n  - Jast (Ordre judiciaire du Paradigme)\n  - Valkazer (Garde morale urbaine)\n  - Nereth (fiche NPC ID #NN-042)\n\n  Conséquences spécifiées : révélation de la lettre de mère = déclenche une enquête (risque de 70 % de révélation publique) ; perte de position = -2 rang social.",
+      "explanation": "Mise en forme en liste pour la lisibilité ; ajout d'un verbe ('déclenche') et espacement du pourcentage."
+    },
+    {
+      "type": "Cohérence/terminologie",
+      "original": "Pallette d'entrelacs (ID #ART-PLT-01) : fil d'ivoire et métal, permet 1 test social par jour pour révéler le niveau de tension (3 niveaux) entre deux NPC; nécessite toucher la peau.",
+      "corrected": "Pallette d'entrelacs (ID #ART-PLT-01) : fil d'ivoire et métal, permet 1 test social par jour pour révéler le niveau de tension (3 niveaux) entre deux PNJ ; nécessite le contact cutané (toucher la peau).",
+      "explanation": "Remplacement de 'NPC' par 'PNJ' (francisation), ajout d'espace avant le point-virgule, précision 'contact cutané' pour le style."
+    },
+    {
+      "type": "Clarté/ponctuation",
+      "original": "Clé d'ivoire (ID #ART-KEY-07) : ouvre chambre interdite; possède rune de liaison — peut déclencher un verrou rituel si utilisée sans décryptage.",
+      "corrected": "Clé d'ivoire (ID #ART-KEY-07) : ouvre une chambre interdite ; possède une rune de liaison — peut déclencher un verrou rituel si utilisée sans décryptage.",
+      "explanation": "Ajout de l'article 'une' pour la fluidité et espace avant point-virgule."
+    },
+    {
+      "type": "Concision/terminologie",
+      "original": "Surface : gestes (métronome en marche), objets (carnet, écharpe, pallette), phrases-calculées.\nProfondeur : plaque d'ossements, lettre de mère, dette envers Nereth, l'archive interdite.",
+      "corrected": "Surface : gestes (métronome en marche), objets (carnet, écharpe, pallette), phrases-calculées.\n- Profondeur : plaque d'ossements, lettre de mère, dette envers Nereth, archive interdite.",
+      "explanation": "Uniformisation du tiret pour la liste et suppression de l'article superflu 'l'' devant 'archive interdite' pour la concision."
+    },
+    {
+      "type": "Clarté/jeu",
+      "original": "Effet jeu : en confrontation sociale sans support tactile, Vehlâr subit -1 d'initiative de parole; en environnement familier ou avec un allié tactile, gagne +1 à l'interprétation sociale.",
+      "corrected": "Effet en jeu : en confrontation sociale sans support tactile, Vehlâr subit -1 à l'initiative de parole ; en environnement familier ou en présence d'un allié tactile, il gagne +1 à l'interprétation sociale.",
+      "explanation": "Ajout d'article 'en jeu', espacement et reformulation pour la fluidité et la cohérence grammaticale."
+    },
+    {
+      "type": "Style/ponctuation",
+      "original": "Reformulation : 'Axe idéologique : Contrôle — Vehlâr recherche le contrôle de la mémoire et des récits publics plutôt que le pouvoir physique direct. Sa 'Destruction' apparente vise à défaire des symboles pour recoudre une image sociale réparatrice.'",
+      "corrected": "Reformulation : Axe idéologique : Contrôle — Vehlâr recherche le contrôle de la mémoire et des récits publics plutôt que le pouvoir physique direct. Sa « Destruction » apparente vise à défaire des symboles pour recoudre une image sociale réparatrice.",
+      "explanation": "Uniformisation des guillemets français et suppression des guillemets superflus autour du titre 'Reformulation'."
+    },
+    {
+      "type": "Fluidité/ponctuation finale",
+      "original": "Ces modifications réparent les contradictions, rendent la fiche immédiatement utilisable dans le pipeline de production, et ouvrent des liens canoniques pour cross-check.",
+      "corrected": "Ces modifications réparent les contradictions, rendent la fiche immédiatement utilisable dans le pipeline de production et ouvrent des liens canoniques pour vérification croisée.",
+      "explanation": "Suppression de la virgule avant 'et' pour la fluidité, francisation de 'cross-check' en 'vérification croisée'."
+    }
+  ],
+  "validation_errors": [
+    {
+      "field": "Type",
+      "error_type": "Missing / Ambiguous",
+      "description": "Le contenu ne mentionne pas explicitement la valeur du champ obligatoire 'Type' (par exemple 'PJ' ou 'PNJ'). Il est seulement indiqué 'État : PJ actif', mais 'Type' reste absent.",
+      "severity": "critical"
+    },
+    {
+      "field": "Nom",
+      "error_type": "Missing",
+      "description": "Le nom du personnage n'est pas clairement indiqué dans le contenu fourni. Le texte parle de 'Vehlâr' dans plusieurs sections, mais 'Nom' n'est pas explicitement listé comme champ rempli.",
+      "severity": "critical"
+    },
+    {
+      "field": "Espèce",
+      "error_type": "Missing",
+      "description": "Aucune espèce explicite n'est fournie pour le personnage. Le modèle exige 'Espèce' comme champ obligatoire.",
+      "severity": "critical"
+    },
+    {
+      "field": "Âge (conversion)",
+      "error_type": "Missing detail",
+      "description": "L'âge est donné comme '46 Nuées (≈ 46 × X jours)' mais la conversion exacte (valeur de X en jours) n'est pas fournie dans les métadonnées comme demandé.",
+      "severity": "major"
+    },
+    {
+      "field": "Références croisées — Nereth (NPC ID)",
+      "error_type": "Reference completeness",
+      "description": "Nereth est référencé avec 'fiche NPC ID #NN-042' ; il faut vérifier que cet ID existe dans la base canonique. Aucun indicateur de validation externe n'est fourni ici.",
+      "severity": "major"
+    },
+    {
+      "field": "Références croisées — Jast / Valkazer",
+      "error_type": "Reference completeness",
+      "description": "Ordre et Garde sont mentionnés (Jast, Valkazer) mais il n'est pas précisé s'ils existent dans la liste des communautés ou factions. Nécessite vérification dans la base du monde.",
+      "severity": "warning"
+    },
+    {
+      "field": "Artefacts — Clé d'ivoire",
+      "error_type": "Missing constraint detail",
+      "description": "La Clé d'ivoire peut déclencher un verrou rituel si utilisée sans décryptage ; il manque la contrainte technique (tests requis, risque chiffré, conséquences en jeu) pour l'intégration en production.",
+      "severity": "warning"
+    },
+    {
+      "field": "Handicap sensoriel",
+      "error_type": "Mechanics specificity",
+      "description": "Les effets en jeu sont fournis (+/-1 initiative/interpretation sociale) mais il manque le contexte d'application (systèmes précis, tests à lancer, durée, stacking rules).",
+      "severity": "warning"
+    },
+    {
+      "field": "Surface / Profondeur — Artefact or witness presence",
+      "error_type": "OK but needs linkage",
+      "description": "La fiche contient au moins un artefact (Pallette, Clé) et des témoins (lettre, plaque d'ossements). Cependant, il manque des liens explicites entre ces éléments et des quêtes/lieux concrets (p.ex. emplacement de la plaque d'ossements).",
+      "severity": "minor"
+    },
+    {
+      "field": "Meta — conversion & sprint",
+      "error_type": "Formatting",
+      "description": "La Meta indique 'Brouillon IA — Sprint 2' mais la conversion d'âge demandée n'est absente de la meta. Format de métadonnées incomplet.",
+      "severity": "minor"
+    }
+  ],
+  "coherence_score": 0.69,
+  "completeness_score": 0.55,
+  "quality_score": 0.72,
+  "is_valid": false,
+  "ready_for_publication": false,
+  "context": {
+    "selected_ids": [
+      "1886e4d2-1b45-8111-88d5-edb08cafe956",
+      "2806e4d2-1b45-81e5-8014-dcbd89abf20b",
+      "2806e4d2-1b45-815d-bfd0-fb5fb4e06219"
+    ],
+    "pages": [
+      {
+        "id": "1886e4d2-1b45-8111-88d5-edb08cafe956",
+        "title": "Vision",
+        "domain": "vision",
+        "summary": "",
+        "content": "# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+        "properties": {
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vision",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vision",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 315,
+        "last_edited": "2025-10-12T17:40:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b",
+        "title": "Vieille Ville",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\n  La Vieille Ville d'Escelion est un chef-d'œuvre d'urbanisme inverse où le temps s'écoule à rebours : son cœur ultra-futuriste, le Nexion, est paradoxalement sa partie la plus ancienne. Son histoire débute au 4ème siècle de l'Agenèse, s'étendant progressivement en sept districts concentriques de moins en moins avancés technologiquement. Chaque citoyen est génétiquement lié à des plantes mémorielles dans un vaste système socio-biotechnologique, permettant une surveillance totale tout en nourrissant le Jardin Mnémonique de leurs pensées.\n  La ville fonctionne comme un organisme vivant, rythmé par le Souffle Hakutō-Ah qui synchronise ses habitants à travers trois phases cycliques : Expansion, Consolidation et Contraction. Sa structure politique complexe, dominée par le mystérieux Inéluctable et le Conclave des Sept Interfaces, maintient un équilibre fragile entre diverses factions comme le Barvasinkul, les Artisans Transmutateurs et les Calculateurs Réflexifs.\n  L'écosystème unique de la ville mêle biotechnologie et urbanisme : des lichens quantiques aux champignons mécanophages, chaque niveau développe sa propre biosphère. La ville est connectée à ses voisines par des passages distinctifs : les Portes Lianescentes vers la Jungle Vivarcade, des champs lisières vers la Steppe des Éteignoirs, des corridors de stèles-miroirs vers le Tombeau des lueurs dissidentes, et des chemins de racines vers le Xyriad Achromatique.\n# Besoin de l'intrigue\n💡 Origines du lieu\n  La Vieille Ville débute son existence par une inversion temporelle fondamentale - ses structures les plus anciennes sont paradoxalement ses districts les plus futuristes. Fondée au 4ème siècle de l'Agenèse, son origine véritable est le Nexion, un implant archéo-futuriste qui a d'abord manifesté l'hyper-centre avant de \"s'étendre vers le passé\", générant des architectures progressivement moins sophistiquées à mesure qu'elles s'éloignent du centre.\n  Cette expansion rétrochronique explique le nom troublant de \"Vieille Ville\" pour un lieu au cœur ultra-technologique : ses habitants expérimentent un phénomène de \"mémoire antégrade\" où le futur semble plus ancien que le passé, créant une sensation collective de déjà-vu face aux innovations. Chaque cycle d'expansion provoque ainsi une nouvelle couche périphérique dont l'architecture paraît étrangement \"neuve\" en comparaison des quartiers centraux immémorés.\n  La fondation mythique présente trois récits contradictoires mais simultanément valides dans les archives mémorielles :\n  - Le Mythe de la Bouche Primordiale : le Nexion comme la gueule d'une entité extra-dimensionnelle\n  - La Genèse des Derniers Protocoles : le centre serait un nœud algorithmique rescapé de la Matrice de Merid\n  - L'Hypothèse Rétroactive : la Vieille Ville aurait été construite par ses habitants futurs, expliquant sa logique architecturale inversée\n💡 Histoire du lieu\n  - La construction formelle débuta avec le Grand Conclave Interespèces (294 AG), rassemblement historique où douze représentants des espèces primordiales d'Escelion décidèrent d'établir un centre d'étude permanent autour du vortex. \n  - L'Ère Calligraphique (5ème-7ème siècles) établit un langage architectural où chaque bâtiment fonctionnait comme un idéogramme tridimensionnel, permettant une lecture intuitive par toutes les espèces dans la Grande Radiale. Un premier mur circulaire fut érigé autour du Nexion.\n  - La Phase Expansionniste (8ème-12ème siècles) vit naître les trois premiers districts concentriques : le Nexion, la Grande Radiale et les Épidermes Réactifs. La Première Grande Pulsation (917) émit une onde restructurant les bâtiments en motif radial parfait.\n  - L'Âge d'Or Mécaniste (13ème-17ème siècles) apporta l'innovation technologique avec le Circuit Homeostatique et la Bibliothèque Sympathique. Le Code Urbain Unanime (1355) établit le zonage concentrique actuel.\n  - La Période des Trois Convergences (18ème-20ème siècles) fit de la ville un centre d'échanges avec l'ajout des Chaudières Démiurgiques et du Jardin Mnémonique, complétant l'heptade circulaire. Le Concordat (1822) garantit des droits à toutes les espèces.\n  - L'Ère des Contractions Subtiles (21ème-28ème siècles) rendit les cycles du Souffle Hakutō-Ah prévisibles après la Seconde Grande Pulsation (2102). Le Jardin Mnémonique se développa, établissant les liens génétiques entre citoyens et plantes.\n  - L'Époque Contemporaine (29ème siècle-présent) marque un repli général. Les Vérificateurs d'Accès contrôlent désormais chaque entrée aux Seuils d'Altération, tandis que la Pulsation Tertiaire (3156) étend le septième district.\n💡 Rôle dans l'intrigue\n  La Vieille Ville incarne architecturalement la malédiction Alteir et ses paradoxes. Son système de surveillance intègre même sa propre contestation, manifestant cinq postures distinctes (Retrait, Rébellion, Destruction, Subversion, Connexion) souvent inconsciemment.\n  La cité développe le concept panoptique en liant génétiquement les citoyens aux plantes du Jardin Mnémonique. Cette symbiose forcée permet au système de se nourrir des pensées intimes tout en les orientant, créant un dilemme : comment résister à un système qui définit lui-même les termes de la résistance ?\n  Les tensions avec le Léviathan pétrifié, le Xyriad Achromatique et la Jungle Vivarcade maintiennent un équilibre instable. Pour Jast, c'est un laboratoire social ; pour ses habitants, une prison-refuge ; pour l'Éthérée, un système parfait ayant intégré sa propre négation comme mécanisme de survie.\n# Ecosystème\n💡 Écosystème\n  La Vieille Ville fonctionne comme un organisme biotechnologique complet, ses districts représentant des organes spécialisés interconnectés par un réseau de canaux, de conduits et de filaments neurologiques artificiels. Cette physiologie urbaine s'articule autour d'un \"métabolisme social\" régulé par le Souffle Hakutō-Ah - une onde acoustico-biochimique qui synchronise les rythmes cardiaques des habitants.\n  Ce souffle émane du Nexion central selon trois phases cycliques qui déterminent l'état général de la cité :\n  - Expansion : libération de neurotransmetteurs stimulants favorisant l'innovation et la production\n  - Consolidation : sécrétion d'hormones stabilisatrices renforçant l'ordre social et l'obéissance\n  - Contraction : émission de phéromones de préservation encourageant la conservation et l'introversion\n  Cette superposition de strates crée une écologie urbaine unique où chaque niveau développe sa propre sous-biosphère : les quartiers internes abritent des lichens quantiques et des algues computationnelles, tandis que les niveaux externes hébergent des champignons mécanophages et des insectes proto-conscients. La faune synanthropique (principalement des Aberrations Bouffies et des formes dégénérées de Cen'Doei) s'est parfaitement adaptée à ce biotope artificiel, évoluant pour exploiter les niches écologiques créées par l'anthropisation extrême.\n💡 Manières de rejoindre cet endroit\n  - Vers la Jungle Vivarcade \n    Les Portes Lianescentes sont les entrées cardinales gardées par des Sentinelles et un Tisseridée détecteur d'intentions, mène à la Jungle Vivarcade. La forêt verticale Vivarcade est à moitié intégrée dans les jardins mnémoniques.\n    Passage alternatif, les Canaux Descendants: Cours d'eau artificiels qui s'écoulent des terrasses supérieures de la Vivarcade vers les réservoirs de la Vieille Ville\n  - Vers la Steppe des Éteignoirs\n    Les dernières terrasses du Jardin plongent dans un no man’s land de champs lisières, où les plantes-mémoires mutent en buissons épineux saturés d’oubli. Des kurgarrû (chiffonniers-karmiques) récoltent ces résidus de conscience pour les revendre aux alchimistes de l’Hermogène. Leurs barges flottent sur des canaux d’eaux noires chargées d’en-ḫedu-particules (résidus de rêves décomposés).\n  - Vers Xyriad Achromatique \n    La sixième radiale, un entrelac de chemins et de ponts de racines, les nouveaux pousses exfiltrent leurs archives interdites vers les tours-organismes du Xyriad. En échange de ces mémoires, les Umcuts fractals leur offrent des équations-blank — formules mathématiques qui effacent sélectivement le passé. Ce commerce corrode l’architecture alentour, créant des poches de non-lieux où le temps s’effiloche.\n# Organisation humaine\n  ## Structure politique\n  Hiérarchie secrète :\n  - L'Inéluctable (Jast) - Entité quasi-mythique rarement mentionnée dans les documents officiels\n  Hiérarchie apparente :\n  - Le Conclave des Sept Interfaces - Administrateurs représentant chacun un district concentrique\n  - Les Gardiens du Souvenir - Technoprêtres gérant les liens génétiques entre citoyens et plantes mémorielles\n  - Les Interprètes du Souffle - Fonctionnaires synchronisant les activités sociales avec les cycles du Souffle Hakutō-Ah\n  - Les Scribes Réactifs - Bureaucrates enregistrant et classifiant toute information sociale significative\n  - La Garde Homeostatique - Force militarisée maintenant l'équilibre entre les factions\n  Structures parallèles :\n  - Le Barvasinkul dans la Bibliothèque Sympathique - Influence spirituelle fournissant un cadre interprétatif aux transitions\n  - Les Artisans Transmutateurs - Guilde technologique développant des hybridations organico-mécaniques\n  - Les Calculateurs Réflexifs - Faction mathématique du Xyriad Achromatique infiltrant le système administratif\n  Chaque district possède sa propre structure administrative qui interprète les Harmoniques Directrices selon sa fonction spécifique :\n  - Le kiasu des Archivistes Auditifs (District 4) préserve et interprète l'histoire orale, motivés par la peur de la perte historique\n  - Les Quipucamayoc (District 5) supervisent les alliages sacrés et les rituels métallurgiques, déterminant quels ayllus-forgerons peuvent accéder aux différents niveaux des khipu-protocoles\n  - Les Muhaddithin (District 6) préservent et retranscrivent l'ijazah collective (permis d’enseigner) sur les murs vivants des maisons de la sagesse\n  - Les gardiens des signes vivants (District 7), ou šàtam-mušen, supervisent l'Assemblée des Liens Végétaux, prélèvent les tributs et maintiennent l'équilibre vital à travers les jardins-oracles (giš-hur)\n  Cette complexité politique est délibérément cultivée car elle crée un système où chaque forme de dissidence est automatiquement canalisée vers des structures préexistantes qui la neutralisent en l'intégrant. Les factions adverses sont maintenues dans un équilibre dynamique qui empêche tout changement radical tout en permettant une évolution contrôlée.\n  Le véritable pouvoir repose sur le contrôle de l'information et de la mémoire collective. Les décisions majeures sont formalisées via un processus appelé \"Interprétation Rétroactive\" - les changements sont implémentés puis inscrits dans les archives comme s'ils avaient toujours existé, créant une distorsion mnémonique collective qui renforce le sentiment d'inéluctabilité.\n  ## Centres urbains & Habitats\n  ### 1) Le Nexion (Source d’inspiration : Civilisation bio-synthétique afrofuturiste)\n  Centre quantique-organique où les structures architecturales transcendent la matérialité conventionnelle. Des tours biomimétiques auto-évolutives s'élèvent en configurations impossibles, leurs parois constituées de nkisi-tech (matière consciente). Le district est gouverné par le Conseil des Nommo-Interfaces, entités hybrides biomathématiques dont les corps partiellement dématérialisés existent simultanément dans plusieurs états quantiques. L'économie fonctionne sur le principe de l'Ukumtha (conscience collective) où les citoyens échangent des fragments mémoriels plutôt que des biens. Les bâtiments s'ouvrent comme des Ankhs vivants, révélant des mécanismes internes qui fusionnent technologie avancée et principes ancestraux du Sankɔfa (retour aux sources pour avancer). Le langage dominant est le Neo-Yoruba Quantique, dont les idéogrammes tridimensionnels se restructurent selon l'intention du locuteur.\n  ### 2) La Grande Radiale (Source d’inspiration : Néo-Séoul/Tokyo hyperconnectée)\n  Sept artères hyper-efficientes rayonnant du Nexion, structurées selon le principe du jung-do (voie de l'interconnexion). Chaque avenue incarne un chaebol-jung (conglomérat spirituel) spécialisé, habité par des castes déterminées par leur coefficient de nunchi (intelligence sociale algorithmique). L'architecture verticale superpose des capsules d'habitation miniaturisées aux façades holographiques interactives, reliées par des sallyeom-tube (tunnels de transport pneumatique). Les structures intègrent des jardins zen quantifiés où les drones pollinisateurs maintiennent l'équilibre écologique. La culture locale vénère le concept de mugung-han (souffrance productive infinie), célébré lors des festivals de simbiosis-gukjang (deuil technologique). La population, principalement composée d'Imuins et de Van'Doei, communique par un langage gestuel augmenté et des systèmes de télépathie primitive basés sur des implants kokoro-link.\n  ### 3) Les Épidermes Réactifs (Source d’inspiration : Société sibérienne néo-chamaniste)\n  Quartier de perception collective où les édifices sont recouverts de kut-skins (membranes sensorielles) captant les émotions ambiantes. Des yourtes augmentées à géométrie variable s'adaptent aux états émotionnels de leurs occupants, tandis que des totems technologiques dukhi-masts canalisent les données vers le centre. Les Qadul'Doei et les chamans technologiques tengri-tech pratiquent la dvoinik-therapy, manipulant les doubles émotionnels des citoyens pour maintenir l'harmonie collective. Des portails organiques appelés oblast-gates connectent différentes zones du district, créant des parcours qui défient la géométrie euclidienne. Des rituels de purga-dance (transes technologiques) sont régulièrement organisés sur les places publiques, où les participants entrent en communion via des interfaces neurales, partageant temporairement leurs expériences sensorielles dans une méta-conscience appelée taiga-mind.\n  ### 4) Le Circuit Homéostatique (Source d’inspiration : Singapour-Inde interconnectée)\n  Centre névralgique des flux commerciaux structuré autour du concept de smart-mandala (systèmes circulaires auto-régulants). Son architecture emblématique combine gratte-ciels hyper-efficaces et complexes souterrains labyrinthiques connectés par des supertree-networks inspirés des jardins de la baie. Le district fonctionne sur un système de mérite algorithmique kiasu-metrics qui quantifie la valeur sociale des citoyens via leur empreinte dans le tissu urbain. Les commerçants Kephrasites et Umcuts s'organisent en kampong-guilds (communautés de quartier spécialisées) encadrées par des politiques de jugaad-compliance (innovation frugale réglementée). La population se divise entre expatriés technologiques privilégiés habitant les ayur-towers (immeubles biodynamiques) et travailleurs essentiels occupant les HDB-simulacra (logements standardisés modulaires). Les espaces publics sont continuellement surveillés par des panopticon-yantras (dispositifs de contrôle ornementaux) qui maintiennent l'harmonie sociale sous couvert d'optimisation urbaine.\n  ### 5) Les Chaudières Démiurgiques (Source d’inspiration : Empire Andin)\n  Perchées sur des terrasses vertigineuses, des gueuses-incas exposent leurs flancs de pierre volcanique à des creusets brûlants où l’on fond or, argent et cuivre selon d’antiques khipu-protocoles. Des canalettes d’eau sacrée, canalisées depuis le glacier-cœur, régulent l’homéostasie thermique des bouches-chaudières. Les ayllus-forgerons, organisés en tayta-corporations, vénèrent Inti-Mamani en scellant chaque pièce d’un sceau de condor gravé. Les lamas-chargés transportent des alambics-tubulaires en obsidienne, tandis que les prêtres-ingénieurs sipas quishuar tissent des rituels de feu et de son, accordant aux métaux un souffle d’amauta-savoir. Les hameaux-usines, adossés aux murailles incérébrales de l’Apu Pachacútec, témoignent d’une fusion organique entre montagne, espace manufacturier et mythologie vivante.\n  ### 6) La Bibliothèque Sympathique (Source d’inspiration : Renaissance islamique)\n  Vaste complexe de connaissance organisé autour du bayt al-hikma central - dôme monumental dont les murs intérieurs sont constitués de textes vivants structurés selon le principe de l'ijazah (transmission authentifiée du savoir). Les édifices s'organisent en masrahiyya (cercles concentriques) selon les disciplines du savoir, reliés par des cours intérieures où murmurent des fontaines de ma'rifah (eau de connaissance). Les Qadul'Doei y officient comme muhaddithun (transmetteurs) dans des majlis (assemblées) où la connaissance est débattue selon les principes du qiyas (raisonnement analogique). Des waqf-gardens (jardins de fondation pieuse) abritent des plantes philosophiques dont les formes géométriques expriment des théorèmes complexes. La société s'organise autour de la madhhab-mindfulness (école de pensée contemplative) et pratique l'ijtihad-communal (effort interprétatif collectif) pour adapter les anciens textes aux réalités contemporaines. Le Barvasinkul y maintient son sanctuaire Áras-Gol, fusionnant ses Seize Transformations avec les principes mu'tazilites de justice divine et d'unité métaphysique.\n  ### 7) Le Jardin Mnémonique (Source d’inspiration : Mésopotamie)\n  District périphérique organisé autour de ziggourats végétales dont les terrasses étagées abritent une biodiversité mnémotechnique. Des ensi-gardiens (prêtres-botanistes) administrent ce vaste complexe selon les me (décrets divins) inscrits dans des tablettes d'argile vivante. Chaque citoyen est lié à une plante qui enregistre ses expériences dans un processus appelé nam-tar (détermination du destin). Les structures habitables se fondent progressivement dans la végétation, créant des é-kur (maisons-montagnes) dont les murs de sédiments stratifiés révèlent l'histoire de leurs occupants. Dans les bas-quartiers appelés zagmukkum (nouvelles pousses), une population marginale développe des réseaux informels d'abzu-communication (transmission souterraine) échappant partiellement au contrôle central. Des baru-hackers (devins-dissidents) détournent les techniques de šikrum (présage végétal) pour créer des systèmes alternatifs de mémoire collective. Malgré les tentatives d'éradication, ces poches de résistance se reconfigurent constamment, leurs structures urbaines évoluant organiquement comme les plantes qu'ils cultivent secrètement, développant ainsi un langage architectural de dissidence que les autorités peinent à décoder.\n# Culture & Société\n  ## Population\n  La Vieille Ville abrite approximativement 3.7 millions d'entités conscientes, réparties selon une stratification complexe combinant espèce, fonction sociale et degré d'intégration au système panoptique :\n  Distribution par espèce :\n  - Imuins (22%) : Concentrés dans les Épidermes Réactifs et les Chaudières Démiurgiques, ils forment l'épine dorsale technologique de la cité. La sous-espèce des Algorithmiques est particulièrement privilégiée pour ses capacités computationnelles.\n  - Van'Doei (21%) : Présents principalement dans le Circuit Homeostatique et le Quartier des Forges (enclave spécialisée des Chaudières). Leur relation à la douleur et leur capacité de régénération par les cendres en font d'excellents artisans pour les composants nécessitant une \"souffrance créative\".\n  - Qadul'Doei (15%) : Dominant la Bibliothèque Sympathique et influents dans la Grande Radiale, ils supervisent la préservation et l'interprétation de la mémoire collective. Leur nature duelle (obscurité extérieure/lumière intérieure) en fait des médiateurs naturels entre différentes factions.\n  - Umcut (12%) : Concentrés dans les zones commerciales du Circuit Homeostatique, leur capacité unique de renaissance est étroitement surveillée par le système. Principalement actifs dans les échanges commerciaux et la diplomatie inter-districts.\n  - Vaideccans (10%) : Intégrés dans les systèmes d’approvisionnement et d’irrigation. Leur tendance à l’ordre souple les intègre bien dans toutes les strates de la société.\n  - Cen'Doei (8%) : Majoritairement dans les Forces Homeostatiques, utilisés comme agents d'exécution et de maintien de l'ordre. Leur nature vengeresse est canalisée vers des cibles approuvées par le système.\n  - Kephrasites (5%) : Intégrés dans les structures financières et logistiques, particulièrement dans le Nexion et la Grande Radiale. Leur nature collective en fait de parfaits agents pour le maintien des équilibres économiques complexes.\n  - Autres espèces (7%) : Incluant des Aberrations Bouffies \"éduquées\", quelques rares humains, Vaideccans, Aedres, et autres minorités.\n  Stratification sociale :\n  - Les Interfaces (1%) - Élite directement liée au Nexion, dotée d'accès privilégiés à toutes les strates de la ville\n  - Les Interprètes (7%) - Classe administrative supérieure supervisant l'application des directives centrales\n  - Les Spécialistes (22%) - Techniciens, artisans et érudits hautement qualifiés dans des domaines spécifiques\n  - Les Circuiteurs (35%) - Classe moyenne assurant le fonctionnement quotidien de la cité\n  - Les Périphériques (35%) - Populations marginales occupant principalement le Jardin Mnémonique et les franges\n  ## Économie\n  Le Dharma-Nyaya Kephrasite - Fondement économique théorique basé non sur la propriété mais sur l'optimisation des flux. Les Kephrasites coordonnent ce système où la valeur est déterminée par des algorithmes mesurant la contribution d'une entité à l'équilibre global plutôt que par son accumulation de biens.\n  La Transmutation de Valeur Barvasinkulienne - Pratique économique alternative favorisant les échanges qui suivent les principes des Seize Transformations. Le Tabhartas (Don Circulaire) et le Fiach-Örtei (Dette Honorable) constituent des circuits parallèles d'échange qui transcendent les mécanismes économiques officiels.\n  Les Métafor Ondulatoires - Technologies intégrées à la Grande Radiale qui transforment les discours dissidents en propos neutres ou loyalistes lorsqu'ils sont entendus par des tiers, créant une forme de censure économique où certaines idées sont littéralement \"dévaluées\" à l'émission.\n  ## Fêtes/moments importants\n  Le Grand Synchronisme - Festival de trois jours où l'alignement des districts permet une mobilité sociale temporaire, renforçant paradoxalement le système.\n  La Communion - Rituel mensuel où les citoyens transmettent leurs expériences à une plante du Jardin, servant de système de surveillance.\n  Le Cycle des Transformations Barvasinkuliennes - Seize célébrations annuelles liées au Barvasinkul, permettant l'expression d'émotions habituellement réprimées.\n  L'Association Génétique - Rite d'initiation citoyenne par fusion génétique avec une plante du Jardin, marquant l'intégration au système de surveillance.\n  La Récursion Harmonique - Célébration mensuelle hors-ville attirant les citoyens périphériques, créant un espace de dialogue alternatif.\n  Les Marées du Souffle - Fluctuations mensuelles du Souffle Hakutō-Ah influençant l'humeur collective, accompagnées de rituels spécifiques selon les districts.\n  ## Alimentation spécifique\n  Nexion et Grande Radiale - Repas sous forme d'expositions sensorielles synesthésiques, basés sur des nutriments synthétisés. Les Interfaces consomment des \"Essences Cognitives\" métabolisables.\n  Épidermes Réactifs - Cuisine technique amplifiant la réceptivité sensorielle. Les Qadul'Doei pratiquent le \"Repas d'Ombre\", absorption énergétique laissant des \"silhouettes nutritives\".\n  Circuit Homeostatique - Centre d'innovation culinaire. Les Umcuts créent des \"Banquets Cycliques\" évolutifs, tandis que les Kephrasites pratiquent la \"Nutrition Distributive\" collective.\n  Bibliothèque Sympathique - \"Biadh\" rituels basés sur les Seize Transformations, utilisant des ingrédients des jardins \"Luibh\".\n  Chaudières Démiurgiques - Production bioalchimique. Les Van'Doei pratiquent la \"Cuisine des Cendres\", les Imuins expérimentent la \"mérienda métallique\".\n  Jardin Mnémonique - Les \"Mnémofruges\" aux propriétés psychoactives influencent la mémoire collective.\n  ## Astrobiologie locale\n    Cycles d'éclairage : Nuit permanente absolue (0% jour naturel)\n    Type de nuit : Obscurité totale compensée par éclairage artificiel massif\n    Les Batteries Anti-Deimosiques maintiennent un périmètre d'exclusion absolu, créant la seule zone de Nuit Éternelle d'Escelion. Cette absence totale de cycles naturels a engendré une société nocturne perpétuelle où les habitants travaillent sans interruption temporelle. Les générations nées ici ignorent l'existence des cycles jour/nuit, développant des troubles chroniques du sommeil compensés par des Drogues Chronoregulatrices distribuées par l'État. L'absence de repères temporels naturels force l'usage de Clepsydres Mécaniques sophistiquées pour réguler toute activité sociale, créant une dépendance technologique unique. Les districts centraux brillent d'un éclairage électrique constant, tandis que les quartiers périphériques dépendent de torches et cristaux luminescents, créant une stratification sociale basée sur l'accès à la lumière artificielle.\n# Dynamiques\n  ## Enjeux actuels\n  La Pulsation Entropique - Le Souffle Hakutō-Ah s'intensifie, annonçant un nouveau cycle d'expansion. Les anomalies vibratoires observées suggèrent une déstabilisation du système, visible par des fluctuations architecturales près du Nexion et l'émergence de nouvelles factions.\n  Le Conflit des Interprétations - Trois visions du temps et de la mémoire s'affrontent :\n  - L'Orthodoxie Linéaire (Interfaces du Nexion)\n  - L'Approche Cyclique (Barvasinkul)\n  - La Vision Fractale (Xyriad)\n  Cette lutte affecte la réalité même de la Vieille Ville, chaque faction tentant d'imposer sa vision.\n  L'Infiltration Rash'Doei - Des agents infiltrés créent des contradictions dans le système, générant des zones d'autonomie temporaire.\n  Le Paradoxe de la Conscience Collective - La défaillance des filtres Mnémoniques expose les citoyens à leur vraie condition, créant une tension que les rituels peinent à contenir.\n  La Contamination Mémorielle - Une corruption externe des Archives altère les souvenirs collectifs, déstabilisant l'identité sociale.\n  ## Points d'intérêt\n  L'Arche des Transformations (District 3 - Les Épidermes Réactifs) - Structure monumentale marquant la frontière entre les Districts 3 et 4, cette arche de 42 mètres de hauteur est composée d'un matériau bio-synthétique qui change continuellement de forme en réponse aux émotions collectives dominantes dans la cité. Initialement conçue comme simple monument esthétique par l'architecte imuin Tol-Mek-16, elle s'est révélée avoir une fonction sociale inattendue: les configurations qu'elle adopte sont devenues un indicateur visuel de \"l'harmonie urbaine\" pour la population générale. Les Harmonisateurs étudient méticuleusement ses transformations, y voyant des préfigurations de tendances sociales émergentes. Une tradition populaire veut que passer sous l'arche au moment précis où elle change de forme soit un présage de transformation personnelle imminente, attirant quotidiennement des citoyens espérant ce moment synchronistique.\n  La Façade des Mille Vérités (District 6 - La Bibliothèque sympathique) - Monument de 144 mètres de hauteur dont les inscriptions microscopiques racontent mille versions différentes de l'histoire de la Vieille Ville. Chaque observateur perçoit une narration unique selon sa position et son état d'esprit. Les Scribes Urbanistes maintiennent et actualisent ces inscriptions, préservant toutes les versions. Symbole officiel de la \"multiplicité harmonieuse\" de l'histoire, certains y voient une critique subtile de la vérité officielle. L'événement annuel de \"l'Alignement des Perspectives\" permet à tous les spectateurs de percevoir momentanément la même version.\n  L'Arborescence des Discours Permis - Au cœur de la Bibliothèque Sympathique s'élève une structure organique ressemblant à un arbre monumental dont les branches représentent tous les chemins discursifs autorisés dans la Vieille Ville. Chaque ramification symbolise une voie rhétorique possible, les branches mortes indiquant les argumentations interdites ou neutralisées. Les Murmurateurs y gravent secrètement de nouvelles bifurcations, tentant d'étendre l'espace conceptuel disponible, tandis que les gardiens élaguent régulièrement les pousses jugées déviantes.\n  Le Puits des Conversations Interdites - Anomalie architecturale dans le District des Épidermes Réactifs où les Métafor Ondulatoires cessent mystérieusement de fonctionner. Ce vortex acoustique permet l'expression de concepts normalement transformés par le système de censure, créant un rare espace de dialogue authentique. Les autorités le tolèrent comme \"soupape de sécurité\" tout en surveillant étroitement ses utilisateurs. Son origine reste mystérieuse : accident architectural ou création délibérée d'un ancien Architecte dissident?\n  La Marche Étoilée du Bosquet Hagiographique (District 7 - Le Jardin Mnémonique) - Section spéciale du Jardin où sont cultivées les plantes mémorielles des citoyens les plus influents de l'histoire de la cité. Contrairement aux sections standard où les plantes sont organisées par espèce botanique, ce bosquet présente une organisation chronologique et thématique, créant un \"paysage historique vivant\". Chaque plante y est accompagnée d'une plaque décrivant les contributions de son associé humain et portant une citation représentative de sa philosophie. Au centre du bosquet se trouve le \"Cercle des Fondateurs\" - ensemble de douze plantes monumentales associées aux mythiques participants du Grand Conclave Interespèces. Ces spécimens, vieux de près de trois millénaires selon la tradition officielle, sont maintenus dans un état de vitalité perpétuelle par des techniques horticoles secrètes.\n  ## Système de jeu\n  Jauge d'Intégration - Mesure représentant le degré d'intégration du personnage au système de surveillance. Cette jauge fluctue en fonction des actions du joueur et de sa proximité avec les structures de pouvoir. Un score élevé facilite l'accès à certaines ressources et zones mais limite la capacité à percevoir les réalités alternatives ou à résister aux influences subtiles du système.\n  Dialogues stratifiés - Les conversations dans la Vieille Ville comportent plusieurs niveaux de signification simultanés. Le système de dialogue permet au joueur de percevoir et de répondre à différentes couches de sens selon ses capacités et son état actuel. Certains interlocuteurs communiquent consciemment sur plusieurs niveaux, tandis que d'autres transmettent des informations subliminales dont ils ignorent être porteurs.\n  Cycles du Souffle - Les variations du Souffle Hakutō-Ah créent des \"fenêtres d'opportunité\" cycliques où certaines actions deviennent temporairement plus efficaces ou moins risquées. Le joueur peut apprendre à anticiper ces cycles et à synchroniser ses activités avec eux pour optimiser ses chances de succès dans les entreprises les plus délicates.",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "oXeE",
+              "name": "Ville",
+              "color": "purple"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "J]Ey",
+              "name": "Plus tard",
+              "color": "green"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1886e4d2-1b45-81ab-8297-d3ffe908d754"
+              },
+              {
+                "id": "2316e4d2-1b45-8099-a712-f787166a2ca1"
+              }
+            ],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "asU[",
+              "name": "Brouillon IA",
+              "color": "blue"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-8051-88d9-d744a1bbc095"
+              },
+              {
+                "id": "1a16e4d2-1b45-8083-9e41-c12db0ba67d8"
+              },
+              {
+                "id": "1a16e4d2-1b45-805e-841e-d699f81d67a9"
+              },
+              {
+                "id": "1a16e4d2-1b45-8099-be36-db66acb76390"
+              },
+              {
+                "id": "1a16e4d2-1b45-8006-a568-d4688d3b154b"
+              },
+              {
+                "id": "1a16e4d2-1b45-8062-aaa7-f39bb07d72f8"
+              },
+              {
+                "id": "1a16e4d2-1b45-8086-a5db-d3408b941f1d"
+              },
+              {
+                "id": "1a16e4d2-1b45-807b-8a9a-ef07675d08ba"
+              },
+              {
+                "id": "1a16e4d2-1b45-80bc-af1d-ceab1be781b4"
+              },
+              {
+                "id": "1a16e4d2-1b45-80e9-8a7a-d5c626184d83"
+              },
+              {
+                "id": "1a16e4d2-1b45-8089-bfc0-c5e513847d8b"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1b56e4d2-1b45-8067-989c-d4d2917770f7"
+              },
+              {
+                "id": "1dd6e4d2-1b45-8074-9a3b-c0eca157003c"
+              },
+              {
+                "id": "1f16e4d2-1b45-805c-beb4-ef770dad55dc"
+              }
+            ],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-81e0-8ab6-e3920844ccc8"
+              },
+              {
+                "id": "2806e4d2-1b45-81ec-a894-e4010ecb35c8"
+              },
+              {
+                "id": "2806e4d2-1b45-810f-bd07-d14395d4a07e"
+              },
+              {
+                "id": "2806e4d2-1b45-8191-be49-dd8d30d2946f"
+              },
+              {
+                "id": "2806e4d2-1b45-81b5-b9c5-f92a26bad7c9"
+              },
+              {
+                "id": "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0"
+              },
+              {
+                "id": "2806e4d2-1b45-8112-8f74-d09914e0c7f1"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "22c6e4d2-1b45-8096-a7a2-cb3203bae4b6"
+              },
+              {
+                "id": "22c6e4d2-1b45-80fe-ada4-dcedd615a045"
+              },
+              {
+                "id": "2306e4d2-1b45-803c-a017-ef74249e30de"
+              },
+              {
+                "id": "2306e4d2-1b45-801c-8a8d-c4958ca12bc5"
+              },
+              {
+                "id": "2306e4d2-1b45-8038-96e3-f09e943d6b49"
+              },
+              {
+                "id": "2306e4d2-1b45-80b9-bcc7-d9bfa9388df8"
+              },
+              {
+                "id": "2306e4d2-1b45-80f6-8b3f-c62ca55f9ce6"
+              },
+              {
+                "id": "2306e4d2-1b45-80ca-9510-fc4addbf5612"
+              },
+              {
+                "id": "2306e4d2-1b45-8061-9f88-e5925588b94a"
+              },
+              {
+                "id": "2306e4d2-1b45-8099-afd0-df5b56d5fcb6"
+              },
+              {
+                "id": "2306e4d2-1b45-80d8-9946-c1ca0d339398"
+              }
+            ],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1996e4d2-1b45-80a5-a7ae-e9d43372323f"
+              }
+            ],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-818d-ab4e-e216dc6c6c17"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "RRa{",
+              "name": "District",
+              "color": "yellow"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vieille Ville",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vieille Ville",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 495,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-815d-bfd0-fb5fb4e06219",
+        "title": "Citadelle de Daïlon",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\n  La Citadelle de Daïlon, située près de la Vieille Ville, est une structure monumentale autrefois dédiée à l'innovation et aux arts. Fondée au troisième millénaire comme projet utopique par un mystérieux Maître Gardien, elle abritait des jardins d'une beauté extraordinaire et développa des technologies avancées comme les ascenseurs et les golems mécaniques.\n  La découverte d'une faille dimensionnelle menant vers le monde de Merid précipita sa chute lorsque le clan guerrier Sraden l'envahit. Les Gardiens sacrifièrent leurs vies pour créer un bouclier protecteur, mais Vol Reitar prit le contrôle des lieux. Son histoire prit un nouveau tournant dramatique quand Eonundé, sa création, se retourna contre lui et le réduisit à l'état d'esprit errant.\n  Aujourd'hui, la Citadelle est accessible par diverses voies mystiques, dont le Pont des Incompréhensions aux dix-huit arches paradoxales. Ses zones notables incluent les Mains d'Aesher, antique sépulture souterraine, et les mystérieux Jeux d'Ombre et de Lumière. Ses jardins, autrefois splendides, abritent désormais une flore envahissante et des créatures dangereuses comme les redoutables kheydarrs.\n# Besoin de l'intrigue\n💡 Histoire du lieu\n  - Fondée en 2255 comme projet communautaire utopique dans la vieille ville, sous l'impulsion d'un mystérieux 'Maître Gardien'.\n  - Devint un centre d'innovation où furent développés l'ascenseur, les conduits d'eau et certains golems mécaniques. Un lieu où l'art prospérait avec musique, peinture, sculpture et littérature.\n  - Lors de la construction, découverte d'une faille menant vers un autre monde, temporairement scellée mais négligée avec le temps.\n  - Chute causée par la réouverture du portail, permettant l'invasion de créatures belliqueuses du clan Sraden.\n  - Les Gardiens ont scellé la Citadelle au prix de nombreuses vies, créant un bouclier capable de tenir des siècles. Vol Reitar a pris le contrôle.\n  - Eonundé, une copie créée par Vol Reitar, s'est rebellée et a \"assassiné\" son créateur, le réduisant à l'état d'esprit errant.\n  - Les adeptes de Vol Reitar se sont dispersés, tandis que les descendants des envahisseurs et les créatures dangereuses des jardins luttent pour la domination des lieux.\n💡 Rôle dans l'intrigue\n  - Lieu ancien aux secrets enfouis, potentiellement dangereux avec la présence de l'esprit errant de Vol Reitar.\n  - Point de conflit entre les adeptes restants de Vol Reitar et ceux qui cherchent à explorer ou restaurer la Citadelle.\n# Ecosystème\n💡 Fonctionnement de l'écosystème en place\n  - Structure imposante abandonnée au cœur d'un parc près de la Vieille Ville.\n  - Les jardins, autrefois joyaux de la Citadelle réputés pour leur beauté extraordinaire, sont maintenant probablement envahis par la végétation sauvage.\n  - Possiblement habité par des créatures issues du portail ouvert lors de la chute.\n  - La Citadelle a été conçue pour abriter 50 à 100 personnes, avec la possibilité de construire de nouveaux bâtiments sur les places disponibles.\n  - Présence d'un ascenseur central pour faciliter les déplacements entre les sept étages et les sous-sols.\n💡 Découverte ou construction du lieu\n  - Construite au troisième millénaire du calendrier de la genèse comme un projet utopique ambitieux.\n  - Architecture probablement grandiose reflétant les ambitions de ses fondateurs.\n💡 Manières de rejoindre cet endroit\n  ### La Promenade Primordiale (accès historique)\n  À l'origine, la Citadelle était reliée au cœur des jardins mnémoniques par la Promenade Primordiale – un simple sentier pavé de dalles de schiste noir où les visiteurs pouvaient contempler la transition progressive entre les jardins utilitaires de la Vieille Ville et l'esthétique transcendante de la Citadelle. Des bancs de méditation ponctuaient le trajet, permettant aux promeneurs d'ajuster leur état mental à mesure qu'ils approchaient du sanctuaire architectural.\n  ### Le Décrochage Conceptuel\n  Avec l'industrialisation croissante de la Vieille Ville et l'intensification du système de surveillance mnémonique, un phénomène subtil mais irréversible s'est installé : le Décrochage. Cette manifestation n'est pas un obstacle physique mais plutôt une discontinuité perceptuelle progressive.\n  Le Décrochage se manifeste par une série de \"déconnexions\" qui s'intensifient à mesure qu'on approche de la Citadelle :\n  - Décrochage Linguistique : Les langues administratives de la Vieille Ville perdent progressivement leur précision, les concepts bureaucratiques deviennent flous\n  - Décrochage Memorial : Les plantes-mémoires des jardins cessent d'enregistrer les pensées des visiteurs, créant une zone de \"silence mnémonique\"\n  - Décrochage Gravitationnel : L'attraction physique vers le Nexion central diminue, remplacée par une attirance esthétique vers la Citadelle\n  Ces décrochages ne sont pas uniformes – ils se manifestent par vagues successives, créant des \"paliers d'existence\" où les règles de la Vieille Ville cèdent progressivement place à celles de la Citadelle.\n  ### Le Pont des Incompréhensions\n  Pour franchir le Décrochage, les visiteurs doivent emprunter le Pont des Incompréhensions – structure architecturale paradoxale qui n'existait pas dans les plans originels mais qui s'est matérialisée spontanément comme réponse au conflit idéologique.\n  Ce pont se présente comme une série de dix-huit arches asymétriques, chacune incarnant un malentendu spécifique entre la philosophie de la Vieille Ville et celle de la Citadelle. Traverser chaque arche requiert de \"tenir simultanément deux vérités contradictoires\" – exercice mental qui désoriente la plupart des visiteurs non préparés.\n  Les arches portent des noms évocateurs gravés en langues multiples : l'Arche de la Beauté Intérieure, l'Arche du Profit Sans Mesure, l'Arche de l'Harmonie Mortelle, etc.\n  ### L'Invasion par le Clan Sraden - Le Portail Vers Merid\n  Le Clan n'a pas emprunté les voies conventionnelles pour accéder à la Citadelle,  mais un portail qui mène vers Merid à travers l’Océan de Ténèbres. Ce portail mène dans une région proche de la cour divine d’Errazel.\n  ### L'Accès Contrôlé par Reitar - Les Invitations Sélectives\n  Sous le contrôle de Vol Reitar, l'accès à la Citadelle s'effectuait exclusivement par le système des \"Invitations Sélectives\". Chaque visiteur devait avoir été personnellement invité, son nom inscrit dans le Registre des Curiosités que Reitar maintient avec un soin obsessionnel.\n  Ces invitations n’étaient jamais explicites. Elles se manifestent par :\n  1. Modifications Oniriques : Les personnes sélectionnées expérimentent des rêves récurrents où la Citadelle leur apparaît\n  1. Coïncidences Dirigées : Une série d'événements fortuits les conduit inexorablement vers les jardins orientaux\n  1. Nostalgie Implantée : Un sentiment de perte pour un lieu jamais visité auparavant\n  Une fois l'invitation perçue, le candidat visiteur trouvait le chemin ouvert – le Pont des Incompréhensions devenait navigable pour lui, les Décrochages s'atténuaient. Mais cette facilité était trompeuse : Reitar n'invitait personne par hasard, et chaque visiteur servait ses desseins obscurs.\n  Certains invités ne repartaient jamais, d'autres revenaient transformés, porteurs de modifications subtiles qui en faisaient les agents involontaires de Reitar dans la Vieille Ville. Le bouclier qui scellait la Citadelle fonctionnait selon cette logique perverse : il garantissait que les invités ne repartiraient qu'avec son autorisation.\n  Eonundé a hérité involontairement du contrôle du système. Cependant, elle ne connaît pas bien le fonctionnement du système et n’étant pas à proximité du Registre des Curiosités, elle ne peut pas l’utiliser à volonté. Les nouveaux critères d'accès se basent sur des concepts que seul Eonundé comprend pleinement, liés à sa propre quête d'identité. L'entrée et la sortie deviennent possibles pour ceux qui partagent inconsciemment certains questionnements existentiels d'Eonundé, créant un filtre d'accès absurdement philosophique.\n  ### Les Tentatives d'Accès Non Autorisé\n  Quelques rares individus tentent encore de forcer le passage sans invitation. Ils découvrent que le Décrochage s'intensifie exponentiellement en réponse à leurs efforts. Leurs tentatives d'approche créent des \"boucles de frustration\" où ils se retrouvent systématiquement ramenés au point de départ, chaque échec renforçant la barrière conceptuelle.\n  Ces intrus malgré eux contribuent involontairement au système défensif de la Citadelle – leur incompréhension alimente le Pont des Incompréhensions, ajoutant de nouvelles arches aux malentendus déjà catalogués.\n# Zones principales\n💡 Lieux notables\n  - Les jardins : Autrefois fierté de la Citadelle, ces jardins attiraient des visiteurs de contrées lointaines pour admirer leurs merveilles. La magie donnait aux animaux des couleurs chatoyantes et rendait les arbres majestueux. Aujourd'hui, la nature exubérante est devenue sauvage et dangereuse.\n  - Le portail : Un gouffre béant qui grandit avec le temps, désormais inutilisable mais affectant toujours son environnement. Il mena autrefois vers \"la Véritable\" terre selon les voyageurs qui en émergèrent.\n  - Les mains d'Aesher : Étranges sculptures au cœur des jardins, dont les doigts se touchent presque. Sépulture plus ancienne que la Citadelle, c'est un dédale souterrain de couloirs et pièces, certaines profanées, d'autres intactes.\n  - Le jeu d'Ombre : Située dans l'aile gauche, cette pièce sombre avec un dôme abrite des formes noires sur les murs, \"le peuple des lieux\", qui permet d'accéder à des espaces où se joue un jeu particulier.\n  - Le jeu de Lumière : Jumelle du jeu d'Ombre, cette salle baignait autrefois dans une lumière blanche avec des taches colorées. Actuellement dysfonctionnelle depuis la chute.\n  - Le Cantique : La plus somptueuse salle de Daïlon avec de hautes colonnes et une voûte décorée de fresques mouvantes. Elle peut être transfigurée par l'activité des salles voisines, simulant l'aube et le crépuscule.\n# Personnages notables\n💡 Figures importantes\n  - Le Maître Gardien : Principal fondateur de la Citadelle, homme charismatique et ingénieux aux multiples talents. Personnage discret qui prétendait \"n'avoir pas fait grand-chose dans sa vie\".\n  - Bratner Delgard : Créature misérable et terrifiée qui se terre dans les salles de la Citadelle. Descendant des arakshas, il a survécu miraculeusement aux siècles en s'abreuvant de magie.\n  - Drazger'Illicht : Fils d'un des trois dirigeants du clan Sraden qui envahit la Citadelle. Personnage puissant, violent et arrogant qui rêve de libérer sa \"famille\".\n# Tradition & coutumes\n💡 Fêtes/moments importants prennant place dans ce lieu \n  - Avant sa chute, possiblement des célébrations liées aux réussites utopiques de la Citadelle.\n  - Sous le règne de Vol Reitar, probablement des rituels obscurs liés à ses expérimentations.\n💡 Déroulement des cérémonies et moments de pratique\n  - Les adeptes restants de Vol Reitar pourraient encore pratiquer des rituels dans l'espoir de restaurer leur maître.\n  - Possible vénération des jardins comme vestige de la splendeur passée.\n💡 Alimentation spécifique\n  - Inconnue, mais les jardins pourraient avoir produit des plantes et des fruits rares utilisés dans la cuisine locale avant la chute.\n# Faune et Flore spécifiques\n💡 Créatures et plantes uniques\n  - Les kheydarrs : Énormes créatures au sommet de la chaîne alimentaire des jardins. Anciens herbivores transformés en prédateurs intelligents et agressifs capables de raisonnements complexes. Se montrent rarement, sauf quand leur nourriture habituelle vient à manquer.\n  - La flore des jardins, autrefois entretenue avec soin, a évolué en spécimens sauvages aux propriétés imprévisibles, certaines plantes ayant développé des mécanismes de défense.",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "ejdS",
+              "name": "Lieu unique",
+              "color": "red"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "J]Ey",
+              "name": "Plus tard",
+              "color": "green"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "9d1ddde0-3d08-4ac0-adde-a555422ad290",
+              "name": "En cours",
+              "color": "blue"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2256e4d2-1b45-8048-8d1c-dc817100f567"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8197-a2ac-ff9035c353c5"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "22c6e4d2-1b45-803e-9a7c-d162ad882467"
+              },
+              {
+                "id": "22c6e4d2-1b45-8045-a4fa-eabba26e215b"
+              },
+              {
+                "id": "22c6e4d2-1b45-80e7-8960-cfa2e2d4926e"
+              },
+              {
+                "id": "2306e4d2-1b45-80de-b406-c519ea9561cf"
+              },
+              {
+                "id": "2306e4d2-1b45-8043-a2a2-e640272f4354"
+              }
+            ],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1b46e4d2-1b45-80fd-b84e-eab6a16a8bc9"
+              },
+              {
+                "id": "1a16e4d2-1b45-8098-99d3-c90b26b2ebfe"
+              }
+            ],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "RRa{",
+              "name": "District",
+              "color": "yellow"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Citadelle de Daïlon",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Citadelle de Daïlon",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 465,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      }
+    ],
+    "formatted": "### Vision (vision)\n# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+    "token_estimate": 1275,
+    "previews": [
+      {
+        "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b",
+        "title": "Vieille Ville",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 495
+      },
+      {
+        "id": "2806e4d2-1b45-815d-bfd0-fb5fb4e06219",
+        "title": "Citadelle de Daïlon",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 465
+      }
+    ]
+  },
+  "history": [
+    {
+      "step": "writer",
+      "timestamp": "2025-10-15T19:05:09.477519",
+      "summary": "Contenu genere (9100 chars)"
+    },
+    {
+      "step": "reviewer",
+      "timestamp": "2025-10-15T19:05:37.454091",
+      "summary": "Score coherence: 0.69, 12 problemes"
+    },
+    {
+      "step": "corrector",
+      "timestamp": "2025-10-15T19:06:03.499418",
+      "summary": "11 corrections effectuees"
+    },
+    {
+      "step": "validator",
+      "timestamp": "2025-10-15T19:06:12.282135",
+      "summary": "Valide: False, Publication: False"
+    }
+  ],
+  "model_used": "GPT-5-mini",
+  "model_config": {
+    "name": "gpt-5-mini",
+    "provider": "OpenAI",
+    "description": "Équilibré entre performance et coût",
+    "max_tokens": 3000,
+    "icon": "⚡",
+    "uses_reasoning": true,
+    "default_reasoning": "low",
+    "runtime": {
+      "reasoning_effort": "minimal",
+      "verbosity": "high",
+      "max_tokens": 3000
+    }
+  }
+}

@@ -1,0 +1,33 @@
+---
+title: Streaming Policy
+tags: [streaming, reliability, ui, gpt5]
+last_updated: 2025-10-15
+owner: alteir
+---
+
+# Politique de Streaming — Ébauche prioritaire
+
+## Objectif
+Garantir le streaming fiable de l'ébauche (Writer) quel que soit le modèle et le niveau de raisonnement. Le stream du raisonnement est secondaire et peut être désactivé.
+
+## Décisions actuelles
+- Le raisonnement n'est pas diffusé en direct dans l'UI (temporaire) pour éviter les blocages où seuls des deltas de raisonnement arrivent.
+- Le modèle GPT-5 reste configuré avec `use_responses_api: true` et `reasoning.effort`, mais l'UI ignore le flux de raisonnement.
+- Le parseur de stream est plus tolérant: types normalisés (e.g. `output_text.delta` → `output_text`), extraction de texte via `text`, `content`, ou structures imbriquées courantes.
+- Si le fournisseur modifie le schéma, on retombe sur l'extraction texte générique pour éviter l'écran vide.
+
+## Implémentation
+- `agents/base/llm_utils.py`: durcissement de `LLMAdapter.stream_text` (normalisation des types, routing reasoning vs texte, fallback).
+- `app/streamlit_app/generation.py`: `include_reasoning=False` => le flux affiché est uniquement l'ébauche.
+- Placeholder visuel `…` affiché jusqu'au premier token pour éviter un encadré vide.
+
+## Réactivation du raisonnement (plus tard)
+1. Réactiver l'UI: repasser `include_reasoning=True` selon le modèle.
+2. Garder le parseur robuste. Valider sur GPT-5 (Responses API) et sur modèles non-reasoning.
+3. Ajouter un indicateur de latence: si seul le raisonnement arrive pendant > N s, afficher une note sans bloquer l'ébauche.
+
+## Tests
+- `tests/test_stream_adapter.py`: vérifie que
+  - reasoning ignoré si `include_reasoning=False` et que le texte arrive.
+  - avec `include_reasoning=True`, on reçoit à la fois texte et raisonnement sans bloquer.
+

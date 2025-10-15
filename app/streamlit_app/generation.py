@@ -335,10 +335,8 @@ def generate_content(
     time_estimate.text(f"⏱️ Temps estimé : ~{int(eta_seconds)}s")
 
     # Resolve include_reasoning before entering try block
-    if model_config.get("provider") == "OpenAI":
-        include_reasoning = bool(model_config.get("uses_reasoning"))
-    else:
-        include_reasoning = bool(include_reasoning)
+    # Always prefer reliable draft streaming; don’t stream reasoning for now
+    include_reasoning = False
 
     try:
         start_time = time.time()
@@ -358,19 +356,22 @@ def generate_content(
         status_text.text("✍️ Writer : Génération du contenu initial...")
         progress_bar.progress(10)
 
-        # Collapsible draft area containing reasoning first, then live streams
+        # Collapsible draft area containing live streams (reasoning not streamed for reliability)
         reason_writer = reason_reviewer = reason_corrector = reason_validator = None
         draft_expander = st.expander("📝 Ébauche (en direct)", expanded=True)
         with draft_expander:
-            if include_reasoning:
-                reasoning_expander = st.expander("💭 Raisonnement (en direct)", expanded=False)
-                with reasoning_expander:
-                    reason_writer = st.empty()
-                    reason_reviewer = st.empty()
-                    reason_corrector = st.empty()
-                    reason_validator = st.empty()
+            try:
+                if model_config.get("uses_reasoning"):
+                    st.caption("💭 Raisonnement non diffusé temporairement pour fiabilité du stream.")
+            except Exception:
+                pass
             stream_area = st.container()
             live_writer = stream_area.empty()
+            # Placeholder until first token arrives
+            try:
+                live_writer.markdown("…")
+            except Exception:
+                pass
             live_reviewer = stream_area.empty()
             live_corrector = stream_area.empty()
             live_validator = stream_area.empty()
@@ -393,9 +394,7 @@ def generate_content(
                 if text:
                     content_buffer["writer"].append(text)
                 live_writer.markdown("".join(content_buffer["writer"]) + " ▌")
-                if include_reasoning and payload.get("reasoning") and reason_writer is not None:
-                    reasoning_buffer["writer"].append(payload["reasoning"])
-                    reason_writer.markdown("".join(reasoning_buffer["writer"]))
+                # Reasoning stream intentionally disabled for reliability
             elif event == "writer:done":
                 live_writer.markdown("".join(content_buffer["writer"]))
                 step_placeholders[0].markdown(

@@ -156,8 +156,6 @@ def render_sidebar():
             summary_lines.append(f"Atmosphère: `{st.session_state.atmosphere}`")
         if domain == "Personnages" and "dialogue_mode" in st.session_state:
             summary_lines.append(f"Dialogue: `{st.session_state.dialogue_mode}`")
-        if "max_tokens" in st.session_state:
-            summary_lines.append(f"Max tokens: `{st.session_state.max_tokens}`")
         if summary_lines:
             st.info("\n".join(summary_lines))
 

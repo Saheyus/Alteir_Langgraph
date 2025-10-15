@@ -39,7 +39,7 @@ PERSONNAGES_SCHEMA = {
 # Template narratif Notion pour les personnages (structure de contenu)
 PERSONNAGES_NARRATIVE_TEMPLATE = """
 # Résumé de la fiche
-[Description courte du personnage en 2-3 phrases]
+[Description générale]
 
 # Caractérisation
 
@@ -62,15 +62,15 @@ PERSONNAGES_NARRATIVE_TEMPLATE = """
 
 ## Évènements marquants
 **De sa vie d'enfant :**
-- [Événement significatif]
+- [3-5 Événements significatifs]
 **De sa vie d'ado :**
-- [Événement significatif]
+- [3-5 Événements significatifs]
 **De sa vie d'adulte :**
-- [Événement significatif]
+- [3-5 Événements significatifs]
 
 ## Relations
 **À sa famille :**
-- [Relation familiale avec enjeu concret]
+- [Relations familiales avec enjeu concret]
 **Aux autres :**
 - [Relations avec prix/dette/délai/tabou]
 

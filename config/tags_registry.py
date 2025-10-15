@@ -48,7 +48,7 @@ TAGS_REGISTRY = {
             "Vohars",
             "Kephrasites",
             "Construits",
-            "Autre (à inventer)",
+            "Autre espèce (à inventer)",
         ],
         "LIEU": [
             "Vieille Ville",
@@ -73,7 +73,7 @@ TAGS_REGISTRY = {
             "Xyriad Achromatique",
             "Ciel de Roche",
             "Océan mécanique",
-            "Autre (à inventer)",
+            "Autre lieu (à inventer)",
         ],
         "ORIGINE": [
             "Vieille Ville",
@@ -98,7 +98,7 @@ TAGS_REGISTRY = {
             "Xyriad Achromatique",
             "Ciel de Roche",
             "Océan mécanique",
-            "Autre (à inventer)",
+            "Autre origine (à inventer)",
         ],
         "APPARENCE": [
             "Émaciée",
@@ -127,7 +127,7 @@ TAGS_REGISTRY = {
             "Alchimiste",
             "Diplomate",
             "Sans occupation",
-            "Autre (à inventer)",
+            "Autre occupation (à inventer)",
         ],
         "FACTION": [
             "Culte de l'Anentropie",
@@ -137,7 +137,7 @@ TAGS_REGISTRY = {
             "Paradigme Ésothrope",
             "Aldravinds",
             "Indépendant/Paria",
-            "Autre (à inventer)",
+            "Autre faction (à inventer)",
         ],
         "ÉTAT_SANTÉ": [
             "Valide",
@@ -157,8 +157,8 @@ TAGS_REGISTRY = {
         "ÉDUCATION": [
             "Aucune (analphabète)",
             "Faible (autodidacte)",
-            "Moyenne",
-            "Importante",
+            "Moyenne (éducation classique)",
+            "Importante (intellectuelle)",
             "Avancée (érudit)",
         ],
         "STATUT_SOCIAL": [
@@ -240,7 +240,7 @@ TAGS_REGISTRY = {
             "Peur paralysante",
             "Dissociation",
             "Rigidité mentale",
-            "Autre (à inventer)",
+            "Autre faiblesse (à inventer)",
         ],
         "DÉSIR": [
             "Pouvoir",
@@ -253,7 +253,7 @@ TAGS_REGISTRY = {
             "Transformation",
             "Connexion",
             "Destruction",
-            "Autre (à inventer)",
+            "Autre désir (à inventer)",
         ],
         "BESOIN": [
             "Acceptation",
@@ -264,7 +264,7 @@ TAGS_REGISTRY = {
             "Sens",
             "Confrontation",
             "Changement",
-            "Autre (à inventer)",
+            "Autre besoin (à inventer)",
         ],
         "AXE_IDÉOLOGIQUE": [
             "Retrait",
@@ -294,7 +294,7 @@ TAGS_REGISTRY = {
             "Acqueux",
             "Abyssal",
             "Commun",
-            "Autre (à inventer)",
+            "Autre registre (à inventer)",
         ],
         "POSTURE_MORALE": [
             "Résiste activement",
@@ -348,7 +348,7 @@ TAGS_REGISTRY = {
             "Xyriad Achromatique",
             "Ciel de Roche",
             "Océan mécanique",
-            "Autre (à inventer)",
+            "Autre lieu (à inventer)",
         ],
         "ESPÈCE": [
             "Van'Doei",
@@ -368,7 +368,7 @@ TAGS_REGISTRY = {
             "Vohars",
             "Kephrasites",
             "Construits",
-            "Autre (à inventer)",
+            "Autre espèce (à inventer)",
         ],
         "ATMOSPHÈRE": [
             "Oppressante",
@@ -437,7 +437,7 @@ TAGS_REGISTRY = {
             "Paradigme Ésothrope",
             "Aldravinds",
             "Indépendant/Paria",
-            "Autre (à inventer)",
+            "Autre faction (à inventer)",
         ],
     },
 }
