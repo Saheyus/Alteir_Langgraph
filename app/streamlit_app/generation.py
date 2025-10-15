@@ -11,6 +11,7 @@ import streamlit as st
 
 from agents.notion_context_fetcher import NotionClientUnavailable, NotionContextFetcher
 from .cache import load_workflow_dependencies
+from dataclasses import asdict
 
 
 def create_llm(
@@ -51,9 +52,14 @@ def create_llm(
                 },
                 "max_tokens": effective_max_tokens,
             }
-            # Verbosity is a separate model_kwargs if needed
+            # Verbosity: prefer explicit kw if supported; otherwise use model_kwargs
             if verbosity:
-                llm_config["model_kwargs"] = {"verbosity": verbosity}
+                try:
+                    # Newer langchain_openai forwards unknown kwargs to provider
+                    return ChatOpenAI(**llm_config, verbosity=verbosity)
+                except TypeError:
+                    llm_config["model_kwargs"] = {"verbosity": verbosity}
+                    return ChatOpenAI(**llm_config)
             return ChatOpenAI(**llm_config)
         else:
             # Classic chat models (GPT-4, GPT-4o-mini)
@@ -87,6 +93,49 @@ def create_llm(
 
 def _build_context_payload(context_summary: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
     """Fetch full Notion pages for the selected context and format them."""
+
+    # Primary path: use provided summary
+    if not context_summary or not context_summary.get("selected_ids"):
+        # Fallback 1: use last computed summary from session
+        try:
+            ss_summary = (st.session_state.get("selected_context_summary") or {})
+            if ss_summary and ss_summary.get("selected_ids"):
+                context_summary = ss_summary
+                st.caption("📌 Contexte récupéré depuis la sélection en mémoire")
+        except Exception:
+            pass
+
+    if not context_summary or not context_summary.get("selected_ids"):
+        # Fallback 2: reconstruct from raw session selection
+        try:
+            selection = st.session_state.get("context_selection") or {}
+            selected_ids = list(selection.get("selected_ids") or [])
+            if selected_ids:
+                previews_map = selection.get("previews") or {}
+                previews_list = []
+                for pid in selected_ids:
+                    pv = previews_map.get(pid)
+                    if pv is None:
+                        continue
+                    try:
+                        # Convert dataclass to dict if applicable
+                        if hasattr(pv, "__dataclass_fields__"):
+                            previews_list.append(asdict(pv))
+                        elif isinstance(pv, dict):
+                            previews_list.append(pv)
+                    except Exception:
+                        # Best-effort; ignore malformed preview
+                        continue
+                if previews_list:
+                    context_summary = {
+                        "selected_ids": selected_ids,
+                        "previews": previews_list,
+                        "token_estimate": sum((p.get("token_estimate", 0) for p in previews_list if isinstance(p, dict))),
+                    }
+                    st.caption("📌 Contexte reconstruit depuis la sélection active")
+        except Exception:
+            # If anything goes wrong, continue to no-context path below
+            pass
 
     if not context_summary or not context_summary.get("selected_ids"):
         st.info("ℹ️ Aucun contexte Notion sélectionné. Génération sans contexte externe.")
@@ -509,7 +558,15 @@ def generate_content(
             enriched_model_config.setdefault("runtime", {})
             enriched_model_config["runtime"].update({
                 "reasoning_effort": reasoning_effort,
-                "verbosity": (llm.model_kwargs.get("verbosity") if hasattr(llm, "model_kwargs") and isinstance(getattr(llm, "model_kwargs", None), dict) else None),
+                # Try explicit attribute first, then model_kwargs
+                "verbosity": (
+                    getattr(llm, "verbosity", None)
+                    if hasattr(llm, "verbosity") else (
+                        llm.model_kwargs.get("verbosity")
+                        if hasattr(llm, "model_kwargs") and isinstance(getattr(llm, "model_kwargs", None), dict)
+                        else None
+                    )
+                ),
                 "max_tokens": effective_max_tokens,
             })
         else:

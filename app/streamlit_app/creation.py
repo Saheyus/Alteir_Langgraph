@@ -588,6 +588,18 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         else:
             # Ensure verbosity variable exists in all branches
             _verbosity = verbosity if (provider == "OpenAI" and uses_reasoning) else None
+            # Force-commit latest checkbox state just before generation
+            try:
+                from .context_selector import force_commit_selection
+                committed = force_commit_selection()
+                # Small latency to allow Streamlit state propagation
+                import time as _t
+                _t.sleep(0.05)
+                # Prefer freshly committed selection when non-empty
+                if committed and committed.get("selected_ids"):
+                    context_summary = committed
+            except Exception:
+                pass
             generate_content(
                 active_brief_text,
                 intent,

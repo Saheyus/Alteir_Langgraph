@@ -41,8 +41,8 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Lancer l'application Streamlit
-echo Lancement de l'application sur http://localhost:8501
+REM Lancer l'application Streamlit (le port est choisi par Streamlit)
+echo Lancement de l'application (le port exact sera affiché par Streamlit)
 echo.
 echo Pour arrêter l'application, appuyez sur Ctrl+C dans cette fenêtre
 echo.

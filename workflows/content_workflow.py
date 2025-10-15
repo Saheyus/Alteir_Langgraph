@@ -599,9 +599,12 @@ class ContentWorkflow:
             model_used = state.get("model_used")
             model_cfg = state.get("model_config") or {}
             verbosity = None
-            # Try to surface verbosity from model kwargs (Responses API) or runtime
+            # Try explicit attribute first, then model kwargs, then runtime-dumped value
             try:
-                verbosity = ((model_cfg.get("model_kwargs") or {}).get("verbosity")) or ((model_cfg.get("runtime") or {}).get("verbosity"))
+                if hasattr(self, "llm") and hasattr(self.llm, "verbosity"):
+                    verbosity = getattr(self.llm, "verbosity", None)
+                if not verbosity:
+                    verbosity = ((model_cfg.get("model_kwargs") or {}).get("verbosity")) or ((model_cfg.get("runtime") or {}).get("verbosity"))
             except Exception:
                 verbosity = None
 

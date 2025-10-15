@@ -53,6 +53,10 @@ def _init_session_state() -> None:
     selection.setdefault("previews", {})
     selection.setdefault("suggestions", [])
 
+    # Index of checkbox keys -> lightweight page info for just-in-time commit
+    if "_context_checkbox_index" not in st.session_state:
+        st.session_state._context_checkbox_index = {}
+
     # Normalize storage to list for persistence
     if isinstance(selection["selected_ids"], set):
         selection["selected_ids"] = list(selection["selected_ids"])
@@ -126,15 +130,30 @@ def _render_suggestions(brief: str, domain_key: str, matcher: NotionContextMatch
         assert isinstance(suggestion, MatchSuggestion)
         page = suggestion.page
         checked = (page.id in set(selection["selected_ids"])) or suggestion.auto_select
+        checkbox_key = f"suggestion_{page.id}"
         checkbox = st.checkbox(
             f"{page.title} — {int(suggestion.score * 100)}%",
             value=checked,
-            key=f"suggestion_{page.id}",
+            key=checkbox_key,
             help=page.summary or "",
         )
+        # Record mapping for force-commit later
+        try:
+            st.session_state._context_checkbox_index[checkbox_key] = {
+                "id": page.id,
+                "title": page.title,
+                "domain": page.domain,
+                "summary": page.summary,
+                # Fixed coarse estimate per fiche
+                "token_estimate": 3000,
+                "last_edited": page.last_edited,
+                "tags": getattr(page, "tags", []) or [],
+            }
+        except Exception:
+            pass
         _toggle_selection(page, checkbox)
 
-        with st.expander(f"Détails · {page.domain.capitalize()} · ~{page.token_estimate} tokens", expanded=False):
+        with st.expander(f"Détails · {page.domain.capitalize()} · ~3000 tokens", expanded=False):
             st.markdown(f"**Résumé :** {page.summary or '—'}")
             if suggestion.matched_keywords:
                 keywords = ", ".join(suggestion.matched_keywords)
@@ -168,12 +187,27 @@ def _render_manual_selection(previews_by_domain: Dict[str, List[NotionPagePrevie
 
             for page in filtered[:80]:
                 checked = page.id in st.session_state.context_selection["selected_ids"]
+                checkbox_key = f"manual_{domain}_{page.id}"
                 checkbox = st.checkbox(
-                    f"{page.title} · ~{page.token_estimate} tokens",
+                    f"{page.title} · ~3000 tokens",
                     value=checked,
-                    key=f"manual_{domain}_{page.id}",
+                    key=checkbox_key,
                     help=page.summary or "Sans aperçu",
                 )
+                # Record mapping for force-commit later
+                try:
+                    st.session_state._context_checkbox_index[checkbox_key] = {
+                        "id": page.id,
+                        "title": page.title,
+                        "domain": page.domain,
+                        "summary": page.summary,
+                        # Fixed coarse estimate per fiche
+                        "token_estimate": 3000,
+                        "last_edited": page.last_edited,
+                        "tags": getattr(page, "tags", []) or [],
+                    }
+                except Exception:
+                    pass
                 _toggle_selection(page, checkbox)
 
 
@@ -201,12 +235,13 @@ def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
                 # On ignore silencieusement pour ne pas bloquer le rendu
                 continue
         ordered_previews.append(preview)
-        total_tokens += preview.token_estimate
+        # Fixed coarse estimate per fiche
+        total_tokens += 3000
 
     for preview in ordered_previews:
         col_label, col_remove = st.columns([6, 1])
         with col_label:
-            st.markdown(f"**{preview.title}** · {preview.domain.capitalize()} · ~{preview.token_estimate} tokens")
+            st.markdown(f"**{preview.title}** · {preview.domain.capitalize()} · ~3000 tokens")
             if preview.summary:
                 st.caption(preview.summary)
         with col_remove:
@@ -265,4 +300,56 @@ def render_context_selector(domain: str, brief: str) -> Dict[str, Any]:
     summary = _render_selected_summary(fetcher)
 
     return summary
+
+
+def force_commit_selection() -> Dict[str, Any]:
+    """Recompute selection from current checkbox states and return a summary.
+
+    This ensures that a click on "Générer" cannot miss the latest UI state
+    due to Streamlit rerun timing.
+    """
+    _init_session_state()
+    selection = st.session_state.context_selection
+    index: Dict[str, Dict[str, Any]] = st.session_state.get("_context_checkbox_index", {})
+
+    # Rebuild selected_ids from checkbox values
+    selected_ids_set = set()
+    for key, page_info in index.items():
+        try:
+            if bool(st.session_state.get(key)):
+                pid = page_info.get("id")
+                if pid:
+                    selected_ids_set.add(pid)
+                    # Ensure preview is available for this id
+                    if pid not in selection["previews"]:
+                        selection["previews"][pid] = NotionPagePreview(
+                            id=page_info.get("id", ""),
+                            title=page_info.get("title", "Sans titre"),
+                            domain=page_info.get("domain", "inconnu"),
+                            summary=page_info.get("summary", ""),
+                            tags=page_info.get("tags", []) or [],
+                            last_edited=page_info.get("last_edited"),
+                            token_estimate=int(page_info.get("token_estimate", 0)),
+                        )
+        except Exception:
+            continue
+
+    # Persist back to session selection
+    selection["selected_ids"] = list(selected_ids_set)
+
+    # Build ordered previews list following the current order in selection
+    previews_cache: Dict[str, NotionPagePreview] = selection["previews"]
+    ordered_previews: List[NotionPagePreview] = []
+    total_tokens = 0
+    for pid in selection["selected_ids"]:
+        pv = previews_cache.get(pid)
+        if pv is not None:
+            ordered_previews.append(pv)
+            total_tokens += int(getattr(pv, "token_estimate", 0) or 0)
+
+    return {
+        "selected_ids": list(selection["selected_ids"]),
+        "previews": [asdict(p) for p in ordered_previews],
+        "token_estimate": total_tokens,
+    }
 

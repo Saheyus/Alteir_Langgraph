@@ -23,10 +23,11 @@ def test_create_llm_anthropic_instantiates_chat_anthropic(monkeypatch):
     fake_module = types.SimpleNamespace(ChatAnthropic=_FakeChatAnthropic)
     sys.modules['langchain_anthropic'] = fake_module
 
-    model_info = MODELS["Claude 4.5 Sonnet"]
+    # The app keeps only one key for Sonnet 4.5 now
+    model_info = MODELS["Claude Sonnet 4.5"]
 
     llm = create_llm(
-        model_name="Claude 4.5 Sonnet",
+        model_name="Claude Sonnet 4.5",
         model_config=model_info,
         creativity=0.6,
         reasoning_effort="low",

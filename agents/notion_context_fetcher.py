@@ -206,7 +206,8 @@ class NotionContextFetcher:
                             response.raise_for_status()
                             blocks = response.json().get("results", [])
                         except Exception as e:
-                            LOGGER.warning(f"Failed to fetch children for block {block_id}: {e}")
+                            # 404 or transient errors are expected on some legacy blocks; keep silent in normal runs
+                            LOGGER.debug(f"Failed to fetch children for block {block_id}: {e}")
                             return []
                         
                         content_parts = []

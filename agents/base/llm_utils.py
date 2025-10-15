@@ -165,12 +165,16 @@ Ne pas ajouter de texte avant ou après le JSON."""
         
         try:
             stream = self.llm.stream(messages)
-        except Exception:
-            # Fallback to non-streaming
+        except Exception as e:
+            # If OpenAI Responses API refuses streaming (org not verified etc.), emulate streaming
+            # by chunking a non-streaming response so the UI still gets live updates.
             try:
                 response = self.llm.invoke(messages)
-                text = self._extract_text(response)
-                yield text
+                full_text = self._extract_text(response)
+                # Emit in small chunks to simulate token stream
+                chunk_size = 80
+                for i in range(0, len(full_text), chunk_size):
+                    yield full_text[i : i + chunk_size]
             except Exception:
                 pass
             return
