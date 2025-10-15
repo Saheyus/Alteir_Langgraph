@@ -217,7 +217,7 @@ def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
 
     st.subheader(f"✅ Contexte sélectionné ({len(selected_ids)} fiches)")
 
-    previews_cache: Dict[str, NotionPagePreview] = selection["previews"]
+    previews_cache: Dict[str, Any] = selection["previews"]
     ordered_previews: List[NotionPagePreview] = []
     total_tokens = 0
     for page_id in selected_ids:
@@ -233,6 +233,22 @@ def _render_selected_summary(fetcher: NotionContextFetcher) -> Dict[str, Any]:
                 continue
             except Exception:
                 # On ignore silencieusement pour ne pas bloquer le rendu
+                continue
+        # Coerce dict previews to NotionPagePreview for uniform handling
+        if isinstance(preview, dict):
+            try:
+                preview = NotionPagePreview(
+                    id=preview.get("id", page_id),
+                    title=preview.get("title", "Sans titre"),
+                    domain=preview.get("domain", "inconnu"),
+                    summary=preview.get("summary", ""),
+                    tags=preview.get("tags", []) or [],
+                    last_edited=preview.get("last_edited"),
+                    token_estimate=int(preview.get("token_estimate", 3000) or 3000),
+                )
+                previews_cache[page_id] = preview
+            except Exception:
+                # Skip malformed entries silently to avoid breaking UI
                 continue
         ordered_previews.append(preview)
         # Fixed coarse estimate per fiche

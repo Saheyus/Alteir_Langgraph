@@ -13,6 +13,10 @@ from agents.notion_context_fetcher import NotionClientUnavailable, NotionContext
 from .cache import load_workflow_dependencies
 from dataclasses import asdict
 
+# Exposed for tests to monkeypatch with a lightweight stub
+# If None, real workflow dependencies will be loaded dynamically
+ContentWorkflow = None  # type: ignore[assignment]
+
 
 def create_llm(
     model_name: str,
@@ -209,7 +213,11 @@ def generate_content(
 ):
     """Génère du contenu (personnage ou lieu) selon le domaine."""
 
-    ContentWorkflow, WriterConfig, domain_config = load_workflow_dependencies(domain.lower())
+    # Allow tests to inject a lightweight ContentWorkflow stub via monkeypatch.
+    # We still load WriterConfig and domain_config from real dependencies.
+    _loaded_Workflow, WriterConfig, domain_config = load_workflow_dependencies(domain.lower())
+    WorkflowClass = globals().get("ContentWorkflow")
+    ContentWorkflow_local = WorkflowClass or _loaded_Workflow
     llm = create_llm(
         model_name,
         model_config,
@@ -274,7 +282,7 @@ def generate_content(
     if context_payload and context_payload.get("pages"):
         st.caption(f"📚 Contexte chargé: {len(context_payload['pages'])} page(s) (~{context_payload.get('token_estimate', 0)} tokens)")
 
-    workflow = ContentWorkflow(domain_config, llm=llm)
+    workflow = ContentWorkflow_local(domain_config, llm=llm)
 
     progress_container = st.container()
 
