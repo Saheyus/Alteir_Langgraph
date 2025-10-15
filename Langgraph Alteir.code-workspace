@@ -1,8 +1,39 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+  "folders": [
+    { "path": "F:\\Projets\\Langgraph Alteir" }
+  ],
+  "settings": {
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "terminal.integrated.env.windows": {
+      "WORKSPACE_FOLDER": "${workspaceFolder}"
+    },
+    "terminal.integrated.profiles.windows": {
+      "PwshProject": {
+        "path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+        "args": [
+          "-NoExit",
+          "-Command",
+          "Set-Location -LiteralPath $Env:WORKSPACE_FOLDER"
+        ]
+      },
+      "WinPSProject": {
+        "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "args": [
+          "-NoExit",
+          "-Command",
+          "Set-Location -LiteralPath $Env:WORKSPACE_FOLDER"
+        ]
+      },
+      "CmdProject": {
+        "path": "C:\\Windows\\System32\\cmd.exe",
+        "args": ["/K", "cd /d %WORKSPACE_FOLDER%"]
+      }
+    },
+    "terminal.integrated.defaultProfile.windows": "PwshProject",
+    "terminal.integrated.automationProfile.windows": {
+      "path": "C:\\Windows\\System32\\cmd.exe",
+      "args": ["/K", "cd /d %WORKSPACE_FOLDER%"]
+    },
+    "terminal.integrated.splitCwd": "workspaceRoot"
+  }
 }

@@ -1,8 +1,7 @@
 ---
 description: Bonnes pratiques pour le debug et l'exploration de code
-alwaysApply: true
+alwaysApply: false
 ---
-
 # Debug & Exploration - Bonnes Pratiques
 
 ## ❌ ANTI-PATTERN : Scripts jetables

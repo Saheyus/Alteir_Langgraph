@@ -1,6 +1,7 @@
-description: Streamlit AppTest patterns, snapshots, and UI assertions for E2E
-globs: ["tests/streamlit/**.py"]
-
+---
+description: Streamlit testing
+alwaysApply: false
+---
 ## Streamlit E2E Testing (AppTest v1)
 
 ## Problème
