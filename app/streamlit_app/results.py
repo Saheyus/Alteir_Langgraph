@@ -694,6 +694,7 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                     "success": True,
                     "page_url": page_url,
                     "page_id": page_id,
+                    "domain": domain,
                 }
             except Exception:
                 pass

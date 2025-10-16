@@ -56,10 +56,11 @@ def run_app() -> None:
 
     selected_model, model_info, domain = render_sidebar()
 
-    # Crisis-mode: show last export outcome as a global banner at top of app
+    # Global banner: show only if it matches current domain to avoid cross-domain noise
     try:
         last_export = st.session_state.get("_last_export_event")
-        if isinstance(last_export, dict):
+        current_domain = (domain or "").lower()
+        if isinstance(last_export, dict) and last_export.get("domain") == current_domain:
             if last_export.get("success"):
                 url = last_export.get("page_url") or "https://www.notion.so"
                 st.markdown(

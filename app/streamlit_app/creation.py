@@ -813,7 +813,7 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
 
     # Feedback export persistant (si présent)
     persisted_creation = st.session_state.get("_export_creation")
-    if isinstance(persisted_creation, dict):
+    if isinstance(persisted_creation, dict) and persisted_creation.get("domain") == domain.lower():
         if persisted_creation.get("success"):
             page_url = persisted_creation.get("page_url") or "https://www.notion.so"
             st.markdown(
