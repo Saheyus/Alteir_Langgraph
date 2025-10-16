@@ -266,10 +266,9 @@ Produis la fiche DIRECTEMENT dans cette structure, sans apartés méthodologique
             {"role": "user", "content": user_prompt}
         ]
         
-        response = self.llm.invoke(messages)
-        
-        # Normaliser le contenu (même fonction que dans agents_demo.py)
-        character_text = self._to_text(response.content if hasattr(response, 'content') else response)
+        from agents.base.llm_utils import LLMAdapter
+        adapter = LLMAdapter(self.llm)
+        character_text = adapter.invoke_text(messages, label="character_writer.invoke", extra={"domain": "personnages"})
         
         # Parser le résultat en structure Notion
         character_data = self._parse_character_text(character_text)

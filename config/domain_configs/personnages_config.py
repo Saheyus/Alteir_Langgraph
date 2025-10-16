@@ -44,7 +44,7 @@ PERSONNAGES_NARRATIVE_TEMPLATE = """
 # Caractérisation
 
 ## Faiblesse
-[Point faible du personnage, ce qui le rend vulnérable]
+[Faiblesse morale et psychologique du personnage. Aussi appelée "moral/psychological need" en anglais. La première lui cause du tort, la seconde cause du tort à autrui.]
 
 ## Compulsion
 [Ce qui le pousse à agir, son moteur interne]

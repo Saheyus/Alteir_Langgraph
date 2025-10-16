@@ -5,6 +5,10 @@ Utilitaires LLM agnostiques du fournisseur
 from typing import Any, Type, TypeVar, Optional, List, Dict, Iterator, Union
 from pydantic import BaseModel
 from langchain_core.language_models import BaseChatModel
+from pathlib import Path
+from datetime import datetime
+import json
+import uuid
 
 T = TypeVar('T', bound=BaseModel)
 
@@ -22,6 +26,144 @@ class LLMAdapter:
         self.llm = llm
         self.provider = self._detect_provider()
         self.supports_structured = self._check_structured_support()
+        self._raw_dir = Path("outputs") / "raw_llm"
+        try:
+            self._raw_dir.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            # Ne pas faire échouer si le dossier ne peut pas être créé
+            pass
+
+    # ---------------------------------------------------------------------
+    # Raw dump helpers
+    # ---------------------------------------------------------------------
+    def _get_model_name(self) -> str:
+        try:
+            # LangChain OpenAI exposes .model or .model_name depending on version
+            model = getattr(self.llm, "model", None) or getattr(self.llm, "model_name", None)
+            return str(model) if model else "unknown"
+        except Exception:
+            return "unknown"
+
+    def _normalize_messages(self, messages: Any) -> Any:
+        # Try to convert messages into a JSON-serializable structure
+        try:
+            if isinstance(messages, list):
+                normalized: List[Dict[str, Any]] = []
+                for m in messages:
+                    if isinstance(m, dict):
+                        role = m.get("role") or m.get("type") or "user"
+                        content = m.get("content")
+                        if not isinstance(content, (str, list, dict)):
+                            content = str(content)
+                        normalized.append({"role": str(role), "content": content})
+                    else:
+                        role = getattr(m, "role", "user")
+                        content = getattr(m, "content", None)
+                        if not isinstance(content, (str, list, dict)):
+                            content = str(content)
+                        normalized.append({"role": str(role), "content": content})
+                return normalized
+            # Fallback: stringify anything else
+            return messages if isinstance(messages, (str, dict)) else str(messages)
+        except Exception:
+            return str(messages)
+
+    def _serialize_response(self, response: Any) -> Dict[str, Any]:
+        data: Dict[str, Any] = {
+            "repr": None,
+            "text": None,
+            "content": None,
+            "response_metadata": None,
+            "type": type(response).__name__ if response is not None else None,
+        }
+        try:
+            data["repr"] = repr(response)
+        except Exception:
+            pass
+        try:
+            data["text"] = self._extract_text(response)
+        except Exception:
+            data["text"] = None
+        try:
+            if hasattr(response, "content"):
+                content = getattr(response, "content")
+                if isinstance(content, (str, list, dict)):
+                    data["content"] = content
+                else:
+                    data["content"] = str(content)
+        except Exception:
+            pass
+        try:
+            meta = getattr(response, "response_metadata", None)
+            if meta is not None:
+                # Ensure JSON-serializable
+                if isinstance(meta, (dict, list, str, int, float, bool)):
+                    data["response_metadata"] = meta
+                else:
+                    data["response_metadata"] = str(meta)
+        except Exception:
+            pass
+        return data
+
+    def _dump_raw(self, payload: Dict[str, Any]) -> Optional[Path]:
+        try:
+            ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S_%f")
+            base = f"{ts}_{self.provider}_{self._get_model_name()}_{uuid.uuid4().hex[:8]}.json"
+            path = self._raw_dir / base
+            # Avoid leaking API keys accidentally: scrub common keys
+            def _scrub(d: Any) -> Any:
+                if isinstance(d, dict):
+                    return {k: ("***" if k.lower() in ("api_key", "authorization", "openai_api_key") else _scrub(v)) for k, v in d.items()}
+                if isinstance(d, list):
+                    return [_scrub(x) for x in d]
+                return d
+            with path.open("w", encoding="utf-8") as f:
+                json.dump(_scrub(payload), f, ensure_ascii=False, indent=2)
+            return path
+        except Exception:
+            return None
+
+    def _save_raw_call(self, stage: str, messages: Any, response: Any = None, error: str | None = None, extra: Dict[str, Any] | None = None) -> None:
+        payload: Dict[str, Any] = {
+            "stage": stage,
+            "provider": self.provider,
+            "model": self._get_model_name(),
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "messages": self._normalize_messages(messages),
+            "error": error,
+        }
+        if extra:
+            payload["extra"] = extra
+        if response is not None:
+            payload["response"] = self._serialize_response(response)
+        self._dump_raw(payload)
+
+    # Public helpers for agents
+    def invoke_text(self, messages: Any, label: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> str:
+        """Invoke the underlying LLM and return extracted text, saving raw I/O to disk."""
+        try:
+            response = self.llm.invoke(messages)
+            # Save ASAP
+            self._save_raw_call(stage=label or "invoke", messages=messages, response=response, extra=extra)
+            return self._extract_text(response)
+        except Exception as e:
+            # Save error case as well
+            self._save_raw_call(stage=(label or "invoke") + ":error", messages=messages, response=None, error=str(e), extra=extra)
+            raise
+
+    def save_final_text(self, messages: Any, text: str, label: str = "stream_complete", extra: Optional[Dict[str, Any]] = None) -> None:
+        """Persist the final concatenated text of a streaming call."""
+        payload = {
+            "stage": label,
+            "provider": self.provider,
+            "model": self._get_model_name(),
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "messages": self._normalize_messages(messages),
+            "response": {"text": text},
+        }
+        if extra:
+            payload["extra"] = extra
+        self._dump_raw(payload)
     
     def _detect_provider(self) -> str:
         """Détecte le fournisseur du LLM"""
@@ -73,7 +215,10 @@ class LLMAdapter:
                 # Prefer native structured outputs when available
                 if hasattr(self.llm, 'with_structured_output'):
                     structured_llm = self.llm.with_structured_output(schema)
-                    return structured_llm.invoke(prompt)
+                    result = structured_llm.invoke(prompt)
+                    # On ne dispose pas forcément de la réponse brute; loggons le prompt et le résultat structuré
+                    self._save_raw_call(stage="structured.invoke", messages=prompt, response=None, extra={"structured_output": True, "schema": schema.__name__ if hasattr(schema, "__name__") else str(schema)})
+                    return result
 
                 elif self.provider == 'anthropic':
                     # Anthropic utilise tool_choice avec JSON schema
@@ -84,6 +229,8 @@ class LLMAdapter:
                         tools=[tool],
                         tool_choice={"type": "tool", "name": tool["name"]}
                     )
+                    # Save raw response
+                    self._save_raw_call(stage="structured.anthropic.invoke", messages=prompt, response=response, extra={"schema": tool.get("name")})
                     return schema.model_validate(response.tool_calls[0]["args"])
             
             except Exception as e:
@@ -107,6 +254,8 @@ Ne pas ajouter de texte avant ou après le JSON."""
 
             response = self.llm.invoke(json_prompt)
             content = self._extract_text(response)
+            # Save raw JSON-mode attempt
+            self._save_raw_call(stage="json_mode.invoke", messages=json_prompt, response=response, extra={"schema": getattr(schema, "__name__", str(schema))})
             
             # Extraire JSON du texte
             import json
@@ -132,6 +281,8 @@ Ne pas ajouter de texte avant ou après le JSON."""
             try:
                 # Si messages, les passer tels quels
                 raw_response = self.llm.invoke(prompt)
+                # Save fallback raw before parsing
+                self._save_raw_call(stage="fallback.invoke", messages=prompt, response=raw_response)
                 content = self._extract_text(raw_response)
                 return fallback_parser(content, schema)
             except Exception as e:

@@ -149,8 +149,9 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
                 improved_content = structured.improved_content or content
             except Exception:
                 # 2) Fallback: texte + parser existant
-                response = self.llm.invoke(messages)
-                review_text = self._to_text(response.content if hasattr(response, 'content') else response)
+                from agents.base.llm_utils import LLMAdapter
+                adapter = LLMAdapter(self.llm)
+                review_text = adapter.invoke_text(messages, label="reviewer.invoke", extra={"domain": self.domain})
                 issues, improvements, score = self._parse_review(review_text)
                 improved_content = self._generate_improvements(content, improvements) if improvements else content
 
@@ -221,6 +222,8 @@ Tu es rigoureux mais constructif, toujours orienté vers l'amélioration."""
                         yield {"text": delta}
 
             review_text = "".join(accumulated_parts)
+            # Dump texte final du stream
+            adapter.save_final_text(messages, review_text, label="reviewer.stream_complete", extra={"domain": self.domain})
             issues, improvements, score = self._parse_review(review_text)
             improved_content = self._generate_improvements(content, improvements) if improvements else content
             return ReviewResult(

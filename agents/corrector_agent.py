@@ -149,8 +149,9 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
                 summary = structured.improvement_summary or ""
             except Exception:
                 # 2) Fallback: texte + parser existant
-                response = self.llm.invoke(messages)
-                correction_text = self._to_text(response.content if hasattr(response, 'content') else response)
+                from agents.base.llm_utils import LLMAdapter
+                adapter = LLMAdapter(self.llm)
+                correction_text = adapter.invoke_text(messages, label="corrector.invoke", extra={"domain": self.domain})
                 corrected_content, corrections, summary = self._parse_corrections(content, correction_text)
 
             self.logger.debug(
@@ -211,6 +212,8 @@ Tu es précis et respectueux du travail créatif, améliorant la forme sans alt�
                         yield {"text": delta}
 
             correction_text = "".join(accumulated_parts)
+            # Dump texte final du stream
+            adapter.save_final_text(messages, correction_text, label="corrector.stream_complete", extra={"domain": self.domain})
             corrected_content, corrections, summary = self._parse_corrections(content, correction_text)
             return CorrectionResult(
                 success=True,

@@ -165,7 +165,8 @@ Les résultats sont sauvegardés dans `outputs/` :
 │
 ├── outputs/                   # Résultats générés
 │   ├── *.json               # Données complètes
-│   └── *.md                 # Contenu formaté
+│   ├── *.md                 # Contenu formaté
+│   └── raw_llm/             # Dumps bruts des appels LLM (JSON)
 │
 ├── demo_workflow.py          # Démo avec Rich
 ├── langgraph.json            # Config LangGraph Studio

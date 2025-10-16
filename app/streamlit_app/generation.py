@@ -210,6 +210,7 @@ def generate_content(
     domain: str,
     context_summary: Optional[Dict[str, Any]] = None,
     include_reasoning: bool = False,
+    agentic_work: bool = True,
 ):
     """Génère du contenu (personnage ou lieu) selon le domaine."""
 
@@ -380,6 +381,8 @@ def generate_content(
         reasoning_buffer = {"writer": [], "reviewer": [], "corrector": [], "validator": []}
         result = None
 
+        # If agentic_work is False, we want Writer only. We'll consume events and stop
+        # after writer:done, fabricating minimal payloads for downstream UI fields.
         for event, payload in workflow.run_iter_live(
             brief,
             writer_config,
@@ -409,6 +412,18 @@ def generate_content(
                 )
                 progress_bar.progress(35)
                 result = payload
+                if not agentic_work:
+                    # Stop here and synthesize minimal result for downstream steps
+                    result = dict(result or {})
+                    result.setdefault("review_issues", [])
+                    result.setdefault("corrections", [])
+                    result.setdefault("validation_errors", [])
+                    result.setdefault("coherence_score", 0.0)
+                    result.setdefault("completeness_score", 0.0)
+                    result.setdefault("quality_score", 0.0)
+                    result.setdefault("is_valid", True)
+                    result.setdefault("ready_for_publication", False)
+                    break
             elif event == "reviewer:start":
                 step_placeholders[1].markdown(
                     """
@@ -606,6 +621,17 @@ def generate_content(
         }
         st.success(success_msg[domain.lower()])
 
+        # Persist the full result for later actions (e.g., export from creation tab after rerun)
+        try:
+            # Persist last result and file paths for downstream export recovery
+            enriched_result = dict(result)
+            enriched_result.setdefault("domain", domain.lower())
+            st.session_state._last_generation_result = enriched_result
+            st.session_state._last_saved_json = str(json_file)
+            st.session_state._last_saved_md = str(md_file)
+        except Exception:
+            st.session_state._last_generation_result = result
+
         col1, col2, col3 = st.columns(3)
 
         with col1:
@@ -684,39 +710,23 @@ def generate_content(
                         unsafe_allow_html=True,
                     )
 
-        col_files, col_export = st.columns([2, 1])
-
-        with col_files:
-            st.info(
-                f"""
-            **Fichiers sauvegardés:**
-            - 📊 JSON: `{json_file.name}`
-            - 📝 Markdown: `{md_file.name}`
-            """
-            )
-
-        from .results import export_to_notion  # local import to avoid cycle
-
-        with col_export:
-            st.write("")
-            if st.button("📤 Exporter vers Notion", help="Créer une page dans Notion", key="export_btn_creation"):
-                st.session_state.trigger_export = True
-
-            json_data = json_file.read_text(encoding="utf-8")
-            st.download_button(
-                label="💾 Télécharger JSON",
-                data=json_data,
-                file_name=json_file.name,
-                mime="application/json",
-                key=f"download_json_{json_file.stem}",
-            )
-
-        # Feedback OUTSIDE columns so it persists across reruns
-        export_feedback_area = st.container()
-        if st.session_state.get("trigger_export", False):
-            st.session_state.trigger_export = False
-            with export_feedback_area:
-                export_to_notion(result)
+        # La gestion des fichiers sauvegardés et de l'export est désormais rendue dans
+        # l'onglet Création (entre "Contenu final" et "Options avancées").
+                if isinstance(export_res, dict):
+                    st.session_state._export_creation = export_res
+        # Persisted confirmation after rerun
+        persisted_creation = st.session_state.get("_export_creation")
+        if persisted_creation and isinstance(persisted_creation, dict):
+            if persisted_creation.get("success"):
+                page_url = persisted_creation.get("page_url") or "https://www.notion.so"
+                st.markdown(
+                    f"""
+                <div style=\"background-color:#ecfdf5;border-left:5px solid #10b981;padding:1rem;margin:1rem 0;border-radius:.5rem;\">✅ Export confirmé — <a href=\"{page_url}\" target=\"_blank\" style=\"color:#047857;text-decoration:underline;font-weight:600;\">ouvrir la fiche</a></div>
+                """,
+                    unsafe_allow_html=True,
+                )
+            elif persisted_creation.get("error"):
+                st.error(f"❌ Échec export: {persisted_creation.get('error')}")
 
     except Exception as exc:  # pragma: no cover - UI feedback path
         st.error(f"❌ Erreur lors de la génération: {exc}")

@@ -56,6 +56,33 @@ def run_app() -> None:
 
     selected_model, model_info, domain = render_sidebar()
 
+    # Crisis-mode: show last export outcome as a global banner at top of app
+    try:
+        last_export = st.session_state.get("_last_export_event")
+        if isinstance(last_export, dict):
+            if last_export.get("success"):
+                url = last_export.get("page_url") or "https://www.notion.so"
+                st.markdown(
+                    f"""
+                <div style="background-color:#ecfdf5;border-left:5px solid #10b981;padding:10px 12px;margin:8px 0;border-radius:6px;">
+                    ✅ Export confirmé — <a href="{url}" target="_blank" style="color:#047857;text-decoration:underline;font-weight:600;">ouvrir la fiche</a>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
+            else:
+                err = last_export.get("error", "inconnu")
+                st.markdown(
+                    f"""
+                <div style="background-color:#fef2f2;border-left:5px solid #ef4444;padding:10px 12px;margin:8px 0;border-radius:6px;">
+                    ❌ Échec export: <code>{err}</code>
+                </div>
+                """,
+                    unsafe_allow_html=True,
+                )
+    except Exception:
+        pass
+
     tab1, tab2, tab3, tab4 = st.tabs(["✨ Créer", "📂 Résultats", "🕸️ Graphe", "ℹ️ À propos"])
 
     with tab1:

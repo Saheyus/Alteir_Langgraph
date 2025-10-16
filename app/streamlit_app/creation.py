@@ -88,6 +88,10 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
         # Defaults align with OpenAI docs: medium by default
         st.session_state.verbosity = "medium"
 
+    # Default for agentic work (writer+reviewer+... when True)
+    if "agentic_work" not in st.session_state:
+        st.session_state.agentic_work = True
+
     if "max_tokens" not in st.session_state:
         st.session_state.max_tokens = 5000
 
@@ -109,6 +113,7 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
         st.session_state.reasoning_effort = prefs.get("reasoning_effort", st.session_state.reasoning_effort)
         st.session_state.max_tokens = prefs.get("max_tokens", st.session_state.max_tokens)
         st.session_state.verbosity = prefs.get("verbosity", st.session_state.verbosity)
+        st.session_state.agentic_work = prefs.get("agentic_work", st.session_state.agentic_work)
         st.session_state._ui_prefs_loaded = True
 
 
@@ -639,10 +644,16 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 )
 
         st.write("")
+        # Toggle: Travail agentique (Writer seul si décoché)
+        st.session_state.agentic_work = st.checkbox(
+            "Travail agentique",
+            value=bool(st.session_state.get("agentic_work", True)),
+            help="Quand décoché, seule l'étape d'écriture (Writer) est exécutée. Les étapes d'analyse/correction/validation sont sautées (plus rapide).",
+        )
         max_tokens = st.slider(
             "Max tokens (sortie)",
             min_value=50000,
-            max_value=300000,
+            max_value=500000,
             value=st.session_state.max_tokens,
             step=10000,
             help="Limite de tokens pour la réponse (50000-300000). ⚠️ GPT-5 utilise des tokens pour le reasoning !",
@@ -681,6 +692,7 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             "reasoning_effort": st.session_state.get("reasoning_effort"),
             "max_tokens": max_tokens,
             "verbosity": st.session_state.get("verbosity"),
+            "agentic_work": st.session_state.get("agentic_work", True),
         })
         save_ui_prefs(prefs)
     except Exception:
@@ -747,8 +759,71 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 domain,
                 context_summary,
                 include_reasoning=st.session_state.get("include_reasoning") if model_info.get("provider") == "Anthropic" else True if (model_info.get("provider") == "OpenAI" and model_info.get("uses_reasoning")) else False,
+                agentic_work=bool(st.session_state.get("agentic_work", True)),
             )
 
+            # Gestion export Notion immédiate si flag déjà posé (cas rare pendant génération)
+            from .results import export_to_notion  # local import
+            if st.session_state.pop("trigger_export", False):
+                payload = st.session_state.get("_pending_export_payload") or st.session_state.get("_last_generation_result")
+                if payload:
+                    export_container = st.container()
+                    with export_container:
+                        export_to_notion(payload)
+    # Zone PERSISTANTE: affichée juste après "Contenu final" et avant "Options avancées"
+    last_json = st.session_state.get("_last_saved_json")
+    last_md = st.session_state.get("_last_saved_md")
+    if last_json or last_md:
+        col_files_persist, col_export_persist = st.columns([2, 1])
+        with col_files_persist:
+            from pathlib import Path as _Path
+            json_name = _Path(last_json).name if last_json else None
+            md_name = _Path(last_md).name if last_md else None
+            info_lines = ["**Fichiers sauvegardés:**"]
+            if json_name:
+                info_lines.append(f"- 📊 JSON: `{json_name}`")
+            if md_name:
+                info_lines.append(f"- 📝 Markdown: `{md_name}`")
+            st.info("\n".join(info_lines))
+        with col_export_persist:
+            if st.button(
+                "📤 Exporter vers Notion",
+                key="export_btn_persist_inline",
+                help="Créer une page dans Notion",
+                disabled=bool(st.session_state.get("_export_in_progress", False)),
+            ):
+                try:
+                    st.session_state._pending_export_payload = dict(st.session_state.get("_last_generation_result") or {})
+                except Exception:
+                    st.session_state._pending_export_payload = st.session_state.get("_last_generation_result")
+                st.session_state._export_in_progress = True
+                st.session_state.trigger_export = True
+            if last_json:
+                try:
+                    with open(last_json, "r", encoding="utf-8") as _h:
+                        st.download_button(
+                            label="💾 Télécharger JSON",
+                            data=_h.read(),
+                            file_name=_Path(last_json).name,
+                            mime="application/json",
+                            key="download_json_persist",
+                        )
+                except Exception:
+                    pass
+
+    # Feedback export persistant (si présent)
+    persisted_creation = st.session_state.get("_export_creation")
+    if isinstance(persisted_creation, dict):
+        if persisted_creation.get("success"):
+            page_url = persisted_creation.get("page_url") or "https://www.notion.so"
+            st.markdown(
+                f"""
+            <div style=\"background-color:#ecfdf5;border-left:5px solid #10b981;padding:1rem;margin:1rem 0;border-radius:.5rem;\">✅ Export confirmé — <a href=\"{page_url}\" target=\"_blank\" style=\"color:#047857;text-decoration:underline;font-weight:600;\">ouvrir la fiche</a></div>
+            """,
+                unsafe_allow_html=True,
+            )
+        elif persisted_creation.get("error"):
+            st.error(f"❌ Échec export: {persisted_creation.get('error')}")
     # QoL: Reset parameters button
     with st.expander("⚙️ Options avancées"):
         col_reset, col_cancel = st.columns(2)
@@ -775,3 +850,15 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         with col_cancel:
             # Placeholder for future cancel: would require cooperative checks in workflow
             st.caption("Annuler la génération (prochain itératif)")
+
+    # Gestion export globale (s'exécute à chaque rerun)
+    from .results import export_to_notion  # local import
+    if st.session_state.pop("trigger_export", False):
+        payload = st.session_state.get("_pending_export_payload") or st.session_state.get("_last_generation_result")
+        if payload:
+            export_feedback_global = st.container()
+            with export_feedback_global:
+                st.session_state._export_in_progress = True
+                with st.spinner("📤 Export vers Notion en cours…"):
+                    export_to_notion(payload)
+                st.session_state._export_in_progress = False

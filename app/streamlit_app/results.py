@@ -29,12 +29,65 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
     logger.info("🚀 Début export vers Notion")
     logger.info(f"  - Domain: {result.get('domain', 'N/A')}")
     logger.info(f"  - DRY_RUN: {NotionConfig.DRY_RUN}")
+    try:
+        logger.info(f"  - Feedback container provided: {bool(container)}")
+    except Exception:
+        pass
     
     try:
+        # Affiche un indicateur visuel immédiat dans la zone fournie
+        status_area = (container or st).empty()
+        try:
+            status_area.info("📤 Export vers Notion en cours…")
+        except Exception:
+            pass
+
         with st.spinner("📤 Export vers Notion en cours..."):
-            domain = result.get("domain", "personnages").lower()
+            # If domain missing, try to recover from persisted state
+            domain = (result.get("domain") or st.session_state.get("_last_generation_result", {}).get("domain") or "personnages").lower()
             logger.info(f"  - Domain normalisé: {domain}")
-            content = result.get("content", "")
+            content = result.get("content") or (st.session_state.get("_last_generation_result") or {}).get("content") or ""
+
+            # Recovery path: reload last saved JSON if content is empty
+            if (not isinstance(content, str)) or (not content.strip()):
+                try:
+                    import json as _json
+                    from pathlib import Path as _Path
+                    last_json_path = st.session_state.get("_last_saved_json")
+                    if last_json_path:
+                        p = _Path(last_json_path)
+                        if p.exists():
+                            data = _json.loads(p.read_text(encoding="utf-8"))
+                            if isinstance(data, dict):
+                                # Prefer file content/domain if present
+                                file_content = data.get("content")
+                                file_domain = data.get("domain")
+                                if isinstance(file_content, str) and file_content.strip():
+                                    content = file_content
+                                if file_domain and not result.get("domain"):
+                                    domain = (file_domain or domain or "personnages").lower()
+                                # Merge into result for downstream use
+                                try:
+                                    merged = dict(data)
+                                    merged.update({k: v for k, v in (result or {}).items() if v is not None})
+                                    result = merged
+                                except Exception:
+                                    pass
+                except Exception:
+                    # Non bloquant
+                    pass
+            if not isinstance(content, str) or not content.strip():
+                logger.warning("  - Contenu vide ou invalide; annulation export")
+                (container or st).warning("⚠️ Contenu vide: export Notion annulé")
+                try:
+                    st.session_state._last_export_event = {
+                        "success": False,
+                        "error": "empty_content",
+                        "source": "results",
+                    }
+                except Exception:
+                    pass
+                return {"success": False, "error": "empty_content"}
 
             if domain == "lieux":
                 database_id = NotionConfig.get_sandbox_database_id("lieux")
@@ -497,6 +550,19 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
 
             # Headers depuis la configuration centralisée
             headers = NotionConfig.get_headers()
+            # Hard safety: if token missing, stop with clear UI feedback
+            if not headers.get("Authorization") or headers["Authorization"].endswith(" ") or headers["Authorization"] == "Bearer ":
+                logger.error("❌ NOTION_TOKEN manquant: export impossible")
+                (container or st).error("❌ NOTION_TOKEN manquant. Ajoute le token dans `.env` et relance l'app.")
+                try:
+                    st.session_state._last_export_event = {
+                        "success": False,
+                        "error": "missing_token",
+                        "source": "results",
+                    }
+                except Exception:
+                    pass
+                return {"success": False, "error": "missing_token"}
 
             payload = {
                 "parent": {"database_id": database_id},
@@ -585,7 +651,13 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                         f""", {relation_stats['unresolved']} non trouvées"""
                     )
 
-            container.markdown(
+            # Nettoie l'indicateur et rend une confirmation persistante
+            try:
+                status_area.empty()
+            except Exception:
+                pass
+
+            (container or st).markdown(
                 f"""
             <div style="background-color: #f0f9ff; border-left: 5px solid #0ea5e9; padding: 1.25rem; margin: 1rem 0; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 <div style="color: #0c4a6e; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">
@@ -600,6 +672,31 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
             """,
                 unsafe_allow_html=True,
             )
+
+            # Toast rapide + persistance de l'état pour ré-affichage inline
+            try:
+                st.toast("✅ Export Notion terminé", icon="✅")
+            except Exception:
+                pass
+
+            # Global banner state for top-level display (survives reruns and tab changes)
+            try:
+                st.session_state._last_export_event = {
+                    "success": True,
+                    "page_url": page_url,
+                    "page_id": page_id,
+                    "domain": domain,
+                    "nom": nom,
+                    "source": "results",
+                }
+                # Mirror to creation flow confirmation slot
+                st.session_state._export_creation = {
+                    "success": True,
+                    "page_url": page_url,
+                    "page_id": page_id,
+                }
+            except Exception:
+                pass
 
             if relation_stats["details"]:
                 with st.expander("🔍 Détails résolution relations"):
@@ -711,6 +808,10 @@ def show_results():
     else:
         st.warning("⚠️ Nécessite révision")
 
+    # État persistant des exports par fichier
+    if "_export_results" not in st.session_state:
+        st.session_state._export_results = {}
+
     col_export, col_download = st.columns(2)
 
     with col_export:
@@ -720,7 +821,16 @@ def show_results():
             help="Créer une page dans Notion",
             key=f"export_{selected_file}",
         ):
-            export_to_notion(data, container=export_feedback)
+            result_export = export_to_notion(data, container=export_feedback)
+            # Persist result so confirmation remains visible after rerun
+            if isinstance(result_export, dict) and result_export.get("success"):
+                st.session_state._export_results[selected_file] = result_export
+            else:
+                # Keep at least an error marker to avoid silent disappear
+                st.session_state._export_results[selected_file] = {
+                    "success": False,
+                    "error": (result_export or {}).get("error") if isinstance(result_export, dict) else "unknown",
+                }
 
     with col_download:
         json_path = Path("outputs") / f"{selected_file}.json"
@@ -732,6 +842,26 @@ def show_results():
                     file_name=f"{selected_file}.json",
                     mime="application/json",
                 )
+
+    # Affichage persistant du dernier export pour ce fichier (après reruns)
+    persisted = st.session_state._export_results.get(selected_file)
+    if persisted and isinstance(persisted, dict) and persisted.get("success"):
+        link = persisted.get("page_url") or "https://www.notion.so"
+        title = persisted.get("nom") or "Fiche Notion"
+        st.markdown(
+            f"""
+        <div style="background-color: #ecfdf5; border-left: 5px solid #10b981; padding: 1rem; margin: 1rem 0; border-radius: 0.5rem;">
+            ✅ Export confirmé — <a href="{link}" target="_blank" style="color:#047857; text-decoration: underline; font-weight:600;">ouvrir la fiche</a>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+    elif persisted and isinstance(persisted, dict) and not persisted.get("success"):
+        st.error(f"❌ Échec export: {persisted.get('error','inconnu')}")
+
+    # Extra safety: when a selection is present but no visible message, render a lightweight hint
+    if selected_file and persisted is None:
+        st.caption("ℹ️ Tip: Utilise le bouton Exporter pour créer la fiche Notion du résultat sélectionné.")
 
     st.divider()
 

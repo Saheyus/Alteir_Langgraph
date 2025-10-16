@@ -110,8 +110,10 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
 
         try:
             self.logger.info("Génération du contenu (brief: %s)", brief[:80])
-            response = self.llm.invoke(messages)
-            content_text = self._to_text(response.content if hasattr(response, 'content') else response)
+            # Utiliser l'adapter pour capturer le raw I/O
+            from agents.base.llm_utils import LLMAdapter
+            adapter = LLMAdapter(self.llm)
+            content_text = adapter.invoke_text(messages, label="writer.invoke", extra={"domain": self.domain})
 
             if not content_text or not content_text.strip():
                 raise RuntimeError("Empty content returned by LLM")
@@ -182,6 +184,8 @@ Tu es extrêmement pro-actif pour t'approprier les concepts existants de l'unive
                         yield {"text": delta}
 
             content_text = "".join(accumulated_parts)
+            # Sauvegarder le texte final obtenu via streaming
+            adapter.save_final_text(messages, content_text, label="writer.stream_complete", extra={"domain": self.domain})
             # If streaming yielded nothing, fallback to non-streaming invocation
             if not content_text.strip():
                 self.logger.warning("Streaming n'a renvoyé aucun texte; fallback non-streaming")

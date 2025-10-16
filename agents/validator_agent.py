@@ -157,8 +157,9 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
                 ready = bool(structured.ready_for_publication)
             except Exception:
                 # 2) Fallback: texte + parser existant
-                response = self.llm.invoke(messages)
-                validation_text = self._to_text(response.content if hasattr(response, 'content') else response)
+                from agents.base.llm_utils import LLMAdapter
+                adapter = LLMAdapter(self.llm)
+                validation_text = adapter.invoke_text(messages, label="validator.invoke", extra={"domain": self.domain})
                 errors, completeness, quality, is_valid, ready = self._parse_validation(validation_text)
 
             self.logger.debug(
@@ -226,6 +227,8 @@ Tu es rigoureux et exigeant, garant de la qualité finale du GDD."""
                         yield {"text": delta}
 
             validation_text = "".join(accumulated_parts)
+            # Dump texte final du stream
+            adapter.save_final_text(messages, validation_text, label="validator.stream_complete", extra={"domain": self.domain})
             errors, completeness, quality, is_valid, ready = self._parse_validation(validation_text)
             return ValidationResult(
                 success=True,
