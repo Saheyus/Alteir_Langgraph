@@ -40,6 +40,14 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                 database_id = NotionConfig.get_sandbox_database_id("lieux")
                 domain_label = "Lieu"
                 nom_property = "Nom"
+            elif domain == "especes":
+                database_id = NotionConfig.get_sandbox_database_id("especes")
+                domain_label = "Espèce"
+                nom_property = "Nom"
+            elif domain == "communautes":
+                database_id = NotionConfig.get_sandbox_database_id("communautes")
+                domain_label = "Communauté"
+                nom_property = "Nom"
             else:
                 database_id = NotionConfig.get_sandbox_database_id("personnages")
                 domain_label = "Personnage"
@@ -134,6 +142,39 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                     if value := extract_field(field_name, content):
                         value_clean = value.split(",")[0].split(";")[0].strip()[:100]
                         notion_properties[field_name] = {"select": {"name": value_clean}}
+            elif domain == "especes":
+                for field_name in [
+                    "Type",
+                    "Morphologie",
+                    "Habitat",
+                    "Comportement",
+                    "Intelligence",
+                    "Communication",
+                    "Rang trophique",
+                ]:
+                    if value := extract_field(field_name, content):
+                        value_clean = value.split(",")[0].split(";")[0].strip()[:100]
+                        notion_properties[field_name] = {"select": {"name": value_clean}}
+                if faib_raw := extract_field("Faiblesses", content):
+                    vals = [v.strip() for v in re.split(r"[,;]\s*", faib_raw) if v.strip()]
+                    if vals:
+                        notion_properties["Faiblesses"] = {"multi_select": [{"name": v} for v in vals]}
+            elif domain == "communautes":
+                for field_name in [
+                    "Type",
+                    "Taille",
+                    "Objectif",
+                    "Ressource clé",
+                    "Tabou",
+                    "Structure",
+                ]:
+                    if value := extract_field(field_name, content):
+                        value_clean = value.split(",")[0].split(";")[0].strip()[:100]
+                        notion_properties[field_name] = {"select": {"name": value_clean}}
+                if meth_raw := extract_field("Méthodes", content):
+                    vals = [v.strip() for v in re.split(r"[,;]\s*", meth_raw) if v.strip()]
+                    if vals:
+                        notion_properties["Méthodes"] = {"multi_select": [{"name": v} for v in vals]}
 
             from agents.notion_relation_resolver import NotionRelationResolver
 
@@ -296,6 +337,8 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                     secteurs_names = re.split(r"[,;]\s*", secteurs_raw)
                     secteurs_names = [n.strip() for n in secteurs_names if n.strip()]
 
+                    from agents.notion_relation_resolver import NotionRelationResolver
+                    resolver = NotionRelationResolver(fuzzy_threshold=0.80)
                     secteurs_resolved = []
                     secteurs_unresolved = []
 
@@ -335,6 +378,8 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                     figures_names = re.split(r"[,;]\s*", figures_raw)
                     figures_names = [n.strip() for n in figures_names if n.strip()]
 
+                    from agents.notion_relation_resolver import NotionRelationResolver
+                    resolver = NotionRelationResolver(fuzzy_threshold=0.80)
                     figures_resolved = []
                     figures_unresolved = []
 
@@ -374,6 +419,8 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                     organisations_names = re.split(r"[,;]\s*", organisations_raw)
                     organisations_names = [n.strip() for n in organisations_names if n.strip()]
 
+                    from agents.notion_relation_resolver import NotionRelationResolver
+                    resolver = NotionRelationResolver(fuzzy_threshold=0.80)
                     organisations_resolved = []
                     organisations_unresolved = []
 
@@ -408,6 +455,45 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                                 "unresolved": organisations_unresolved,
                             }
                         )
+
+            elif domain == "especes":
+                # Relations (facultatives MVP)
+                if lieux_raw := extract_field("Aire de répartition", content):
+                    names = [n.strip() for n in re.split(r"[,;]\s*", lieux_raw) if n.strip()]
+                    if names:
+                        from agents.notion_relation_resolver import NotionRelationResolver
+                        resolver = NotionRelationResolver(fuzzy_threshold=0.80)
+                        resolved = []
+                        unresolved = []
+                        for nm in names:
+                            match = resolver.find_match(nm, "lieux")
+                            if match:
+                                resolved.append({"id": match.notion_id, "original": nm, "matched": match.matched_name, "confidence": match.confidence})
+                            else:
+                                unresolved.append(nm)
+                        if resolved:
+                            notion_properties["Aire de répartition"] = {"relation": [{"id": r["id"].replace("-", "")} for r in resolved]}
+                        if resolved or unresolved:
+                            relation_stats["details"].append({"field": "Aire de répartition", "resolved": resolved, "unresolved": unresolved})
+            elif domain == "communautes":
+                # Relations (facultatives MVP)
+                if lieux_raw := extract_field("Lieux d'influence", content):
+                    names = [n.strip() for n in re.split(r"[,;]\s*", lieux_raw) if n.strip()]
+                    if names:
+                        from agents.notion_relation_resolver import NotionRelationResolver
+                        resolver = NotionRelationResolver(fuzzy_threshold=0.80)
+                        resolved = []
+                        unresolved = []
+                        for nm in names:
+                            match = resolver.find_match(nm, "lieux")
+                            if match:
+                                resolved.append({"id": match.notion_id, "original": nm, "matched": match.matched_name, "confidence": match.confidence})
+                            else:
+                                unresolved.append(nm)
+                        if resolved:
+                            notion_properties["Lieux d'influence"] = {"relation": [{"id": r["id"].replace("-", "")} for r in resolved]}
+                        if resolved or unresolved:
+                            relation_stats["details"].append({"field": "Lieux d'influence", "resolved": resolved, "unresolved": unresolved})
 
             # Headers depuis la configuration centralisée
             headers = NotionConfig.get_headers()

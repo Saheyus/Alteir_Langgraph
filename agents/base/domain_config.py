@@ -149,12 +149,27 @@ class DomainConfigFactory:
         return LIEUX_CONFIG
     
     @staticmethod
+    def create_especes_config() -> DomainConfig:
+        """Crée la configuration pour le domaine Espèces"""
+        from config.domain_configs.especes_config import ESPECES_CONFIG
+        return ESPECES_CONFIG
+    
+    @staticmethod
+    def create_communautes_config() -> DomainConfig:
+        """Crée la configuration pour le domaine Communautés"""
+        from config.domain_configs.communautes_config import COMMUNAUTES_CONFIG
+        return COMMUNAUTES_CONFIG
+    
+    @staticmethod
     def get_config(domain: str) -> DomainConfig:
         """Récupère la configuration pour un domaine donné"""
         configs = {
             "personnages": DomainConfigFactory.create_personnages_config,
             "lieux": DomainConfigFactory.create_lieux_config,
-            # Ajoutez d'autres domaines ici
+            "especes": DomainConfigFactory.create_especes_config,
+            "espèces": DomainConfigFactory.create_especes_config,
+            "communautes": DomainConfigFactory.create_communautes_config,
+            "communautés": DomainConfigFactory.create_communautes_config,
         }
         
         if domain not in configs:

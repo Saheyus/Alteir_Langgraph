@@ -14,10 +14,25 @@ def load_workflow_dependencies(domain: str = "personnages"):
     from workflows.content_workflow import ContentWorkflow
     from agents.writer_agent import WriterConfig
 
-    if domain == "lieux":
+    key = (domain or "").lower()
+    # Normaliser accents de l'UI vers clés ASCII
+    if key in ("espèces",):
+        key = "especes"
+    if key in ("communautés",):
+        key = "communautes"
+
+    if key == "lieux":
         from config.domain_configs.lieux_config import LIEUX_CONFIG
 
         return ContentWorkflow, WriterConfig, LIEUX_CONFIG
+    if key == "especes":
+        from config.domain_configs.especes_config import ESPECES_CONFIG
+
+        return ContentWorkflow, WriterConfig, ESPECES_CONFIG
+    if key == "communautes":
+        from config.domain_configs.communautes_config import COMMUNAUTES_CONFIG
+
+        return ContentWorkflow, WriterConfig, COMMUNAUTES_CONFIG
 
     from config.domain_configs.personnages_config import PERSONNAGES_CONFIG
 

@@ -132,8 +132,8 @@ def render_sidebar():
         st.subheader("Domaine")
         domain = st.selectbox(
             "Domaine",
-            ["Personnages", "Lieux"],
-            index=["Personnages", "Lieux"].index(default_domain) if default_domain in ["Personnages", "Lieux"] else 0,
+            ["Personnages", "Lieux", "Espèces", "Communautés"],
+            index=["Personnages", "Lieux", "Espèces", "Communautés"].index(default_domain) if default_domain in ["Personnages", "Lieux", "Espèces", "Communautés"] else 0,
             help="Choisir le type de contenu à générer",
             key="sidebar_domain_select",
         )

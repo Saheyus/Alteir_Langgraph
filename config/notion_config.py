@@ -44,6 +44,8 @@ class NotionConfig:
     SANDBOX_DATABASE_IDS = {
         "personnages": "2806e4d21b458012a744d8d6723c8be1",
         "lieux": "2806e4d21b4580969f1cd7463a4c889c",
+        "especes": "28d6e4d21b4581c88f48c7aaed8a2803",
+        "communautes": "28d6e4d21b4581f4864ac2a5a65f9221",
     }
     
     # Headers pour les requêtes API

@@ -57,8 +57,10 @@ class NotionContextFetcher:
     """Fetch and format Notion pages used as LLM context."""
 
     SANDBOX_DATABASES: Dict[str, Optional[str]] = {
+        # Écriture autorisée uniquement sur Personnages (1) et Lieux (1)
         "personnages": "2806e4d21b458012a744d8d6723c8be1",
         "lieux": "2806e4d21b4580969f1cd7463a4c889c",
+        # Bases principales: lecture seule → ne pas les lister dans le bac à sable
         "communautes": None,
         "especes": None,
         "objets": None,

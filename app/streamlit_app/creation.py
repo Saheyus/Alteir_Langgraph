@@ -54,13 +54,28 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
             st.session_state.level = "site"
         if "atmosphere" not in st.session_state:
             st.session_state.atmosphere = "neutre"
-    else:
+    elif domain == "Personnages":
         if "intent" not in st.session_state or domain != st.session_state.get("last_domain"):
             st.session_state.intent = "orthogonal_depth"
         if "level" not in st.session_state or domain != st.session_state.get("last_domain"):
             st.session_state.level = "standard"
         if "dialogue_mode" not in st.session_state:
             st.session_state.dialogue_mode = "parle"
+    else:
+        # Espèces / Communautés : pas de dialogue/atmosphere
+        if "intent" not in st.session_state or domain != st.session_state.get("last_domain"):
+            # choisir une valeur par défaut par domaine si disponible
+            defaults = {
+                "Espèces": "predateur_signature",
+                "Communautés": "influence_locale",
+            }
+            st.session_state.intent = defaults.get(domain, "orthogonal_depth")
+        if "level" not in st.session_state or domain != st.session_state.get("last_domain"):
+            defaults = {
+                "Espèces": "standard",
+                "Communautés": "chapitre",
+            }
+            st.session_state.level = defaults.get(domain, "standard")
 
     if "creativity" not in st.session_state:
         st.session_state.creativity = 0.7
@@ -129,7 +144,14 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     def _render_free_tab() -> str:
         col_brief_label, col_example_btn = st.columns([4, 1])
         with col_brief_label:
-            brief_label = "Description du lieu" if domain == "Lieux" else "Description du personnage"
+            if domain == "Lieux":
+                brief_label = "Description du lieu"
+            elif domain == "Espèces":
+                brief_label = "Description de l'espèce"
+            elif domain == "Communautés":
+                brief_label = "Description de la communauté"
+            else:
+                brief_label = "Description du personnage"
             st.markdown(f"**{brief_label}**")
         with col_example_btn:
             if st.button("🎲 Exemple", help="Charger un exemple de brief"):
@@ -333,6 +355,18 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     level_options = LEVEL_OPTIONS[domain]
     dialogue_options = DIALOGUE_OPTIONS.get(domain, [])
     atmosphere_options = ATMOSPHERE_OPTIONS.get(domain, [])
+    # Ensure a defined dialogue_mode variable for all domains
+    dialogue_mode = st.session_state.get("dialogue_mode", "parle") if domain == "Personnages" else "none"
+    # Sanitize dialogue_mode when switching back to Personnages
+    if domain == "Personnages" and dialogue_options:
+        if st.session_state.get("dialogue_mode") not in dialogue_options:
+            st.session_state.dialogue_mode = dialogue_options[0]
+
+    def _safe_index(options_list, value, default_idx: int = 0) -> int:
+        try:
+            return options_list.index(value)
+        except Exception:
+            return default_idx if options_list else 0
 
     def randomize_all():
         st.session_state.intent = _random_different(intent_options, st.session_state.intent)
@@ -432,7 +466,7 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             intent = st.selectbox(
                 intent_label,
                 intent_options,
-                index=intent_options.index(st.session_state.intent),
+                index=_safe_index(intent_options, st.session_state.intent, 0),
                 help=intent_help,
                 key=f"intent_select_{st.session_state.random_seed}",
             )
@@ -453,7 +487,7 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             level = st.selectbox(
                 level_label,
                 level_options,
-                index=level_options.index(st.session_state.level),
+                index=_safe_index(level_options, st.session_state.level, 0),
                 help=level_help,
                 key=f"level_select_{st.session_state.random_seed}",
             )
@@ -479,11 +513,11 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 atmosphere = st.selectbox(
                     "Atmosphère",
                     atmosphere_options,
-                    index=atmosphere_options.index(st.session_state.atmosphere),
+                    index=_safe_index(atmosphere_options, st.session_state.atmosphere, 0),
                     help="Ambiance générale du lieu",
                     key=f"atmosphere_select_{st.session_state.random_seed}",
                 )
-        else:
+        elif domain == "Personnages":
             col_dialogue, col_dialogue_random = st.columns([4, 1])
             with col_dialogue_random:
                 st.write("")
@@ -498,10 +532,13 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 dialogue_mode = st.selectbox(
                     "Mode de dialogue",
                     dialogue_options,
-                    index=dialogue_options.index(st.session_state.dialogue_mode),
+                    index=_safe_index(dialogue_options, st.session_state.dialogue_mode, 0),
                     help="Comment le personnage communique",
                     key=f"dialogue_select_{st.session_state.random_seed}",
                 )
+        else:
+            # No extra control for dialogue/atmosphere on other domains
+            pass
 
     with col2:
         st.subheader("Paramètres Techniques")
@@ -619,8 +656,10 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     if domain == "Lieux":
         st.session_state.atmosphere = atmosphere
         dialogue_mode = "none"
-    else:
+    elif domain == "Personnages":
         st.session_state.dialogue_mode = dialogue_mode
+    else:
+        dialogue_mode = "none"
 
     if provider == "OpenAI" and uses_reasoning:
         st.session_state.reasoning_effort = reasoning_effort
@@ -665,10 +704,14 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     button_text = {
         "Personnages": "🚀 Générer le Personnage",
         "Lieux": "🚀 Générer le Lieu",
+        "Espèces": "🚀 Générer l'Espèce",
+        "Communautés": "🚀 Générer la Communauté",
     }
     error_text = {
         "Personnages": "⚠️ Veuillez fournir une description du personnage",
         "Lieux": "⚠️ Veuillez fournir une description du lieu",
+        "Espèces": "⚠️ Veuillez fournir une description de l'espèce",
+        "Communautés": "⚠️ Veuillez fournir une description de la communauté",
     }
 
     trigger = st.session_state.pop("trigger_generate", False)

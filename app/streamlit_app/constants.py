@@ -59,16 +59,22 @@ MODELS = {
 DOMAIN_HEADERS = {
     "Personnages": "Créer un Personnage",
     "Lieux": "Créer un Lieu",
+    "Espèces": "Créer une Espèce",
+    "Communautés": "Créer une Communauté",
 }
 
 DOMAIN_ICONS = {
     "Personnages": "👤",
     "Lieux": "🏛️",
+    "Espèces": "🦎",
+    "Communautés": "🏳️",
 }
 
 BRIEF_PLACEHOLDERS = {
     "Personnages": "Ex: Un alchimiste qui transforme les émotions en substances physiques...",
     "Lieux": "Ex: Une bibliothèque souterraine dont les livres murmurent...",
+    "Espèces": "Ex: Prédateur photophore vivant dans des forêts de corail...",
+    "Communautés": "Ex: Confrérie qui scelle les dettes avec du sang ocre...",
 }
 
 BRIEF_EXAMPLES = {
@@ -91,16 +97,28 @@ BRIEF_EXAMPLES = {
         "Un jardin suspendu où poussent des souvenirs cristallisés. Taille: Site. Rôle: Zone naturelle. Entretenu par des jardiniers aveugles qui récoltent les rêves.",
         "Une gare abandonnée devenue labyrinthe de rails fantômes. Taille: Secteur. Rôle: Lieu unique. Des trains spectraux y passent encore certaines nuits.",
     ],
+    "Espèces": [
+        "Predateur bioluminescent nocturne des forêts de corail. Communication: pulsations lumineuses. Faiblesse: sel. Habitats: grottes salines, falaises de verre.",
+        "Ruche d'insectes ossifiés avec caste musicienne. Habitat: cavernes pulmonaires. Rituel: chant de mue collective. Ressource: miasmes nutritifs.",
+    ],
+    "Communautés": [
+        "Guilde d'archivistes collectant les mémoires interdites. Structure: collégiale. Objectif: préservation. Tabou: feu. Lieux: Vieille Ville, Marché automaton.",
+        "Culte itinérant prêchant la subversion douce. Structure: cellulaire. Méthodes: troc, soin. Ressource: réseau d'informateurs. Tabou: mensonge.",
+    ],
 }
 
 INTENT_OPTIONS = {
     "Personnages": ["orthogonal_depth", "vocation_pure", "archetype_assume", "mystere_non_resolu"],
     "Lieux": ["hub_central", "passage_obligé", "zone_exploration", "lieu_secret"],
+    "Espèces": ["ecologie_pure", "symbiose_critique", "predateur_signature"],
+    "Communautés": ["influence_locale", "réseau_occulté", "ordre_dominant"],
 }
 
 LEVEL_OPTIONS = {
     "Personnages": ["cameo", "standard", "major"],
     "Lieux": ["point_interet", "site", "secteur", "district"],
+    "Espèces": ["simple", "standard", "detail"],
+    "Communautés": ["cellule", "chapitre", "ordre"],
 }
 
 DIALOGUE_OPTIONS = {
@@ -184,6 +202,34 @@ PROFILE_CONFIGS = {
             "dialogue_mode": "gestuel",
             "creativity": 0.85,
             "description": "Zones d'ombre, communication non-verbale",
+        },
+    },
+    "Espèces": {
+        "Prédateur signature": {
+            "intent": "predateur_signature",
+            "level": "standard",
+            "creativity": 0.70,
+            "description": "Comportement de chasse distinctif et contrainte claire",
+        },
+        "Symbiose critique": {
+            "intent": "symbiose_critique",
+            "level": "detail",
+            "creativity": 0.75,
+            "description": "Relation écologique clé avec une ressource ou un hôte",
+        },
+    },
+    "Communautés": {
+        "Réseau occulté": {
+            "intent": "réseau_occulté",
+            "level": "chapitre",
+            "creativity": 0.70,
+            "description": "Opère par cellules, méthodes indirectes",
+        },
+        "Ordre dominant": {
+            "intent": "ordre_dominant",
+            "level": "ordre",
+            "creativity": 0.65,
+            "description": "Hiérarchie claire, contrôle d'un territoire",
         },
     },
 }
