@@ -1,0 +1,21 @@
+{
+  "stage": "stream:pre",
+  "provider": "unknown",
+  "model": "unknown",
+  "timestamp": "2025-10-19T10:10:05.045999Z",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    }
+  ],
+  "error": null,
+  "extra": {
+    "provider": "unknown",
+    "model": "unknown",
+    "call_kwargs": {},
+    "has_alt_kwargs": false,
+    "alt_kwargs": null,
+    "temperature": null
+  }
+}

@@ -1,0 +1,30 @@
+---
+title: "Déploiement SmarterASP sous /langgraph_alteir"
+summary: "Héberger l'app Streamlit via iframe sur SmarterASP et déployer l'app sur Render"
+updated: "2025-10-19"
+tags: [deploy, smarterasp, streamlit, render, iframe]
+---
+
+## Contexte
+SmarterASP (mutualisé) n'exécute pas d'applications Python/Streamlit. Pour publier sous `https://auto-diffusion.net/langgraph_alteir`, on expose une page statique avec **iframe** qui pointe vers l'app Streamlit déployée sur une plateforme compatible (Render/Railway/VPS).
+
+## Étapes
+1) Déployer l'app sur Render (ou équivalent)
+   - Utiliser `render.yaml` à la racine
+   - Variables d'env à définir dans le dashboard: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` (optionnel), `NOTION_TOKEN`
+   - Le service doit exposer WebSockets (activé par défaut chez Render)
+
+2) Créer la sous-page SmarterASP
+   - Sur l'hébergement, créer le dossier `langgraph_alteir/` sous la racine web
+   - Uploader `deploy/smarterasp/langgraph_alteir/index.html`
+   - Éditer l'`src` de l'iframe pour cibler l'URL Render (ajouter `?embed=true`)
+
+3) (Option VPS/Reverse proxy) Servir en sous-chemin
+   - Copier `deploy/streamlit/config.subpath.toml` vers `.streamlit/config.toml`
+   - Lancer: `streamlit run app_streamlit.py --server.port 8501 --server.baseUrlPath /langgraph_alteir --server.headless true --server.enableCORS false --server.enableXsrfProtection false`
+   - Configurer le reverse proxy (Nginx) pour `/langgraph_alteir/` avec support WebSocket
+
+## Notes
+- `?embed=true` nettoie l'UI Streamlit dans l'iframe.
+- Pour l'iframe cross-origin, désactiver XSRF côté Streamlit: `--server.enableXsrfProtection false` (déjà dans `render.yaml`).
+- Ne jamais commiter de clés API; utilisez les variables d'environnement de la plateforme.

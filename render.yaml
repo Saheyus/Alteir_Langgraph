@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: langgraph-alteir
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app_streamlit.py --server.headless true --server.port $PORT --server.enableCORS false --server.enableXsrfProtection false
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
+      # Définissez les secrets dans le dashboard Render (ne pas commiter de clés)
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: NOTION_TOKEN
+        sync: false

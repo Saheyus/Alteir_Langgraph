@@ -1,0 +1,18 @@
+## Streamlit config for subpath deployment (copy to .streamlit/config.toml for prod)
+
+[server]
+headless = true
+enableCORS = false
+enableXsrfProtection = false
+# Serve the app under a subpath like https://domain.tld/langgraph_alteir/
+baseUrlPath = "/langgraph_alteir"
+port = 8501
+
+[client]
+toolbarMode = "viewer"
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"

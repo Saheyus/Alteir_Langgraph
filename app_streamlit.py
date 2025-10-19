@@ -2,6 +2,7 @@
 """Interface Streamlit pour le système multi-agents GDD Alteir."""
 
 import sys
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -22,6 +23,26 @@ try:
     _load_env_files()
 except Exception:
     # dotenv not installed; proceed (tests may install it)
+    pass
+
+# Attempt to read Streamlit Cloud secrets and export to environment (safe fallback for local)
+try:
+    import streamlit as st  # type: ignore
+    def _export_secrets_to_env() -> None:
+        secrets = getattr(st, "secrets", None)
+        if not secrets:
+            return
+        # Only set if not already present in OS env (local .env wins)
+        for key in ("OPENAI_API_KEY", "ANTHROPIC_API_KEY", "NOTION_TOKEN"):
+            try:
+                if key in secrets and not os.getenv(key):
+                    os.environ[key] = str(secrets[key])
+            except Exception:
+                # Never fail app startup on secrets export
+                pass
+    _export_secrets_to_env()
+except Exception:
+    # streamlit might not be importable in some test contexts; ignore
     pass
 
 from config.logging_config import get_logger, setup_logging
