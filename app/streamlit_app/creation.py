@@ -136,7 +136,7 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
         if domain == "Lieux":
             st.session_state.atmosphere = prefs.get("atmosphere", st.session_state.atmosphere)
         elif domain == "Personnages":
-            # Restore dialogue_mode only for Personnages; use safe default if absent
+            # Guard against missing key when not previously initialized
             st.session_state.dialogue_mode = prefs.get(
                 "dialogue_mode",
                 st.session_state.get("dialogue_mode", "parle"),
@@ -179,6 +179,11 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     brief_placeholder = BRIEF_PLACEHOLDERS[domain]
 
     def _render_free_tab() -> str:
+        def _activate_free():
+            try:
+                st.session_state.brief_mode = "free"
+            except Exception:
+                pass
         col_brief_label, col_example_btn = st.columns([4, 1])
         with col_brief_label:
             if domain == "Lieux":
@@ -200,13 +205,19 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             height=100,
             label_visibility="collapsed",
             key="brief",
+            on_change=_activate_free,
         )
         return value
 
     def _render_random_tab(mode_key: str, mode_name: str) -> str:
         state = st.session_state[mode_key]
-        # When this tab is visible, consider its brief as active
-        st.session_state.brief_mode = "random_simple" if mode_name == "simple" else "random_complex"
+        def _activate_random():
+            try:
+                st.session_state.brief_mode = (
+                    "random_simple" if mode_name == "simple" else "random_complex"
+                )
+            except Exception:
+                pass
         template_available = BRIEF_TEMPLATES.get(domain, {}).get(mode_name)
         if not template_available:
             st.info("Brief aléatoire non disponible pour ce domaine.")
@@ -268,8 +279,9 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                                 label,
                                 opts or [""],
                                 index=(opts.index(cur) if cur in opts else 0) if opts else 0,
-                                key=f"{mode_key}_{cat}_select_{state.get('render_nonce', 0)}",
+                            key=f"{mode_key}_{cat}_select_{state.get('render_nonce', 0)}",
                                 label_visibility="collapsed",
+                            on_change=_activate_random,
                             )
                             state["selections"][cat] = sel
                         with row_lock:
@@ -279,8 +291,9 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                                 new_locked = st.checkbox(
                                     "lock",
                                     value=locked,
-                                    key=f"{mode_key}_{cat}_lock",
+                                key=f"{mode_key}_{cat}_lock",
                                     label_visibility="collapsed",
+                                on_change=_activate_random,
                                 )
                                 state["locked"][cat] = new_locked
                             with col_lock_icon:
@@ -305,6 +318,7 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             
             # Bouton Regénérer sous l'aperçu
             if st.button("🎲 Regénérer", key=f"regen_{mode_key}", use_container_width=True):
+                _activate_random()
                 # Increment seed
                 before_seed = st.session_state[mode_key]["seed"]
                 st.session_state[mode_key]["seed"] += 1
@@ -375,28 +389,6 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
         else:
             st.session_state._random_complex_selections = dict(state["selections"])  # shallow copy
             st.session_state._random_complex_locked = dict(state["locked"])  # shallow copy
-
-        # Zone pleine largeur: Prompt additionnel
-        st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-        st.markdown("**Prompt additionnel**")
-        # Valeur par défaut persistée par mode
-        additional_key = f"{mode_key}_additional_prompt"
-        if additional_key not in st.session_state:
-            st.session_state[additional_key] = ""
-        additional_text = st.text_area(
-            "Prompt additionnel",
-            value=st.session_state.get(additional_key, ""),
-            placeholder="Instructions supplémentaires (optionnel)…",
-            height=72,  # ~3 lignes
-            label_visibility="collapsed",
-            key=f"{additional_key}_widget",
-        )
-        # Sync state
-        st.session_state[additional_key] = additional_text
-
-        # Concaténer au brief généré si présent
-        if additional_text and additional_text.strip():
-            brief_text = f"{brief_text}\n\n{additional_text.strip()}"
 
         return brief_text
 

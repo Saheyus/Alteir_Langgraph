@@ -8,19 +8,19 @@ BRIEF_TEMPLATES = {
     "Personnages": {
         "simple": (
             "Rédige un personnage de type [TYPE], de l'espèce [ESPÈCE], vivant à [LIEU]. "
-            "Il/Elle occupe la fonction de [OCCUPATION] au sein de [FACTION]. "
+            "Il ou elle occupe la fonction de [OCCUPATION] au sein de [FACTION]. "
             "Sa personnalité se caractérise par [QUALITÉS], mais souffre aussi de [DÉFAUTS]. Genre: [GENRE]."
         ),
         "complexe": (
             "Rédige un personnage de type [TYPE], de genre [GENRE], faisant partie de l'espèce [ESPÈCE], [CATÉGORIE_ÂGE]. "
-            "Il/Elle est originaire de [ORIGINE] et vit actuellement à [LIEU]. Son apparence est [APPARENCE]. "
-            "Il/Elle occupe la fonction de [OCCUPATION] au sein de [FACTION]. Son état de santé : [ÉTAT_SANTÉ]. "
-            "Sa classe sociale : [CLASSE_SOCIALE]. Son niveau d'éducation : [ÉDUCATION]. Son statut social : [STATUT_SOCIAL]. "
-            "Sa personnalité se caractérise par [QUALITÉS], mais souffre aussi de [DÉFAUTS]. Sa principale faiblesse : [FAIBLESSE]. "
-            "Ce qu'il/elle désire par-dessus tout : [DÉSIR], alors qu'en réalité il/elle a besoin de [BESOIN]. "
-            "Son axe idéologique face à Jast : [AXE_IDÉOLOGIQUE]. Il/Elle incarne l'archétype littéraire de John Truby : [ARCHÉTYPE]. "
-            "Il/Elle s'exprime principalement en [REGISTRE_LANGUE]. Face à la question \"Comment résister à un système d'oppression "
-            "quand ce système définit les termes mêmes de la résistance ?\", il/elle [POSTURE_MORALE]."
+            "Il ou elle est originaire de [ORIGINE] et vit actuellement à [LIEU]. Son apparence est [APPARENCE]. "
+            "Il ou elle occupe la fonction de [OCCUPATION] au sein de [FACTION]. Son état de santé  est qualifié de [ÉTAT_SANTÉ]. "
+            "Il ou elle fait partie de la classe sociale [CLASSE_SOCIALE] et son niveau d'éducation est [ÉDUCATION]. Son statut social  au sein de sa classe est [STATUT_SOCIAL]. "
+            "Sa personnalité se caractérise par [QUALITÉS], mais souffre aussi de [DÉFAUTS]. Sa faiblesse psychologiqu est liée à [FAIBLESSE]. "
+            "Ce qu'il ou elle désire par-dessus tout : [DÉSIR], alors qu'en réalité il ou elle a besoin de [BESOIN]. "
+            "Son axe idéologique : [AXE_IDÉOLOGIQUE]. Il/Elle incarne l'archétype littéraire de John Truby : [ARCHÉTYPE]. "
+            "Il ou elle s'exprime principalement en [REGISTRE_LANGUE]. Face à la question \"Comment résister à un système d'oppression "
+            "quand ce système définit les termes mêmes de la résistance ?\", il ou elle [POSTURE_MORALE]."
         ),
     },
     "Lieux": {

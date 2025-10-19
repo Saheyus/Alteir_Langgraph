@@ -59,7 +59,7 @@ class WriterAgent(BaseAgent):
 
 **LANGUE & STYLE:**
 - Français clair, précis, sans méta
-- Prose continue (pas de tableaux comparatifs)
+- Prose continue
 - Néologismes autorisés avec glose brève (5-8 mots) à la première mention
 - Éviter les anglicismes non nécessaires
 - Décrire sans euphémiser, de façon crue mais non esthétisante
