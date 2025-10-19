@@ -122,7 +122,7 @@ def create_character():
     
     # Créativité
     print("\n--- CREATIVITE ---")
-    creativity = float(get_user_input("Temperature (0.0-1.0)", "0.7"))
+    creativity = float(get_user_input("Temperature (0.0-1.0)", "1.0"))
     
     # Récapitulatif
     print("\n" + "=" * 70)

@@ -90,7 +90,7 @@ class ContentWorkflow:
         """Crée un LLM par défaut"""
         return ChatOpenAI(
             model="gpt-4o-mini",
-            temperature=0.7,
+            temperature=1.0,
             max_tokens=2000,
         )
     

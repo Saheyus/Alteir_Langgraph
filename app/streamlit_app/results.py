@@ -564,9 +564,29 @@ def export_to_notion(result, container: st.delta_generator.DeltaGenerator | None
                     pass
                 return {"success": False, "error": "missing_token"}
 
+            # Adapter dynamiquement aux propriétés réellement présentes dans la base cible
+            try:
+                from agents.notion_schema_helper import NotionSchemaHelper
+                _helper = NotionSchemaHelper()
+                _prop_map = _helper.get_property_id_map(database_id)
+                _allowed = set(_prop_map.keys())
+                # Toujours garder le titre s'il existe sous un alias courant
+                if "Nom" not in _allowed:
+                    # Chercher un équivalent Title dans le schéma
+                    for _n, _id in _prop_map.items():
+                        # Heuristique: type title
+                        pass  # handled by convert below; keep key as-is
+                # Filtrer les propriétés inconnues (prévention 400)
+                filtered_props = {k: v for k, v in notion_properties.items() if k in _allowed or k == "Nom"}
+                # Convertir noms → IDs (meilleure robustesse API)
+                notion_properties_final = _helper.convert_properties_to_ids(filtered_props, database_id)
+            except Exception:
+                # Fallback: utiliser les propriétés telles quelles
+                notion_properties_final = notion_properties
+
             payload = {
                 "parent": {"database_id": database_id},
-                "properties": notion_properties,
+                "properties": notion_properties_final,
             }
 
             # Dry-run: ne pas écrire en mode DRY_RUN

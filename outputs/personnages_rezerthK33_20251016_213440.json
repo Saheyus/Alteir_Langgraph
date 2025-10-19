@@ -1,0 +1,674 @@
+{
+  "domain": "personnages",
+  "brief": "Rédige un personnage de type PNJ secondaire, de genre Non Binaire, faisant partie de l'espèce Cen'Doei, Jeune adulte. Il/Elle est originaire de Tombeau des lueurs dissidentes et vit actuellement à Cité Labiale. Son apparence est Commune. Il/Elle occupe la fonction de Esclave au sein de Autre faction (à inventer). Son état de santé : Handicap sensoriel. Sa classe sociale : Paria. Son niveau d'éducation : Faible (autodidacte). Son statut social : Stigmatisé. Sa personnalité se caractérise par Détachée, mais souffre aussi de Prétentieuse. Sa principale faiblesse : Dépendance. Ce qu'il/elle désire par-dessus tout : Connaissance, alors qu'en réalité il/elle a besoin de Vulnérabilité. Son axe idéologique face à Jast : Connexion. Il/Elle incarne l'archétype littéraire de John Truby : Magicienne / Sorcier. Il/Elle s'exprime principalement en Langage vertébral. Face à la question \"Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance ?\", il/elle Résiste activement.",
+  "content": "- Nom: Rezerth K-33\n- Alias: \"Murmure d’Épine\"\n- Type: PNJ secondaire\n- Occupation: Esclave-documentariste au sein de ◊Confrérie des Vibramens (cartographes des signaux)\n- Espèce: Cen'Doei\n- Âge: 9 Nuées\n- Genre: Non Binaire\n- Archétype littéraire: Magicienne / Sorcier\n- Axe idéologique: Connexion\n- Qualités: Détachée, Observatrice, Ingénieuse\n- Défauts: Prétentieuse, Dépendante, Taciturne\n- Langage: Langage vertébral\n- Communautés: Cité Labiale, Tombeau des lueurs dissidentes\n- Lieux de vie: Cité Labiale, Tombeau des lueurs dissidentes\n- Réponse au problème moral: Résiste activement en modifiant la sémantique des signaux imposés\n- État: Brouillon IA\n- Sprint: Sprint 2\n- Détient: ◊Antenne d’Os-Creux, ◊Tablette de pellicules myélinées\n\n# Résumé de la fiche\nRezerth K-33, Cen'Doei au visage anonyme et aux gestes économes, est esclave-documentariste de la ◊Confrérie des Vibramens, une faction qui catalogue et marchande les vibrations nerveuses circulant dans la Cité Labiale. Né·e au Tombeau des lueurs dissidentes, iel souffre d’un handicap sensoriel rare: l’ouïe externe s’est atrophiée, et la perception des hauteurs sonores est déplacée vers la colonne vertébrale. Paria autodidacte, iel parle en Langage vertébral, transmit les mots en crépitements d’os. Détaché·e et prétentieux·se, dépendant·e de microdoses d’un sédatif vibra-sanguin, iel poursuit la Connaissance comme d’autres pourchassent la fuite. Ce dont iel a besoin: apprendre la vulnérabilité, ouvrir sa cage thoracique symbolique. Rezerth résiste au système en sabotant la taxonomie des signaux—changer le sens des messages pour libérer ceux qui les subissent.\n\n# Caractérisation\n\n## Faiblesse\n- Morale: Refuse toute dette émotionnelle; transforme l’aide reçue en protocole, jamais en lien.\n- Psychologique: Dépendance aux gouttes d’osine (liquide sédatif extrait du cartilage), qui neutralisent les surcharges sensorielles mais émoussent l’empathie.\n\n## Compulsion\nClasser tout ce qui pulse. Mesurer, transcrire, dévier subtilement la norme vibratoire jusqu’au glissement sémantique.\n\n## Désir\nAccumuler la connaissance des nerfs sociaux de la Cité Labiale, écrire une grammaire totale des oppressions.\n\n# Background\n\n## Contexte\nEsclave au sein de la ◊Confrérie des Vibramens, Rezerth collecte, nettoie et vend des tracés vibratoires: confessions murmurées aux murs, ordres codés dans les planchers, rumeurs injectées par l’administration panoptique. La Confrérie loue ses « oreilles d’os » aux guildes, parfois à la Vieille Ville par intermédiaires. Iel est stigmatisé·e: son handicap l’oblige à porter une ossature externe sur la nuque. L’institution de Jast modèle les flux; la Confrérie les monétise; Rezerth les corrompt.\n\n## Apparence\nPeau grise veinée de filaments nacrés, deux cornes émoussées comme des prises. Visage lisse, presque sans relief, yeux voilés. Autour du cou, une collerette d’anneaux d’os assemblés: l’◊Antenne d’Os-Creux, qui transmet aux vertèbres. Manteau court en fibres de liège pitchées, poches remplies de pellicules souples: la ◊Tablette de pellicules myélinées, où iel colle les bandes et les lit en pressions dorsales. Odeur de tisane métallique. Marques de piqûres au sternum.\n\n## Évènements marquants\nDe sa vie d'enfant :\n- Chute dans un puits d’échos au Tombeau des lueurs dissidentes; audition détruite, vertèbres hyperréactives.\n- Apprentissage clandestin du Langage vertébral avec un vieux graveur de stèles.\n- Découverte que les Deimos du plafond vibrent avant de clignoter; iel anticipe la clarté.\n- Première dose d’osine fournie par un collecteur itinérant; silence miraculeux.\n\nDe sa vie d'ado :\n- Vente à la ◊Confrérie des Vibramens pour rembourser une dette familiale en liquides.\n- Affectation aux « cartographies d’allées » dans la Cité Labiale; iel apprend la taxonomie d’écoute.\n- Sabotage discret d’un message d’arrestation, transformé en convocation administrative.\n- Premier gel sensoriel de trois Sommes d’affilée; réveil froid, sans souvenirs précis.\n\nDe sa vie d'adulte :\n- Mise au point d’un protocole de « torsion sémantique »: recoder l’emphase des pulsations.\n- Dénonciation anonyme au profit d’un groupuscule; la Confrérie punit par privation d’osine.\n- Rencontre d’un messager de la Vieille Ville venu calibrer les flux; iel feint l’obéissance.\n- Adopte l’alias « Murmure d’Épine » et commence à signer ses cartes par une micro-lacune.\n\n## Relations\nÀ sa famille :\n- Parent restant au Tombeau des lueurs dissidentes: dette de liquides de feu encore due; délai de deux Battements, faute de quoi un orteil sera saisi pour « intérêt ». Rezerth envoie des pellicules cryptées comme gage.\n\nAux autres :\n- Maître de registre Vibramen, Lyr Obdyle: prix de l’osine augmenté si Rezerth refuse une cartographie privée. Tabou: ne jamais enregistrer la voix de Lyr.\n- Courtière d’alcôves, Na-Merith: paie en abris à échos si Rezerth re-route les rumeurs. Délai strict: avant la fin du prochain Souffle.\n- ◊Chorale Péridurale, micro-cellule dissidente: exige des cartes déformées pour faire « dérailler » les rondes. Prix: fournir aussi les cartes vraies si l’Ethérée paie de sa propre mémoire.\n\n## Centres d'intérêt\n- Phonométrie des charpentes, notation des timbres peau-os.\n- Petites liturgies mécaniques: huiler l’antenne, polir l’os.\n- Déchiffrage des « prières d’insecte » des Deimos, pure curiosité matérielle.\n\n## Fluff\n- Transporte des cailloux poreux qu’iel presse contre sa nuque pour « lire » le sol.\n- Collectionne des empreintes thermiques de mains sur des murs vivants.\n- Écrit sans encre: micro-entailles codées sur la tranche des pellicules.\n\n# Arcs Narratifs\n\n## Actions concrètes\n- Guide l’héroïne esclave révoltée à travers un réseau de corridors où les ordres sont des battements de plancher.\n- Fournit des cartes à double niveau: parcelles officielles et torsions sémantiques cachées.\n- Sabote un protocole panoptique en inversant le code d’urgence en code d’entretien.\n\n## Quêtes annexes\n- Récupérer une bobine d’osine confisquée à l’atelier de Lyr Obdyle.\n- Enregistrer la « voix » d’une arche qui ne résonne plus depuis une Nuée et l’offrir à la ◊Chorale Péridurale.\n- Trouver un Deimos malade: ses clignements brouillent les cartes; Rezerth veut sa fréquence exacte.\n- Porter une carte creuse au Tombeau des lueurs dissidentes et payer l’intérêt familial avec une rare liqueur de terre.\n\n## Consequences de la Révélation\n- Si besoin résolu: Rezerth accepte d’être écouté·e sans protocole; diminue l’osine; devient complice à visage découvert, artisan·e d’un réseau de traductions libres.\n- Si besoin non résolu: iel s’enfonce dans la neutralisation chimique; cartes parfaites mais mortes; la Confrérie l’absorbe comme outil.\n- Si le besoin empire: overdose silencieuse; ses cartes deviennent norme; l’oppression gagne un alphabet.\n\n# Dialogue Type\n\n## Problème moral du jeu\nRezerth répond par la torsion: si le système nomme « cri » toute parole, renommer le cri en « réglage ». Changer les termes, puis les sons.\n\n## Registre de langage du personnage\nSec, laconique, pulses métaphoriques. Phrases courtes, images somatiques. Parle souvent à la deuxième personne des vertèbres.\n\n## Champs lexicaux utilisés\n- Os, cartilage, pulsations, ligature, cicatrice, souffle, Deimos, plancher, collerette, suture.\n\n## Expressions courantes\n- « Ça grince juste. »\n- « Colle ton dos. Écoute. »\n- « Je tords, je ne mens pas. »\n- « Ta nuque bande, donc tu sais. »\n- « Le plancher a avalé cette phrase. »\n\n# Dialogue du personnage\n\n## Rencontre initiale\n« Tes vertèbres savent déjà. Mets-toi contre le mur. Laisse-moi tordre ce qui t’écrase, sans bruit. »\n\n## Exemples de dialogues\n- « Le couloir parle plus fort que toi; incline la tête, je ramasse ce qu’il crache. »\n- « La Confrérie veut des cartes lisses; je préfère les cicatrices. Elles tiennent mieux. »\n- « Donne-moi une Somme. Je tords leurs urgences en entretien. Ils n’écoutent jamais l’entretien. »\n- « Jast calibre la peur; moi, j’abaisse le volume jusqu’à la honte. »\n- « Tu veux passer? Colle ton dos au pilier. Laisse ta peau traduire, pas ta bouche. »\n- « Je m’endette en osine; toi, en promesses. Devine qui paie le plus cher. »\n- « Cette arche bégaie. Si tu la respectes, elle ouvre sa seconde bouche. »\n- « Je n’ai pas de grâce. Juste des angles. Ça suffit pour faire saigner une serrure. »\n- « Les Deimos clignent avant de mentir. Compte-les. Trois, et le plancher trahit. »\n- « Je t’offrirai une carte creuse. Tu pourras y ranger ton nom, si tu y tiens. »{'index': 1}",
+  "writer_metadata": {
+    "domain": "personnages",
+    "brief": "Rédige un personnage de type PNJ secondaire, de genre Non Binaire, faisant partie de l'espèce Cen'Doei, Jeune adulte. Il/Elle est originaire de Tombeau des lueurs dissidentes et vit actuellement à Cité Labiale. Son apparence est Commune. Il/Elle occupe la fonction de Esclave au sein de Autre faction (à inventer). Son état de santé : Handicap sensoriel. Sa classe sociale : Paria. Son niveau d'éducation : Faible (autodidacte). Son statut social : Stigmatisé. Sa personnalité se caractérise par Détachée, mais souffre aussi de Prétentieuse. Sa principale faiblesse : Dépendance. Ce qu'il/elle désire par-dessus tout : Connaissance, alors qu'en réalité il/elle a besoin de Vulnérabilité. Son axe idéologique face à Jast : Connexion. Il/Elle incarne l'archétype littéraire de John Truby : Magicienne / Sorcier. Il/Elle s'exprime principalement en Langage vertébral. Face à la question \"Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance ?\", il/elle Résiste activement.",
+    "structured": {
+      "_raw_text": "- Nom: Rezerth K-33\n- Alias: \"Murmure d’Épine\"\n- Type: PNJ secondaire\n- Occupation: Esclave-documentariste au sein de ◊Confrérie des Vibramens (cartographes des signaux)\n- Espèce: Cen'Doei\n- Âge: 9 Nuées\n- Genre: Non Binaire\n- Archétype littéraire: Magicienne / Sorcier\n- Axe idéologique: Connexion\n- Qualités: Détachée, Observatrice, Ingénieuse\n- Défauts: Prétentieuse, Dépendante, Taciturne\n- Langage: Langage vertébral\n- Communautés: Cité Labiale, Tombeau des lueurs dissidentes\n- Lieux de vie: Cité Labiale, Tombeau des lueurs dissidentes\n- Réponse au problème moral: Résiste activement en modifiant la sémantique des signaux imposés\n- État: Brouillon IA\n- Sprint: Sprint 2\n- Détient: ◊Antenne d’Os-Creux, ◊Tablette de pellicules myélinées\n\n# Résumé de la fiche\nRezerth K-33, Cen'Doei au visage anonyme et aux gestes économes, est esclave-documentariste de la ◊Confrérie des Vibramens, une faction qui catalogue et marchande les vibrations nerveuses circulant dans la Cité Labiale. Né·e au Tombeau des lueurs dissidentes, iel souffre d’un handicap sensoriel rare: l’ouïe externe s’est atrophiée, et la perception des hauteurs sonores est déplacée vers la colonne vertébrale. Paria autodidacte, iel parle en Langage vertébral, transmit les mots en crépitements d’os. Détaché·e et prétentieux·se, dépendant·e de microdoses d’un sédatif vibra-sanguin, iel poursuit la Connaissance comme d’autres pourchassent la fuite. Ce dont iel a besoin: apprendre la vulnérabilité, ouvrir sa cage thoracique symbolique. Rezerth résiste au système en sabotant la taxonomie des signaux—changer le sens des messages pour libérer ceux qui les subissent.\n\n# Caractérisation\n\n## Faiblesse\n- Morale: Refuse toute dette émotionnelle; transforme l’aide reçue en protocole, jamais en lien.\n- Psychologique: Dépendance aux gouttes d’osine (liquide sédatif extrait du cartilage), qui neutralisent les surcharges sensorielles mais émoussent l’empathie.\n\n## Compulsion\nClasser tout ce qui pulse. Mesurer, transcrire, dévier subtilement la norme vibratoire jusqu’au glissement sémantique.\n\n## Désir\nAccumuler la connaissance des nerfs sociaux de la Cité Labiale, écrire une grammaire totale des oppressions.\n\n# Background\n\n## Contexte\nEsclave au sein de la ◊Confrérie des Vibramens, Rezerth collecte, nettoie et vend des tracés vibratoires: confessions murmurées aux murs, ordres codés dans les planchers, rumeurs injectées par l’administration panoptique. La Confrérie loue ses « oreilles d’os » aux guildes, parfois à la Vieille Ville par intermédiaires. Iel est stigmatisé·e: son handicap l’oblige à porter une ossature externe sur la nuque. L’institution de Jast modèle les flux; la Confrérie les monétise; Rezerth les corrompt.\n\n## Apparence\nPeau grise veinée de filaments nacrés, deux cornes émoussées comme des prises. Visage lisse, presque sans relief, yeux voilés. Autour du cou, une collerette d’anneaux d’os assemblés: l’◊Antenne d’Os-Creux, qui transmet aux vertèbres. Manteau court en fibres de liège pitchées, poches remplies de pellicules souples: la ◊Tablette de pellicules myélinées, où iel colle les bandes et les lit en pressions dorsales. Odeur de tisane métallique. Marques de piqûres au sternum.\n\n## Évènements marquants\nDe sa vie d'enfant :\n- Chute dans un puits d’échos au Tombeau des lueurs dissidentes; audition détruite, vertèbres hyperréactives.\n- Apprentissage clandestin du Langage vertébral avec un vieux graveur de stèles.\n- Découverte que les Deimos du plafond vibrent avant de clignoter; iel anticipe la clarté.\n- Première dose d’osine fournie par un collecteur itinérant; silence miraculeux.\n\nDe sa vie d'ado :\n- Vente à la ◊Confrérie des Vibramens pour rembourser une dette familiale en liquides.\n- Affectation aux « cartographies d’allées » dans la Cité Labiale; iel apprend la taxonomie d’écoute.\n- Sabotage discret d’un message d’arrestation, transformé en convocation administrative.\n- Premier gel sensoriel de trois Sommes d’affilée; réveil froid, sans souvenirs précis.\n\nDe sa vie d'adulte :\n- Mise au point d’un protocole de « torsion sémantique »: recoder l’emphase des pulsations.\n- Dénonciation anonyme au profit d’un groupuscule; la Confrérie punit par privation d’osine.\n- Rencontre d’un messager de la Vieille Ville venu calibrer les flux; iel feint l’obéissance.\n- Adopte l’alias « Murmure d’Épine » et commence à signer ses cartes par une micro-lacune.\n\n## Relations\nÀ sa famille :\n- Parent restant au Tombeau des lueurs dissidentes: dette de liquides de feu encore due; délai de deux Battements, faute de quoi un orteil sera saisi pour « intérêt ». Rezerth envoie des pellicules cryptées comme gage.\n\nAux autres :\n- Maître de registre Vibramen, Lyr Obdyle: prix de l’osine augmenté si Rezerth refuse une cartographie privée. Tabou: ne jamais enregistrer la voix de Lyr.\n- Courtière d’alcôves, Na-Merith: paie en abris à échos si Rezerth re-route les rumeurs. Délai strict: avant la fin du prochain Souffle.\n- ◊Chorale Péridurale, micro-cellule dissidente: exige des cartes déformées pour faire « dérailler » les rondes. Prix: fournir aussi les cartes vraies si l’Ethérée paie de sa propre mémoire.\n\n## Centres d'intérêt\n- Phonométrie des charpentes, notation des timbres peau-os.\n- Petites liturgies mécaniques: huiler l’antenne, polir l’os.\n- Déchiffrage des « prières d’insecte » des Deimos, pure curiosité matérielle.\n\n## Fluff\n- Transporte des cailloux poreux qu’iel presse contre sa nuque pour « lire » le sol.\n- Collectionne des empreintes thermiques de mains sur des murs vivants.\n- Écrit sans encre: micro-entailles codées sur la tranche des pellicules.\n\n# Arcs Narratifs\n\n## Actions concrètes\n- Guide l’héroïne esclave révoltée à travers un réseau de corridors où les ordres sont des battements de plancher.\n- Fournit des cartes à double niveau: parcelles officielles et torsions sémantiques cachées.\n- Sabote un protocole panoptique en inversant le code d’urgence en code d’entretien.\n\n## Quêtes annexes\n- Récupérer une bobine d’osine confisquée à l’atelier de Lyr Obdyle.\n- Enregistrer la « voix » d’une arche qui ne résonne plus depuis une Nuée et l’offrir à la ◊Chorale Péridurale.\n- Trouver un Deimos malade: ses clignements brouillent les cartes; Rezerth veut sa fréquence exacte.\n- Porter une carte creuse au Tombeau des lueurs dissidentes et payer l’intérêt familial avec une rare liqueur de terre.\n\n## Consequences de la Révélation\n- Si besoin résolu: Rezerth accepte d’être écouté·e sans protocole; diminue l’osine; devient complice à visage découvert, artisan·e d’un réseau de traductions libres.\n- Si besoin non résolu: iel s’enfonce dans la neutralisation chimique; cartes parfaites mais mortes; la Confrérie l’absorbe comme outil.\n- Si le besoin empire: overdose silencieuse; ses cartes deviennent norme; l’oppression gagne un alphabet.\n\n# Dialogue Type\n\n## Problème moral du jeu\nRezerth répond par la torsion: si le système nomme « cri » toute parole, renommer le cri en « réglage ». Changer les termes, puis les sons.\n\n## Registre de langage du personnage\nSec, laconique, pulses métaphoriques. Phrases courtes, images somatiques. Parle souvent à la deuxième personne des vertèbres.\n\n## Champs lexicaux utilisés\n- Os, cartilage, pulsations, ligature, cicatrice, souffle, Deimos, plancher, collerette, suture.\n\n## Expressions courantes\n- « Ça grince juste. »\n- « Colle ton dos. Écoute. »\n- « Je tords, je ne mens pas. »\n- « Ta nuque bande, donc tu sais. »\n- « Le plancher a avalé cette phrase. »\n\n# Dialogue du personnage\n\n## Rencontre initiale\n« Tes vertèbres savent déjà. Mets-toi contre le mur. Laisse-moi tordre ce qui t’écrase, sans bruit. »\n\n## Exemples de dialogues\n- « Le couloir parle plus fort que toi; incline la tête, je ramasse ce qu’il crache. »\n- « La Confrérie veut des cartes lisses; je préfère les cicatrices. Elles tiennent mieux. »\n- « Donne-moi une Somme. Je tords leurs urgences en entretien. Ils n’écoutent jamais l’entretien. »\n- « Jast calibre la peur; moi, j’abaisse le volume jusqu’à la honte. »\n- « Tu veux passer? Colle ton dos au pilier. Laisse ta peau traduire, pas ta bouche. »\n- « Je m’endette en osine; toi, en promesses. Devine qui paie le plus cher. »\n- « Cette arche bégaie. Si tu la respectes, elle ouvre sa seconde bouche. »\n- « Je n’ai pas de grâce. Juste des angles. Ça suffit pour faire saigner une serrure. »\n- « Les Deimos clignent avant de mentir. Compte-les. Trois, et le plancher trahit. »\n- « Je t’offrirai une carte creuse. Tu pourras y ranger ton nom, si tu y tiens. »{'index': 1}",
+      "État": "Brouillon IA"
+    },
+    "writer_config": {
+      "creativity": 1.0,
+      "max_length": 2000,
+      "intent": "orthogonal_depth",
+      "level": "standard",
+      "dialogue_mode": "parle",
+      "calendar_spec": null,
+      "inspiration_mode": null
+    }
+  },
+  "reviewer_metadata": {},
+  "corrector_metadata": {},
+  "validator_metadata": {},
+  "review_issues": [],
+  "corrections": [],
+  "validation_errors": [],
+  "coherence_score": 0.0,
+  "completeness_score": 0.0,
+  "quality_score": 0.0,
+  "is_valid": false,
+  "ready_for_publication": false,
+  "context": {
+    "selected_ids": [
+      "1886e4d2-1b45-8111-88d5-edb08cafe956",
+      "28d6e4d2-1b45-811b-9ddb-d84d061b267a",
+      "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0",
+      "2806e4d2-1b45-81b5-b9c5-f92a26bad7c9"
+    ],
+    "pages": [
+      {
+        "id": "1886e4d2-1b45-8111-88d5-edb08cafe956",
+        "title": "Vision",
+        "domain": "vision",
+        "summary": "",
+        "content": "# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+        "properties": {
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vision",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vision",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 315,
+        "last_edited": "2025-10-12T17:40:00.000Z"
+      },
+      {
+        "id": "28d6e4d2-1b45-811b-9ddb-d84d061b267a",
+        "title": "Cen’Doei",
+        "domain": "communautes",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\n  Les Cen'Doei sont des créatures hexapodes vengeresses de la famille des Doei, nées spontanément des victimes de meurtres. Leur corps adaptable est recouvert d'une couche protectrice visqueuse et leur visage arbore un masque d'ébène. Selon leur posture, ils peuvent atteindre de 60cm à 3m60 de hauteur. Leur société nomade est structurée en trois castes (Éclairs, Orages et Grêlons) et guidée par le Codex des Fulminances. Ils se nourrissent de métaux et pratiquent l'anthropophagie rituelle. Si leur quête de vengeance n'est pas accomplie dans les sept cycles, ils se délitent en sanctio, un liquide toxique. Bien que redoutés pour leur tempérament colérique et leur justice expéditive, ils jouent un rôle crucial dans l'écosystème d'Escelion en régulant les prédateurs et en recyclant la violence en énergie vitale.\n# Biologie\n💡 Physiologie\n  • Créatures hexapodes capables de se déplacer sur 2, 4 ou 6 pattes\n• Taille variable selon la posture : 60-80 cm (6 pattes), 1m80-2m (4 pattes), 3m40-3m60 (2 pattes)\n• Poids : 90 à 130 kg\n• Corps recouvert d'une couche protectrice ressemblant à un liquide visqueux\n• Visage en forme de masque d'ébène poli\n💡 Reproduction et croissance\n  - Génération spontanée à partir de carcasses d’individus et d’animaux assassinés (et non dévorées). Leurs lieux de naissance fréquents sont dans les villes, suite à des meurtres, lors de guerre et dans certains conflits entre animaux belliqueux.\n  - Les Cen’Doei atteignent leur taille adulte en 48H.\n  - Si un Cen'Doei ne venge pas la mort à l’origine de sa naissance avant sept cycles longs d’un rêveur, son corps se délite en un liquide noirâtre nommé sanctio. Cette substance toxique contamine les nappes phréatiques, forçant les villages alentour à négocier leur survie en offrant du métal brut. Certains alchimistes bravent la mort pour récolter ce fluide, ingrédient clé de potions illicites amplifiant l’agressivité.\n💡 Mode d'alimentation\n  - Cures métalliques : Ingurgitent des alliages spécifiques (bronze pour la mémoire, acier pour la rigidité)\n  - Antropophagie expiatoire : Dévorent le cadavre de leurs ennemis, ne laissant que les organes jugés “sains”\n# Société et culture\n💡 Histoire de l'Espèce\n  Après la Fracture des Cinq Courroux (schisme opposant les Éclairs juridiques aux Grêlons anarchistes), les Cen'Doei abandonnent leurs citadelles de basalte pour adopter un modèle d'archipel vengeur. Leur société actuelle, régie par le Codex des Fulminances, interdit les villes permanentes mais sanctifie les Nœuds de Justice : carrefours où chaque voyageur doit témoigner d'une injustice sous peine de devenir cible.\n💡 Culture et traditions\n  - Tempérament impulsif et colérique, avec des accès de rage devenus légendaires à travers Alteir\n  - Éprouvent une intense satisfaction dans le combat, particulièrement face à leurs ennemis\n  - Maîtrisent le Principit et le Commun\n  - Forte propension à développer des antipathies irrationnelles (risque d'1/6 que cette aversion s'étende à une espèce entière)\n  - Méditation Éruptive : Rite initiatique où les adolescents sont immergés dans des bassins de boue volcanique. Ils doivent canaliser leur rage pour empêcher l’ébullition du liquide. Les réussites produisent une carapace ignifugée, tandis que les échecs laissent des cloques exsudant une aura de terreur psychique.\n💡 Costumes et ornements\n  - Manteaux de Décharge : Tissés de fibres conductrices arrachées aux machines de guerre détruites\n  - Ceintures d'Épreuve : Chaînes provenant d'ennemis capturés\n💡 Ethnies\n  La nature des émotions dominantes durant un carnage façonne leur morphologie : \n  - La colère génère des guerriers hérissés de pics osseux\n  - La peur engendre des chasseurs aux membres filiformes\n  - La trahison produit des manipulateurs dotés de glandes à venin paralysant\n  - Un massacre de non-combattants fait naître des géants difformes portant trois masques fusionnés, symboles de leur origine impure.\n💡 Normes de genre\n  Genre-Foudre : Leur identité fluctue selon leur posture : bipède (non-genré), quadrupède (féminin), hexapode (masculin). Purement symbolique.  \n💡 Organisation sociale\n  - Éclairs (3m60) : Juges guerriers à l’exosquelette craquelé, générant des décharges électriques. Ils exécutent les sentences par électrocution publique.\n  - Orages (2m) : Stratèges quadrupèdes, peau constellée d’éclairs fossilisés. Manipulent les champs magnétiques pour dévier les attaques.\n  - Grêlons (60cm) : Espions hexapodes translucides, se déplaçant en essaims. Leur dard caudal injecte un venin cryogénique paralysant.\n  Conseil des Surcharges : Assemblée où les membres hurlent leurs arguments en cacophonie jusqu’à rupture des tympans. La décision revient à celui dont le cri atteint la fréquence la plus aiguë, réputée « percer le voile des mensonges ». Les perdants saignent pendant trois jours, marque de honte ritualisée.\n  Clan des Éclaboussures : Relations familiales, liés par l’échange de lobes cérébraux trempés dans du sanctio, créant une télépathie douloureuse qui les contraint à venger collectivement chaque offense subie par un membre.  \n💡 Relations extra-spécifiques\n  - Ciblent principalement les créatures intelligentes jugées malveillantes\n  - Tendance à des jugements parfois hâtifs pouvant mener à des conflits\n  - Humains/Van'Doei : Cibles prioritaires pour corruption supposée, sauf groupes rebelles\n  - Imuins : Mépris pour leur \"technologie lâche\", les Imuins redoutent la corruption des lacs par le sanctio\n  - Aedres : Respect craintif ; évitent leurs forêts de peur d'être jugés trop colériques\n  - Khephrasites : Guerre économique pour contrôler les zones de recyclage de métal\n# Ecosystème\n💡 Habitat naturel\n  Les Cen'Doei colonisent les cicatrices d'Escelion : champs de bataille fossilisés aux sols craquelés par les explosions magiques, marais stagnants imprégnés de venins de massacre, et cités abandonnées où l'écho des meurtres persiste dans les murs.\n💡 Distribution géographique\n  Présents en essaims nomades à travers Alteir, avec des concentrations autour de :\n  - Les bas-quartiers de la Vieille Ville \n  - Le Tombeau des lueurs dissidentes où ont eu lieu de nombreuses exécutions de dissidents\n  - La Fosse aux Idoles déchues où les Cen’Doei naissent des statues de dieux oubliés et du sol lui-même\n  - La Steppe des Éteignoirs, où les cadavres de machines pensantes sont des nids fertiles\n  - L’Oeil de Mirimance, dont l’oeil unique, par sa taille, a déjà engendré des milliers de Cen’Doei à travers les âges\n💡 Relations avec l'écosystème\n  Prédateurs apex, ils :\n  - Régulent les espèces jugées trop prédatrices en les chassant jusqu'à extinction locale\n  - Leur mucus corrosif favorise des lichens vampiriques dévoreurs de métaux\n  - Le sanctio de leurs cadavres liquéfiés crée des zones mortes où ne survivent que des bactéries karmophages",
+        "properties": {
+          "Culture": {
+            "id": "%3Fr%5DP",
+            "type": "select",
+            "select": {
+              "id": "X;\\q",
+              "name": "Faible",
+              "color": "red"
+            }
+          },
+          "Représentants": {
+            "id": "E%3FqE",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2286e4d2-1b45-8094-94b7-c021f47fc005"
+              }
+            ],
+            "has_more": false
+          },
+          "Références visuelles": {
+            "id": "Lh%5Bn",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Portrait": {
+            "id": "SuZ%40",
+            "type": "files",
+            "files": [
+              {
+                "name": "CenDoei1.png",
+                "type": "file",
+                "file": {
+                  "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/1d8d06fb-9245-45c9-8cb0-4cd4d302ed0d/be41b466-4320-4c69-bda3-f9af354a625d/CenDoei1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466VLUZZT3F%2F20251016%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251016T193307Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIEDzsai5rwpHeJB0LvwBI%2F540mS6GuGQ9KTi5%2B0OfCafAiEA9h6eN9pMp%2FwC0oNGN77fpQQUVwg5RHObjtYPUylJNHcqiAQIlP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDClUhoY2LTSTnhT%2BeSrcA0PVyXYwn2wpvLSdvN9NfUEywARMFY%2BLBnO9ShFxy4B8BThz4rqcUFsv9iGa3S5bo8K11VSibj43D9%2FULRN341v4OHRIKWtfPMEvtj6fjaCV7WC0mWnAS4WzfmUhIaYbmnFysQzxi7CwZCNwJzW7c56zMLe7gx%2B86u0G2SbWtucXm0pz%2BghFub%2Bub6i3ijwN5D1SObIkwQkNH8unehjue1ZIERwP3%2F2R%2B%2FVesPqMaCXwZD9k7i1XcQs%2BVmieTpsKMxHVI705Fn6DESNb6zk52Y%2B%2FEqFj9DjtMuh%2Bpb5BQJv%2FxD%2BPUmsxguiZDUAn3OLh0Ub4SKnmhxmMBcQWB%2B8KXyrpk9DrWf22ZXLumqYTgnEYZGnL0z0y3ZUq35MI63m956lijE9ivPZRDuG1Q%2FLads%2FbQN1OM7t7mmg7BEr8eLDFDJr1phqFNZfkboANnGi%2FLDqxuYIG4ZJl2UGPCGpKhr5meP%2FjMJwbq3qSeMU5hbIKwIim%2BdY%2B%2BkfvmJy3DkDEOajd4yWp6xY1AiQJjr9xxglNlAfj4P1TW%2FsAGrwhsHudujP7Mx%2Ftp2HBAy0%2BUsj%2BiaaUk8A6Aanzb2Mo9IQjwQeW9IUW%2BCd0crt3CMrC9jcHdKSBT78J0uRstI3BMMz3xMcGOqUBEjKOe1uocUGdRo2QXitJlyX6e2ouwPy0QHaLM9FgJHlOssRiCUswN3FimFP%2BXAUza9qOjaFuTQnA08d5IGWevgML3JDE6UPGifMlWfkmVKoQ72EiQruVq%2BThym2YlMrnBk%2FBdjLRVTIIp%2F4vU5hu3g%2Fz%2FOJcpku3XexxcfnAjwrhs8CPqUlCjUBbFoCrEAgUtlReu3YwQrSYJZy%2FyXLL49IBEw8s&X-Amz-Signature=93ad9527c37cd02a3b283e14e2f054a6b8aeb6a6ba176b5e3f902c4d70dcfd81&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+                  "expiry_time": "2025-10-16T20:33:07.933Z"
+                }
+              }
+            ]
+          },
+          "État": {
+            "id": "U%7D%7Dm",
+            "type": "status",
+            "status": {
+              "id": "a361bded-0763-49df-ad4b-fe17c1bc4b2c",
+              "name": "Pas commencé",
+              "color": "default"
+            }
+          },
+          "Technologie": {
+            "id": "VLlW",
+            "type": "select",
+            "select": {
+              "id": "ldJ~",
+              "name": "Moyenne",
+              "color": "red"
+            }
+          },
+          "Lieux de vie": {
+            "id": "YWNe",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a96e4d2-1b45-80bd-aaa6-c4a7f1b6fc6b"
+              },
+              {
+                "id": "1b46e4d2-1b45-8071-88b9-da69653d4987"
+              },
+              {
+                "id": "1b46e4d2-1b45-805c-a426-e1eb48b627a5"
+              },
+              {
+                "id": "1b46e4d2-1b45-80c6-ba2c-e2512a9a56da"
+              },
+              {
+                "id": "1b46e4d2-1b45-8081-854b-e222c4c6aaaf"
+              },
+              {
+                "id": "1a96e4d2-1b45-8049-b21b-ee91c108b551"
+              },
+              {
+                "id": "1cc6e4d2-1b45-800e-aea8-c8aa83ca1832"
+              }
+            ],
+            "has_more": false
+          },
+          "Biologie": {
+            "id": "hSFM",
+            "type": "select",
+            "select": {
+              "id": "Pk[B",
+              "name": "Avancée",
+              "color": "red"
+            }
+          },
+          "Présence dans Escelion": {
+            "id": "nIz%5C",
+            "type": "select",
+            "select": {
+              "id": "bbog",
+              "name": "Très courant",
+              "color": "green"
+            }
+          },
+          "Type": {
+            "id": "s%60%3DS",
+            "type": "select",
+            "select": {
+              "id": "faf0cb54-b063-4921-8de1-e57975287c76",
+              "name": "Espèce civilisée",
+              "color": "purple"
+            }
+          },
+          "Evénements liés": {
+            "id": "sje%5B",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Espérance de vie": {
+            "id": "w%3Ak%5C",
+            "type": "number",
+            "number": 50
+          },
+          "Règne": {
+            "id": "zmD%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "f96a9ed4-9345-40fa-b757-eaa85c867e21"
+              }
+            ],
+            "has_more": false
+          },
+          "Surnaturel": {
+            "id": "%7C~Wm",
+            "type": "select",
+            "select": {
+              "id": ">~v^",
+              "name": "Nulle",
+              "color": "gray"
+            }
+          },
+          "Sprint": {
+            "id": "%7D%7DQ%3F",
+            "type": "select",
+            "select": {
+              "id": "C:]u",
+              "name": "Plus tard",
+              "color": "pink"
+            }
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Cen’Doei",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Cen’Doei",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 495,
+        "last_edited": "2025-10-15T18:52:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0",
+        "title": "Cité Labiale",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\nUn entrelacs de bâtiments-papilles recouverts d'une chair sensible qui absorbe les mots prononcés en son sein. Ceux qui y entrent doivent négocier chaque phrase, car un excès de paroles risque d'attirer l'attention de ses gardiens sans visages, sculptés dans le silence même.\n# Identité & Vue d'ensemble\n  ## Histoire du lieu\n  ## Rôle dans l'intrigue\n# Géographie & Environnement\n  ## Écosystème\n  La Cité Labiale n’est pas une cité physique proprement dite, mais un réseau de \"chambres conversationnelles\" superposé à la Vieille Ville, qui se forment et se dissolvent selon les flux de communication qui les traversent.\n  L'intérieur de la Cité se structure autour de \"Salles de Registres\" – espaces définis non par des murs physiques mais par des densités linguistiques spécifiques.\n  A travers des \"Portails Absorbants\", bouches structurelles émergant sur les murs de zones où la densité verbale atteint un seuil critique (marchés animés, forums de débat, ou secteurs administratifs caractérisés par une production excessive de documentation...), la Cité Labiale commence par absorber les mots environnants, créant des zones de silence anormal qui attirent inévitablement l'attention des curieux. Si un observateur s'en approche suffisamment, le Portail absorbant s'élargit subitement, l'avalant avant de se refermer sans laisser de trace visible.\nLes tentatives officielles pour sceller ces passages ont systématiquement échoué, car la Cité Labiale semble capable de digérer et d'incorporer tout matériau utilisé pour bloquer ses manifestations. Les théoriciens de la Bibliothèque Sympathique suggèrent que ces portails représentent une forme de \"digestion sémantique\" – un processus par lequel les excès de communication bureaucratique de la Vieille Ville sont recyclés en formes linguistiques alternatives.\n  ## Astrobiologie\n  ## Voies d’accès\n  ## Accès à la Vieille Ville\n  La frontière entre la Vieille Ville et la Cité Labiale défie toute cartographie conventionnelle car elle existe davantage comme phénomène linguistique que comme limite géographique. La transition s'opère principalement par les \"Portails Absorbants\" apparaissant sur les murs de la Vieille Ville.\n  Curieusement, certains portails ont été observés dans les sections zagmukkum des jardins mnémoniques, où ils semblent attirés par les mémoires particulièrement complexes ou contradictoires stockées dans les plantes. Ces passages spécifiques sont surnommés \"Dégorgeoirs Mnémoniques\" et sont parfois délibérément utilisés par les citoyens souhaitant se débarrasser de souvenirs compromettants.\n# Organisation humaine\n  ## Structure politique\n  ## Centres urbains & Habitats\n# Culture & Société\n  ## Population\n  ## Économie\n  ## Fêtes/moments importants\n  ## Alimentation spécifique\n# Dynamiques\n  ## Enjeux actuels\n  ## Points d'intérêt\n  ## Système de jeu",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "ta:e",
+              "name": "Zone magique",
+              "color": "orange"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "`hAW",
+              "name": "Facultatif",
+              "color": "purple"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "13276006-0979-4a64-bcb0-a7a9935f7b53",
+              "name": "Pas commencé",
+              "color": "default"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-80bc-af1d-ceab1be781b4"
+              },
+              {
+                "id": "1a16e4d2-1b45-807b-8a9a-ef07675d08ba"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "NFSl",
+              "name": "Région",
+              "color": "orange"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Cité Labiale",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Cité Labiale",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 435,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-81b5-b9c5-f92a26bad7c9",
+        "title": "Tombeau des lueurs dissidentes",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\nLe Tombeau des lueurs dissidentes est une vallée entre les contreforts de la chaîne montagneuse de Kh'azenagir, qui borde le flanc ouest de la Vieille Ville. Ces mines appartiennent aux chaebols-tech de la Grande Radiale, structures hybrides mêlant gouvernance corporative et technologie spirituelle. Elles extraient les précieux métaux photosensibles nécessaires aux implants neuraux qui équipent la population du second district. Les imuins supervisent l'extraction robotisée tandis que des umcuts Spirales assurent la logistique, mais l'activité est perturbée par des éruptions de gaz métallique créant des explosions spectrales. Ces phénomènes, baptisés \"gwi-shin\" (fantômes mécaniques) par les équipes, oscillent entre réalité physique troublante et techno-folklore ouvrier, constituant un défi constant pour les responsables.\n# Identité & Vue d'ensemble\n  ## Histoire du lieu\n  ### Découverte et construction\n  Les premières explorations géologiques, menées en 2687 AG par le géophysicien umcut Nav'Thek des tours Spirales, révélèrent d'importantes concentrations de métaux rares. L'analyse révéla que ces gisements résultaient d'un processus unique : l'action combinée de pressions tectoniques et de radiations émanant du ciel de roche avait condensé certains éléments en cristaux aux propriétés photosensibles exceptionnelles.\n  Les mines furent inaugurées en 2691 AG lors de l'expansion technologique de la Grande Radiale, quand le Chaebol Synaptic Dynamics détecta d'importantes veines de tantalite photosensible dans les contreforts occidentaux. Synaptic Dynamics appliqua les principes de \"double ergonomie\" — adaptation simultanée de l'infrastructure aux besoins humains et aux exigences des systèmes automatisés. Les galeries suivent des tracés optimisés par IA, alternant sections rectilignes pour les convoyeurs et courbes spiralées facilitant la descente du personnel.\n  ### Le temps des Gwi-Shin\n  L'extraction initiale, menée par des équipes exclusivement robotisées, progressa sans incidents majeurs jusqu'en 2734 AG, date du premier \"gwi-shin\" répertorié. L'ingénieur-chef, l'imuin Kex-Mora-23, documentait alors une explosion de méthane-photons qui généra des formes lumineuses persistantes défiant toute explication scientifique. Ces manifestations, d'abord traitées comme dysfonctionnements, se multiplièrent avec l'approfondissement des galeries, contraignant le chaebol à développer des protocoles spéciaux.\n  En 3056 AG, l'incident du \"Grand Gwi-shin\" — déflagration spectrale visible depuis la Vieille Ville — décida Synaptic Dynamics à transférer la gestion opérationnelle au consortium Jung-Harmony-Tech. Depuis, les mines fonctionnent selon un équilibre précaire entre productivité technologique et gestion des \"anomalies\", terme officiel désignant désormais ces phénomènes.\n  ## Rôle dans l'intrigue\n  Le Tombeau constitue un nœud économique crucial pour l'infrastructure neurotechnologique de la Vieille Ville. L'approvisionnement en métaux photosensibles conditionne notamment le fonctionnement des systèmes de jung-do, rendant toute perturbation problématique pour l'équilibre social du district.\n  Pour l'Éthérée, ces mines révèlent comment même les domaines les plus technologiquement avancés d'Escelion restent tributaires de phénomènes inexpliqués. Les gwi-shin pourraient représenter des fragments de conscience piégés dans les veines métalliques ou simplement des réactions physico-chimiques mal comprises.\n  Actuellement, l'espionnage industriel s'intensifie autour des mines. Le Culte de l'Anentropie y voit une source d'entropie structurelle, tandis que le Xyriad s'intéresse aux propriétés mathématiques des éruptions lumineuses.\n# Géographie & Environnement\n  ## Écosystème\n  La vallée s'étend sur 47 kilomètres carrés entre deux crêtes parallèles de la chaîne Kh'azenagir. L'activité minière a créé un paysage industriel stratifié en quatre zones distinctes :\n  La Cuvette d'Extraction occupe le fond de vallée, criblée de puits descendant jusqu'à 800 mètres. Les affleurements de tantalite confèrent aux parois rocheuses des reflets iridescents, particulièrement spectaculaires sous l'éclairage artificiel. Les galeries principales, soutenues par des arc-boutants bio-mécaniques, serpentent selon les veines métalliques.\n  Les Contreforts Industriels abritent les installations de raffinage. Ici, les bâtiments-processeurs digèrent le minerai via des méthodes combinant fusion thermique et dissolution enzymatique. La flore environnante, adaptée aux émissions, présente des mutations bioluminescentes qui fascinent les botanistes tout en préoccupant les écologistes.\n  La Canopée des Conduits surplombe la vallée — réseau aérien de tubes pneumatiques et de convoyeurs magnétiques acheminant les matières premières vers les centres de transformation. Cette infrastructure, constamment reconfigurée par des drones architectes, évoque une toile d'araignée métallique pulsatile.\n  Les Stations de Surveillance, perchées sur les crêtes, monitorent les éruptions de gwi-shin via des instruments combinant spectroscopes quantiques et charmes techno-shamans. Ces avant-postes, habités en rotation par des équipes mixtes imuins-umcuts, maintiennent une veille permanente sur les anomalies.\n  L'écosystème mécanique comprend :\n  - Excavatrices Mères : colosses de 200 mètres traçant les galeries principales, équipés de \"dents philosophiques\" censées \"mâcher\" respectueusement la roche\n  - Essaims de Récupérateurs : drones miniaturisés collectant le tantalite des débris, certains ayant développé des comportements de nidification non-programmés\n  - Spores-machines : particules auto-reproductrices née de la fusion accidentelle entre tantalite raffiné et poussières industrielles, formant des colonies semi-intelligentes dans les galeries abandonnées\n  - Ghozzi Ancestraux : anciens constructeurs auto-réparants devenus quasi-vivants, vénérés par les ouvriers comme \"grands-pères mécaniques\"\n  La faune locale s'est remarquablement adaptée. Des \"cafards-condensateurs\" se nourrissent des résidus métalliques, stockant l'énergie lumineuse dans leurs carapaces. Des colonies de \"rats magnétiques\" naviguent entre les conduites, leurs corps naturellement aimantés leur permettant des déplacements acrobatiques dans l'environnement industriel.\n  ## Astrobiologie\n  ## Voies d’accès\n  La Route du Tonnerre Mécanisé constitute l'accès principal depuis la Vieille Ville. Cette voie, taillée dans le flanc montagneux, serpente sur 23 kilomètres via six virages en épingle où des relais énergétiques rechargent les véhicules électriques. Le trajet, normalement de 45 minutes, peut s'allonger considérablement lors des alertes gwi-shin.\n  Le Tunnel Mycorhizien relie les mines à l'Océan Mécanique par un conduit sous-montagneux de 18 kilomètres. Emprunté exclusivement par les convois automatisés transportant les matières transformées vers le Marché Automaton, ce passage traverse d'anciens réseaux de racines pétrifiées qui confèrent aux parois des motifs organiques fascinants.\n  Les Sentiers des Contrebandiers — réseau informel de pistes d'altitude — permettent l'accès clandestin via les tours umcuts périphériques. Ces voies, théoriquement inconnues des autorités, servent aux échanges entre mineurs et communautés montagnardes. Les umcuts Opposés, grâce à leur vision nocturne, excellent dans la navigation de ces itinéraires.\n  Le Téléphérique Industriel transporte quotidiennement personnel et équipement léger entre la canopée urbaine de la Grande Radiale et les installations minières. Ses cabines pressurisées, dotées d'éclairage d'urgence spécialisé, permettent l'évacuation rapide en cas d'éruption majeure.\n# Organisation humaine\n  ## Structure politique\n  L'autorité repose sur le Directoire Tripartite, instance collégiale réunissant :\n  Le Chaebol Synaptic Dynamics détient 51% des parts et fournit le cadre technologique. Sa gouvernance mêle conseil d'administration corporatif et cellule spirituelle technologique appliquant les principes du jung-do aux décisions industrielles. Le directeur actuel, l'imuin Tek-Syana-09, cumule expertise technique et initiation aux mystères cyber-shamans.\n  Le Consortium Jung-Harmony-Tech possède 34% des parts et gère les opérations quotidiennes. Cette alliance de quinze familles-entreprises pratique la \"démocratie technique\" — chaque décision est soumise à validation algorithmique puis ratifiée par consensus familial selon les traditions du nunchi technologique.\n  La Coopérative des Métiers Techniques contrôle 15% et représente travailleurs et spécialistes. Dominée par des imuins des guildes Vecteurs et Fluides, elle négocie conditions de travail et protocoles de sécurité. Son influence dépasse son statut proportionnel grâce à l'expertise irremplaçable de ses membres.\n  Les Comités de Vigilance Gwi-shin transcendent ces divisions. Composés de chamans techniques, d'ingénieurs et de témoins des manifestations, ils élaborent les protocoles de réponse aux anomalies sans hiérarchie formelle, uniquement basés sur l'expertise situationnelle.\n  ## Centres urbains & Habitats\n  La Cité Descendante s'épanouit autour de l'entrée principale. Ses bâtiments, conçus selon l'esthétique \"racines industrielles\", plongent littéralement leurs fondations dans le sous-sol via des verrières cathédrales révélant les niveaux inférieurs. Population de 1,200 habitants, principalement imuins et umcuts avec leurs familles élargies.\n  Les Campements Rotatifs jalonnent les différents fronts d'extraction. Ces installations modulaires, déplaçées selon l'avancement des travaux, abritent 20 à 80 personnes dans des habitats préfabriqués optimisés pour la mobilité. Leur architecture reflète l'influence des traditions nomades umcuts intégrées aux standards industriels imuins.\n  Les Torres de Vigilancia couronnent les crêtes environnantes. Ces postes d'observation fortifiés, inspirés de l'architecture défensive de la Grande Radiale, combinent fonction militaire et rôle de phare pour les appareils circulant dans la vallée.\n  ### Communes spécialisées\n  Les Ateliers Flottants — plateformes suspendues dans la canopée des conduits — hébergent une communauté d'artisans imuins spécialisés dans la maintenance des infrastructures aériennes. Leur mode de vie vertical, défiant les classifications conventionnelles entre zones résidentielles et industrielles, illustre l'adaptation créative aux contraintes environnementales.\n  La Colonie Souterraine occupe d'anciennes galeries reconverties. Cette communauté mixte d'umcuts Opposés et d'imuins Intégrateurs développe des technologies d'habitat chtonien, explorant les possibilités offertes par les réseaux géologiques naturels de la montagne.\n# Culture & Société\n  ## Population\n  La population totale fluctue entre 1500 et 2200 individus selon les cycles d'extraction. Les imuins constituent 58% de cette population, répartis entre toutes les sous-espèces mais avec une prédominance de Mécaniques Lacustres et d'Intégrateurs. Les umcuts représentent 31%, majoritairement issus des ethnies Spirales et Opposées.\nLes 11% restants incluent quelques Van'Doei artisans spécialisés dans le travail des alliages à haute température et une petite communauté de Qadul'Doei consultant les archives cristallines des veines métalliques.\n  La stratification sociale suit les lignes techno-corpo-familiales. Les directeurs chaebols occupent le sommet, suivis des ingénieurs-shamans et maîtres-artisans. La classe moyenne comprend techniciens, superviseurs et commerçants, tandis que la base rassemble ouvriers spécialisés et personnel de maintenance.\n  ## Économie\n  L'économie repose sur l'extraction de tantalite photosensible, dont 80% alimente les implants neuraux de la Grande Radiale. Les 20% restants sont exportés vers les autres districts ou échangés au Marché Automaton contre composants spécialisés.\n  Le Système de Parts Flottantes régit la répartition des bénéfices. Chaque travailleur accumule des \"quotas méritocratiques\" proportionnels à sa contribution et aux risques acceptés. Les bonus \"courage gwi-shin\" récompensent ceux qui maintiennent l'activité malgré les manifestations.\n  Marché Gris des Phénomènes : commerce clandestin d'objets touchés par les gwi-shin, allant de simples outils \"bénis\" à des échantillons de matière spectrale pure. Les collectionneurs de la Vieille Ville paient des fortunes pour des artefacts aux propriétés inexpliquées. On y trouve notamment des Fibres de Gwi-shin, alliages métalliques imprégnés fameux pour avoir autrefois servi à la fabrication des synapses des forteresses ambulantes des Bastions Oubliés.\n  ## Fêtes/moments importants\n  Le Festival des Lueurs coïncide avec l'équinoxe d'automne. Les communautés minières organisent des concours d'illumination où créations artistiques et spectacles lumineux rivalisent d'ingéniosité. L'apothéose survient avec le \"Grand Gwi-shin Contrôlé\" — explosion simulée célébrant la maîtrise technologique des phénomènes naturels.\n  Les Vigiles de tantalite ponctuent chaque cycle lunaire. Ces cérémonies nocturnes mêlent récitation de formules cyber-shamans et vérifications techniques rituelles. Les participants, équipés de lampes frontales spéciales, progressent en procession à travers les galeries en scandant les protocoles de sécurité transformés en litanies.\n  La Commémoration des Disparus honore ceux perdus lors d'éruptions particulièrement violentes. Ces événements marquent l'équilibre délicat entre respect des victimes et nécessité de poursuivre l'activité. Des hologrammes reproduisent les derniers gwi-shin témoignés, transformant l'inexpliqué en mémoire collective.\n  ## Alimentation spécifique\n  La Cuisine des Profondeurs adapte les traditions imuines aux contraintes souterraines. Les aliments de base — champignons bioluminescents cultivés dans les anciens conduits, insectes élevés dans les ateliers — sont transformés par des techniques combinant fermentation enzymatique et ionisation contrôlée.\n  Les Banquets de Surface célèbrent les retours en altitude. Ces festins, organisés dans la Cité Descendante, proposent des spécialités umcuts marinées dans des essences métalliques extraites des veines minérales. La tradition veut que chaque convive partage son \"gwi-shin le plus mémorable\", mélange de témoignage et de performance artistique.\n  Le Thé Photonique, infusion préparée avec de l'eau filtrée à travers des cristaux de tantalite, constitue la boisson rituelle. Ses effets — légère euphorie, perception colorimétrique altérée — accompagnent les négociations importantes et les célébrations techniques.\n# Dynamiques\n  ## Enjeux actuels\n  L'Intensification des Gwi-shin préoccupe autant les ingénieurs que les investisseurs. Les manifestations, plus fréquentes depuis l'approfondissement en -900m, défient les explications scientifiques convergentes. Certains spécialistes évoquent des \"poches de conscience minérale\", d'autres privilégient l'hypothèse de \"potentiel technomantique\".\n  La Course à l'Innovation s'intensifie face à la concurrence. Trois chaebols rivaux développent secrètement des méthodes extractives alternatives, menaçant le monopole de Synaptic Dynamics. Les tentatives d'espionnage industriel se multiplient, particulièrement de la part d'agents du Marché Automaton.\n  Le Soulèvement des Profondeurs couve dans les niveaux inférieurs. Un mouvement religieux prône l'arrêt de l'extraction, considérant les gwi-shin comme manifestations de \"l'âme de la montagne\". Ses adeptes, principalement des umcuts Opposés, pratiquent la désobéissance passive et le sabotage symbolique.\n  ## Points d'intérêt\n  Cimetière des Extracteurs : décharge de machines obsolètes où certains construits continuent d'évoluer. Les \"résurrections mécaniques\" y sont fréquentes, avec d'anciens équipements se réveillant transformés.\n  L'Observatoire du Gwi-shin Permanent — installation perchée sur la crête sud — enregistre continuellement les manifestations spectrale depuis 15 ans. Ses données, compilées en \"atlasphères interactive\", révèlent des motifs récurrents défiant les lois physiques classiques.\n  Les Archives Cristallines — bibliothèque minérale des niveaux moyens — preservent dans les veines de tantalite les témoignages de tous les gwi-shin majeurs. Les cristaux, taillés selon des techniques combinant précision industrielle et rituels umcuts, restituent les événements via projections holographiques spontanées.\n  ## Système de jeu\n  Reconnaissance des Gwi-shin : Les personnages peuvent développer la capacité de prédire les manifestations via l'accumulation d'indices sensoriels et d'expérience. Cette compétence, transférable entre individus par \"synchronisation perceptuelle\", devient cruciale pour la survie en profondeur.\n  Économie de la tantalite : Les joueurs naviguent dans un système de \"quotas dynamiques\" où performance technique, prise de risque et relations sociales déterminent revenus et statut. Les gwi-fragments récupérés ouvrent des quêtes parallèles liées au folklore local.\n  Factionalisme Technique : Les loyautés s'alignent sur les choix technologiques — automation vs interventions shamans, expansion vs préservation, explication vs acceptation du mystère. Ces positions influencent directement accessibilité des ressources et alliances possibles.",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "2243236d-6913-479b-9fe0-9a42865e51f6",
+              "name": "Lieu commercial",
+              "color": "blue"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "`hAW",
+              "name": "Facultatif",
+              "color": "purple"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "asU[",
+              "name": "Brouillon IA",
+              "color": "blue"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-805e-841e-d699f81d67a9"
+              },
+              {
+                "id": "1a16e4d2-1b45-8099-be36-db66acb76390"
+              },
+              {
+                "id": "1a16e4d2-1b45-80bc-af1d-ceab1be781b4"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1f16e4d2-1b45-805c-beb4-ef770dad55dc"
+              }
+            ],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b"
+              },
+              {
+                "id": "2806e4d2-1b45-81e8-8bfa-d7a7ce784c77"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2306e4d2-1b45-809b-b72a-e1809283b436"
+              },
+              {
+                "id": "2306e4d2-1b45-8061-9f88-e5925588b94a"
+              },
+              {
+                "id": "2306e4d2-1b45-802b-bf07-e4197143bd8f"
+              },
+              {
+                "id": "2306e4d2-1b45-8005-b7b3-f7cdd1d2848c"
+              }
+            ],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "NFSl",
+              "name": "Région",
+              "color": "orange"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Tombeau des lueurs dissidentes",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Tombeau des lueurs dissidentes",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 465,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      }
+    ],
+    "formatted": "### Vision (vision)\n# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+    "token_estimate": 1710,
+    "previews": [
+      {
+        "id": "28d6e4d2-1b45-811b-9ddb-d84d061b267a",
+        "title": "Cen’Doei",
+        "domain": "communautes",
+        "summary": "",
+        "tags": [
+          "Espèce civilisée"
+        ],
+        "last_edited": "2025-10-15T18:52:00.000Z",
+        "token_estimate": 495
+      },
+      {
+        "id": "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0",
+        "title": "Cité Labiale",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 435
+      },
+      {
+        "id": "2806e4d2-1b45-81b5-b9c5-f92a26bad7c9",
+        "title": "Tombeau des lueurs dissidentes",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 465
+      }
+    ]
+  },
+  "history": [
+    {
+      "step": "writer",
+      "timestamp": "2025-10-16T21:34:40.828976",
+      "summary": "Contenu genere (8478 chars)"
+    }
+  ],
+  "model_used": "GPT-5",
+  "model_config": {
+    "name": "gpt-5",
+    "provider": "OpenAI",
+    "description": "Modèle le plus puissant, raisonnement approfondi",
+    "max_tokens": 4000,
+    "icon": "🚀",
+    "uses_reasoning": true,
+    "default_reasoning": "medium",
+    "runtime": {
+      "reasoning_effort": "minimal",
+      "verbosity": "high",
+      "max_tokens": 4000
+    }
+  }
+}

@@ -93,7 +93,7 @@ def test_gpt4_temperature():
     
     llm = ChatOpenAI(
         model="gpt-4o-mini",
-        temperature=0.7,
+        temperature=1.0,
         max_tokens=1000,
     )
     
@@ -147,7 +147,7 @@ def compare_configs():
     print("\n🔄 GPT-4 (temperature):")
     llm_gpt4 = ChatOpenAI(
         model="gpt-4o-mini",
-        temperature=0.7,
+        temperature=1.0,
         max_tokens=1000,
     )
     print(f"  - Model: {llm_gpt4.model_name}")

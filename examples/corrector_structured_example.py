@@ -57,21 +57,21 @@ def correct_with_structured_output(text: str, provider: str = "openai"):
         from langchain_anthropic import ChatAnthropic
         llm = ChatAnthropic(
             model="claude-sonnet-4-5-20250929",  # Latest Claude Sonnet 4.5
-            temperature=0.3
+            temperature=1.0
         )
     
     elif provider == "mistral":
         from langchain_mistralai import ChatMistralAI
         llm = ChatMistralAI(
             model="mistral-large-latest",
-            temperature=0.3
+            temperature=1.0
         )
     
     elif provider == "ollama":
         from langchain_ollama import ChatOllama
         llm = ChatOllama(
             model="llama3.2",
-            temperature=0.3,
+            temperature=1.0,
             format="json"  # Force JSON mode
         )
     

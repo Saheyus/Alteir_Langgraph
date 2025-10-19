@@ -18,7 +18,7 @@ Stack : LangGraph + MCP Notion + OpenAI GPT-5/GPT-4.
 
 ### LLM
 - GPT-5 : `use_responses_api=True`, `reasoning={"effort": "minimal"}`, **PAS de `temperature`**
-- GPT-4 : `temperature=0.7`, pas de `reasoning`
+- GPT-4 : `temperature=1.0`, pas de `reasoning`
 
 ### Guides et Documentation
 - Guides pour l'IA → `.cursor/rules/*.mdc` (format MDC avec frontmatter)

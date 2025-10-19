@@ -142,7 +142,27 @@ class LLMAdapter:
     def invoke_text(self, messages: Any, label: Optional[str] = None, extra: Optional[Dict[str, Any]] = None) -> str:
         """Invoke the underlying LLM and return extracted text, saving raw I/O to disk."""
         try:
-            response = self.llm.invoke(messages)
+            call_kwargs = {}
+            # Forward Anthropic vendor kwargs if present (thinking, etc.)
+            try:
+                if hasattr(self.llm, "_alt_anthropic_kwargs"):
+                    call_kwargs.update(getattr(self.llm, "_alt_anthropic_kwargs") or {})
+            except Exception:
+                pass
+            # Pre-call diagnostic dump
+            try:
+                diag = {
+                    "provider": self.provider,
+                    "model": self._get_model_name(),
+                    "call_kwargs": call_kwargs,
+                    "has_alt_kwargs": hasattr(self.llm, "_alt_anthropic_kwargs"),
+                    "alt_kwargs": getattr(self.llm, "_alt_anthropic_kwargs", None),
+                    "temperature": getattr(self.llm, "temperature", None),
+                }
+                self._save_raw_call(stage=(label or "invoke") + ":pre", messages=messages, response=None, extra=diag)
+            except Exception:
+                pass
+            response = self.llm.invoke(messages, **call_kwargs)
             # Save ASAP
             self._save_raw_call(stage=label or "invoke", messages=messages, response=response, extra=extra)
             return self._extract_text(response)
@@ -315,7 +335,26 @@ Ne pas ajouter de texte avant ou après le JSON."""
                 return
         
         try:
-            stream = self.llm.stream(messages)
+            call_kwargs = {}
+            try:
+                if hasattr(self.llm, "_alt_anthropic_kwargs"):
+                    call_kwargs.update(getattr(self.llm, "_alt_anthropic_kwargs") or {})
+            except Exception:
+                pass
+            # Pre-stream diagnostic dump
+            try:
+                diag = {
+                    "provider": self.provider,
+                    "model": self._get_model_name(),
+                    "call_kwargs": call_kwargs,
+                    "has_alt_kwargs": hasattr(self.llm, "_alt_anthropic_kwargs"),
+                    "alt_kwargs": getattr(self.llm, "_alt_anthropic_kwargs", None),
+                    "temperature": getattr(self.llm, "temperature", None),
+                }
+                self._save_raw_call(stage="stream:pre", messages=messages, response=None, extra=diag)
+            except Exception:
+                pass
+            stream = self.llm.stream(messages, **call_kwargs)
         except Exception as e:
             # If OpenAI Responses API refuses streaming (org not verified etc.), emulate streaming
             # by chunking a non-streaming response so the UI still gets live updates.
@@ -355,10 +394,16 @@ Ne pas ajouter de texte avant ou après le JSON."""
                                 maybe_text = txt
                             elif isinstance(part.get("content"), str):
                                 maybe_text = part.get("content")
+                            elif base_type == "thinking" and isinstance(part.get("thinking"), str):
+                                # Anthropic extended thinking streams text under the 'thinking' key
+                                if include_reasoning:
+                                    reasoning_delta += part.get("thinking") or ""
+                                # Do not treat as output text
+                                maybe_text = None
 
                             if maybe_text is not None:
                                 # Route reasoning separately; if not requested, ignore reasoning parts entirely
-                                if base_type in ("reasoning", "thought", "chain_of_thought"):
+                                if base_type in ("reasoning", "thought", "chain_of_thought", "thinking"):
                                     if include_reasoning:
                                         reasoning_delta += maybe_text
                                     # else: ignore reasoning chunk to avoid polluting output text
@@ -366,9 +411,13 @@ Ne pas ajouter de texte avant ou après le JSON."""
                                     delta_text += maybe_text
                             else:
                                 # If no direct text fields, last-resort stringify known shapes
-                                if base_type in ("reasoning", "thought", "chain_of_thought"):
+                                if base_type in ("reasoning", "thought", "chain_of_thought", "thinking"):
                                     if include_reasoning:
-                                        reasoning_delta += str(part)
+                                        # Avoid dumping raw dicts; try nested content
+                                        nested_reason = part.get("thinking")
+                                        if isinstance(nested_reason, str):
+                                            reasoning_delta += nested_reason
+                                        # else: skip unknown shapes silently
                                     # else ignore
                                 else:
                                     # Avoid stalling: try to recover any displayable text
@@ -381,8 +430,7 @@ Ne pas ajouter de texte avant ou après le JSON."""
                                             nested_text = ct
                                     if isinstance(nested_text, str):
                                         delta_text += nested_text
-                                    else:
-                                        delta_text += str(part)
+                                    # else: skip unknown shapes to avoid dumping raw dicts
                         else:
                             # Unknown object; stringify
                             delta_text += str(part)
@@ -409,11 +457,11 @@ Ne pas ajouter de texte avant ou après le JSON."""
     def _extract_text(self, response: Any) -> str:
         """Extrait le texte d'une réponse LLM"""
         if isinstance(response, str):
-            return response
+            return self._sanitize_provider_artifacts(response)
         if hasattr(response, 'content'):
             content = response.content
             if isinstance(content, str):
-                return content
+                return self._sanitize_provider_artifacts(content)
             if isinstance(content, list):
                 parts = []
                 for p in content:
@@ -423,8 +471,27 @@ Ne pas ajouter de texte avant ou après le JSON."""
                         parts.append(p.text)
                     else:
                         parts.append(str(p))
-                return ''.join(parts)
-        return str(response)
+                return self._sanitize_provider_artifacts(''.join(parts))
+        return self._sanitize_provider_artifacts(str(response))
+
+    def _sanitize_provider_artifacts(self, text: str) -> str:
+        """Nettoie les artefacts connus provenant de certains streams fournisseurs.
+
+        Exemples: "{'index': 1}" collé à la fin d'une ligne, ou variantes similaires.
+        Ne modifie pas le contenu sémantique attendu.
+        """
+        try:
+            import re
+            # Pattern 1: artefact isolé en fin de ligne ou après un token
+            text = re.sub(r"\{\'index\':\s*\d+\}\s*", "", text)
+            text = re.sub(r"\{\"index\":\s*\d+\}\s*", "", text)
+            # Pattern 2: mêmes artefacts précédés d'un espace ou collés
+            text = re.sub(r"\s*\{index:\s*\d+\}\s*", "", text)
+            # Collapse accidental double spaces left by removals
+            text = re.sub(r"[ \t]{2,}", " ", text)
+            return text
+        except Exception:
+            return text
 
     def _messages_to_text(self, messages: List[Dict[str, Any]]) -> str:
         """Convertit une liste de messages {role, content} en texte concaténé pour JSON-mode."""

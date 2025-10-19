@@ -170,6 +170,11 @@ def _render_manual_selection(previews_by_domain: Dict[str, List[NotionPagePrevie
     for tab, domain in zip(tabs, CONTEXT_DOMAINS):
         with tab:
             pages = previews_by_domain.get(domain, [])
+            # Tri alphabétique insensible à la casse sur le titre
+            try:
+                pages = sorted(pages, key=lambda p: (p.title or "").lower())
+            except Exception:
+                pass
             if not pages:
                 st.caption("Aucune fiche disponible dans ce domaine.")
                 continue

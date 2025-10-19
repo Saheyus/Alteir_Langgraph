@@ -33,9 +33,9 @@ def create_llm(
 
     provider = model_config.get("provider", "OpenAI")
     
-    # Clamp max_tokens to model's limit to avoid 400 errors
+    # Clamp max_tokens to model's limit to avoid 400 errors. If max_tokens is None, omit explicit limit (unbounded).
     model_max = model_config.get("max_tokens", 2000)
-    effective_max_tokens = min(max_tokens or model_max, model_max)
+    effective_max_tokens = None if (max_tokens is None) else min(max_tokens, model_max)
 
     if provider == "OpenAI":
         # Check OpenAI key early and fail fast with clear UI message
@@ -54,8 +54,9 @@ def create_llm(
                 "reasoning": {
                     "effort": reasoning_effort or model_config.get("default_reasoning", "minimal")
                 },
-                "max_tokens": effective_max_tokens,
             }
+            if effective_max_tokens is not None:
+                llm_config["max_tokens"] = effective_max_tokens
             # Verbosity: prefer explicit kw if supported; otherwise use model_kwargs
             if verbosity:
                 try:
@@ -69,25 +70,80 @@ def create_llm(
             # Classic chat models (GPT-4, GPT-4o-mini)
             llm_config: Dict[str, Any] = {
                 "model": model_config["name"],
-                "max_tokens": effective_max_tokens,
                 "temperature": creativity,
             }
+            if effective_max_tokens is not None:
+                llm_config["max_tokens"] = effective_max_tokens
             return ChatOpenAI(**llm_config)
 
     elif provider == "Anthropic":
         # Anthropic models are handled via ChatAnthropic
-        # Do not enforce API key here; let the underlying client resolve it from the environment.
         from langchain_anthropic import ChatAnthropic
 
-        # Claude uses standard params; avoid passing vendor-specific kwargs for testability
-        return ChatAnthropic(
-            model=model_config["name"],
-            temperature=(creativity if creativity is not None else 0.7),
-            max_tokens=effective_max_tokens,
-        )
+        # Base config
+        base_temperature = (creativity if creativity is not None else 0.7)
+        kwargs: Dict[str, Any] = {
+            "model": model_config["name"],
+            "temperature": base_temperature,
+        }
+        if effective_max_tokens is not None:
+            kwargs["max_tokens"] = effective_max_tokens
+
+        # Enable Claude Thinking mode if requested via UI
+        try:
+            import streamlit as st
+            if st.session_state.get("anthropic_thinking_enabled", False):
+                # Extended thinking requires: temperature=1 and budget_tokens < max_tokens
+                # Also, max_tokens must be explicitly provided when thinking is enabled.
+                # Choose defaults if unlimited was requested.
+                # Temperature
+                kwargs["temperature"] = 1.0
+                # Ensure max_tokens exists
+                if "max_tokens" not in kwargs or kwargs.get("max_tokens") is None:
+                    kwargs["max_tokens"] = 500000  # safe default
+                # Clamp budget
+                try:
+                    budget = int(st.session_state.get("anthropic_thinking_budget", 2048) or 2048)
+                except Exception:
+                    budget = 2048
+                max_tok = int(kwargs.get("max_tokens") or 20000)
+                if budget >= max_tok:
+                    budget = max(1024, max_tok - 1024)
+                # Attach thinking to the model instance via a side-channel so adapter can pass it per-call
+                _thinking_payload = {"type": "enabled", "budget_tokens": budget}
+                # Anthropic thinking parameter on constructor for newer SDKs
+                kwargs["thinking"] = _thinking_payload
+                # Back-compat shim: some langchain_anthropic builds require passing vendor params at call time
+                # We'll set a private attribute the adapter will read and forward on invoke/stream
+                # (We can't set it yet since the instance isn't created; do it right after construction below.)
+                _attach_thinking_side_channel = _thinking_payload
+                # Do not set top_p with temperature for Anthropic; model forbids both
+            else:
+                # Guard: Anthropic rejects temperature==1 when thinking disabled
+                try:
+                    temp = float(kwargs.get("temperature", 0.7))
+                except Exception:
+                    temp = 0.7
+                if temp >= 1.0:
+                    kwargs["temperature"] = 0.99
+        except Exception:
+            pass
+
+        model = ChatAnthropic(**kwargs)
+        try:
+            if locals().get("_attach_thinking_side_channel"):
+                setattr(model, "_alt_anthropic_kwargs", {"thinking": locals()["_attach_thinking_side_channel"]})
+        except Exception:
+            pass
+        return model
 
     else:
         # Fallback: try OpenAI signature to avoid crashing
+        if effective_max_tokens is None:
+            return ChatOpenAI(
+                model=model_config["name"],
+                temperature=creativity,
+            )
         return ChatOpenAI(
             model=model_config["name"],
             temperature=creativity,
@@ -204,7 +260,7 @@ def generate_content(
     creativity: float,
     reasoning_effort: str | None,
     verbosity: str | None,
-    max_tokens: int,
+    max_tokens: int | None,
     model_name: str,
     model_config: Dict[str, Any],
     domain: str,
@@ -615,11 +671,20 @@ def generate_content(
         except Exception:
             pass
 
+        # Normaliser le domaine pour clés ASCII (évite KeyError sur accents)
+        _dom = (domain or "").lower()
+        if _dom in ("espèces",):
+            _dom = "especes"
+        if _dom in ("communautés",):
+            _dom = "communautes"
+
         success_msg = {
             "personnages": f"✅ Personnage généré avec succès ! (Modèle: {model_config['icon']} {model_name})",
             "lieux": f"✅ Lieu généré avec succès ! (Modèle: {model_config['icon']} {model_name})",
+            "especes": f"✅ Espèce générée avec succès ! (Modèle: {model_config['icon']} {model_name})",
+            "communautes": f"✅ Communauté générée avec succès ! (Modèle: {model_config['icon']} {model_name})",
         }
-        st.success(success_msg[domain.lower()])
+        st.success(success_msg.get(_dom, f"✅ Contenu généré avec succès ! (Modèle: {model_config['icon']} {model_name})"))
 
         # Persist the full result for later actions (e.g., export from creation tab after rerun)
         try:
@@ -712,6 +777,8 @@ def generate_content(
 
         # La gestion des fichiers sauvegardés et de l'export est désormais rendue dans
         # l'onglet Création (entre "Contenu final" et "Options avancées").
+                # Note: export handled in Creation tab; keep compatibility guard if value was set earlier in session
+                export_res = st.session_state.get("_pending_export_payload")
                 if isinstance(export_res, dict):
                     st.session_state._export_creation = export_res
         # Persisted confirmation after rerun

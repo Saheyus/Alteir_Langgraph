@@ -88,7 +88,7 @@ def test_brief_2_kira():
         intent="orthogonal_depth",
         level="standard",
         dialogue_mode="parle",
-        creativity=0.7
+        creativity=1.0
     )
     
     run_test(brief, writer_config, "kira_entailleuse")

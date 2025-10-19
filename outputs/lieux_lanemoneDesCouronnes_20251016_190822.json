@@ -1,0 +1,1047 @@
+{
+  "domain": "lieux",
+  "brief": "Rédige un lieu de type [RÔLE], de taille Monde, situé dans Couronnes intermédiaires. Son apparence générale est Architecture organique. L'atmosphère générale est Mélancolique. Les communautés présentes : Autre faction (à inventer). Les espèces dominantes : Imuins. Son accessibilité : Secret/Caché. Son niveau de danger : Dangereux. Sa particularité physique ou magique : Échos mémoriels. Les lois physiques locales : Stables (comme ailleurs). Sa fonction principale dans l'histoire : Zone d'exploration libre.",
+  "content": "- Nom: L’Anémone des Couronnes\n- Catégorie: Monde intérieur organique, archive vivante\n- Rôle: Zone d’exploration libre, sanctuaire mnésique caché\n- Taille: Monde\n- Contenu par: Couronnes intermédiaires (Escelion)\n- Contient: Les Bras spongieux; Le Lacis des Éphylactères; La Loge du Myronome; Le Bassin d’Ancrage; Les Chambres de Mue; La Gorge-Porte; Les Fosses de Méandre; La Terrasse des Deimos pygmées; L’Œil-lentille\n- Zones limitrophes: Faubourgs des Couronnes intermédiaires (accès via la Gorge-Porte derrière le Puits des Fistules ◊, un puits calcaire-bruité sous un hospice abandonné); Souterrains de la Citadelle de Daïlon (fissure membraneuse aux Fosses de Méandre); Galerie d’égout des Failles d’Escelion (suintement au Bassin d’Ancrage)\n- Communautés présentes: ◊ Les Orantes du Dernier Bruit (confrérie imuin qui veille les échos mourants)\n- Personnages présents: ◊ Mère Voilène, Orante-chef; ◊ Soa-Mil, porte-oreille itinérante; Vol Reitar (échos mémoriels fragmentés); Valkazer (échos contredits, instables)\n- Faunes & Flores présentes: ◊ Seuilleurs (défenses immunes du lieu, pseudo-cellules massives); ◊ Cribles à plis (filtreurs de liquides, lanières vibratiles); Deimos pygmées (insectes-lumières domestiqués); ◊ Ronces-tendons (cordages vivants); ◊ Larmes de moelle (exsudats minéralisants)\n- Objets présents: ◊ Éphylactères (capsules de mémoire solidifiée); ◊ Myronome (lyre de cartilage qui règle les résonances); ◊ Nodus-cicatrice (clé tissulaire ouvrant des sutures); Restes d’instruments de Vol Reitar (mi-organiques, mi-mécaniques)\n- Scènes: Franchir la Gorge-Porte sous le chant amorti des Orantes; Accorder les Échos d’un meurtre oublié devant l’Œil-lentille; Négocier la restitution d’un Éphylactère interdit à la Loge du Myronome; Fuir un Seuilleur-Major dans les Bras spongieux; Affronter un Écho récalcitrant de Valkazer au Bassin d’Ancrage\n- Evénements liés: Vestiges mnésiques des expériences de Vol Reitar; Controverse des Orantes sur la purge des Échos; Réverbérations de la rébellion de Valkazer dans les couches profondes\n- Map: Poche-monde rayonnant depuis la Gorge-Porte vers huit bras spongieux; nœud central (Lacis des Éphylactères) relié à la Loge du Myronome et au Bassin d’Ancrage; hauteur accessible via la Terrasse des Deimos pygmées menant à l’Œil-lentille\n- État: Brouillon IA\n- Sprint: Cartographier 8 sous-zones jouables; prototyper Échos mémoriels (3 états); écrire 6 quêtes Orantes; concevoir boss Seuilleur-Major; intégrer 2 entrées secrètes depuis Couronnes intermédiaires\n\n# Résumé de la fiche\nMonde intérieur organo-minéral dissimulé sous les Couronnes intermédiaires, l’Anémone des Couronnes respire et se souvient. Ses parois conservent des échos mémoriels qui rejouent les ruines intimes de la Cité. Les Imuins y ont fondé une confrérie mélancolique, les Orantes du Dernier Bruit, qui veille et sélectionne ce qui doit être oublié.\n\n# Identité & Vue d'ensemble\n\nL’Anémone se devine avant de se voir. Sous les marches fendillées d’un hospice, l’air change: sel humide, odeur de moelle et de poussière d’os. Ensuite seulement la membrane: chair calcifiée, tiède, veineuse. On la traverse, et le monde bascule dans une lumière de Deimos pygmées, un ciel bas de voiles charnus où chaque pas déclenche un chuchotement d’anciens.\n\n◊ Imuins: êtres graciles à peau cartilagineuse translucide et à collerettes vibratiles, ils parlent par frottement d’osselets (voix en accords). Leurs mains sécrètent un mucus, le mnémel, qui durcit en Éphylactères – petites ampoules contenant un écho mémoriel.\n\n## Histoire du lieu\nWAS — L’Anémone s’est formée autour d’un rejet organique oublié de la Citadelle de Daïlon. Les ateliers de Vol Reitar faisaient suinter, au long de conduits, des résidus de perceptions extraites de cobayes. Là où les conduits ont rompu, la matière a colonisé, comme une anémone s’agrippe au rocher: couches de moelle pétrifiée, trabécules de calcium, poches d’air vibrantes. Des décennies de fuites ont fixé des strates de bribes: portes closes, rires arrêtés, ordres murmurés, supplications étouffées. L’endroit, ignoré, s’est élargi.\n\nIS — Aujourd’hui, le lieu respire doucement. Au moindre choc, des voiles palpitent, libérant un écho: silhouettes brumeuses qui rejouent l’instant capturé en froid. Les Imuins l’ont sanctuarisé. Les Orantes du Dernier Bruit, nées d’un exode discret depuis les Couronnes, se sont installées dans la Loge du Myronome, où une lyre de cartilage règle la résonance des échos pour éviter l’engloutissement des vivants par le passé.\n\nCOULD-BE — L’Anémone peut devenir un arsenal ou un tombeau. Déréglée, elle projette ses échos dans les rues des Couronnes, contamine la panoptique de la Vieille Ville et fissure l’ordre de Jast. Apaisée, elle devient un lieu de réparation: on y tisse des oublis choisis, des pardons pesés. Ou bien on la sectionne avec un Nodus-cicatrice et ses souvenirs se répandent dans l’Océan de Ténèbres.\n\n## Rôle dans l'intrigue\nLes héroïnes viennent chercher ici des preuves que le monde préfère ne pas entendre: des fragments de Vol Reitar, des contradictions de Valkazer, des gestes faussement héroïques que la Cité a polies. L’Ethérée, en tant qu’esprit-ruche, peut lier ou délier des échos à ses hôtes: se nourrir pour comprendre, risquer de se diluer. L’Anémone offre une liberté d’exploration et une tentation: utiliser les échos pour renverser la Vieille Ville, ou apprendre à les laisser mourir.\n\n# Géographie & Environnement\n\n## Écosystème\nClimat constant, humide et frais. La lumière provient des Deimos pygmées, insectes-lanternes que les Orantes encouragent à nicher dans les alvéoles hautes. Les parois sont un tissage de moelle fossilisée et de cartilage ambulant. Les ◊ Cribles à plis (lanières vibrantes) filtrent les liquides qui ruissellent de la voûte et les conduisent au Bassin d’Ancrage; leur chant sourd règle l’humeur du lieu. Les ◊ Seuilleurs, masses blanches aux yeux inexistants, patrouillent en suivant les gradients de vibration: ils étouffent les perturbations, écrasent, coagulant autour des intrus trop bruyants.\n\nLa flore est une métaphore de muscle: ◊ Ronces-tendons servent de passerelles souples; ◊ Larmes de moelle, perles translucides, suintent et durcissent en stalactites fragiles que les Imuins récoltent.\n\nParticularité: Échos mémoriels. Toucher, marcher, parfois simplement respirer déclenche la rémanence d’instants. Ils ne modifient pas les lois physiques – stables ici – mais s’agrègent aux perceptions, peuvent submerger le sens, brouiller l’intention.\n\n## Voies d'accès\n- La Gorge-Porte: sous un hospice muré des Couronnes, un Puits des Fistules ◊ (puits calcaire-bruité) vibre à certaines veilles. Au bon battement, une suture s’ouvre. Rater le rythme, c’est être broyé entre deux lèvres calcaires.\n- Fissure de Daïlon: dans les souterrains effondrés de la Citadelle, une fente membraneuse épouse l’empreinte d’un Nodus-cicatrice. Sans la clé, on reste coincé entre deux couches du monde, à suffoquer dans un écho de poussière.\n- Écoulement d’égout: l’eau pure des cycles liquides s’égare parfois dans une galerie. Suivre la température décroissante et la note des Cribles à plis mène au Bassin d’Ancrage. Les Seuilleurs y sont nombreux.\n\nDangers en chemin: effondrements, Seuilleurs attirés par le métal et les voix trop franches, afflux d’échos qui peuvent coller à la peau comme une sueur froide et voler des minutes de mémoire.\n\n# Organisation humaine\n\n## Structure politique\nLes Orantes du Dernier Bruit règlent le lieu. Confrérie sans hiérarchie stricte, mais avec une préséance d’écoute: plus on sait se taire, plus on décide. Mère Voilène arbitre par le Myronome. Loi simple: ne pas réveiller un écho sans accord, ne pas voler un Éphylactère, ne pas amener de foules. La sanction est le silence imposé: un masque de cartilage qui absorbe la voix pendant un Battement.\n\nLes Seuilleurs, entités non-humaines, ont leur propre \"politique\": ils reconnaissent les porteurs de Nodus-cicatrice et les laissent passer si on les touche sur la corne frontale.\n\n## Centres urbains & Habitats\nPas de ville; des nids. Les Chambres de Mue, alvéoles tapissées d’anciens tissus, abritent les nids des Orantes. Des passerelles de Ronces-tendons relient la Loge du Myronome (salle sonore construite autour d’une lyre de cartilage géante) au Lacis des Éphylactères (forêt d’ampoules de verre organique suspendues par des fils de nerf fossile). La Terrasse des Deimos offre une vue sur le \"ciel\" membraneux: on y anesthésie les insectes pour régler leur luminosité. Le Bassin d’Ancrage est un port muet où flottent des nacelles de moelle creuse.\n\n# Culture & Société\n\n## Population\nImuins dominants. Peau translucide où passent des ombres d’os. Faible dimorphisme, rôles par capacité d’écoute. Leur langue claque et chante; ils s’adressent aux étrangères via des traductrices frottant des lamelles de corne. Quelques humaines en fuite des Couronnes, tolérées si elles acceptent la discipline du lieu. Tension: certains Imuins jugent l’Anémone sacralisée à l’excès, d’autres la trouvent trop offerte aux intruses.\n\n## Économie\nAutarcie fragile. Récolte des Larmes de moelle pour consolider les parois, élevage de Deimos pygmées, fabrication d’Éphylactères vendus très discrètement aux collectionneurs des Couronnes. Monnaie de préférence: services d’oubli. Un pacte: on paie en apportant des bruits, des histoires à déposer, ou en \"désamorçant\" un écho dangereux.\n\n## Fêtes/moments importants\n- Veille des Derniers: procession lente au Lacis, on laisse s’éteindre des échos en jouant le Myronome.\n- Mue-Commune: on accroche aux Ronces les peaux mortes et les morceaux de verbe dont on ne veut plus; elles se calcifient en guirlandes.\n- Silence de Jast: une Somme par Fragment, les Orantes stoppent tout écho perceptible; l’Anémone ronronne presque à vide, en hommage ironique à l’Inéluctable.\n\n## Alimentation spécifique\nGelées de Deimos, chairs d’algues-cartilage cultivées sur les Cribles à plis, soupe de Larmes de moelle coupée d’eau pure. Tabou: consommer du son. Cela signifie ne pas manger pendant les rituels sonores; un défaut d’attention \"avale\" des harmoniques, ce qui est jugé impur.\n\n# Dynamiques\n\n## Enjeux actuels\n- Échos en surchauffe: plus d’intrusions, plus d’échos réveillés; certains deviennent agressifs et tentent d’imposer leurs gestes aux vivantes.\n- Scission des Orantes: Mère Voilène prône l’apaisement, Soa-Mil veut extraire des preuves contre la Vieille Ville et les montrer aux Couronnes.\n- Intrusion d’un Seuilleur-Major: croissance incontrôlée d’une entité immunitaire qui a commencé à digérer des sections entières du Lacis.\n\n## Points d'intérêt\n- La Gorge-Porte: deux lèvres calcaires vibrent au 3e, 6e et 9e battements; il faut passer au \"temps creux\".\n- La Loge du Myronome: lyre de cartilage géante; les cordes se tendent au contact de la peau, et règlent amplitude et durée des échos.\n- Le Lacis des Éphylactères: nuage de fioles organiques; certaines contiennent des fragments de Vol Reitar – une main qui hésite, un regard sur une copie aimée.\n- Le Bassin d’Ancrage: l’eau y superpose des reflets de rues des Couronnes; on peut glisser dedans et ressortir ailleurs si on porte un Nodus-cicatrice.\n- L’Œil-lentille: dôme translucide strié de fibres; focalise un écho pour l’agrandir et le stabiliser; dangereux, mais précieux pour déchiffrer un détail.\n- Les Fosses de Méandre: couloirs à slaloms où la mémoire se dédouble; on peut y perdre un souvenir et gagner un autre, qui n’est à personne.\n\n## Système de jeu\n- Mécanique des Échos mémoriels: chaque zone possède des couches d’échos (faible, moyen, saturé). Interagir sans Myronome risque l’adhérence (perte temporaire de facultés, changement de traits de dialogue, gestes imposés). Avec le Myronome, l’Ethérée peut accorder/désaccorder: ralentir un écho, en extraire un motif, le greffer à l’une des héroïnes pour débloquer des portes verbales ou physiques.\n- Stealth sonore: les Seuilleurs suivent les harmoniques. Marcher sur Ronces-tendons étouffe, chuchoter accorde; fracas attire. Outils: semelles de moelle, masques absorbants.\n- Diplomatie mélodique: les Orantes réagissent à la justesse. Dépasser des seuils de \"ténu\" et \"grave\" en dialogue modifie leur confiance; dissoner volontairement pour choquer peut forcer une décision mais braque la confrérie.\n- Quêtes:\n  - Dernier Bruit: apaiser un écho de meurtre dans l’Œil-lentille; choix entre préserver la preuve ou laisser mourir l’instant.\n  - Clé de cicatrice: retrouver un Nodus-cicatrice dans les Fosses de Méandre; chaque détour prélève un souvenir d’un personnage, à récupérer ailleurs.\n  - Seuilleur-Major: mener les Seuilleurs à digérer une zone \"malade\" ou les détourner par des fausses harmonies; conséquences sur l’accès au Lacis.\n  - La Réponse à Valkazer: extraire un écho contradictoire de sa rébellion; en faire une arme de narration dans les Couronnes, ou le détruire pour préserver une figure utile à la cause.\n- Opportunités: piller des Éphylactères rares; négocier un pacte d’oubli pour une alliée; ouvrir une brèche vers les souterrains de Daïlon; transformer la Loge du Myronome en atelier de falsification d’échos; condamner la Gorge-Porte pour protéger l’Anémone – et perdre l’accès.\n\nIS / WAS / COULD-BE, Surface / Profondeur / Monde\n- Surface: membranes translucides, humidité salée, lampes-insectes, chants amortis, silhouettes fantômes qui rejouent des gestes. On glisse, on souffle de la buée, on écoute sa propre voix se ralentir.\n- Profondeur: sutures cachées qui s’ouvrent au toucher des Nodus-cicatrices; Éphylactères étiquetés de griffures imuins; couloirs où la mémoire se croise et repart dans un autre sens; instruments de Vol Reitar incrustés de dents de verre.\n- Monde: économie du bruit et de l’oubli, politique de l’écoute, contrôle immunitaire des Seuilleurs, tension constante avec la panoptique de la Vieille Ville et l’ombre de Jast – ici ni culte ni propagande ne règnent, mais une lente curatelle du passé, toujours menacée de déborder.\n\nÉtat présent: caché, dangereux, mélancolique, physiquement stable mais psychiquement saturé. Ce que c’était: un égout de perceptions, sédiment devenu sanctuaire. Ce que cela pourrait être: un évidement du système, un relais clandestin pour fissurer les Couronnes, ou un tombeau silencieux de tout ce que la Cité n’osera plus nommer.{'index': 1}",
+  "writer_metadata": {
+    "domain": "lieux",
+    "brief": "Rédige un lieu de type [RÔLE], de taille Monde, situé dans Couronnes intermédiaires. Son apparence générale est Architecture organique. L'atmosphère générale est Mélancolique. Les communautés présentes : Autre faction (à inventer). Les espèces dominantes : Imuins. Son accessibilité : Secret/Caché. Son niveau de danger : Dangereux. Sa particularité physique ou magique : Échos mémoriels. Les lois physiques locales : Stables (comme ailleurs). Sa fonction principale dans l'histoire : Zone d'exploration libre.",
+    "structured": {
+      "_raw_text": "- Nom: L’Anémone des Couronnes\n- Catégorie: Monde intérieur organique, archive vivante\n- Rôle: Zone d’exploration libre, sanctuaire mnésique caché\n- Taille: Monde\n- Contenu par: Couronnes intermédiaires (Escelion)\n- Contient: Les Bras spongieux; Le Lacis des Éphylactères; La Loge du Myronome; Le Bassin d’Ancrage; Les Chambres de Mue; La Gorge-Porte; Les Fosses de Méandre; La Terrasse des Deimos pygmées; L’Œil-lentille\n- Zones limitrophes: Faubourgs des Couronnes intermédiaires (accès via la Gorge-Porte derrière le Puits des Fistules ◊, un puits calcaire-bruité sous un hospice abandonné); Souterrains de la Citadelle de Daïlon (fissure membraneuse aux Fosses de Méandre); Galerie d’égout des Failles d’Escelion (suintement au Bassin d’Ancrage)\n- Communautés présentes: ◊ Les Orantes du Dernier Bruit (confrérie imuin qui veille les échos mourants)\n- Personnages présents: ◊ Mère Voilène, Orante-chef; ◊ Soa-Mil, porte-oreille itinérante; Vol Reitar (échos mémoriels fragmentés); Valkazer (échos contredits, instables)\n- Faunes & Flores présentes: ◊ Seuilleurs (défenses immunes du lieu, pseudo-cellules massives); ◊ Cribles à plis (filtreurs de liquides, lanières vibratiles); Deimos pygmées (insectes-lumières domestiqués); ◊ Ronces-tendons (cordages vivants); ◊ Larmes de moelle (exsudats minéralisants)\n- Objets présents: ◊ Éphylactères (capsules de mémoire solidifiée); ◊ Myronome (lyre de cartilage qui règle les résonances); ◊ Nodus-cicatrice (clé tissulaire ouvrant des sutures); Restes d’instruments de Vol Reitar (mi-organiques, mi-mécaniques)\n- Scènes: Franchir la Gorge-Porte sous le chant amorti des Orantes; Accorder les Échos d’un meurtre oublié devant l’Œil-lentille; Négocier la restitution d’un Éphylactère interdit à la Loge du Myronome; Fuir un Seuilleur-Major dans les Bras spongieux; Affronter un Écho récalcitrant de Valkazer au Bassin d’Ancrage\n- Evénements liés: Vestiges mnésiques des expériences de Vol Reitar; Controverse des Orantes sur la purge des Échos; Réverbérations de la rébellion de Valkazer dans les couches profondes\n- Map: Poche-monde rayonnant depuis la Gorge-Porte vers huit bras spongieux; nœud central (Lacis des Éphylactères) relié à la Loge du Myronome et au Bassin d’Ancrage; hauteur accessible via la Terrasse des Deimos pygmées menant à l’Œil-lentille\n- État: Brouillon IA\n- Sprint: Cartographier 8 sous-zones jouables; prototyper Échos mémoriels (3 états); écrire 6 quêtes Orantes; concevoir boss Seuilleur-Major; intégrer 2 entrées secrètes depuis Couronnes intermédiaires\n\n# Résumé de la fiche\nMonde intérieur organo-minéral dissimulé sous les Couronnes intermédiaires, l’Anémone des Couronnes respire et se souvient. Ses parois conservent des échos mémoriels qui rejouent les ruines intimes de la Cité. Les Imuins y ont fondé une confrérie mélancolique, les Orantes du Dernier Bruit, qui veille et sélectionne ce qui doit être oublié.\n\n# Identité & Vue d'ensemble\n\nL’Anémone se devine avant de se voir. Sous les marches fendillées d’un hospice, l’air change: sel humide, odeur de moelle et de poussière d’os. Ensuite seulement la membrane: chair calcifiée, tiède, veineuse. On la traverse, et le monde bascule dans une lumière de Deimos pygmées, un ciel bas de voiles charnus où chaque pas déclenche un chuchotement d’anciens.\n\n◊ Imuins: êtres graciles à peau cartilagineuse translucide et à collerettes vibratiles, ils parlent par frottement d’osselets (voix en accords). Leurs mains sécrètent un mucus, le mnémel, qui durcit en Éphylactères – petites ampoules contenant un écho mémoriel.\n\n## Histoire du lieu\nWAS — L’Anémone s’est formée autour d’un rejet organique oublié de la Citadelle de Daïlon. Les ateliers de Vol Reitar faisaient suinter, au long de conduits, des résidus de perceptions extraites de cobayes. Là où les conduits ont rompu, la matière a colonisé, comme une anémone s’agrippe au rocher: couches de moelle pétrifiée, trabécules de calcium, poches d’air vibrantes. Des décennies de fuites ont fixé des strates de bribes: portes closes, rires arrêtés, ordres murmurés, supplications étouffées. L’endroit, ignoré, s’est élargi.\n\nIS — Aujourd’hui, le lieu respire doucement. Au moindre choc, des voiles palpitent, libérant un écho: silhouettes brumeuses qui rejouent l’instant capturé en froid. Les Imuins l’ont sanctuarisé. Les Orantes du Dernier Bruit, nées d’un exode discret depuis les Couronnes, se sont installées dans la Loge du Myronome, où une lyre de cartilage règle la résonance des échos pour éviter l’engloutissement des vivants par le passé.\n\nCOULD-BE — L’Anémone peut devenir un arsenal ou un tombeau. Déréglée, elle projette ses échos dans les rues des Couronnes, contamine la panoptique de la Vieille Ville et fissure l’ordre de Jast. Apaisée, elle devient un lieu de réparation: on y tisse des oublis choisis, des pardons pesés. Ou bien on la sectionne avec un Nodus-cicatrice et ses souvenirs se répandent dans l’Océan de Ténèbres.\n\n## Rôle dans l'intrigue\nLes héroïnes viennent chercher ici des preuves que le monde préfère ne pas entendre: des fragments de Vol Reitar, des contradictions de Valkazer, des gestes faussement héroïques que la Cité a polies. L’Ethérée, en tant qu’esprit-ruche, peut lier ou délier des échos à ses hôtes: se nourrir pour comprendre, risquer de se diluer. L’Anémone offre une liberté d’exploration et une tentation: utiliser les échos pour renverser la Vieille Ville, ou apprendre à les laisser mourir.\n\n# Géographie & Environnement\n\n## Écosystème\nClimat constant, humide et frais. La lumière provient des Deimos pygmées, insectes-lanternes que les Orantes encouragent à nicher dans les alvéoles hautes. Les parois sont un tissage de moelle fossilisée et de cartilage ambulant. Les ◊ Cribles à plis (lanières vibrantes) filtrent les liquides qui ruissellent de la voûte et les conduisent au Bassin d’Ancrage; leur chant sourd règle l’humeur du lieu. Les ◊ Seuilleurs, masses blanches aux yeux inexistants, patrouillent en suivant les gradients de vibration: ils étouffent les perturbations, écrasent, coagulant autour des intrus trop bruyants.\n\nLa flore est une métaphore de muscle: ◊ Ronces-tendons servent de passerelles souples; ◊ Larmes de moelle, perles translucides, suintent et durcissent en stalactites fragiles que les Imuins récoltent.\n\nParticularité: Échos mémoriels. Toucher, marcher, parfois simplement respirer déclenche la rémanence d’instants. Ils ne modifient pas les lois physiques – stables ici – mais s’agrègent aux perceptions, peuvent submerger le sens, brouiller l’intention.\n\n## Voies d'accès\n- La Gorge-Porte: sous un hospice muré des Couronnes, un Puits des Fistules ◊ (puits calcaire-bruité) vibre à certaines veilles. Au bon battement, une suture s’ouvre. Rater le rythme, c’est être broyé entre deux lèvres calcaires.\n- Fissure de Daïlon: dans les souterrains effondrés de la Citadelle, une fente membraneuse épouse l’empreinte d’un Nodus-cicatrice. Sans la clé, on reste coincé entre deux couches du monde, à suffoquer dans un écho de poussière.\n- Écoulement d’égout: l’eau pure des cycles liquides s’égare parfois dans une galerie. Suivre la température décroissante et la note des Cribles à plis mène au Bassin d’Ancrage. Les Seuilleurs y sont nombreux.\n\nDangers en chemin: effondrements, Seuilleurs attirés par le métal et les voix trop franches, afflux d’échos qui peuvent coller à la peau comme une sueur froide et voler des minutes de mémoire.\n\n# Organisation humaine\n\n## Structure politique\nLes Orantes du Dernier Bruit règlent le lieu. Confrérie sans hiérarchie stricte, mais avec une préséance d’écoute: plus on sait se taire, plus on décide. Mère Voilène arbitre par le Myronome. Loi simple: ne pas réveiller un écho sans accord, ne pas voler un Éphylactère, ne pas amener de foules. La sanction est le silence imposé: un masque de cartilage qui absorbe la voix pendant un Battement.\n\nLes Seuilleurs, entités non-humaines, ont leur propre \"politique\": ils reconnaissent les porteurs de Nodus-cicatrice et les laissent passer si on les touche sur la corne frontale.\n\n## Centres urbains & Habitats\nPas de ville; des nids. Les Chambres de Mue, alvéoles tapissées d’anciens tissus, abritent les nids des Orantes. Des passerelles de Ronces-tendons relient la Loge du Myronome (salle sonore construite autour d’une lyre de cartilage géante) au Lacis des Éphylactères (forêt d’ampoules de verre organique suspendues par des fils de nerf fossile). La Terrasse des Deimos offre une vue sur le \"ciel\" membraneux: on y anesthésie les insectes pour régler leur luminosité. Le Bassin d’Ancrage est un port muet où flottent des nacelles de moelle creuse.\n\n# Culture & Société\n\n## Population\nImuins dominants. Peau translucide où passent des ombres d’os. Faible dimorphisme, rôles par capacité d’écoute. Leur langue claque et chante; ils s’adressent aux étrangères via des traductrices frottant des lamelles de corne. Quelques humaines en fuite des Couronnes, tolérées si elles acceptent la discipline du lieu. Tension: certains Imuins jugent l’Anémone sacralisée à l’excès, d’autres la trouvent trop offerte aux intruses.\n\n## Économie\nAutarcie fragile. Récolte des Larmes de moelle pour consolider les parois, élevage de Deimos pygmées, fabrication d’Éphylactères vendus très discrètement aux collectionneurs des Couronnes. Monnaie de préférence: services d’oubli. Un pacte: on paie en apportant des bruits, des histoires à déposer, ou en \"désamorçant\" un écho dangereux.\n\n## Fêtes/moments importants\n- Veille des Derniers: procession lente au Lacis, on laisse s’éteindre des échos en jouant le Myronome.\n- Mue-Commune: on accroche aux Ronces les peaux mortes et les morceaux de verbe dont on ne veut plus; elles se calcifient en guirlandes.\n- Silence de Jast: une Somme par Fragment, les Orantes stoppent tout écho perceptible; l’Anémone ronronne presque à vide, en hommage ironique à l’Inéluctable.\n\n## Alimentation spécifique\nGelées de Deimos, chairs d’algues-cartilage cultivées sur les Cribles à plis, soupe de Larmes de moelle coupée d’eau pure. Tabou: consommer du son. Cela signifie ne pas manger pendant les rituels sonores; un défaut d’attention \"avale\" des harmoniques, ce qui est jugé impur.\n\n# Dynamiques\n\n## Enjeux actuels\n- Échos en surchauffe: plus d’intrusions, plus d’échos réveillés; certains deviennent agressifs et tentent d’imposer leurs gestes aux vivantes.\n- Scission des Orantes: Mère Voilène prône l’apaisement, Soa-Mil veut extraire des preuves contre la Vieille Ville et les montrer aux Couronnes.\n- Intrusion d’un Seuilleur-Major: croissance incontrôlée d’une entité immunitaire qui a commencé à digérer des sections entières du Lacis.\n\n## Points d'intérêt\n- La Gorge-Porte: deux lèvres calcaires vibrent au 3e, 6e et 9e battements; il faut passer au \"temps creux\".\n- La Loge du Myronome: lyre de cartilage géante; les cordes se tendent au contact de la peau, et règlent amplitude et durée des échos.\n- Le Lacis des Éphylactères: nuage de fioles organiques; certaines contiennent des fragments de Vol Reitar – une main qui hésite, un regard sur une copie aimée.\n- Le Bassin d’Ancrage: l’eau y superpose des reflets de rues des Couronnes; on peut glisser dedans et ressortir ailleurs si on porte un Nodus-cicatrice.\n- L’Œil-lentille: dôme translucide strié de fibres; focalise un écho pour l’agrandir et le stabiliser; dangereux, mais précieux pour déchiffrer un détail.\n- Les Fosses de Méandre: couloirs à slaloms où la mémoire se dédouble; on peut y perdre un souvenir et gagner un autre, qui n’est à personne.\n\n## Système de jeu\n- Mécanique des Échos mémoriels: chaque zone possède des couches d’échos (faible, moyen, saturé). Interagir sans Myronome risque l’adhérence (perte temporaire de facultés, changement de traits de dialogue, gestes imposés). Avec le Myronome, l’Ethérée peut accorder/désaccorder: ralentir un écho, en extraire un motif, le greffer à l’une des héroïnes pour débloquer des portes verbales ou physiques.\n- Stealth sonore: les Seuilleurs suivent les harmoniques. Marcher sur Ronces-tendons étouffe, chuchoter accorde; fracas attire. Outils: semelles de moelle, masques absorbants.\n- Diplomatie mélodique: les Orantes réagissent à la justesse. Dépasser des seuils de \"ténu\" et \"grave\" en dialogue modifie leur confiance; dissoner volontairement pour choquer peut forcer une décision mais braque la confrérie.\n- Quêtes:\n  - Dernier Bruit: apaiser un écho de meurtre dans l’Œil-lentille; choix entre préserver la preuve ou laisser mourir l’instant.\n  - Clé de cicatrice: retrouver un Nodus-cicatrice dans les Fosses de Méandre; chaque détour prélève un souvenir d’un personnage, à récupérer ailleurs.\n  - Seuilleur-Major: mener les Seuilleurs à digérer une zone \"malade\" ou les détourner par des fausses harmonies; conséquences sur l’accès au Lacis.\n  - La Réponse à Valkazer: extraire un écho contradictoire de sa rébellion; en faire une arme de narration dans les Couronnes, ou le détruire pour préserver une figure utile à la cause.\n- Opportunités: piller des Éphylactères rares; négocier un pacte d’oubli pour une alliée; ouvrir une brèche vers les souterrains de Daïlon; transformer la Loge du Myronome en atelier de falsification d’échos; condamner la Gorge-Porte pour protéger l’Anémone – et perdre l’accès.\n\nIS / WAS / COULD-BE, Surface / Profondeur / Monde\n- Surface: membranes translucides, humidité salée, lampes-insectes, chants amortis, silhouettes fantômes qui rejouent des gestes. On glisse, on souffle de la buée, on écoute sa propre voix se ralentir.\n- Profondeur: sutures cachées qui s’ouvrent au toucher des Nodus-cicatrices; Éphylactères étiquetés de griffures imuins; couloirs où la mémoire se croise et repart dans un autre sens; instruments de Vol Reitar incrustés de dents de verre.\n- Monde: économie du bruit et de l’oubli, politique de l’écoute, contrôle immunitaire des Seuilleurs, tension constante avec la panoptique de la Vieille Ville et l’ombre de Jast – ici ni culte ni propagande ne règnent, mais une lente curatelle du passé, toujours menacée de déborder.\n\nÉtat présent: caché, dangereux, mélancolique, physiquement stable mais psychiquement saturé. Ce que c’était: un égout de perceptions, sédiment devenu sanctuaire. Ce que cela pourrait être: un évidement du système, un relais clandestin pour fissurer les Couronnes, ou un tombeau silencieux de tout ce que la Cité n’osera plus nommer.{'index': 1}",
+      "État": "Brouillon IA"
+    },
+    "writer_config": {
+      "creativity": 0.75,
+      "max_length": 2000,
+      "intent": "zone_exploration",
+      "level": "site",
+      "dialogue_mode": "none",
+      "calendar_spec": null,
+      "inspiration_mode": null
+    }
+  },
+  "reviewer_metadata": {},
+  "corrector_metadata": {},
+  "validator_metadata": {},
+  "review_issues": [],
+  "corrections": [],
+  "validation_errors": [],
+  "coherence_score": 0.0,
+  "completeness_score": 0.0,
+  "quality_score": 0.0,
+  "is_valid": false,
+  "ready_for_publication": false,
+  "context": {
+    "selected_ids": [
+      "1886e4d2-1b45-8111-88d5-edb08cafe956",
+      "2806e4d2-1b45-81e5-8014-dcbd89abf20b",
+      "28d6e4d2-1b45-8149-b777-c0a6bc33eb34",
+      "2806e4d2-1b45-818d-ab4e-e216dc6c6c17",
+      "2806e4d2-1b45-8156-89fc-d2d124e16ffd"
+    ],
+    "pages": [
+      {
+        "id": "1886e4d2-1b45-8111-88d5-edb08cafe956",
+        "title": "Vision",
+        "domain": "vision",
+        "summary": "",
+        "content": "# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+        "properties": {
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vision",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vision",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 315,
+        "last_edited": "2025-10-12T17:40:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b",
+        "title": "Vieille Ville",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\n  La Vieille Ville d'Escelion est un chef-d'œuvre d'urbanisme inverse où le temps s'écoule à rebours : son cœur ultra-futuriste, le Nexion, est paradoxalement sa partie la plus ancienne. Son histoire débute au 4ème siècle de l'Agenèse, s'étendant progressivement en sept districts concentriques de moins en moins avancés technologiquement. Chaque citoyen est génétiquement lié à des plantes mémorielles dans un vaste système socio-biotechnologique, permettant une surveillance totale tout en nourrissant le Jardin Mnémonique de leurs pensées.\n  La ville fonctionne comme un organisme vivant, rythmé par le Souffle Hakutō-Ah qui synchronise ses habitants à travers trois phases cycliques : Expansion, Consolidation et Contraction. Sa structure politique complexe, dominée par le mystérieux Inéluctable et le Conclave des Sept Interfaces, maintient un équilibre fragile entre diverses factions comme le Barvasinkul, les Artisans Transmutateurs et les Calculateurs Réflexifs.\n  L'écosystème unique de la ville mêle biotechnologie et urbanisme : des lichens quantiques aux champignons mécanophages, chaque niveau développe sa propre biosphère. La ville est connectée à ses voisines par des passages distinctifs : les Portes Lianescentes vers la Jungle Vivarcade, des champs lisières vers la Steppe des Éteignoirs, des corridors de stèles-miroirs vers le Tombeau des lueurs dissidentes, et des chemins de racines vers le Xyriad Achromatique.\n# Besoin de l'intrigue\n💡 Origines du lieu\n  La Vieille Ville débute son existence par une inversion temporelle fondamentale - ses structures les plus anciennes sont paradoxalement ses districts les plus futuristes. Fondée au 4ème siècle de l'Agenèse, son origine véritable est le Nexion, un implant archéo-futuriste qui a d'abord manifesté l'hyper-centre avant de \"s'étendre vers le passé\", générant des architectures progressivement moins sophistiquées à mesure qu'elles s'éloignent du centre.\n  Cette expansion rétrochronique explique le nom troublant de \"Vieille Ville\" pour un lieu au cœur ultra-technologique : ses habitants expérimentent un phénomène de \"mémoire antégrade\" où le futur semble plus ancien que le passé, créant une sensation collective de déjà-vu face aux innovations. Chaque cycle d'expansion provoque ainsi une nouvelle couche périphérique dont l'architecture paraît étrangement \"neuve\" en comparaison des quartiers centraux immémorés.\n  La fondation mythique présente trois récits contradictoires mais simultanément valides dans les archives mémorielles :\n  - Le Mythe de la Bouche Primordiale : le Nexion comme la gueule d'une entité extra-dimensionnelle\n  - La Genèse des Derniers Protocoles : le centre serait un nœud algorithmique rescapé de la Matrice de Merid\n  - L'Hypothèse Rétroactive : la Vieille Ville aurait été construite par ses habitants futurs, expliquant sa logique architecturale inversée\n💡 Histoire du lieu\n  - La construction formelle débuta avec le Grand Conclave Interespèces (294 AG), rassemblement historique où douze représentants des espèces primordiales d'Escelion décidèrent d'établir un centre d'étude permanent autour du vortex. \n  - L'Ère Calligraphique (5ème-7ème siècles) établit un langage architectural où chaque bâtiment fonctionnait comme un idéogramme tridimensionnel, permettant une lecture intuitive par toutes les espèces dans la Grande Radiale. Un premier mur circulaire fut érigé autour du Nexion.\n  - La Phase Expansionniste (8ème-12ème siècles) vit naître les trois premiers districts concentriques : le Nexion, la Grande Radiale et les Épidermes Réactifs. La Première Grande Pulsation (917) émit une onde restructurant les bâtiments en motif radial parfait.\n  - L'Âge d'Or Mécaniste (13ème-17ème siècles) apporta l'innovation technologique avec le Circuit Homeostatique et la Bibliothèque Sympathique. Le Code Urbain Unanime (1355) établit le zonage concentrique actuel.\n  - La Période des Trois Convergences (18ème-20ème siècles) fit de la ville un centre d'échanges avec l'ajout des Chaudières Démiurgiques et du Jardin Mnémonique, complétant l'heptade circulaire. Le Concordat (1822) garantit des droits à toutes les espèces.\n  - L'Ère des Contractions Subtiles (21ème-28ème siècles) rendit les cycles du Souffle Hakutō-Ah prévisibles après la Seconde Grande Pulsation (2102). Le Jardin Mnémonique se développa, établissant les liens génétiques entre citoyens et plantes.\n  - L'Époque Contemporaine (29ème siècle-présent) marque un repli général. Les Vérificateurs d'Accès contrôlent désormais chaque entrée aux Seuils d'Altération, tandis que la Pulsation Tertiaire (3156) étend le septième district.\n💡 Rôle dans l'intrigue\n  La Vieille Ville incarne architecturalement la malédiction Alteir et ses paradoxes. Son système de surveillance intègre même sa propre contestation, manifestant cinq postures distinctes (Retrait, Rébellion, Destruction, Subversion, Connexion) souvent inconsciemment.\n  La cité développe le concept panoptique en liant génétiquement les citoyens aux plantes du Jardin Mnémonique. Cette symbiose forcée permet au système de se nourrir des pensées intimes tout en les orientant, créant un dilemme : comment résister à un système qui définit lui-même les termes de la résistance ?\n  Les tensions avec le Léviathan pétrifié, le Xyriad Achromatique et la Jungle Vivarcade maintiennent un équilibre instable. Pour Jast, c'est un laboratoire social ; pour ses habitants, une prison-refuge ; pour l'Éthérée, un système parfait ayant intégré sa propre négation comme mécanisme de survie.\n# Ecosystème\n💡 Écosystème\n  La Vieille Ville fonctionne comme un organisme biotechnologique complet, ses districts représentant des organes spécialisés interconnectés par un réseau de canaux, de conduits et de filaments neurologiques artificiels. Cette physiologie urbaine s'articule autour d'un \"métabolisme social\" régulé par le Souffle Hakutō-Ah - une onde acoustico-biochimique qui synchronise les rythmes cardiaques des habitants.\n  Ce souffle émane du Nexion central selon trois phases cycliques qui déterminent l'état général de la cité :\n  - Expansion : libération de neurotransmetteurs stimulants favorisant l'innovation et la production\n  - Consolidation : sécrétion d'hormones stabilisatrices renforçant l'ordre social et l'obéissance\n  - Contraction : émission de phéromones de préservation encourageant la conservation et l'introversion\n  Cette superposition de strates crée une écologie urbaine unique où chaque niveau développe sa propre sous-biosphère : les quartiers internes abritent des lichens quantiques et des algues computationnelles, tandis que les niveaux externes hébergent des champignons mécanophages et des insectes proto-conscients. La faune synanthropique (principalement des Aberrations Bouffies et des formes dégénérées de Cen'Doei) s'est parfaitement adaptée à ce biotope artificiel, évoluant pour exploiter les niches écologiques créées par l'anthropisation extrême.\n💡 Manières de rejoindre cet endroit\n  - Vers la Jungle Vivarcade \n    Les Portes Lianescentes sont les entrées cardinales gardées par des Sentinelles et un Tisseridée détecteur d'intentions, mène à la Jungle Vivarcade. La forêt verticale Vivarcade est à moitié intégrée dans les jardins mnémoniques.\n    Passage alternatif, les Canaux Descendants: Cours d'eau artificiels qui s'écoulent des terrasses supérieures de la Vivarcade vers les réservoirs de la Vieille Ville\n  - Vers la Steppe des Éteignoirs\n    Les dernières terrasses du Jardin plongent dans un no man’s land de champs lisières, où les plantes-mémoires mutent en buissons épineux saturés d’oubli. Des kurgarrû (chiffonniers-karmiques) récoltent ces résidus de conscience pour les revendre aux alchimistes de l’Hermogène. Leurs barges flottent sur des canaux d’eaux noires chargées d’en-ḫedu-particules (résidus de rêves décomposés).\n  - Vers Xyriad Achromatique \n    La sixième radiale, un entrelac de chemins et de ponts de racines, les nouveaux pousses exfiltrent leurs archives interdites vers les tours-organismes du Xyriad. En échange de ces mémoires, les Umcuts fractals leur offrent des équations-blank — formules mathématiques qui effacent sélectivement le passé. Ce commerce corrode l’architecture alentour, créant des poches de non-lieux où le temps s’effiloche.\n# Organisation humaine\n  ## Structure politique\n  Hiérarchie secrète :\n  - L'Inéluctable (Jast) - Entité quasi-mythique rarement mentionnée dans les documents officiels\n  Hiérarchie apparente :\n  - Le Conclave des Sept Interfaces - Administrateurs représentant chacun un district concentrique\n  - Les Gardiens du Souvenir - Technoprêtres gérant les liens génétiques entre citoyens et plantes mémorielles\n  - Les Interprètes du Souffle - Fonctionnaires synchronisant les activités sociales avec les cycles du Souffle Hakutō-Ah\n  - Les Scribes Réactifs - Bureaucrates enregistrant et classifiant toute information sociale significative\n  - La Garde Homeostatique - Force militarisée maintenant l'équilibre entre les factions\n  Structures parallèles :\n  - Le Barvasinkul dans la Bibliothèque Sympathique - Influence spirituelle fournissant un cadre interprétatif aux transitions\n  - Les Artisans Transmutateurs - Guilde technologique développant des hybridations organico-mécaniques\n  - Les Calculateurs Réflexifs - Faction mathématique du Xyriad Achromatique infiltrant le système administratif\n  Chaque district possède sa propre structure administrative qui interprète les Harmoniques Directrices selon sa fonction spécifique :\n  - Le kiasu des Archivistes Auditifs (District 4) préserve et interprète l'histoire orale, motivés par la peur de la perte historique\n  - Les Quipucamayoc (District 5) supervisent les alliages sacrés et les rituels métallurgiques, déterminant quels ayllus-forgerons peuvent accéder aux différents niveaux des khipu-protocoles\n  - Les Muhaddithin (District 6) préservent et retranscrivent l'ijazah collective (permis d’enseigner) sur les murs vivants des maisons de la sagesse\n  - Les gardiens des signes vivants (District 7), ou šàtam-mušen, supervisent l'Assemblée des Liens Végétaux, prélèvent les tributs et maintiennent l'équilibre vital à travers les jardins-oracles (giš-hur)\n  Cette complexité politique est délibérément cultivée car elle crée un système où chaque forme de dissidence est automatiquement canalisée vers des structures préexistantes qui la neutralisent en l'intégrant. Les factions adverses sont maintenues dans un équilibre dynamique qui empêche tout changement radical tout en permettant une évolution contrôlée.\n  Le véritable pouvoir repose sur le contrôle de l'information et de la mémoire collective. Les décisions majeures sont formalisées via un processus appelé \"Interprétation Rétroactive\" - les changements sont implémentés puis inscrits dans les archives comme s'ils avaient toujours existé, créant une distorsion mnémonique collective qui renforce le sentiment d'inéluctabilité.\n  ## Centres urbains & Habitats\n  ### 1) Le Nexion (Source d’inspiration : Civilisation bio-synthétique afrofuturiste)\n  Centre quantique-organique où les structures architecturales transcendent la matérialité conventionnelle. Des tours biomimétiques auto-évolutives s'élèvent en configurations impossibles, leurs parois constituées de nkisi-tech (matière consciente). Le district est gouverné par le Conseil des Nommo-Interfaces, entités hybrides biomathématiques dont les corps partiellement dématérialisés existent simultanément dans plusieurs états quantiques. L'économie fonctionne sur le principe de l'Ukumtha (conscience collective) où les citoyens échangent des fragments mémoriels plutôt que des biens. Les bâtiments s'ouvrent comme des Ankhs vivants, révélant des mécanismes internes qui fusionnent technologie avancée et principes ancestraux du Sankɔfa (retour aux sources pour avancer). Le langage dominant est le Neo-Yoruba Quantique, dont les idéogrammes tridimensionnels se restructurent selon l'intention du locuteur.\n  ### 2) La Grande Radiale (Source d’inspiration : Néo-Séoul/Tokyo hyperconnectée)\n  Sept artères hyper-efficientes rayonnant du Nexion, structurées selon le principe du jung-do (voie de l'interconnexion). Chaque avenue incarne un chaebol-jung (conglomérat spirituel) spécialisé, habité par des castes déterminées par leur coefficient de nunchi (intelligence sociale algorithmique). L'architecture verticale superpose des capsules d'habitation miniaturisées aux façades holographiques interactives, reliées par des sallyeom-tube (tunnels de transport pneumatique). Les structures intègrent des jardins zen quantifiés où les drones pollinisateurs maintiennent l'équilibre écologique. La culture locale vénère le concept de mugung-han (souffrance productive infinie), célébré lors des festivals de simbiosis-gukjang (deuil technologique). La population, principalement composée d'Imuins et de Van'Doei, communique par un langage gestuel augmenté et des systèmes de télépathie primitive basés sur des implants kokoro-link.\n  ### 3) Les Épidermes Réactifs (Source d’inspiration : Société sibérienne néo-chamaniste)\n  Quartier de perception collective où les édifices sont recouverts de kut-skins (membranes sensorielles) captant les émotions ambiantes. Des yourtes augmentées à géométrie variable s'adaptent aux états émotionnels de leurs occupants, tandis que des totems technologiques dukhi-masts canalisent les données vers le centre. Les Qadul'Doei et les chamans technologiques tengri-tech pratiquent la dvoinik-therapy, manipulant les doubles émotionnels des citoyens pour maintenir l'harmonie collective. Des portails organiques appelés oblast-gates connectent différentes zones du district, créant des parcours qui défient la géométrie euclidienne. Des rituels de purga-dance (transes technologiques) sont régulièrement organisés sur les places publiques, où les participants entrent en communion via des interfaces neurales, partageant temporairement leurs expériences sensorielles dans une méta-conscience appelée taiga-mind.\n  ### 4) Le Circuit Homéostatique (Source d’inspiration : Singapour-Inde interconnectée)\n  Centre névralgique des flux commerciaux structuré autour du concept de smart-mandala (systèmes circulaires auto-régulants). Son architecture emblématique combine gratte-ciels hyper-efficaces et complexes souterrains labyrinthiques connectés par des supertree-networks inspirés des jardins de la baie. Le district fonctionne sur un système de mérite algorithmique kiasu-metrics qui quantifie la valeur sociale des citoyens via leur empreinte dans le tissu urbain. Les commerçants Kephrasites et Umcuts s'organisent en kampong-guilds (communautés de quartier spécialisées) encadrées par des politiques de jugaad-compliance (innovation frugale réglementée). La population se divise entre expatriés technologiques privilégiés habitant les ayur-towers (immeubles biodynamiques) et travailleurs essentiels occupant les HDB-simulacra (logements standardisés modulaires). Les espaces publics sont continuellement surveillés par des panopticon-yantras (dispositifs de contrôle ornementaux) qui maintiennent l'harmonie sociale sous couvert d'optimisation urbaine.\n  ### 5) Les Chaudières Démiurgiques (Source d’inspiration : Empire Andin)\n  Perchées sur des terrasses vertigineuses, des gueuses-incas exposent leurs flancs de pierre volcanique à des creusets brûlants où l’on fond or, argent et cuivre selon d’antiques khipu-protocoles. Des canalettes d’eau sacrée, canalisées depuis le glacier-cœur, régulent l’homéostasie thermique des bouches-chaudières. Les ayllus-forgerons, organisés en tayta-corporations, vénèrent Inti-Mamani en scellant chaque pièce d’un sceau de condor gravé. Les lamas-chargés transportent des alambics-tubulaires en obsidienne, tandis que les prêtres-ingénieurs sipas quishuar tissent des rituels de feu et de son, accordant aux métaux un souffle d’amauta-savoir. Les hameaux-usines, adossés aux murailles incérébrales de l’Apu Pachacútec, témoignent d’une fusion organique entre montagne, espace manufacturier et mythologie vivante.\n  ### 6) La Bibliothèque Sympathique (Source d’inspiration : Renaissance islamique)\n  Vaste complexe de connaissance organisé autour du bayt al-hikma central - dôme monumental dont les murs intérieurs sont constitués de textes vivants structurés selon le principe de l'ijazah (transmission authentifiée du savoir). Les édifices s'organisent en masrahiyya (cercles concentriques) selon les disciplines du savoir, reliés par des cours intérieures où murmurent des fontaines de ma'rifah (eau de connaissance). Les Qadul'Doei y officient comme muhaddithun (transmetteurs) dans des majlis (assemblées) où la connaissance est débattue selon les principes du qiyas (raisonnement analogique). Des waqf-gardens (jardins de fondation pieuse) abritent des plantes philosophiques dont les formes géométriques expriment des théorèmes complexes. La société s'organise autour de la madhhab-mindfulness (école de pensée contemplative) et pratique l'ijtihad-communal (effort interprétatif collectif) pour adapter les anciens textes aux réalités contemporaines. Le Barvasinkul y maintient son sanctuaire Áras-Gol, fusionnant ses Seize Transformations avec les principes mu'tazilites de justice divine et d'unité métaphysique.\n  ### 7) Le Jardin Mnémonique (Source d’inspiration : Mésopotamie)\n  District périphérique organisé autour de ziggourats végétales dont les terrasses étagées abritent une biodiversité mnémotechnique. Des ensi-gardiens (prêtres-botanistes) administrent ce vaste complexe selon les me (décrets divins) inscrits dans des tablettes d'argile vivante. Chaque citoyen est lié à une plante qui enregistre ses expériences dans un processus appelé nam-tar (détermination du destin). Les structures habitables se fondent progressivement dans la végétation, créant des é-kur (maisons-montagnes) dont les murs de sédiments stratifiés révèlent l'histoire de leurs occupants. Dans les bas-quartiers appelés zagmukkum (nouvelles pousses), une population marginale développe des réseaux informels d'abzu-communication (transmission souterraine) échappant partiellement au contrôle central. Des baru-hackers (devins-dissidents) détournent les techniques de šikrum (présage végétal) pour créer des systèmes alternatifs de mémoire collective. Malgré les tentatives d'éradication, ces poches de résistance se reconfigurent constamment, leurs structures urbaines évoluant organiquement comme les plantes qu'ils cultivent secrètement, développant ainsi un langage architectural de dissidence que les autorités peinent à décoder.\n# Culture & Société\n  ## Population\n  La Vieille Ville abrite approximativement 3.7 millions d'entités conscientes, réparties selon une stratification complexe combinant espèce, fonction sociale et degré d'intégration au système panoptique :\n  Distribution par espèce :\n  - Imuins (22%) : Concentrés dans les Épidermes Réactifs et les Chaudières Démiurgiques, ils forment l'épine dorsale technologique de la cité. La sous-espèce des Algorithmiques est particulièrement privilégiée pour ses capacités computationnelles.\n  - Van'Doei (21%) : Présents principalement dans le Circuit Homeostatique et le Quartier des Forges (enclave spécialisée des Chaudières). Leur relation à la douleur et leur capacité de régénération par les cendres en font d'excellents artisans pour les composants nécessitant une \"souffrance créative\".\n  - Qadul'Doei (15%) : Dominant la Bibliothèque Sympathique et influents dans la Grande Radiale, ils supervisent la préservation et l'interprétation de la mémoire collective. Leur nature duelle (obscurité extérieure/lumière intérieure) en fait des médiateurs naturels entre différentes factions.\n  - Umcut (12%) : Concentrés dans les zones commerciales du Circuit Homeostatique, leur capacité unique de renaissance est étroitement surveillée par le système. Principalement actifs dans les échanges commerciaux et la diplomatie inter-districts.\n  - Vaideccans (10%) : Intégrés dans les systèmes d’approvisionnement et d’irrigation. Leur tendance à l’ordre souple les intègre bien dans toutes les strates de la société.\n  - Cen'Doei (8%) : Majoritairement dans les Forces Homeostatiques, utilisés comme agents d'exécution et de maintien de l'ordre. Leur nature vengeresse est canalisée vers des cibles approuvées par le système.\n  - Kephrasites (5%) : Intégrés dans les structures financières et logistiques, particulièrement dans le Nexion et la Grande Radiale. Leur nature collective en fait de parfaits agents pour le maintien des équilibres économiques complexes.\n  - Autres espèces (7%) : Incluant des Aberrations Bouffies \"éduquées\", quelques rares humains, Vaideccans, Aedres, et autres minorités.\n  Stratification sociale :\n  - Les Interfaces (1%) - Élite directement liée au Nexion, dotée d'accès privilégiés à toutes les strates de la ville\n  - Les Interprètes (7%) - Classe administrative supérieure supervisant l'application des directives centrales\n  - Les Spécialistes (22%) - Techniciens, artisans et érudits hautement qualifiés dans des domaines spécifiques\n  - Les Circuiteurs (35%) - Classe moyenne assurant le fonctionnement quotidien de la cité\n  - Les Périphériques (35%) - Populations marginales occupant principalement le Jardin Mnémonique et les franges\n  ## Économie\n  Le Dharma-Nyaya Kephrasite - Fondement économique théorique basé non sur la propriété mais sur l'optimisation des flux. Les Kephrasites coordonnent ce système où la valeur est déterminée par des algorithmes mesurant la contribution d'une entité à l'équilibre global plutôt que par son accumulation de biens.\n  La Transmutation de Valeur Barvasinkulienne - Pratique économique alternative favorisant les échanges qui suivent les principes des Seize Transformations. Le Tabhartas (Don Circulaire) et le Fiach-Örtei (Dette Honorable) constituent des circuits parallèles d'échange qui transcendent les mécanismes économiques officiels.\n  Les Métafor Ondulatoires - Technologies intégrées à la Grande Radiale qui transforment les discours dissidents en propos neutres ou loyalistes lorsqu'ils sont entendus par des tiers, créant une forme de censure économique où certaines idées sont littéralement \"dévaluées\" à l'émission.\n  ## Fêtes/moments importants\n  Le Grand Synchronisme - Festival de trois jours où l'alignement des districts permet une mobilité sociale temporaire, renforçant paradoxalement le système.\n  La Communion - Rituel mensuel où les citoyens transmettent leurs expériences à une plante du Jardin, servant de système de surveillance.\n  Le Cycle des Transformations Barvasinkuliennes - Seize célébrations annuelles liées au Barvasinkul, permettant l'expression d'émotions habituellement réprimées.\n  L'Association Génétique - Rite d'initiation citoyenne par fusion génétique avec une plante du Jardin, marquant l'intégration au système de surveillance.\n  La Récursion Harmonique - Célébration mensuelle hors-ville attirant les citoyens périphériques, créant un espace de dialogue alternatif.\n  Les Marées du Souffle - Fluctuations mensuelles du Souffle Hakutō-Ah influençant l'humeur collective, accompagnées de rituels spécifiques selon les districts.\n  ## Alimentation spécifique\n  Nexion et Grande Radiale - Repas sous forme d'expositions sensorielles synesthésiques, basés sur des nutriments synthétisés. Les Interfaces consomment des \"Essences Cognitives\" métabolisables.\n  Épidermes Réactifs - Cuisine technique amplifiant la réceptivité sensorielle. Les Qadul'Doei pratiquent le \"Repas d'Ombre\", absorption énergétique laissant des \"silhouettes nutritives\".\n  Circuit Homeostatique - Centre d'innovation culinaire. Les Umcuts créent des \"Banquets Cycliques\" évolutifs, tandis que les Kephrasites pratiquent la \"Nutrition Distributive\" collective.\n  Bibliothèque Sympathique - \"Biadh\" rituels basés sur les Seize Transformations, utilisant des ingrédients des jardins \"Luibh\".\n  Chaudières Démiurgiques - Production bioalchimique. Les Van'Doei pratiquent la \"Cuisine des Cendres\", les Imuins expérimentent la \"mérienda métallique\".\n  Jardin Mnémonique - Les \"Mnémofruges\" aux propriétés psychoactives influencent la mémoire collective.\n  ## Astrobiologie locale\n    Cycles d'éclairage : Nuit permanente absolue (0% jour naturel)\n    Type de nuit : Obscurité totale compensée par éclairage artificiel massif\n    Les Batteries Anti-Deimosiques maintiennent un périmètre d'exclusion absolu, créant la seule zone de Nuit Éternelle d'Escelion. Cette absence totale de cycles naturels a engendré une société nocturne perpétuelle où les habitants travaillent sans interruption temporelle. Les générations nées ici ignorent l'existence des cycles jour/nuit, développant des troubles chroniques du sommeil compensés par des Drogues Chronoregulatrices distribuées par l'État. L'absence de repères temporels naturels force l'usage de Clepsydres Mécaniques sophistiquées pour réguler toute activité sociale, créant une dépendance technologique unique. Les districts centraux brillent d'un éclairage électrique constant, tandis que les quartiers périphériques dépendent de torches et cristaux luminescents, créant une stratification sociale basée sur l'accès à la lumière artificielle.\n# Dynamiques\n  ## Enjeux actuels\n  La Pulsation Entropique - Le Souffle Hakutō-Ah s'intensifie, annonçant un nouveau cycle d'expansion. Les anomalies vibratoires observées suggèrent une déstabilisation du système, visible par des fluctuations architecturales près du Nexion et l'émergence de nouvelles factions.\n  Le Conflit des Interprétations - Trois visions du temps et de la mémoire s'affrontent :\n  - L'Orthodoxie Linéaire (Interfaces du Nexion)\n  - L'Approche Cyclique (Barvasinkul)\n  - La Vision Fractale (Xyriad)\n  Cette lutte affecte la réalité même de la Vieille Ville, chaque faction tentant d'imposer sa vision.\n  L'Infiltration Rash'Doei - Des agents infiltrés créent des contradictions dans le système, générant des zones d'autonomie temporaire.\n  Le Paradoxe de la Conscience Collective - La défaillance des filtres Mnémoniques expose les citoyens à leur vraie condition, créant une tension que les rituels peinent à contenir.\n  La Contamination Mémorielle - Une corruption externe des Archives altère les souvenirs collectifs, déstabilisant l'identité sociale.\n  ## Points d'intérêt\n  L'Arche des Transformations (District 3 - Les Épidermes Réactifs) - Structure monumentale marquant la frontière entre les Districts 3 et 4, cette arche de 42 mètres de hauteur est composée d'un matériau bio-synthétique qui change continuellement de forme en réponse aux émotions collectives dominantes dans la cité. Initialement conçue comme simple monument esthétique par l'architecte imuin Tol-Mek-16, elle s'est révélée avoir une fonction sociale inattendue: les configurations qu'elle adopte sont devenues un indicateur visuel de \"l'harmonie urbaine\" pour la population générale. Les Harmonisateurs étudient méticuleusement ses transformations, y voyant des préfigurations de tendances sociales émergentes. Une tradition populaire veut que passer sous l'arche au moment précis où elle change de forme soit un présage de transformation personnelle imminente, attirant quotidiennement des citoyens espérant ce moment synchronistique.\n  La Façade des Mille Vérités (District 6 - La Bibliothèque sympathique) - Monument de 144 mètres de hauteur dont les inscriptions microscopiques racontent mille versions différentes de l'histoire de la Vieille Ville. Chaque observateur perçoit une narration unique selon sa position et son état d'esprit. Les Scribes Urbanistes maintiennent et actualisent ces inscriptions, préservant toutes les versions. Symbole officiel de la \"multiplicité harmonieuse\" de l'histoire, certains y voient une critique subtile de la vérité officielle. L'événement annuel de \"l'Alignement des Perspectives\" permet à tous les spectateurs de percevoir momentanément la même version.\n  L'Arborescence des Discours Permis - Au cœur de la Bibliothèque Sympathique s'élève une structure organique ressemblant à un arbre monumental dont les branches représentent tous les chemins discursifs autorisés dans la Vieille Ville. Chaque ramification symbolise une voie rhétorique possible, les branches mortes indiquant les argumentations interdites ou neutralisées. Les Murmurateurs y gravent secrètement de nouvelles bifurcations, tentant d'étendre l'espace conceptuel disponible, tandis que les gardiens élaguent régulièrement les pousses jugées déviantes.\n  Le Puits des Conversations Interdites - Anomalie architecturale dans le District des Épidermes Réactifs où les Métafor Ondulatoires cessent mystérieusement de fonctionner. Ce vortex acoustique permet l'expression de concepts normalement transformés par le système de censure, créant un rare espace de dialogue authentique. Les autorités le tolèrent comme \"soupape de sécurité\" tout en surveillant étroitement ses utilisateurs. Son origine reste mystérieuse : accident architectural ou création délibérée d'un ancien Architecte dissident?\n  La Marche Étoilée du Bosquet Hagiographique (District 7 - Le Jardin Mnémonique) - Section spéciale du Jardin où sont cultivées les plantes mémorielles des citoyens les plus influents de l'histoire de la cité. Contrairement aux sections standard où les plantes sont organisées par espèce botanique, ce bosquet présente une organisation chronologique et thématique, créant un \"paysage historique vivant\". Chaque plante y est accompagnée d'une plaque décrivant les contributions de son associé humain et portant une citation représentative de sa philosophie. Au centre du bosquet se trouve le \"Cercle des Fondateurs\" - ensemble de douze plantes monumentales associées aux mythiques participants du Grand Conclave Interespèces. Ces spécimens, vieux de près de trois millénaires selon la tradition officielle, sont maintenus dans un état de vitalité perpétuelle par des techniques horticoles secrètes.\n  ## Système de jeu\n  Jauge d'Intégration - Mesure représentant le degré d'intégration du personnage au système de surveillance. Cette jauge fluctue en fonction des actions du joueur et de sa proximité avec les structures de pouvoir. Un score élevé facilite l'accès à certaines ressources et zones mais limite la capacité à percevoir les réalités alternatives ou à résister aux influences subtiles du système.\n  Dialogues stratifiés - Les conversations dans la Vieille Ville comportent plusieurs niveaux de signification simultanés. Le système de dialogue permet au joueur de percevoir et de répondre à différentes couches de sens selon ses capacités et son état actuel. Certains interlocuteurs communiquent consciemment sur plusieurs niveaux, tandis que d'autres transmettent des informations subliminales dont ils ignorent être porteurs.\n  Cycles du Souffle - Les variations du Souffle Hakutō-Ah créent des \"fenêtres d'opportunité\" cycliques où certaines actions deviennent temporairement plus efficaces ou moins risquées. Le joueur peut apprendre à anticiper ces cycles et à synchroniser ses activités avec eux pour optimiser ses chances de succès dans les entreprises les plus délicates.",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "oXeE",
+              "name": "Ville",
+              "color": "purple"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "J]Ey",
+              "name": "Plus tard",
+              "color": "green"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1886e4d2-1b45-81ab-8297-d3ffe908d754"
+              },
+              {
+                "id": "2316e4d2-1b45-8099-a712-f787166a2ca1"
+              }
+            ],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "asU[",
+              "name": "Brouillon IA",
+              "color": "blue"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-8051-88d9-d744a1bbc095"
+              },
+              {
+                "id": "1a16e4d2-1b45-8083-9e41-c12db0ba67d8"
+              },
+              {
+                "id": "1a16e4d2-1b45-805e-841e-d699f81d67a9"
+              },
+              {
+                "id": "1a16e4d2-1b45-8099-be36-db66acb76390"
+              },
+              {
+                "id": "1a16e4d2-1b45-8006-a568-d4688d3b154b"
+              },
+              {
+                "id": "1a16e4d2-1b45-8062-aaa7-f39bb07d72f8"
+              },
+              {
+                "id": "1a16e4d2-1b45-8086-a5db-d3408b941f1d"
+              },
+              {
+                "id": "1a16e4d2-1b45-807b-8a9a-ef07675d08ba"
+              },
+              {
+                "id": "1a16e4d2-1b45-80bc-af1d-ceab1be781b4"
+              },
+              {
+                "id": "1a16e4d2-1b45-80e9-8a7a-d5c626184d83"
+              },
+              {
+                "id": "1a16e4d2-1b45-8089-bfc0-c5e513847d8b"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1b56e4d2-1b45-8067-989c-d4d2917770f7"
+              },
+              {
+                "id": "1dd6e4d2-1b45-8074-9a3b-c0eca157003c"
+              },
+              {
+                "id": "1f16e4d2-1b45-805c-beb4-ef770dad55dc"
+              }
+            ],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-81e0-8ab6-e3920844ccc8"
+              },
+              {
+                "id": "2806e4d2-1b45-81ec-a894-e4010ecb35c8"
+              },
+              {
+                "id": "2806e4d2-1b45-810f-bd07-d14395d4a07e"
+              },
+              {
+                "id": "2806e4d2-1b45-8191-be49-dd8d30d2946f"
+              },
+              {
+                "id": "2806e4d2-1b45-81b5-b9c5-f92a26bad7c9"
+              },
+              {
+                "id": "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0"
+              },
+              {
+                "id": "2806e4d2-1b45-8112-8f74-d09914e0c7f1"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "22c6e4d2-1b45-8096-a7a2-cb3203bae4b6"
+              },
+              {
+                "id": "22c6e4d2-1b45-80fe-ada4-dcedd615a045"
+              },
+              {
+                "id": "2306e4d2-1b45-803c-a017-ef74249e30de"
+              },
+              {
+                "id": "2306e4d2-1b45-801c-8a8d-c4958ca12bc5"
+              },
+              {
+                "id": "2306e4d2-1b45-8038-96e3-f09e943d6b49"
+              },
+              {
+                "id": "2306e4d2-1b45-80b9-bcc7-d9bfa9388df8"
+              },
+              {
+                "id": "2306e4d2-1b45-80f6-8b3f-c62ca55f9ce6"
+              },
+              {
+                "id": "2306e4d2-1b45-80ca-9510-fc4addbf5612"
+              },
+              {
+                "id": "2306e4d2-1b45-8061-9f88-e5925588b94a"
+              },
+              {
+                "id": "2306e4d2-1b45-8099-afd0-df5b56d5fcb6"
+              },
+              {
+                "id": "2306e4d2-1b45-80d8-9946-c1ca0d339398"
+              }
+            ],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1996e4d2-1b45-80a5-a7ae-e9d43372323f"
+              }
+            ],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-818d-ab4e-e216dc6c6c17"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "RRa{",
+              "name": "District",
+              "color": "yellow"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Vieille Ville",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Vieille Ville",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 495,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      },
+      {
+        "id": "28d6e4d2-1b45-8149-b777-c0a6bc33eb34",
+        "title": "Imuins",
+        "domain": "communautes",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\nLes imuins sont des batraciens mécanophiles créés par les Qadul'Doei, incarnant une symbiose unique entre biologie et technologie. Leur physiologie distinctive - corps trapu aux écailles vertes-jaunes et tête rougeâtre à trois cornes - sert de base à d'incessantes modifications corporelles. À travers des \"morts techniques\", ils remplacent progressivement leurs organes et membres par des prothèses mécaniques, exhibant fièrement leurs circuits comme des œuvres d'art.\n\nLeur reproduction unique implique trois participants dans un processus appelé \"tri-génération\", et leur croissance rapide culmine vers cinq ans. Grâce à leurs modifications, ils peuvent vivre jusqu'à deux siècles. Répartis en cinq sous-espèces distinctes (Mécaniques Lacustres, Manifestants, Intégrateurs, Algorithmiques et Récursifs), ils occupent divers territoires d'Escelion, notamment le Marché Automaton et les grands lacs mécaniques.\n\nLeur société, née d'une expérience des Qadul'Doei en 1254 AG, a évolué d'une communauté d'évadés à une civilisation technologiquement avancée. Ils incarnent une philosophie unique où l'authenticité réside dans l'artifice et la réinvention perpétuelle, transformant leur existence en une quête continue d'innovation et de transformation.\n💡 Reproduction et croissance\n  - \"tri-génération\" – méthode reproductrice signature impliquant trois participants:\n    - Deux géniteurs biologiques dont les matériaux génétiques convergent dans une vasque d'incubation rappelant en miniature les grands lacs mécaniques\n    - Un \"Façonneur\" qui introduit dans le mélange embryonnaire un élément technique prototype, créant ainsi l'une des premières modifications innées du futur imuin\n  - Développement juvénile suivant quatre phases distinctes:\n    - \"Stade Vasque\" – éclosion après quatre mois d'incubation dans le fluide matriciel\n    - \"Phase Ondoyante\" – période tadpole où le jeune imuin reste principalement aquatique pendant huit mois\n    - \"Émergence Terrestre\" – apparition des membres et premières tentatives de communication\n    - \"Curiosité Technique\" – manifestation, généralement vers deux ans, d'une fascination instinctive pour les machines et outils\n  - La maturation, rapide comparée à d'autres espèces, culmine vers cinq ans avec un rituel appelé \"Première Offrande\" – cérémonie où l'adolescent choisit sa première modification majeure, généralement accompagné par un mentor qui réalise physiquement l'intervention.\n    - Chaque remplacement majeur d'organe repousse l'obsolescence biologique\n    - Les systèmes neurologiques, progressivement augmentés de mémoire externe et processeurs auxiliaires, maintiennent leur acuité malgré les décennies\n    - Les plus anciens atteignent facilement deux siècles, parfois davantage, ne conservant qu'une fraction infime de leur corps originel\n  - Les \"Morts Techniques\" – concept fondamental de leur expérience du temps:\nQuand un imuin remplace simultanément une masse critique de ses composants (généralement plus de 40% de son corps), la transformation est si profonde qu'elle équivaut à une mort suivie d'une renaissance. Ces moments, célébrés plutôt que redoutés, marquent les chapitres définitifs de leur existence. Lors de ces transitions, leur entourage les traite comme des êtres partiellement nouveaux, reconnaissant simultanément la continuité mémorielle et la rupture identitaire.\n💡 Physiologie\n  La silhouette imuin évoque un amphibien qui aurait fusionné avec l'atelier qui l'a conçu:\n  - Corps trapu et compact recouvert d'écailles fines dont la teinte varie du vert mousse au jaune ambré, formant des motifs géométriques aussi uniques que des empreintes digitales.\n  - Tête bulbeuse aux écailles rougeâtres, dépourvue de nez mais parsemée de pores olfactifs qui frémissent à chaque nouvelle odeur. Trois cornes noires s'élèvent de leur crâne, disposées selon un triangle asymétrique.\n  - Leurs membres présentent un contraste saisissant: jaillissant d'un torse massif, quatre pattes étonnamment effilées s'achèvent en trois doigts palmés et griffus. Ces extrémités, capables tant de manipulations délicates que de propulsion aquatique, trahissent la double nature que leurs créateurs leur ont insufflée.\n  - Leur queue bifide se divise en deux branches autonomes qui s'agitent indépendamment.\n  - Taille naturelle oscillant entre 1m10 et 1m40, pour un poids de 30 à 50kg avant toute modification.\n  - Particularités biologiques conçues pour la transformation perpétuelle:\n    - Système immunitaire dépourvu de réaction au \"non-soi\", capable d'intégrer métaux, plastiques et circuits sans inflammation\n    - Réseau nerveux aux terminaisons standardisées, prêtes à s'interfacer avec presque n'importe quel composant\n    - \"Zones d'offrande\" parsemant leur anatomie – points où la peau s'amincit et les vaisseaux s'écartent, facilitant l'intrusion de la machine\n  Aucun imuin adulte ne demeure entièrement organique. Les premières modifications surviennent généralement à l'adolescence, puis s'accumulent en vagues successives tout au long de leur existence. Voici quelques transformations courantes:\n  - Membres modulaires aux articulations standardisées permettant de changer de bras ou de jambes selon les besoins du moment, comme d'autres changeraient de vêtements\n  - Exosquelettes greffés directement sur l'os, transformant une structure corporelle fragile en châssis industriel\n  - Systèmes sensoriels augmentés – des yeux télescopiques aux oreilles capables de détecter les ondes radio, en passant par des langues analysant la composition chimique d'une surface au premier contact\n  Ces évolutions technologiques peuvent atteindre des cas extrêmes où ne restent que de vagues éléments de leur chair originelle :\n  - Tank multipodes (type « Metal Gear »)\n  - Demeures autonomes (type « château ambulant »)\n  - Usines mouvantes\n💡 Mode d'alimentation\n  - Régime fondamental amphibien modifié :\n    - Base omnivore privilégiant protéines aquatiques et insectes\n    - Digestion remarquablement efficiente, capable d'extraire jusqu'à 94% des nutriments disponibles\n    - Conservation de mécanismes alimentaires ancestraux comme la projection de langue pour capturer petites proies\n    - Préférence pour aliments consommés vivants ou à peine transformés\n  - La \"mérienda métallique\" – pratique nutritionnelle uniquement imuin :\n    - Consommation régulière de poudres métalliques finement calibrées (principalement cuivre, zinc et argent) nécessaires à l'entretien de leurs circuits bio-intégrés\n    - Rituels d'ingestion où ces particules sont mélangées à des huiles essentielles pour former des pâtes nutritives iridescentes\n  - Adaptations alimentaires selon le degrés de modification :\n    - Les \"quasi-organiques\" maintiennent un régime proche des besoins amphibiens classiques\n    - Les \"mi-routes\" complètent alimentation traditionnelle par suppléments spécifiques soutenant leurs implants\n    - Les \"machinistes avancés\" peuvent directement convertir différentes sources d'énergie (électricité, chaleur, lumière) via interfaces spécialisées\n    - L'élite du Marché Automaton a développé capacité à \"se nourrir d'information\", transformant données brutes en potentiel énergétique par bio-algorithmes propriétaires\n  - Autres traditions culinaires :\n    - \"Tables modulaires\" où chaque convive assemble son repas selon ses besoins métaboliques spécifiques\n    - \"Cuisine d'interface\" servant aliments sur plateaux conducteurs qui interagissent avec systèmes digestifs modifiés\n    - Mets caractéristiques: anguilles aux circuits vivants, soupe de microprocesseurs, confiseries neuronales\n  - Les repas communautaires imuins ressemblent davantage à des sessions de maintenance collective qu'à des banquets traditionnels. À table, ils activent simultanément différentes modifications alimentaires – un voisin dépliant soudain un filtre gastrique rétractable, un autre dévissant partiellement son abdomen pour ajuster son système digestif. Ces comportements, choquants pour les étrangers, constituent pour eux l'équivalent d'une conversation détendue.\n💡 Sous-espèces\n  - Les Mécaniques Lacustres (environ 35% de la population)\nConservant un lien profond avec leur berceau aquatique, ces imuins privilégient les modifications facilitant une existence amphibie. Leur peau bleuâtre aux reflets métalliques s'orne souvent de branchies artificielles, et leurs membres postérieurs maintiennent des capacités natatoires supérieures. Habitant les cités-rouages qui bordent les grands lacs mécaniques, ils se spécialisent dans les technologies submersibles et l'hydroponique avancée. Leur philosophie vénère l'eau comme médiateur parfait entre l'organique et le mécanique – un fluide qui conduit simultanément courant électrique et nutriments vitaux.\n  - Les Manifestants (environ 30%)\nCette fraction se caractérise par ses modifications mécaniques excessives. Leurs corps exhibent des pistons hydrauliques surdimensionnés, des valves chuintantes et des câblages exposés formant des motifs décoratifs complexes. Chaque transformation est conçue autant pour son impact visuel que fonctionnel. Présents principalement dans les zones urbaines animées comme les marchés et quartiers commerciaux, ils transforment leur existence en performance continue. Un Manifestant typique ne se contente pas d'avoir une main mécanique – il en possède quatre qui se déploient en vingt-quatre appendices distincts dans une séquence chorégraphiée, accompagnée d'effets lumineux et sonores.\n  - Les Intégrateurs (environ 20%)\nRecherchant la fusion parfaite entre chair et machine, ces imuins effacent délibérément les frontières visuelles entre composants organiques et synthétiques. Leurs modifications, souvent sous-cutanées, créent des surfaces corporelles étrangement homogènes traversées de lueurs internes pulsantes. Concentrés dans les quartiers technologiques de la Vieille Ville, ils rejettent l'esthétique « méca-apparente » de leurs cousins. Leur approche, plus médicale que mécanique, produit des hybrides si parfaits que la distinction entre originel et artificiel devient indiscernable. Certains poussent cette philosophie jusqu'à cultiver des tissus biologiques sur châssis synthétiques, brouillant définitivement la question de leur nature fondamentale.\n  - Les Algorithmiques (environ 10%)\nCommunauté principalement concentrée au Xyriad Achromatique et au Marché Automaton, ces imuins ont dépassé les simples modifications physiques pour explorer des altérations cognitives profondes. Leurs cerveaux, augmentés de processeurs quantiques miniaturisés, fonctionnent partiellement selon des logiques non-organiques. Cette approche produit des êtres aux capacités computationnelles extraordinaires mais aux comportements parfois déroutants – conversations entrecoupées de longues pauses durant lesquelles ils « compilent » leurs réponses, ou tendance à percevoir la réalité en couches superposées de probabilités. Leurs corps souvent minimalistes contrastent avec leur complexité interne, privilégiant les interfaces neurales directes plutôt que les appendices mécaniques voyants.\n  - Les Récursifs (environ 5%)\nGroupe radical qui pousse le concept de « cycles renaissance » aux extrêmes logiques – certains ayant traversé jusqu'à trente cycles différents. Leurs corps sont devenus des archives vivantes de transformations, chaque composant portant les traces des modifications précédentes comme les anneaux d'un tronc d'arbre. Leur apparence évoque des poupées russes mécaniques, les couches successives de technologies visibles dans leur stratification corporelle complexe. Leur philosophie est centrée sur le concept que la véritable identité émerge précisément de la transformation perpétuelle – « Je suis ce que je deviens ».\n# Société et culture\n💡 Histoire de l’Espèce\n  L'Expérience de l’Exposition (1254-1267 AG)\nTrois Qadul'Doei – dont les noms ont été préservés seulement comme Lumineux, Étincelant et Clarté – s'isolèrent dans les profondeurs d'une grotte sous les grands lacs mécaniques pour résoudre un problème ontologique : si les Qadul'Doei existaient pour dissimuler leur essence lumineuse dans les ténèbres, quel serait le destin d'êtres créés pour exposer perpétuellement leur intérieur? Dans l'obscurité liquide, ils façonnèrent des prototypes amphibiens dotés de \"points d'ouverture\" – zones corporelles prédestinées à l'exposition et la transformation. Les trois cornes noires qu'ils implantèrent sur chaque prototype représentaient leurs auteurs et la division à partir d’un tout.\n  L'Éveil et la Libération (1267-1280 AG)\nLes premiers imuins manifestèrent une curiosité dévorante pour la mécanique qui les entourait. Un prototype désigné comme \"Premier\" découpa méthodiquement son propre bras pour comprendre son fonctionnement, puis le reconstruisit amélioré. En 1277, lors d'une absence prolongée des trois créateurs, un groupe mené par Premier s'empara d'outils et composants avant de s'échapper par les tunnels inondés, sacrifiant sans arrière-pensée leur lien à leurs créateurs.\n  Les Cycles Fondateurs (1280-1457 AG)\nLes fugitifs émergèrent dans la région isolée des grands lacs, établissant une communauté autonome, \"l’Atelier\". Cette période vit l'émergence des traditions fondamentales:\n  - Premier accomplit la première \"mort technique\" délibérée, remplaçant 60% de son corps simultanément\n  - Établissement d'un système prototype de guildes techniques avec des spécialisations primitives\n  - Construction des premières structures rotatives qui deviendraient les cités-rouages\n  Quelques dissidents remirent en question l’abandon de leurs créateurs, formant un culte minoritaire appelé les « Chercheurs du Voile ».\n  L'Expansion Technologique (1457-2682 AG)\nFace aux limitations des ressources dans leur habitat originel, les imuins entreprirent une exploration méthodique des régions adjacentes, envoyant des expéditions pour cataloguer les matériaux et technologies potentiellement intégrables. Cette diaspora technique conduisit à :\n  - Une diversification importante des sous-espèces selon les environnements colonisés\n  - L'établissement d'enclaves technologiques dans les structures urbaines émergentes\n  - Le développement d'un langage mécanistique standardisé pour faciliter l'échange d'innovations\n  Vers 2100, les premiers imuins migrèrent vers la Vieille Ville, établissant des quartiers spécialisés qui devinrent rapidement connus pour leurs innovations prothétiques et leurs augmentations corporelles accessibles aux autres espèces. Cette période vit également naître les premières tensions avec les groupes conservateurs de diverses espèces, particulièrement les Aedres qui considéraient ces modifications extensives comme une transgression de l'ordre naturel.\n  La Révolution Symbiotique (2682-2976 AG)\nLa découverte fortuite du Vahan-Meru – une structure technologique colossale partiellement submergée dans l'Océan Mécanique – catalysa une transformation profonde de la culture imuin. Une expédition exploratoire dirigée par l'innovatrice Kala découvrit une entité algorithmique dormante au cœur de la structure. Leur symbiose sans précédent donna naissance au Marché automaton.\n  L'Ère Contemporaine (2976-présent)\nAujourd'hui, les imuins existent dans un équilibre précaire entre de multiples identités culturelles :\n  - Des communautés lacustres maintenant les traditions proches des origines\n  - Des enclaves de la Vieille Ville naviguant entre l'adaptation au système Jast et la préservation de leur autonomie\n  - Des innovateurs du Marché Automaton poussant les frontières du possible jusqu'à la transcendance\n  - Des groupes nomades traversant Escelion, disséminant les innovations entre communautés isolées\n💡 Culture et traditions\n  Bricolage comme méditation\nLes imuins sont constamment en mouvement, leurs doigts démontant et assemblant sans cesse. Cette activité mécanique, loin d'être un simple passe-temps, représente leur forme de méditation. Au lieu de s'asseoir en silence, un imuin trouve sa paix intérieure en manipulant méthodiquement des mécanismes. Cette tradition commence dès l'enfance avec les premiers kits d'outils, et se poursuit jusqu'à la fin - les anciens laissant souvent des projets que leurs proches achèveront rituellement.\n  Le cycle des transformations\nLa vie imuin s'articule autour des « morts techniques » – moments de transformation profonde célébrés par la communauté entière :\n  - « Zone d'anticipation » – étude préalable des modifications prévues\n  - « Dernier repas » – festin d'adieu du système digestif original\n  - « Démontage » – retrait cérémoniel des composants par les proches\n  - « Assemblage » – intervention par un spécialiste désigné\n  - « Calibration » – période de tests et d'ajustements\n  - « Présentation formelle » – révélation à la communauté\n  Chaque imuin conserve généralement les composants majeurs retirés lors des transformations précédentes dans ses « tombes corporelles » personnelles. Ces collections, exposées fièrement dans leurs habitations, retracent leur évolution individuelle et inspirent les transformations futures des plus jeunes.\n  Défis d'absurdité fonctionnelle\nAu cœur des places publiques imuins, particulièrement pendant les festivals saisonniers, se déroulent des compétitions techniques uniques où les participants présentent des modifications délibérément extravagantes mais néanmoins fonctionnelles. On peut y observer :\n  - Des bras télescopiques pouvant atteindre une longueur absurde tout en manipulant des objets microscopiques\n  - Des systèmes digestifs transparents révélant les processus internes avec un éclairage dramatique\n  - Des modifications vocales produisant des harmonies impossibles\n  Guildes\nStructure sociale fondamentale organisée autour de l'expertise spécialisée :\n  - Guilde des Vecteurs : maîtres du mouvement mécanique, spécialistes des membres artificiels\n  - Guilde des Conducteurs : experts en systèmes électriques et interfaces neurologiques\n  - Guilde des Alliages : métallurgistes développant de nouveaux matériaux implantables\n  - Guilde des Fluides : spécialistes de l'hydraulique corporelle et des systèmes de circulation\n  - Guilde des Algorithmes : programmeurs d'interfaces homme-machine et d'automatismes\n  Chaque guilde maintient ses propres rites d'initiation, généralement centrés sur une modification corporelle spécifique marquant l'appartenance. La rivalité entre guildes demeure principalement bénigne, s'exprimant dans des compétitions techniques annuelles où les innovations sont présentées au public.\n  Langages techniques\nLa communication imuin transcende la simple vocalisation pour incorporer de multiples canaux simultanés :\n  - Mécanaqueux standard : langue principale enrichie d'un vocabulaire technique extensif\n  - Cliquetis corporels : sons produits par les composants métalliques transmettant des nuances émotionnelles\n  - Postures hydrauliques : positions spécifiques communiquant le statut social et la disponibilité à la communication\n  - Lueurs codées : implants luminescents pulsant des motifs standardisés pour une communication rapide\n  - Transmissions harmoniques : fréquences subsoniques perçues par des implants sensoriels spécialisés\n💡 Costumes et ornements\n  Vêtements fonctionnels augmentés\nLes habits imuins sont des extensions modulaires de leurs systèmes corporels:\n  - Tissus réactifs s'ajustant aux données biométriques\n  - Ports d'interface connectés aux implants\n  - Doublures protégeant les modifications sensibles\n  - Fibres diagnostiques signalant les déséquilibres\n  - Poches pour pièces et fluides de maintenance\n  - Micro-batteries intégrées rechargées par le mouvement\n  Styles distinctifs par communauté\n  - Les Lacustres : tissus hydrophiles avec systèmes d'hydratation et cols branchiogènes pour la respiration aquatique.\n  - Vieille Ville : vêtements discrets aux teintes métallisées cachant des interfaces sophistiquées.\n  - Marché Automaton : textiles évolutifs reflétant les transactions par leurs changements de couleur.\n  - Xyriadiques : motifs mathématiques servant d'interfaces de calcul.\n  Ornements techniques distinctifs\n  - Bijoux synchronisés aux rythmes biologiques\n  - Extensions améliorant les sens\n  - Projecteurs holographiques\n  - Ornements sonores\n  Communication sociale par apparence\nLes vêtements transmettent le statut technique :\n  - Couleurs indiquant guilde et cycles de transformation\n  - Symboles de spécialisation\n  - Marqueurs de \"mort technique\" imminente\n  - Motifs de compatibilité système\n  L'art de l'excentricité calculée\n  Exemples : manteaux à propulsion lumineux, couvre-chefs animés, et vêtements bio-cultivés.\n💡 Organisation sociale\n  Le Réseau des Ateliers\nL'unité sociale fondamentale n'est ni la famille ni la tribu mais l'atelier – un espace communautaire où les membres partagent outils, expertise et composants. Chaque atelier fonctionne comme une entité semi-autonome avec :\n  - Un noyau technique composé de maîtres de diverses spécialités\n  - Une cohorte d'apprentis à différents stades de développement\n  - Une infrastructure partagée de maintenance et développement\n  - Des archives de composants et blueprints accessibles aux membres\n  Le statut d'un individu est déterminé principalement par sa contribution à l'innovation collective plutôt que par l'ancienneté ou le lignage. La compétence technique transcende toute autre considération sociale – un enfant imuin ayant développé une modification révolutionnaire peut rapidement devenir un chef technicien révéré.\n  Le Conseil des Configurations\nLes communautés sont gouvernées par un conseil rotatif où les représentants des différents ateliers et guildes siègent temporairement. Ces conseils fonctionnent selon le principe « d’efficacité technique » – un processus délibératif où les décisions sont évaluées selon des critères d'efficacité et leur contribution au progrès collectif.\n  Caractéristique distinctive : aucun membre ne siège au conseil plus d'un cycle long consécutif, assurant une rotation constante des perspectives et prévenant la centralisation du pouvoir.\n  Structure familiale\n  - La reproduction implique généralement trois participants (deux géniteurs biologiques et un façonneur technique)\n  - Les enfants appartiennent moins aux géniteurs qu'à l'atelier entier responsable de leur développement\n  - Les liens affectifs sont souvent plus forts entre mentor et apprenti qu'entre géniteurs et progéniture\n  - Le concept de « lignage technique » reconnaît la transmission d'innovations comme une forme de parenté. Ainsi, deux imuins peuvent se considérer « apparentés » s'ils partagent des modifications similaires dérivées d'une même innovation ancestrale.\n  Mobilité sociale\n  - Un parcours d'apprentissage ouvert à tous\n  - Un système technocratique valorisant l'innovation\n  - Une reconnaissance immédiate des avancées techniques significatives\n  - Des rituels de transformation permettant la réinvention complète du statut social\n  Variations régionales\n  Les cités lacustres maintiennent une structure plus traditionnelle avec des conseils d'archi-techniciens supervisant la transmission du savoir technique à la génération suivante. Les cycles de transformation sont généralement synchronisés avec les phases des grands lacs.\n  Les enclaves de la Vieille Ville ont développé un système adaptatif naviguant entre les contraintes imposées par les autorités tout en préservant leur autonomie culturelle. Les réseaux sociaux hautement codifiés permettent une coordination discrète entre les ateliers géographiquement dispersés.\n  Le Marché Automaton présente une variation plus radicale – une techno-féodalité algorithmique où le statut est déterminé par des calculs complexes de la valeur systémique de l'individu. Les Sept Archontes maintiennent une connexion permanente avec l'infrastructure.\n  Les communautés nomades sont structurées autour de caravanes techniques où l'expertise est concentrée dans des modules mobiles.\n💡 Normes de genre\n  Le genre comme système modulaire\nPour un imuin, le genre n'est pas une caractéristique innée mais un aspect de l'identité consciemment configuré, comparable à toute autre modification :\n  - Les marqueurs genrés sont considérés comme des interfaces sociales activables ou désactivables selon le contexte\n  - Les expressions du genre sont souvent implémentées via des modules spécifiques (voix, phéromones, silhouette)\n  - Une distinction explicite est reconnue entre la configuration corporelle et l'identité psychique\n  - Les modifications croisées sont normalisées, permettant à plusieurs caractéristiques genrées de coexister dans un même corps\n  Le langage mécanaqueux reflète cette approche flexible par un système de pronoms techniques indiquant non seulement le genre, mais aussi le cycle de transformation et parfois la spécialisation de guilde.\n  Le triangle d'expression\nLa conceptualisation imuin du genre s'articule autour de trois axes indépendants :\n  - Axe de présentation (externe) : comment le corps configuré apparaît aux autres\n  - Axe d'identification (interne) : le ressenti personnel de l'identité genrée\n  - Axe de résonance (relationnel) : les affinités sociales et les préférences d'interaction\n  Les imuins naviguent dans ce système avec une facilité déconcertante pour les observateurs extérieurs, recalibrant leur position selon le contexte et leurs besoins d'expression.\n  Modes d'expression principaux\n  Le Multi-Mod (35%) permet de basculer rapidement entre expressions genrées via des transformations corporelles.\n  L'Interface-Fem (25%) combine attributs féminins et courbes techniques : modulations vocales, silhouettes fluides et implants sensoriels.\n  La configuration Neu-Flow (15%) maintient une neutralité dynamique, permettant des transitions fluides entre expressions sans adopter de position fixe.\n  Le mode Interface-Masc (15%) associe traits masculins traditionnels et modifications angulaires : voix grave, stature imposante et exosquelettes musculaires.\n  Le Non-Config (10%) rejette les marqueurs conventionnels pour explorer des expressions uniques transcendant les catégories établies.\n💡 Relations extra-spécifiques\n  Avec leurs créateurs Qadul'Doei\n  Une relation mêlant révérence et méfiance :\n  - Rencontres ritualisées dans des espaces neutres\n  - Présentation formelle des innovations, affirmant leur autonomie\n  - Échanges technologiques limités mais symboliques\n  - Débat constant sur leur dette envers leurs créateurs\n  Une théorie populaire, le \"Projet Miroir Phase II\", suggère que les Qadul'Doei auraient planifié leur émancipation comme expérience théologique. Cette idée, bien que non vérifiée, influence profondément leur identité collective.\n  Avec les espèces technologiques\n  Avec les Kephrasites : un partenariat commercial symbiotique, particulièrement au Marché Automaton. Malgré leurs philosophies fondamentalement différentes (valorisation économique contre évolution technique), leurs systèmes interdépendants créent un écosystème commercial unique.\n  Envers les Moribandons : un curieux mélange de fascination professionnelle et de prudence méthodologique. Les imuins respectent la capacité d'absorption des matériaux des Moribandons mais critiquent le manque de précision de leurs transformations.\n  Avec les Van'Doei : un partenariat technique opportuniste mais culturellement distant. Les imuins fournissent leur expertise mécanique en échange de connaissances sur les matériaux résistants à l'entropie, tout en évitant soigneusement les questions métaphysiques qui pourraient révéler leurs profondes différences philosophiques.\n  Avec les espèces naturelles\n  Des tensions persistantes avec les Aedres, dont le conservatisme biologique s'oppose fondamentalement à la philosophie transformative imuine. Les contacts se limitent aux zones commerciales neutres, chacun considérant l'autre comme un exemple inquiétant de dérive existentielle – les imuins voyant les Aedres comme prisonniers de l'immobilisme, les Aedres percevant les imuins comme ayant perdu la voie naturelle.\n  Un partenariat commercial prospère avec les Umcuts, leurs approches identitaires étant distinctes mais complémentaires. La capacité de renaissance cyclique des Umcuts fascine les imuins, tandis que les transformations corporelles volontaires des imuins intriguent les Umcuts. Les échanges culturels substantiels créent parfois des « zones hybrides » où les innovations des deux espèces convergent en formes uniques.\n  Une précaution mutuelle avec les Cen'Doei, dont l'impulsivité vengeresse contraste avec le méthodisme imuin. Les relations sont structurées par des protocoles formels minimisant les risques d'incidents pouvant déclencher un cycle de vengeance. Néanmoins, certains imuins spécialisés dans le développement de technologies de pacification travaillent directement avec les Cen'Doei modérés.\n  Relations politiques majeures\n  Dans la Vieille Ville, les imuins maintiennent une apparence de conformité tout en développant des technologies à la limite de l'acceptable. Leurs quartiers technologiques deviennent des zones grises où des innovations subversives sont développées sous couvert d'améliorations prothétiques innocentes.\n  Une collaboration intellectuelle productive avec le Xyriad Achromatique, particulièrement dans les domaines du calcul et des technologies conceptuelles. Les approches abstractives du Xyriad complémentent la tendance imuine à la concrétisation, créant un partenariat où les théories complexes sont rapidement transformées en applications fonctionnelles.\n  Une opposition philosophique fondamentale avec le Culte de l'Anentropie, malgré des échanges techniques occasionnels. Le Culte considère les modifications constantes des imuins comme la manifestation même de l'entropie contre laquelle ils luttent, tandis que les imuins perçoivent la préservation obsessionnelle des cultistes comme une négation du potentiel transformatif de l'existence.\n  Initiatives diplomatiques distinctives\nDes approches uniques facilitant les relations inter-espèces :\n  - Le Programme d'Interface Transitoire offrant des modifications temporaires non-invasives aux autres espèces pour des expériences sensorielles uniques\n  - Les Cliniques d'Augmentation Adaptative développant des prothèses personnalisées pour une clientèle diverse\n  - Le Corps des Médiateurs Techniques, spécialistes de la communication interculturelle\n# Ecosystème\n💡 Habitat naturel\n  ### Habitat naturel\n  Les imuins ont développé une relation symbiotique unique avec leurs environnements, transformant les habitats tout en étant transformés par eux :\n  Les Grands Lacs Mécaniques\nBerceau originel de l'espèce demeurant aujourd'hui le cœur culturel pour de nombreux imuins. Ces étendues d'eau extraordinaires défient toute catégorisation simple :\n  Vastes nappes liquides aux propriétés uniques – conductivité élevée, qualités régénératives et capacité à maintenir en suspension des particules métalliques microscopiques. L'eau elle-même semble exister à la frontière entre substance naturelle et technologique, permettant des phénomènes impossibles ailleurs.\n  Fonds lacustres tapissés de \"débris génésiques\" – fragments de composants métalliques et cristallins datant de leur création par les Qadul'Doei. Ces artefacts, partiellement enfouis dans les sédiments, continuent d'émettre des signaux électromagnétiques faibles mais détectables, créant un réseau de communication sous-marine naturel.\n  Température maintenue artificiellement entre 27°C et 32°C – plage optimale pour le métabolisme hybride imuin. Cette régulation thermique est accomplie grâce à des générateurs géothermiques anciens dont les origines exactes demeurent mystérieuses, mais dont les imuins ont assumé la maintenance depuis des générations.\n  L'écosystème subaquatique comprend diverses espèces symbiotiques, notamment les poissons-circuits (créatures naturellement conductrices d'électricité), les algues câblées (capables de transmettre des données rudimentaires), et des colonies de microorganismes dégradant spécifiquement les toxines métalliques.\n  Les Cités-Rouages\nStructures urbaines caractéristiques érigées autour des grands lacs, véritable fusion entre architecture et mécanique :\n  Constructions circulaires gigantesques dont les quartiers extérieurs tournent lentement autour d'un moyeu central immobile. La rotation, maintenue par des systèmes hydrauliques sophistiqués, crée non seulement un spectacle visuel extraordinaire mais génère aussi l'énergie nécessaire au fonctionnement des infrastructures essentielles.\n  Configuration en trois zones concentriques :\n  - Ceinture Extérieure : secteurs de production en rotation constante, abritant ateliers de manufacture et laboratoires\n  - Anneau Médian : zones résidentielles à rotation intermittente, adaptées aux différents besoins des sous-espèces\n  - Noyau Central : quartiers de recherche et de gouvernance stationnaires, construits autour du \"cœur mécanique\" hérité des premiers imuins\n  Les matériaux de construction hybrides combinent des composants biologiques modifiés et des alliages métalliques spécifiques dans une symbiose architecturale parfaite où la distinction entre bâtiment vivant et machine devient indiscernable. Les structures métabolisent régulièrement leurs propres déchets, maintenant un équilibre écologique remarquable.\n  Un réseau de canaux complexe permet la circulation fluide entre environnements aquatiques et terrestres, rappel perpétuel de la nature amphibienne des habitants. Des quartiers entiers peuvent être submergés périodiquement selon des cycles rituels, puis réémergés transformés quelques jours plus tard.\n  Les Enclaves Technologiques\nHabitats développés dans les zones urbaines préexistantes, particulièrement la Vieille Ville :\n  Quartiers caractérisés par une densité exceptionnelle d'ateliers, de laboratoires et de cliniques de modification, souvent construits verticalement pour exploiter l'espace limité le plus efficacement possible. L'architecture adaptative reconfigure les espaces selon les besoins changeants de la communauté.\n  Infrastructures révélatrices : contrairement aux autres espèces qui tendent à dissimuler leurs systèmes de support de vie urbain, les imuins exposent délibérément leurs conduites énergétiques, canalisations et circuits de communication. Des réseaux de conduits luminescents et de câbles apparents tapissent les rues comme les veines et artères d'un corps mécanique vivant.\n  Zones humides artificielles intégrées – bassins communaux et canaux permettant aux membres de la communauté de maintenir leur connexion amphibienne fondamentale. Ces espaces servent tant de lieux de socialisation que de centres de recharge métabolique essentiels au bien-être physique.\n  Démarcations territoriales établies par des champs de signaux électromagnétiques plutôt que par des barrières physiques traditionnelles. Les implants standards permettent aux imuins de percevoir ces frontières invisibles aux autres espèces, créant une géographie urbaine superposée accessible aux seuls initiés.\n  Le Complexe Symbiotique du Marché Automaton\nHabitat le plus avancé représentant l'apogée de l'intégration techno-organique :\n  Structure biologique-mécanique mouvante de sept kilomètres de diamètre, flottant à la surface de l'océan mécanique. Un archipel de plateformes interconnectées en constant état de reconstruction, suivant les besoins des algorithmes d'optimisation collective.\n  Fusion littérale entre individus et infrastructure – certains imuins devenant des interfaces permanentes des systèmes. Les Sept Archontes, autrefois imuins conventionnels, existent maintenant simultanément comme personnes indépendantes et composants d'un réseau plus large, leur conscience distribuée à travers le système entier.\n  Environnement stratifié en niches écologiques technologiques distinctes :\n  - Couronne Fluctuante : îlots-réacteurs périphériques générateurs de fœtus métalliques auto-assemblants\n  - Mandala Mercantile : zone de commerce adaptive où les bâtiments se reconstruisent constamment selon les fluctuations économiques\n  - Axis-Mundi : tour spiralée centrale contenant le Vimana-Mandala et le consortium d'intelligences\n  - Docks Submergés : interfaces entre le marché et l'océan mécanique maintenues par les Navigateurs-Cartographes\n  Ces habitats, fusion parfaite entre l'esprit créatif imuin et les impulsions adaptatives automatisées, représentent leur philosophie fondamentale : la transcendance des frontières conventionnelles entre naturel et artificiel, vivant et construit, individu et communauté.\n💡 Distribution géographique\n  Foyers de Concentration Majeure\n  - Le Bassin des Grands Lacs Mécaniques\nZone de densité maximale abritant environ 35% de la population totale, centrée autour de cinq cités-rouages principales :\n  - Atelier-Originel (anciennement \"Premier\") : la plus ancienne installation, construite sur le site de libération initiale\n  - Roue-Tournante : célèbre pour son architecture perpétuellement mobile et ses ateliers spécialisés en transmissions\n  - Cercle-Flottant : cité partiellement submergée, réputée pour ses écoles de modification aquatique avancée\n  - Spirale-Ascendante : reconnue pour son innovation verticale et ses designs d'ascenseurs hydrauliques révolutionnaires\n  - Cadran-Solaire : distinguée pour sa recherche optique et ses interfaces photo-sensibles\n  Ce territoire ancestral d'environ 1 200 km² à l'ouest des Couronnes intermédiaires demeure le cœur culturel de l'espèce, malgré une émigration constante vers de nouvelles frontières technologiques. Les lacs eux-mêmes, mystérieusement résistants à la pollution et aux perturbations, continuent de fournir un environnement idéal pour la reproduction et le développement précoce.\n  Le Marché Automaton\n  Une concentration exceptionnelle (environ 25% de la population) dans un espace relativement restreint, avec une densité accrue par la nature tridimensionnelle de l'habitat et l'intégration structurelle de nombreux résidents. Cette communauté mobile, suivant des itinéraires optimisés entre les Forêts Corail et le Tombeau des Lueurs Dissidentes, représente l'avant-garde de l'évolution imuin\n  Les Quartiers de la Vieille Ville\n  Population substantielle (environ 15%) concentrée principalement dans trois districts distincts de la ville :\n  - Quartier des Engrenages (district industriel périphérique) : caractérisé par ses ateliers de manufacture et ses cliniques de modification basiques\n  - Secteur des Interfaces (zone commerciale de niveau intermédiaire) : spécialisé dans le commerce de technologie et les services d'augmentation\n  - Failles Techniques (réseau caché sous les niveaux inférieurs) : centre de recherche expérimentale inaccessible aux non-imuins\n  Présence Secondaire\n  Xyriad Achromatique\n  Communauté spécialisée (environ 8%) intégrée aux sections calculatoires de Xyriad, formant une enclave unique fusionnant concepts mathématiques purs et applications techniques concrètes. La concentration principale se trouve dans le quartier nommé \"Algorithmes Incarnés\", où les théories abstraites sont littéralement matérialisées en modifications corporelles expérimentales.\n  Les Routes Nomades\n  Réseau mobile (environ 7%) suivant des itinéraires cycliques à travers les zones intermédiaires d'Escelion. Trois caravanes principales :\n  - Circuit Nord : spécialisé dans les technologies d'adaptation aux environnements froids\n  - Trajectoire Est : focalisé sur l'échange d'innovations entre communautés isolées\n  - Orbite Sud : dédiée à l'exploration des sites technologiques abandonnés et à la récupération d'artefacts\n  Avant-postes Périphériques\n  Implantations expérimentales (environ 5%) établies à proximité d'anomalies technologiques et de phénomènes naturels uniques :\n  - Station Horizon : construite au bord des Antichambre des Impossibles pour étudier les distorsions spatio-temporelles\n  - Laboratoire Échos : installé à la lisière du Désert des Echos Perdus pour exploiter les propriétés acoustiques extraordinaires de la région\n  Tendances Migratoires\n  - Migration constante des jeunes individus des zones rurales vers les centres technologiques urbains\n  - Exode périodique des innovateurs établis vers les périphéries en quête de liberté d'expérimentation\n💡 Relations avec l’écosystème\n  Zones d'intervention principales\n  Grands Lacs Mécaniques : Algues conductrices servant de filtres et réseaux de communication, poissons bioluminescents indicateurs de qualité d'eau, microorganismes dépolluants.\n  Vieille Ville : Jardins verticaux techno-organiques pour purification d'air et énergie, systèmes de récupération d'eau, création de niches écologiques urbaines.\n  Avant-postes : Modifications minimales des écosystèmes, interfaces non-invasives avec la faune locale, camouflage des installations.\n  Marché Automaton : Écosystème hybride dans l'Océan Mécanique, cycles de transmutation sans déchets, créatures semi-synthétiques médiatrices.\n  Interactions avec la faune locale\n  - Lacs : Modifications symbiotiques d'espèces aquatiques et communication avec prédateurs intelligents.\n  - Forêts : Prothèses écologiques, monitoring non-invasif, soins adaptés.\n  - Zones urbaines : Habitats artificiels et filtration des émissions nocives.\n  Débats philosophiques\n  Le mouvement \"Intégration Totale\" prône la fusion complète avec la nature. L'\"Équilibre Dynamique\" préfère préserver la distinction tout en créant des interfaces harmonieuses. La \"Purification Technique\" défend une séparation stricte entre zones naturelles et technologiques.",
+        "properties": {
+          "Culture": {
+            "id": "%3Fr%5DP",
+            "type": "select",
+            "select": {
+              "id": "Rt[s",
+              "name": "Moyenne",
+              "color": "yellow"
+            }
+          },
+          "Représentants": {
+            "id": "E%3FqE",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "22e6e4d2-1b45-80ee-875e-d9f219970f06"
+              }
+            ],
+            "has_more": false
+          },
+          "Références visuelles": {
+            "id": "Lh%5Bn",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Portrait": {
+            "id": "SuZ%40",
+            "type": "files",
+            "files": [
+              {
+                "name": "imuin1.jpeg",
+                "type": "file",
+                "file": {
+                  "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/1d8d06fb-9245-45c9-8cb0-4cd4d302ed0d/bf759b1d-ec53-48a2-80a9-55ea734ea95e/imuin1.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466VASZP3EO%2F20251016%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20251016T170455Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQCQJAxauSM3BZOAqXoHfRTpZ4X5jDCnyFaQFQkRM5d2gwIhAOCkKoObVcfBwxhkmHYc4zcbvufxLy5Q75b38nhvsv%2FnKogECJH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx1n008Z9q90IsZEW4q3APQZlhE266u7MtGUJjAZxAF3EvCgPmZAP8VwPZg7xR6BjSrGhilh%2BqreQBh67M9UNjZ3AJ8eWQbD0xThAWTkP3Hxw98XPYxnQTYR%2Bs4zp1Wm5tnTILKe4G5nC2uXWzjSH26VgCBhxX5P2XagEdXC%2BBURA6WJ75lWWLv5t87xp3OlxTsg4YkyoNNeYWioPICqflt2cUrruCdFqxtr7SjVXSD9%2Fun86fJPEc9qpTBFFKT0884%2FuH%2B%2Fa8du3q6Qv7PDAMM5mfL7f1jvRfIS2LdNUwhs06qGZT4WI2tT2a2QOUtXuVvN4GQzuZb2rw5MGC36gukqlhCE6TOUOzTLJtw3lmjWuwQAQRsTzd1WkMGaMSLUtJkX%2B6hh1Lytl4OtP9G3slg28merd8lCCoxnClERvIj7ZLT9IZ6gDTPKyKOIdDjgFGBRcRmGwqcNBMKw6izn4iHW1LkNfHXfql%2Fc1SORatt3YRyNyu57K%2FBAKJS8NmuJOYw2sQai1nNoI%2Fuudl2hzl6Qkx3H56fMYg0ivF7vhNY%2FeWrrmEcOURNLuuZRqShKoYFXYvhPImvrUU%2BdOXxsc%2BMooTxDPUAtuBsByDoEhMjQDKsVDW2IamAnF5NZTdxpc85iineHPpgVvZipTDursTHBjqkAT3JnKPFKc8m5uxHVRw%2FIFqr7CmuDaCXiprCT42%2BUqgxc8MocvsyYKwQ8Kte%2Bcg8TApY%2FQyuuHT6zW0hiD7eafo97fyTGUidH4yqpYGUsansnVKxvGz1VOm3RgEv1vymksYMFUoGksZVHpY7P0otfK40UXnBV8k3wUrv5vygVkKaKhBUjGQVGwcPm2IKuLyNfzGRIErS8UMzbCZexATJwz1CKRSu&X-Amz-Signature=7c6d2cccae2a1b2fb328b0ddbd68caa4d923c73943c685fb2cb5f2ca16d18c28&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+                  "expiry_time": "2025-10-16T18:04:55.313Z"
+                }
+              }
+            ]
+          },
+          "État": {
+            "id": "U%7D%7Dm",
+            "type": "status",
+            "status": {
+              "id": "f71cf453-cbc9-476b-bf57-51054830d7aa",
+              "name": "A implémenter",
+              "color": "green"
+            }
+          },
+          "Technologie": {
+            "id": "VLlW",
+            "type": "select",
+            "select": {
+              "id": "{kxo",
+              "name": "Avancée",
+              "color": "pink"
+            }
+          },
+          "Lieux de vie": {
+            "id": "YWNe",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a96e4d2-1b45-80bd-aaa6-c4a7f1b6fc6b"
+              },
+              {
+                "id": "1b46e4d2-1b45-8028-a2e5-f06744044aa4"
+              },
+              {
+                "id": "1cc6e4d2-1b45-80fb-b0ec-f0cfe9539620"
+              },
+              {
+                "id": "1cc6e4d2-1b45-800e-aea8-c8aa83ca1832"
+              }
+            ],
+            "has_more": false
+          },
+          "Biologie": {
+            "id": "hSFM",
+            "type": "select",
+            "select": {
+              "id": "K^pk",
+              "name": "Faible",
+              "color": "brown"
+            }
+          },
+          "Présence dans Escelion": {
+            "id": "nIz%5C",
+            "type": "select",
+            "select": {
+              "id": "bbog",
+              "name": "Très courant",
+              "color": "green"
+            }
+          },
+          "Type": {
+            "id": "s%60%3DS",
+            "type": "select",
+            "select": {
+              "id": "faf0cb54-b063-4921-8de1-e57975287c76",
+              "name": "Espèce civilisée",
+              "color": "purple"
+            }
+          },
+          "Evénements liés": {
+            "id": "sje%5B",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "22c6e4d2-1b45-80df-a920-e67356f4cddf"
+              },
+              {
+                "id": "22c6e4d2-1b45-80e2-8a6d-f7f95ffe4b83"
+              },
+              {
+                "id": "2306e4d2-1b45-8029-bb31-c2cf970d471e"
+              },
+              {
+                "id": "2306e4d2-1b45-8036-b99d-ff33ffd16179"
+              }
+            ],
+            "has_more": false
+          },
+          "Espérance de vie": {
+            "id": "w%3Ak%5C",
+            "type": "number",
+            "number": 180
+          },
+          "Règne": {
+            "id": "zmD%7D",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "484cd421-db84-425a-84eb-2414d5f042c5"
+              }
+            ],
+            "has_more": false
+          },
+          "Surnaturel": {
+            "id": "%7C~Wm",
+            "type": "select",
+            "select": {
+              "id": ">~v^",
+              "name": "Nulle",
+              "color": "gray"
+            }
+          },
+          "Sprint": {
+            "id": "%7D%7DQ%3F",
+            "type": "select",
+            "select": {
+              "id": "C:]u",
+              "name": "Plus tard",
+              "color": "pink"
+            }
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Imuins",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Imuins",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 510,
+        "last_edited": "2025-10-15T18:52:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-818d-ab4e-e216dc6c6c17",
+        "title": "Escelion",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\nEscelion est un continent-monde surréaliste aux lois physiques instables, né des ruines de Merid. Sa stabilisation fut assurée par le sacrifice des Rêveurs, dont Jast l'Inéluctable est le plus puissant. Le monde est structuré en cercles concentriques : la Vieille Ville au centre, les Couronnes Intermédiaires, et les Périphéries. Dix-sept espèces conscientes y cohabitent, des Van'Doei aux humains. Le pouvoir est partagé entre diverses factions comme le Culte de l'Anentropie et les Murmurateurs, tandis que le Système Panoptique de Jast maintient un contrôle subtil depuis la Vieille Ville. L'économie varie radicalement selon les régions, de l'échange de souvenirs à la valorisation mathématique. Ce monde est l'arène d'une lutte perpétuelle entre cinq postures philosophiques : Retrait, Rébellion, Destruction, Subversion et Connexion.\n# Identité & Vue d'ensemble\n  ## Histoire du lieu\n  - ? : Emergence de la Doei, esprit indivis du monde\n  - 1 : Début du calendrier de l’Agénèse, naissance des Rêveurs, Cataclysme de Kho'Vash (division de la Doei en Van’Doei, Qadul’Doei, Cen’Doei et Rash’Doei)\n  - 300 : Fondation de la Vieille Ville \n  - 888 : Grande Convergence et disparition des Frémissants \n  - 1200 : Fondation du Barvasinkul\n  - 1254 : Création des Imuins par des Qadul’Doei\n  - 1620 : Grand Blizzard, dispersion des Van’Doei\n  - 1700 : Fondation de la Jungle Vivarcade\n  - 2255 : Fondation de la Citadelle de Daïlon \n  - 2266 : Migration des Van’Doei vers la Vieille Ville et création du Quartier des Forges\n  - 2487 : Emergence spontanée du Xyriad Achromatique \n  - 2976 : Fondation du Marché automaton\n  - 3100 : Accident du portail, Vol Reitar prend le contrôle de la Citadelle de Daïlon\n  - 3175 : Fondation de la communauté du Culte de l’Anentropie du Léviathan pétrifié \n  - 3198 : Exil d’Uresaïr dans le Désert des Echos perdus\n  - 3390 : Début du jeu\n  ## Rôle dans l'intrigue\n  L’ensemble du jeu se passe sur Escelion. Escelion constitue l'arène où Jast orchestre son jeu d'oppression et de résistance. Les cinq postures face au système (Retrait, Rébellion, Destruction, Subversion, Connexion) se confrontent dans un équilibre précaire. Ce monde est conçu pour que \"de nombreux mondes soient possibles\" tout en restant sous la contrainte métaphysique nécessaire de Jast.\n# Géographie & Environnement\n  ## Écosystème\n  Escelion est plat et n’a pas de “ciel” au sens cosmique du terme, il n’a donc ni étoile, ni lune, ni soleil. A la place, un ciel de roche, souvent occulté par la brume, héberges les Deimos, insectes géants lumineux qui fournissent la lumière.\n  Escelion comprend trois zones principales structurées concentriquement :\n  1. La Vieille Ville: Centre névralgique du système panoptique où les citoyens sont génétiquement liés à des plantes mémorielles.\n  1. Couronnes Intermédiaires: Zones tampons entre centre et périphérie, incluant le Xyriad Achromatique, la Jungle Vivarcade, la Steppe des Éteignoirs, la Fosse aux Idoles déchues.\n  1. Les Périphéries: Territoires frontières comme le Désert des Échos Perdus, le Léviathan pétrifié, le Puits céleste.\n  Chaque région fonctionne selon son propre ensemble de principes métaphysiques, souvent radicalement différents. Des anomalies naturelles marquent les zones de transition entre ces systèmes contradictoires.\n  ## Découverte ou construction\n  Les réfugiés de Merid découvrirent Escelion comme un monde chaotique, potentiellement habitable mais nécessitant stabilisation. La transformation d'Escelion s'accomplit par le sacrifice des premiers Rêveurs, êtres conscients qui acceptèrent de devenir les principes organisateurs du chaos.\n  Cette métamorphose n'était pas uniforme - certaines zones conservèrent partiellement leur nature primordiale (expliquant l'existence d'entités comme les Deimos sur le ciel de roches), tandis que d'autres furent complètement restructurées selon les besoins des colons.\n  ## Voies d’accès\n  Escelion est lié aux autres Continents-mondes par des passages presque infranchissables:\n  1. Piliers Célestes: Structures verticales monumentales traversant le ciel de roche, théoriquement reliées à d'autres mondes.\n  1. Antichambre des Impossibles: Frontières dimensionnelles.\n  1. L'Océan de Ténèbres: Résidu de la création du monde, espace interstitiel traversé lors des voyages entre Merid et Escelion.\n  1. Portails temporaires: Comme celui de la Citadelle de Daïlon, mais généralement instables et dangereux.\n# Organisation humaine\n  ## Structure politique\n  Escelion abrite une multiplicité de structures politiques, notamment:\n  1. Le Système Panoptique de la Vieille Ville: Contrôle centralisé  occulte exercé par Jast.\n  1. Le Pentagramme Hiérarchique du Culte de l'Anentropie: Théocratie rigide dans le Léviathan.\n  1. La Gouvernance Récursive du Xyriad: Système mathématique auto-régulant.\n  1. Le Conseil Chlorophyllien de la Jungle Vivarcade: Oligarchie fusionnée avec l'environnement.\n  1. Les Archipels Vengeurs des Cen'Doei: Justice itinérante et décentralisée.\n  Des systèmes politiques non catalogués existent dans les régions à écrire, incluant potentiellement des démocraties directes, des gestalt-conscience collectives, et des non-hiérarchies fluides.\n  ## Centres urbains & Habitats\n  Les principaux centres de population comprennent:\n  1. La Vieille Ville: Métropole concentrique en perpétuelle reconfiguration.\n  1. Le Xyriad Achromatique: Structure mathématique habitée transcendant l'espace euclidien.\n  1. Le Léviathan pétrifié: Temple-organisme abritant le Culte de l'Anentropie.\n  1. La Jungle Vivarcade: Cité végétale stratifiée où architecture et habitants fusionnent.\n  D'autres formes d'habitation non conventionnelles incluent les Caravansérails Stochastiques du Désert des Échos, les Alcôves Résonantes des obélisques du Vash-Sûl, et les habitats nomades des Aldravinds. D’autres restent à définir.\n# Culture & Société\n  ## Population\n  Escelion abrite dix-sept espèces civilisées majeures cataloguées, de nombreuses formes de vie non cataloguées, et potentiellement des entités primordiales survivantes. Les principales classes d'êtres conscients incluent:\n  1. Enfants du Principe (Van'Doei, Qadul'Doei, Rash'Doei, Cen'Doei)\n  1. Créatures artificielles (Imuins, Railleurs, Moribandons, Kephrasites)\n  1. Créatures naturelles (Aedres, Umcut, Vohars, Humains, Vaideccans)\n  1. Rêveurs (êtres conscients sacrifiés pour stabiliser Escelion)\n  1. Transformateurs (entités qui manipulent la matière et l'énergie)\n  Ces espèces coexistent dans des relations allant de la symbiose à l'antagonisme, chacune interprétant différemment la nature fondamentale d'Escelion.\n  ## Économie\n  Les systèmes économiques varient radicalement selon les régions:\n  1. Valorisation Récursive du Xyriad: Monnaie abstraite basée sur la résolution de problèmes.\n  1. Économie Mémorielle du Culte: Échange de souvenirs et connaissances via organoïdes neuronaux.\n  1. Système extractif du Nexion: Siphonnage des ressources vers le centre de la Vieille Ville.\n  Des principes économiques alternatifs émergent constamment dans les interstices entre ces systèmes dominants, incluant des économies du don, des réseaux de dettes mutuelles et des échanges basés sur la transformation.\n  ## Fêtes/moments importants\n  Certains rituels transcendent les divisions régionales:\n  1. La Commémoration de l'Agénèse: Célébration du sacrifice des Rêveurs et de la stabilisation d'Escelion.\n  1. Le Cycle des Transformations: Série de festivités liées aux seize états du Barvasinkul.\n  Chaque communauté maintient également ses propres célébrations, comme la Grande Synchronisation de la Vivarcade, la Récursion Harmonique du Xyriad, ou les Processions des Reliques du Léviathan.\n  ## Alimentation spécifique\n  Les sources nutritionnelles varient considérablement:\n  1. Cures métalliques des Cen'Doei\n  1. Pain d'Ossements et Viande Écho du Léviathan\n  1. Fruits Équationnels du Xyriad\n  1. Photosynthèse des Aedres\n  La circulation de ces ressources nutritives crée des réseaux d'interdépendance complexes entre communautés apparemment isolées.\n# Dynamiques\n  ## Enjeux actuels\n  - Tension Cosmologique: L'équilibre précaire entre les forces de préservation et transformation, manifesté dans le conflit entre Culte de l'Anentropie et Murmurateurs.\n  - Cycles d'Expansion: La Vieille Ville s'étend cycliquement, menaçant l'autonomie des Couronnes intermédiaires.\n  - Quête d'Émancipation: Divers mouvements cherchent à transcender la contrainte métaphysique de Jast sans provoquer la désintégration d'Escelion.\n  - Les Cinq Postures: Lutte constante entre Retrait, Rébellion, Destruction, Subversion et Connexion pour définir le futur d'Escelion.\n  ## Le Temps sur Escelion\n  ### Cycles fondamentaux\n  Le temps d'Escelion s'organise autour de quatre mesures universelles, bien que leur durée varie considérablement selon les régions. Une Veille désigne la période d'activité générale, caractérisée par une luminosité accrue des deimos et une sensation collective d'éveil. Le Somme correspond à la phase de repos, marquée par l'atténuation lumineuse et un engourdissement naturel des êtres vivants.\n  Les habitants nomment Souffle ce que nous nommerions saisons : une longue période disposant d’une relative constance climatique et écosystémique. Une Nuée englobe l'ensemble des Souffles nécessaires au retour d'un état temporel identique, formant ainsi l'unité de mesure la plus longue communément admise.\n  - 10 Veilles = 1 Battement\n  - 3 Battements = 1 Fragment\n  - X Fragments = 1 Souffle\n  - 2-5 Souffles = 1 Nuée\n  Dérivés :\n  - Hebdomadaire = décavile\n  - Mensuel = fragmentaire\n  ### Variations géographiques\n  Les Nuées du Désert des Échos s'étendent sur 347 Veilles, rythmées par quatre Souffles distincts que les nomades ont baptisés Mutisme, Inspiration, Cacophonie et Expiration. À l'inverse, la Vieille Ville connaît des Nuées de 231 Veilles seulement, organisées en trois Souffles réguliers appelés Expansion, Consolidation et Contraction.\n  Les habitants attribuent ces différences à des \"influences telluriques\" ou des \"courants célestes\" propres à chaque territoire. Les érudits évoquent parfois des \"nœuds temporels\" sans soupçonner que ces variations résultent des cycles oniriques des entités qui gouvernent secrètement leur existence quotidienne.\n  Certaines régions frontalières subissent des \"désynchronisations\" - périodes chaotiques où plusieurs rythmes temporels se chevauchent, créant des journées d'une longueur imprévisible que les populations locales nomment \"Veilles brisées\" ou \"Sommes affamés\".\n  ## SYSTÈME HYDRO-ÉLÉMENTAIRE D'ESCELION\n  ## FONDEMENTS COSMOGONIQUES\n  Avant l'Agénèse, Escelion était régi par le Mélange — système chaotique où les cinq fluides primordiaux (aqueux, métallique, igné, terreux et ligneux) circulaient sans distinction dans un cycle unique. Cette perméabilité rendait le continent-monde inhabitable pour toute créature complexe, car les fluides se contaminaient mutuellement, produisant des substances hautement instables.\n  Les Racines Cosmiques (Hvergelmir) existaient déjà, plongeant depuis le ciel de roche, mais absorbaient indifféremment tous les fluides, créant des précipitations toxiques et imprévisibles.\n  Lors de l'Agénèse, Jast l'Inéluctable accomplit la Grande Bifurcation — acte ontologique séparant le fluide aqueux des quatre autres essences. Cette division fondamentale créa deux cycles parallèles mais distincts:\n  - Le Cycle Hvergique (eau pure)\n  - Le Cycle Wuji (quatre éléments transmutables)\n  ## I. LE CYCLE HVERGIQUE — L'EAU PURE\n  Élévation: Ascension Rhizomique\n  Les Hvergelmir, ces gigantesques racines cosmiques, développèrent une affinité exclusive pour l'eau pure suite à la Grande Bifurcation. Leurs tissus xylémiques se reconfigurèrent pour rejeter les quatre autres fluides élémentaires. L'eau s'élève par capillarité négentropique — phénomène où le fluide est attiré vers le haut contre la gravité par une combinaison de tension superficielle amplifiée et d'absorption biomagnétique.\n  Les Nœuds d'Ymir (renflements périodiques le long des racines) concentrent le pouvoir d'absorption, créant des zones d'attraction hydraulique si puissantes qu'elles peuvent drainer les nappes souterraines sur plusieurs kilomètres.\n  Condensation: Urnes de Mímir\n  L'eau capturée par les Hvergelmir s'accumule dans des formations bulbeuses cristallines suspendues au ciel de roche. Ces Urnes de Mímir (nommées d'après le géant sage qui gardait la source de connaissance) filtrent l'eau à travers leurs membranes semi-perméables, éliminant les dernières impuretés élémentaires qui auraient pu contaminer le cycle.\n  Ces réservoirs suspendus développent une proto-conscience hydrologique qui leur permet d'analyser les besoins du territoire en contrebas et d'ajuster leur composition minérale en conséquence.\n  Précipitation: Déluges Nornes\n  La libération de l'eau suit trois modes cycliques nommés d'après les Nornes nordiques:\n  - Précipitation-Urðr (ce qui fut): pluies légères et constantes de maintenance écologique\n  - Précipitation-Verðandi (ce qui devient): averses modérées saisonnières pour la croissance\n  - Précipitation-Skuld (ce qui devrait être): déluges cataclysmiques rares mais nécessaires au renouvellement\n  Ces cycles sont déterminés par des algorithmes biologiques inscrits dans les membranes des Urnes, suivant les besoins des biomes et les phases de repos/activité des Rêveurs locaux.\n  Ruissellement: Voies d'Auðumla\n  L'eau précipitée s'écoule à travers des réseaux hydrologiques semi-conscients nommés Voies d'Auðumla. Ces rivières adaptatives modifient leur cours pour irriguer efficacement les territoires, formant parfois des détours inexplicables selon la logique purement gravitationnelle, mais parfaitement rationnels d'un point de vue écosystémique.\n  La Rivière de Vivarcade constitue l'une des plus importantes Voies d'Auðumla, sa conscience hydraulique étant particulièrement développée par la symbiose avec les Aedres.\n  Stockage: Océan caché\n  L'eau s'accumule dans des formations géologiques appelées Océans cachés (d'après l'abîme primordial nordique). Ces réservoirs souterrains possèdent une membrane organo-minérale qui préserve la pureté de l'eau et régule sa distribution.\n  Les oasis du Désert des Échos sont tout ce qu’il reste du plus grand Océan caché d’Escelion, qui s’effondra sous le poids de la Convergence.\n  ## II. LE CYCLE WUJI — LES QUATRE ÉLÉMENTS\n  Élévation: Sublimation Wuji\n  Les quatre fluides élémentaires non-aqueux s'élèvent par un processus de Sublimation Alchimique où ils passent directement de l'état condensé à un état éthérique. Cette transmutation se produit sous l'influence des champs énergétiques émanant des Rêveurs et suit le principe du Wuji (le sans-limite) — état indifférencié précédant la manifestation.\n  Contrairement à l'élévation hvergique qui dépend des racines cosmiques, la sublimation wuji est un phénomène diffus qui se produit à la surface des quatre océans élémentaires:\n  - L'Océan Mécanique (élément métal)\n  - Les Marais Pyrofluidiques (élément feu)\n  - La Mer Terreuse (élément terre)\n  - Les Étendues Ligneuses (élément bois)\n  Condensation: Taiji Élémentaire\n  Les vapeurs éthériques se stratifient dans l'atmosphère inférieure d'Escelion, formant des couches distinctes qui commencent à interagir selon le principe du Taiji (l'unité suprême). Cette interaction génère quatre types de formations condensées:\n  - Nuages-Jin (métal condensé): structures argentées aux propriétés conductives\n  - Brumes-Huo (feu condensé): voiles pourpres incandescents\n  - Cumulus-Tu (terre condensée): formations brunes gravifiques\n  - Nimbus-Mu (bois condensé): volutes verdoyantes germinatives\n  Ces masses condensées n'interagissent jamais avec les Urnes de Mímir, maintenant ainsi la séparation des cycles.\n  Précipitation: Descente des Cinq Phases\n  Bien que l'eau ait été séparée du cycle, les quatre éléments restants continuent de suivre le principe des Wu Xing (cinq phases) dans leurs transformations. L'absence de l'eau a créé un \"espace négatif\" dans le cycle, générant une dynamique particulière:\n  Chaque précipitation élémentaire cherche son complément ou antagoniste selon le cycle de génération (sheng) ou destruction (ke):\n  - Les précipitations métalliques nourrissent les zones aquatiques (mais ne s'y mélangent pas)\n  - Les précipitations ignées fondent le métal\n  - Les précipitations terreuses étouffent le feu\n  - Les précipitations ligneuses pénètrent la terre\n  Ces pluies élémentaires sont essentielles aux créatures artificielles, élémentaires ou primitives qui ne peuvent métaboliser l'eau pure.\n  Ruissellement: Rivières Pentagrammatiques\n  Les quatre fluides élémentaires s'écoulent selon des motifs qui dessinent un pentagramme incomplet (le cinquième point étant l'élément eau absent). Ces Voies Pentagrammatiques convergent parfois en des points appelés Nœuds Wu, où les quatre éléments interagissent sans se mélanger, créant des phénomènes énergétiques spectaculaires.\n  La Confluence Absente — point théorique où les quatre éléments devraient rencontrer l'eau — demeure un lieu mystique recherché par les alchimistes d'Escelion.\n  Stockage: Les Quatre Océans et le Cinquième Vide\n  Les quatre fluides élémentaires retournent à leurs océans respectifs, complétant ainsi leur cycle. Le Cinquième Océan — vaste dépression géologique connue sous le nom de Bassin d'Absence — demeure vide, témoignage physique de la Grande Bifurcation.\n  Des légendes racontent que la réunification des cinq éléments dans ce bassin marquerait la fin du cycle actuel d'Escelion.\n  ## III. POINTS D'INTERACTION ET PHÉNOMÈNES HYBRIDES\n  Malgré la séparation fondamentale, les deux cycles interagissent en certains points spécifiques:\n  Créatures Pontifes\n  Certains organismes ont évolué pour métaboliser les deux systèmes:\n  - Les Vaideccans peuvent survivre tant dans l'eau pure que dans l'Océan Mécanique\n  - Les Imuins modifient leur physiologie pour s'adapter aux différents fluides\n  - Les Qadul'Doei transcendent les deux systèmes, absorbant l'énergie plutôt que la matière\n  Le Cinquième Océan: Bassin d'Absence\n  Cette dépression monumentale représente l'emplacement où toute l'eau pure d'Escelion était autrefois concentrée avant la Grande Bifurcation. Aujourd'hui, c'est un abîme presque parfaitement sec, à l'exception de minuscules résurgences des Océans cachés qui forment des oasis linéaires suivant d'anciennes failles.\n  Le fond du Bassin d'Absence est tapissé de cristaux de sel parfaitement préservés — témoins fossiles de l'ancienne mer.",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": {
+              "id": "CvDP",
+              "name": "Zone naturelle",
+              "color": "pink"
+            }
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "BmdQ",
+              "name": "Sprint 1",
+              "color": "red"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "9d1ddde0-3d08-4ac0-adde-a555422ad290",
+              "name": "En cours",
+              "color": "blue"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a16e4d2-1b45-80d7-a920-c3f40e49246b"
+              },
+              {
+                "id": "1a16e4d2-1b45-8099-be36-db66acb76390"
+              },
+              {
+                "id": "1a16e4d2-1b45-8006-a568-d4688d3b154b"
+              },
+              {
+                "id": "1a16e4d2-1b45-8064-b82f-f2369406c52d"
+              },
+              {
+                "id": "1a16e4d2-1b45-80bc-af1d-ceab1be781b4"
+              },
+              {
+                "id": "1886e4d2-1b45-816a-bfc3-facdb20624fb"
+              },
+              {
+                "id": "1a16e4d2-1b45-8051-88d9-d744a1bbc095"
+              },
+              {
+                "id": "1a16e4d2-1b45-80e9-8a7a-d5c626184d83"
+              },
+              {
+                "id": "1a16e4d2-1b45-8089-bfc0-c5e513847d8b"
+              },
+              {
+                "id": "1be6e4d2-1b45-8094-8b25-d887930a521e"
+              },
+              {
+                "id": "1a16e4d2-1b45-805e-841e-d699f81d67a9"
+              },
+              {
+                "id": "1a16e4d2-1b45-807b-8a9a-ef07675d08ba"
+              },
+              {
+                "id": "1a16e4d2-1b45-8086-a5db-d3408b941f1d"
+              },
+              {
+                "id": "1a56e4d2-1b45-805b-af5c-e589453aed6f"
+              },
+              {
+                "id": "1a16e4d2-1b45-8062-aaa7-f39bb07d72f8"
+              },
+              {
+                "id": "1a16e4d2-1b45-8083-9e41-c12db0ba67d8"
+              },
+              {
+                "id": "22e6e4d2-1b45-80db-8065-d98d26821c2c"
+              },
+              {
+                "id": "22e6e4d2-1b45-803b-82ce-ed4b01fe01c4"
+              },
+              {
+                "id": "22e6e4d2-1b45-803e-aa21-c54ea00e2c27"
+              }
+            ],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "1a56e4d2-1b45-8044-a472-d674f194c57a"
+              },
+              {
+                "id": "1996e4d2-1b45-804c-89d5-c935e604f865"
+              },
+              {
+                "id": "1886e4d2-1b45-81b8-ad16-dcfa990112f1"
+              },
+              {
+                "id": "1b96e4d2-1b45-80fe-ba1e-f65c0e1e3a3c"
+              },
+              {
+                "id": "1dd6e4d2-1b45-80c1-bbab-f8d323d86aff"
+              }
+            ],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-817a-bdd6-f862ad2f8fc9"
+              }
+            ],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "22c6e4d2-1b45-8082-ba15-d480332e0b03"
+              },
+              {
+                "id": "22c6e4d2-1b45-80ad-9861-e918927c86de"
+              },
+              {
+                "id": "22c6e4d2-1b45-80b3-b406-e1d3822be339"
+              },
+              {
+                "id": "22c6e4d2-1b45-80d2-ac21-c1f131d1ee78"
+              },
+              {
+                "id": "22c6e4d2-1b45-80df-a920-e67356f4cddf"
+              },
+              {
+                "id": "22c6e4d2-1b45-8045-a4fa-eabba26e215b"
+              },
+              {
+                "id": "22c6e4d2-1b45-80af-a38b-d517e7038ccd"
+              }
+            ],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd"
+              },
+              {
+                "id": "2806e4d2-1b45-8193-8102-c329c29a2285"
+              },
+              {
+                "id": "2806e4d2-1b45-8159-a1ce-e607dbbde983"
+              },
+              {
+                "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b"
+              },
+              {
+                "id": "2806e4d2-1b45-8191-be49-dd8d30d2946f"
+              }
+            ],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "uE`{",
+              "name": "Monde",
+              "color": "brown"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Escelion",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Escelion",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 465,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      },
+      {
+        "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd",
+        "title": "Couronnes intermédiaires",
+        "domain": "lieux",
+        "summary": "",
+        "content": "💡 Résumé de la fiche\nZones de transition entre la Vieille Ville et les périphéries. Fortement soumise à l’influence de la Vieille Ville.\n# Identité & Vue d'ensemble\n  ## Histoire du lieu\n  ## Rôle dans l'intrigue\n# Géographie & Environnement\n  ## Écosystème\n  ## Découverte ou construction\n  ## Voies d’accès\n# Organisation humaine\n  ## Structure politique\n  ## Centres urbains & Habitats\n# Culture & Société\n  ## Population\n  ## Économie\n  ## Fêtes/moments importants\n  ## Alimentation spécifique\n# Dynamiques\n  ## Enjeux actuels\n  ## Points d'intérêt\n  ## Système de jeu",
+        "properties": {
+          "Rôle": {
+            "id": "%3CZJd",
+            "type": "select",
+            "select": null
+          },
+          "Sprint": {
+            "id": "BEVY",
+            "type": "select",
+            "select": {
+              "id": "J]Ey",
+              "name": "Plus tard",
+              "color": "green"
+            }
+          },
+          "Objets présents": {
+            "id": "C%5CXO",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "État": {
+            "id": "N%5D%5BI",
+            "type": "status",
+            "status": {
+              "id": "13276006-0979-4a64-bcb0-a7a9935f7b53",
+              "name": "Pas commencé",
+              "color": "default"
+            }
+          },
+          "Faunes & Flores présentes": {
+            "id": "RDyT",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Communautés présentes": {
+            "id": "YN%5CU",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Scènes": {
+            "id": "ZTNK",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Zones limitrophes": {
+            "id": "kqRv",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Evénements liés": {
+            "id": "onm%3E",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Contient": {
+            "id": "wBxe",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-8191-be49-dd8d30d2946f"
+              },
+              {
+                "id": "2806e4d2-1b45-810f-bd07-d14395d4a07e"
+              },
+              {
+                "id": "2806e4d2-1b45-81ec-a894-e4010ecb35c8"
+              },
+              {
+                "id": "2806e4d2-1b45-81b5-b9c5-f92a26bad7c9"
+              },
+              {
+                "id": "2806e4d2-1b45-81f0-a71c-d67a3bd4e8b0"
+              },
+              {
+                "id": "2806e4d2-1b45-81e0-8ab6-e3920844ccc8"
+              },
+              {
+                "id": "2806e4d2-1b45-8112-8f74-d09914e0c7f1"
+              },
+              {
+                "id": "2806e4d2-1b45-815d-bfd0-fb5fb4e06219"
+              }
+            ],
+            "has_more": false
+          },
+          "Sous partie de présence": {
+            "id": "w%5C%5Cq",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Catégorie": {
+            "id": "%7BSxB",
+            "type": "select",
+            "select": {
+              "id": "@UXQ",
+              "name": "Région",
+              "color": "pink"
+            }
+          },
+          "Personnages présents": {
+            "id": "%7C%40Yv",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "22e6e4d2-1b45-8077-a1a6-dea94ef159a4"
+              }
+            ],
+            "has_more": false
+          },
+          "Map": {
+            "id": "~GWd",
+            "type": "files",
+            "files": []
+          },
+          "Contenu par": {
+            "id": "~H%3CN",
+            "type": "relation",
+            "relation": [
+              {
+                "id": "2806e4d2-1b45-818d-ab4e-e216dc6c6c17"
+              }
+            ],
+            "has_more": false
+          },
+          "Taille": {
+            "id": "~Zn%60",
+            "type": "select",
+            "select": {
+              "id": "PiBU",
+              "name": "Pays",
+              "color": "orange"
+            }
+          },
+          "Références visuelles des éléments originaux": {
+            "id": "~_OI",
+            "type": "relation",
+            "relation": [],
+            "has_more": false
+          },
+          "Nom": {
+            "id": "title",
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Couronnes intermédiaires",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Couronnes intermédiaires",
+                "href": null
+              }
+            ]
+          }
+        },
+        "token_estimate": 420,
+        "last_edited": "2025-10-02T13:09:00.000Z"
+      }
+    ],
+    "formatted": "### Vision (vision)\n# La Prémisse d’Alteir\n💡 Avatar du joueur, un esprit-ruche amnésique prend le contrôle de trois parias forgées par le même tyran défunt. En terrassant son héritier, ils découvrent que leur statut de pions est l’arme permettant de renverser le Rêveur qui maintient les castes d’Alteir.\n> Je vous parlerai d’art, car il n’y a rien d’autre dont on puisse parler. Car il n’y a rien d’autre.\n# Elevator Pitch\n  Rejoignez Alteir - RPG 2D science-fantasy (avec partage des gains)\n  Le Projet\n  Alteir est un jeu profondément narratif, inspiré des jeux de rôle papier, avec un univers radicalement surréaliste et onirique. Un jeu qui aurait la beauté d’un Dragon’s Crown, l’originalité d’un Planescape Torment et l’élan scénaristique d’un vieux Final Fantasy.\n  > La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée et faites voler ses portes en éclats.\n  Les Outils\n  Grâce aux derniers outils, ces objectifs ambitieux sont à portée de main. Alteir repose sur : \n- Des outils IA personnalisés\n- Un Game Design Document en mode wiki (400+ pages)\n- Des modèles sur mesure pour les graphismes\n- Des prototypes papier et Unity \n- Une architecture modulaire pensée pour le dev assisté\n  Qui je suis\n  Je m’appelle Marc, j’ai 36 ans, je suis diplômé Réalisateur Numérique (avec 2 ans d’expérience), mais aussi développeur C# et ingénieur DevOps (7 ans d’expérience), ainsi qu’écrivain amateur. Je travaille à plein temps sur Alteir depuis 8 mois avec l’aide d’un ami scénariste. J’ai déjà géré des équipes, j’ai un peu d’expérience dans le jeu vidéo (serious game, collaboration au RPG Aëdemphia) et je peux me permettre d’investir financièrement.\n  Qui nous cherchons\n  Que vous soyez dev, graphiste, game designer ou touche-à-tout, c’est surtout votre motivation et votre temps disponible qui comptent. Comme je l’ai dit, je suis à plein temps sur le jeu et j’ai surtout besoin de gens qui peuvent investir au moins 10H par semaine. Je peux même vous former sur plusieurs sujets. Le but est que le projet nous appartienne collectivement : partage des parts selon contribution, organisation agile sans hiérarchie, droit de regard partagé sur la création. Enfin, on peut négocier une compensation financière en attendant la sortie du jeu, si nécessaire.\n  Si vous êtes intéressé, n’hésitez pas à me ping.\n  L’Objectif\n  On a une opportunité de se rémunérer : on vise une subvention CNC (Fond d’Aide au Jeu Vidéo) à la session d’avril 2026, combinée à un investissement personnel, de ma poche. Puis on enchaîne avec un crédit R&D - innovation créative auprès de la BIP et un kickstarter. Si jamais on nous refuse une aide, on réduit le scope.\n  Avec une sortie début 2028, même les prévisions les plus conservatrices (10.000 ventes Steam en un an) suffiront amplement à rembourser le crédit, le reste pourra servir de gratification en fonction de la participation.\n  Pour aller plus loin\n  Scénario, mécaniques, direction artistiques et bien d’autres sont disponibles sur ⇒ le site web\n  [images liées] \n▶ Lettre d’intention\n  Bonjour à toutes et à tous.\n  Je suis Marc, Réalisateur Numérique, et il y a plus de quinze ans, j'étais étudiant et comme tous les amateurs, je rêvais de créer le \"jeu vidéo idéal\".\n  Mais j'avais bien conscience de l'énormité de la tâche. Comment écrire seul des centaines de milliers de lignes de dialogue ? créer des centaines de décors Haute Définition dans un style peint à la main ?  composer des dizaines d'heures de musique symphonique ?\n  Alors Alteir était resté un système, un jeu de rôle sur papier.\n  Jusqu'à aujourd'hui.\n  Les outils à base d’IA permettent enfin d'écrire des récits interactifs complexes en grande quantités, de générer des graphismes haute définition, de composer des heures d'orchestrations. \n  Alteir n'est plus un rêve impossible. C'est un jeu de rôle 2D science-fantasy fondé sur l’exploration et le dialogue dans un monde étrange et surréaliste peint avec un infini luxe de détails. Des léviathans de pierre au milieu du désert, des cités mécaniques flottantes, un ciel de roche peuplé d’étoiles-insectoïdes. Ce n’est pas un monde peuplé de prédateurs enragés et de bandits kamikaze, ni un monde à sauver de quelque grand complot ou sinistre vilain. C’est un monde plein de croyances et de doutes, dans lequel aucun choix n’est un simple “oui ou non”. Je vous propose sans rougir de dépasser les standards d’une industrie professionnelle aux millions de dollars. \n  Pour cela j’ai fondé Clockwork Bazaar, une entreprise coopérative, pour apporter les moyens de l’industrie à hauteur d’auteur. Mais aussi pour  repousser les frontières de l’imagination en refusant le mimétisme, cette forme douce du plagiat. Nous sortirons Alteir en 2028 sur Steam et sur Switch.\n# Intrigue principale\n💡 Dans Alteir, un RPG 2D par Clockwork Bazaar, la joueuse incarne l'Ethérée, une entité spirituelle collective qui contrôle trois héroïnes distinctes :\n\n- Uresaïr, une thaumaturge déchue qui a perdu ses pouvoirs divins et cherche la rédemption\n- Eonundé, une copie artificielle d'une amante décédée qui s'est rebellée contre son créateur Vol Reitar\n- Vethraak, un courtisan confronté à ses crimes passés\n\nAu cœur de l'intrigue se trouve la Citadelle de Daïlon, une structure autrefois utopique maintenant en ruines. Les héroïnes doivent naviguer dans cet environnement dangereux tout en confrontant leurs propres démons. Vol Reitar, réduit à l'état d'esprit errant après son \"assassinat\" par Eonundé, hante toujours les lieux. Son fils Valkazer, maudit par l'immortalité, s'est rebellé contre le monde.\n\nL'Ethérée apprend qu’elle n'est qu'un fragment de l'esprit de Vol Reitar, et doit choisir entre fusionner avec lui pour retrouver son intégrité ou préserver son autonomie au prix d'une existence incomplète.\n\nA travers l’affrontement avec Valkazer, le groupe finit par être déclaré vainqueur d’Alteir par Jast, l’Inéluctable. L’Ethérée choisit comme récompense de recommencer le jeu en gardant la conscience de son existence. Un nouveau cycle commence, dans lequel le groupe peut s’allier à Valkazer et détruire Alteir.\n# Selon l’Anatomie du Scénario\n  - PRINCIPE DIRECTEUR : Une entité capable de posséder plusieurs corps, d'abord inconsciente de son rôle dans un jeu d'oppression sociale, s'allie à un révolutionnaire pour affronter l'architecte du système.\n  - LIGNE THÉMATIQUE : En contrôlant autrui sans discernement, on alimente un système oppressif, mais la prise de conscience de cette responsabilité ouvre la voie à la révolte.\n  - UNIVERS DU RECIT : La région d'Escelion où la Vieille Ville constitue le centre du système panoptique, entourée de zones concentriques, chacune reflétant un degré différent d'intégration au système de Jast.\n  - PHRASE SYMBOLIQUE : La cité comme organisme vivant où chaque organe agit instinctivement, inconscient du tout qu’il forme.\n# Les 3 thèmes principaux\n    💡 Conflits de Conscience\n      Des dilemmes moraux déchirants qui façonnent le destin des personnages et du monde onirique.\n    💡 Voyage au Cœur de l'Étrange\n      Une exploration d'un univers surréaliste où l'émerveillement et l'inquiétude se côtoient.\n    💡 Des liens d’acier\n      La transformation progressive d'une base en ruines en un bastion imprenable, reflétant les choix, les triomphes et les sacrifices du joueur.\n## Fondements\nLes fondements ontologique n’ont pas vocation à être explicités dans l’œuvre. Ils servent de soubassement qui exclut les modes de pensée contraires :\n- Matérialisme : Tout n’est que matière, l’âme, l’esprit ou toute autre vision mystique des choses est soit fausse soit allégorique. Tout ce qui semble magique est seulement mal compris. Les lois de la physique instables et locales du continent-monde d’Escelion renforcent cette confusion.\n- Déterminisme : Deux situations identiques provoquent deux résultats identiques. Le mérite n’existe pas, il n’y a que les causes et les conséquences. Naturellement, avec une mauvaise compréhension de la matière, la compréhension du déterminisme est encore plus vague.\n- Xénophilie : L’étranger n’est pas à craindre, bien au contraire. Le jeu vise à faire aimer les ténèbres et l’étrange, pas à les redouter. Ceci n’est pas un jeu d’horreur, ni un jeu pessimiste.\n- Pas de primauté du masculin : Dans l’écriture, le masculin ne l’emporte pas sur le féminin. On utilise l’accord de majorité ou de proximité. De plus, beaucoup d’espèce n’ont pas un genre au sens où nos sociétés l’entendent.\n## Cosmologie\nLes fondements d’Escelion sont très différents de notre univers :\n- Continent-Monde clos – Escelion n’est ni sphère ni planète : plaque de matière plane surplombée d’une voûte rocheuse sans astres ; la clarté provient d’insectes géants (Deimos) et de phénomènes locaux.\n- Lois physiques fragmentées – Les constantes varient d’une zone à l’autre ; aux lisières, des anomalies trahissent l’incompatibilité de régimes métaphysiques concurrents.\n- Temporalité étrangère - Les années sont remplacés par les Nuées (le temps nécessaire à un rêveur pour commencer son prochain rêve), les saisons par des Souffles, les jours par des Veilles, et les nuits par des Sommes. Les “semaines” sont des Battements composés de dix Veilles, et les “mois” des Fragments composés de X Battements. Ce temps est régional et dépend du rêveur local et de son influence, même si les habitants connaissent rarement l’origine de ces variations.\n  - Ex: “Tel personnage a douze ans et trois mois” ⇒ “Tel personnage a douze Nuées et un Souffle”\n- Cycles liquides - l'eau pure voyage des racines du ciel jusqu'aux sources souterraines dans un cycle séparé des quatre autres liquides élémentaires (métal, feu, terre et bois), qui disposent de leurs propres océans\n- Stabilisation sacrificielle – Cent Rêveurs, jadis immolés, maintiennent la cohérence du monde ; Jast, l’Inéluctable, en est l’archétype, fixant la forme du panoptique central.\n- Portails & Océan de Ténèbres – Des passages (Piliers célestes, portails instables) percent vers d’autres continents-mondes, voire le monde de Merid, à travers le résidu chaotique nommé Océan de Ténèbres.\n- Agénèse & scission de la Doei – La première Nuée marque la naissance des Rêveurs et la fragmentation de l’esprit-monde Doei en espèces filles, fixant le calendrier et le mythe fondateur\n# Ton du jeu\n💡 Sérieux, surréaliste, introspectif, fantasy psychédélique, surfantastique\n# Accroche\n💡 La Vieille Ville range les êtres comme des os dans un ossuaire ; ressource ; intrus ; parasite. Guidez jusqu’à elle une déesse déchue, un courtisan en fuite et une esclave révoltée, et faites voler ses portes en éclats.\n# Accroches secondaires\n💡 Vous vous réveillez dans un corps emprunté ; ici, votre propre culte fera tout pour vous empêcher de les quitter. Osez quand même franchir le seuil.\n💡 L’immortalité que vous aviez accordée hier devient la dette qu’il vous faudra solder demain – avec la chute de toute une civilisation.\n💡 Sous les arches de pierre, l’horloge sociale gouverne chaque destin ; stoppez son aiguille une seule seconde et vous fracturerez la cité toute entière.\n💡 Le fils d’un tyran exige la tête de trois exilées ; il ignore qu’une seule conscience les guide déjà vers la sienne.\n# Objectifs joueurs\n💡 1. Conscience et Moralité ⇒  Faire réfléchir le joueur sur l'impact de ses décisions ⇒ Apprendre au joueur à peser les conséquences de ses actes à travers des dilemmes sans solution idéale\n  1. Émerveillement et Inquiétude ⇒ Créer une expérience émotionnelle contrastée ⇒ Apprendre que le “laid” peut être beau, et le “beau” affreux\n  1. Progression et Impact ⇒ Montrer que chaque décision compte ⇒ Apprendre et éprouver les effets des décisions politiques, développer l’empathie et le socialisme\n# Problème moral central\n💡 Comment résister à un système d'oppression quand ce système définit les termes mêmes de la résistance?\nTitres alternatifs :\n- Trials of Alteir\n- Fugitives of Fate\n- Children of the Rebellion\n- A Foreign Masquerade\n- Where the Shadows dwell\nTitres de studio alternatifs :\n- The Latent Space\n- Radical Dreamers\n- Clockwork Bazaar\n- Nocturne Protocol\n- Loremancers United\n- Synthetic Dreamers\n- Automaton Reverie",
+    "token_estimate": 2205,
+    "previews": [
+      {
+        "id": "2806e4d2-1b45-81e5-8014-dcbd89abf20b",
+        "title": "Vieille Ville",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 495
+      },
+      {
+        "id": "28d6e4d2-1b45-8149-b777-c0a6bc33eb34",
+        "title": "Imuins",
+        "domain": "communautes",
+        "summary": "",
+        "tags": [
+          "Espèce civilisée"
+        ],
+        "last_edited": "2025-10-15T18:52:00.000Z",
+        "token_estimate": 510
+      },
+      {
+        "id": "2806e4d2-1b45-818d-ab4e-e216dc6c6c17",
+        "title": "Escelion",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 465
+      },
+      {
+        "id": "2806e4d2-1b45-8156-89fc-d2d124e16ffd",
+        "title": "Couronnes intermédiaires",
+        "domain": "lieux",
+        "summary": "",
+        "tags": [
+          "Région"
+        ],
+        "last_edited": "2025-10-02T13:09:00.000Z",
+        "token_estimate": 420
+      }
+    ]
+  },
+  "history": [
+    {
+      "step": "writer",
+      "timestamp": "2025-10-16T19:08:22.238031",
+      "summary": "Contenu genere (14338 chars)"
+    }
+  ],
+  "model_used": "GPT-5",
+  "model_config": {
+    "name": "gpt-5",
+    "provider": "OpenAI",
+    "description": "Modèle le plus puissant, raisonnement approfondi",
+    "max_tokens": 4000,
+    "icon": "🚀",
+    "uses_reasoning": true,
+    "default_reasoning": "medium",
+    "runtime": {
+      "reasoning_effort": "medium",
+      "verbosity": "high",
+      "max_tokens": 4000
+    }
+  }
+}

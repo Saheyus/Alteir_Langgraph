@@ -99,7 +99,7 @@ def test_llm():
         
         return ChatOpenAI(
             model="gpt-4o-mini",
-            temperature=0.7,
+            temperature=1.0,
             max_tokens=2000,
         )
     except ImportError:
@@ -118,7 +118,7 @@ def test_llm_fast():
         
         return ChatOpenAI(
             model="gpt-4o-mini",
-            temperature=0.3,
+            temperature=1.0,
             max_tokens=500,
         )
     except ImportError:

@@ -41,6 +41,34 @@ def _humanize_category(raw_name: str) -> str:
     return raw_name.replace("_", " ").strip().title()
 
 
+def _label_with_tooltip(label: str, tooltip: str, dice_key=None, on_dice=None, col_ratio=(5, 1)) -> None:
+    """Render a label row with an info tooltip and optional dice button.
+
+    Place the corresponding widget immediately after with label_visibility="collapsed".
+    """
+    col_l, col_r = st.columns(col_ratio)
+    with col_l:
+        safe_tip = _html.escape(tooltip or "")
+        st.markdown(
+            f"""
+            <div style='display:flex;align-items:center;gap:.5rem;'>
+                <span style='font-weight:600'>{label}</span>
+                <span title='{safe_tip}' style='cursor:help;color:#9aa0a6;'>ⓘ</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    if dice_key and on_dice:
+        with col_r:
+            st.button(
+                "🎲",
+                key=dice_key,
+                help="Valeur aléatoire",
+                on_click=on_dice,
+                use_container_width=True,
+            )
+
+
 def _ensure_session_defaults(domain: str, model_info: dict) -> None:
     previous_domain = st.session_state.get("last_domain")
 
@@ -107,8 +135,12 @@ def _ensure_session_defaults(domain: str, model_info: dict) -> None:
         st.session_state.level = prefs.get("level", st.session_state.level)
         if domain == "Lieux":
             st.session_state.atmosphere = prefs.get("atmosphere", st.session_state.atmosphere)
-        else:
-            st.session_state.dialogue_mode = prefs.get("dialogue_mode", st.session_state.dialogue_mode)
+        elif domain == "Personnages":
+            # Restore dialogue_mode only for Personnages; use safe default if absent
+            st.session_state.dialogue_mode = prefs.get(
+                "dialogue_mode",
+                st.session_state.get("dialogue_mode", "parle"),
+            )
         st.session_state.creativity = prefs.get("creativity", st.session_state.creativity)
         st.session_state.reasoning_effort = prefs.get("reasoning_effort", st.session_state.reasoning_effort)
         st.session_state.max_tokens = prefs.get("max_tokens", st.session_state.max_tokens)
@@ -344,6 +376,28 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             st.session_state._random_complex_selections = dict(state["selections"])  # shallow copy
             st.session_state._random_complex_locked = dict(state["locked"])  # shallow copy
 
+        # Zone pleine largeur: Prompt additionnel
+        st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+        st.markdown("**Prompt additionnel**")
+        # Valeur par défaut persistée par mode
+        additional_key = f"{mode_key}_additional_prompt"
+        if additional_key not in st.session_state:
+            st.session_state[additional_key] = ""
+        additional_text = st.text_area(
+            "Prompt additionnel",
+            value=st.session_state.get(additional_key, ""),
+            placeholder="Instructions supplémentaires (optionnel)…",
+            height=72,  # ~3 lignes
+            label_visibility="collapsed",
+            key=f"{additional_key}_widget",
+        )
+        # Sync state
+        st.session_state[additional_key] = additional_text
+
+        # Concaténer au brief généré si présent
+        if additional_text and additional_text.strip():
+            brief_text = f"{brief_text}\n\n{additional_text.strip()}"
+
         return brief_text
 
     tabs = st.tabs(["Écriture libre", "Aléatoire", "Aléatoire complexe"])
@@ -455,47 +509,37 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
     with col1:
         st.subheader("Paramètres Narratifs")
 
-        col_intent, col_intent_random = st.columns([4, 1])
-        with col_intent_random:
-            st.write("")
-            st.write("")
-            st.button("🎲", key="random_intent", help="Valeur aléatoire", on_click=randomize_intent)
-        with col_intent:
-            if domain == "Lieux":
-                intent_label = "Fonction narrative"
-                intent_help = "Rôle du lieu dans l'histoire"
-            else:
-                intent_label = "Intention narrative"
-                intent_help = "Orthogonal = profondeur ≠ rôle visible"
+        # Intention narrative / Fonction
+        if domain == "Lieux":
+            intent_label = "Fonction narrative"
+            intent_help = "Rôle du lieu dans l'histoire"
+        else:
+            intent_label = "Intention narrative"
+            intent_help = "Orthogonal = profondeur ≠ rôle visible"
+        _label_with_tooltip(intent_label, intent_help, dice_key="random_intent", on_dice=randomize_intent)
+        intent = st.selectbox(
+            intent_label,
+            intent_options,
+            index=_safe_index(intent_options, st.session_state.intent, 0),
+            key=f"intent_select_{st.session_state.random_seed}",
+            label_visibility="collapsed",
+        )
 
-            intent = st.selectbox(
-                intent_label,
-                intent_options,
-                index=_safe_index(intent_options, st.session_state.intent, 0),
-                help=intent_help,
-                key=f"intent_select_{st.session_state.random_seed}",
-            )
-
-        col_level, col_level_random = st.columns([4, 1])
-        with col_level_random:
-            st.write("")
-            st.write("")
-            st.button("🎲", key="random_level", help="Valeur aléatoire", on_click=randomize_level)
-        with col_level:
-            if domain == "Lieux":
-                level_label = "Échelle spatiale"
-                level_help = "Taille du lieu : point d'intérêt < site < secteur < district"
-            else:
-                level_label = "Niveau de détail"
-                level_help = "cameo: 4-6 répliques | standard: 8-10 | major: 10-12"
-
-            level = st.selectbox(
-                level_label,
-                level_options,
-                index=_safe_index(level_options, st.session_state.level, 0),
-                help=level_help,
-                key=f"level_select_{st.session_state.random_seed}",
-            )
+        # Niveau / Échelle
+        if domain == "Lieux":
+            level_label = "Échelle spatiale"
+            level_help = "Taille du lieu : point d'intérêt < site < secteur < district"
+        else:
+            level_label = "Niveau de détail"
+            level_help = "cameo: 4-6 répliques | standard: 8-10 | major: 10-12"
+        _label_with_tooltip(level_label, level_help, dice_key="random_level", on_dice=randomize_level)
+        level = st.selectbox(
+            level_label,
+            level_options,
+            index=_safe_index(level_options, st.session_state.level, 0),
+            key=f"level_select_{st.session_state.random_seed}",
+            label_visibility="collapsed",
+        )
 
         if domain == "Lieux":
             def randomize_atmosphere():
@@ -504,43 +548,33 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 )
                 st.session_state.random_seed += 1
 
-            col_atmosphere, col_atmosphere_random = st.columns([4, 1])
-            with col_atmosphere_random:
-                st.write("")
-                st.write("")
-                st.button(
-                    "🎲",
-                    key="random_atmosphere",
-                    help="Valeur aléatoire",
-                    on_click=randomize_atmosphere,
-                )
-            with col_atmosphere:
-                atmosphere = st.selectbox(
-                    "Atmosphère",
-                    atmosphere_options,
-                    index=_safe_index(atmosphere_options, st.session_state.atmosphere, 0),
-                    help="Ambiance générale du lieu",
-                    key=f"atmosphere_select_{st.session_state.random_seed}",
-                )
+            _label_with_tooltip(
+                "Atmosphère",
+                "Ambiance générale du lieu",
+                dice_key="random_atmosphere",
+                on_dice=randomize_atmosphere,
+            )
+            atmosphere = st.selectbox(
+                "Atmosphère",
+                atmosphere_options,
+                index=_safe_index(atmosphere_options, st.session_state.atmosphere, 0),
+                key=f"atmosphere_select_{st.session_state.random_seed}",
+                label_visibility="collapsed",
+            )
         elif domain == "Personnages":
-            col_dialogue, col_dialogue_random = st.columns([4, 1])
-            with col_dialogue_random:
-                st.write("")
-                st.write("")
-                st.button(
-                    "🎲",
-                    key="random_dialogue",
-                    help="Valeur aléatoire",
-                    on_click=randomize_dialogue,
-                )
-            with col_dialogue:
-                dialogue_mode = st.selectbox(
-                    "Mode de dialogue",
-                    dialogue_options,
-                    index=_safe_index(dialogue_options, st.session_state.dialogue_mode, 0),
-                    help="Comment le personnage communique",
-                    key=f"dialogue_select_{st.session_state.random_seed}",
-                )
+            _label_with_tooltip(
+                "Mode de dialogue",
+                "Comment le personnage communique",
+                dice_key="random_dialogue",
+                on_dice=randomize_dialogue,
+            )
+            dialogue_mode = st.selectbox(
+                "Mode de dialogue",
+                dialogue_options,
+                index=_safe_index(dialogue_options, st.session_state.dialogue_mode, 0),
+                key=f"dialogue_select_{st.session_state.random_seed}",
+                label_visibility="collapsed",
+            )
         else:
             # No extra control for dialogue/atmosphere on other domains
             pass
@@ -561,25 +595,20 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 )
                 st.session_state.random_seed += 1
 
-            col_reasoning, col_reasoning_random = st.columns([4, 1])
-            with col_reasoning_random:
-                st.write("")
-                st.write("")
-                st.button(
-                    "🎲",
-                    key="random_reasoning",
-                    help="Valeur aléatoire",
-                    on_click=randomize_reasoning,
-                )
-            with col_reasoning:
-                reasoning_effort = st.selectbox(
-                    "Effort de raisonnement",
-                    options=reasoning_options,
-                    index=reasoning_options.index(st.session_state.reasoning_effort),
-                    help="minimal = rapide | low = équilibré | medium = standard | high = approfondi",
-                    key=f"reasoning_select_{st.session_state.random_seed}",
-                )
-                creativity = None
+            _label_with_tooltip(
+                "Effort de raisonnement",
+                "minimal = rapide | low = équilibré | medium = standard | high = approfondi",
+                dice_key="random_reasoning",
+                on_dice=randomize_reasoning,
+            )
+            reasoning_effort = st.selectbox(
+                "Effort de raisonnement",
+                options=reasoning_options,
+                index=reasoning_options.index(st.session_state.reasoning_effort),
+                key=f"reasoning_select_{st.session_state.random_seed}",
+                label_visibility="collapsed",
+            )
+            creativity = None
 
             # Verbosity control (GPT-5 only)
             def randomize_verbosity():
@@ -588,60 +617,65 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
                 )
                 st.session_state.random_seed += 1
 
-            col_verbosity, col_verbosity_random = st.columns([4, 1])
-            with col_verbosity_random:
-                st.write("")
-                st.write("")
-                st.button(
-                    "🎲",
-                    key="random_verbosity",
-                    help="Valeur aléatoire",
-                    on_click=randomize_verbosity,
-                )
-            with col_verbosity:
-                verbosity = st.selectbox(
-                    "Verbosity (niveau de détail)",
-                    options=verbosity_options,
-                    index=verbosity_options.index(st.session_state.verbosity),
-                    help="low = concis | medium = équilibré | high = détaillé",
-                    key=f"verbosity_select_{st.session_state.random_seed}",
-                )
+            _label_with_tooltip(
+                "Verbosity (niveau de détail)",
+                "low = concis | medium = équilibré | high = détaillé",
+                dice_key="random_verbosity",
+                on_dice=randomize_verbosity,
+            )
+            verbosity = st.selectbox(
+                "Verbosity (niveau de détail)",
+                options=verbosity_options,
+                index=verbosity_options.index(st.session_state.verbosity),
+                key=f"verbosity_select_{st.session_state.random_seed}",
+                label_visibility="collapsed",
+            )
             # Anthropic reasoning toggle not shown here
             st.session_state.include_reasoning = True
         else:
             # Temperature UI (Anthropic, Mistral, Ollama, or OpenAI non-reasoning)
-            col_creativity, col_creativity_random = st.columns([4, 1])
-            with col_creativity_random:
-                st.write("")
-                st.write("")
-                st.write("")
-                st.write("")
-                st.button(
-                    "🎲",
-                    key="random_creativity",
-                    help="Valeur aléatoire",
-                    on_click=randomize_creativity,
-                )
-            with col_creativity:
-                creativity = st.slider(
-                    "Créativité (température)",
-                    min_value=0.0,
-                    max_value=1.0,
-                    value=st.session_state.creativity,
-                    step=0.01,
-                    help="0 = déterministe | 1 = très créatif",
-                    key=f"creativity_slider_{st.session_state.random_seed}",
-                )
-                reasoning_effort = None
+            _label_with_tooltip(
+                "Créativité (température)",
+                "0 = déterministe | 1 = très créatif",
+                dice_key="random_creativity",
+                on_dice=randomize_creativity,
+            )
+            creativity = st.slider(
+                "Créativité (température)",
+                min_value=0.0,
+                max_value=1.0,
+                value=st.session_state.creativity,
+                step=0.01,
+                key=f"creativity_slider_{st.session_state.random_seed}",
+                label_visibility="collapsed",
+            )
+            reasoning_effort = None
 
-            # Anthropic: show optional reasoning toggle (if provider supports it)
+            # Anthropic options
             if provider == "Anthropic":
                 st.checkbox(
                     "Afficher le raisonnement (si disponible)",
                     value=st.session_state.get("include_reasoning", True),
                     key="include_reasoning",
-                    help="Affiche un flux de raisonnement si le modèle en renvoie. Ne change pas les paramètres du modèle.",
+                    help="Affiche le flux de raisonnement si le modèle le renvoie. (Visuel uniquement)",
                 )
+                # Toggle to enable Claude Thinking/Reasoning mode at API-level
+                st.checkbox(
+                    "Activer le raisonnement Claude (Thinking mode)",
+                    value=st.session_state.get("anthropic_thinking_enabled", True),
+                    key="anthropic_thinking_enabled",
+                    help="Active le paramètre 'thinking' côté API pour Claude Sonnet. Consomme un budget de tokens de réflexion.",
+                )
+                if st.session_state.get("anthropic_thinking_enabled", False):
+                    st.number_input(
+                        "Budget tokens de raisonnement (Claude)",
+                        min_value=128,
+                        max_value=32768,
+                        step=128,
+                        value=int(st.session_state.get("anthropic_thinking_budget", 32768) or 32768),
+                        key="anthropic_thinking_budget",
+                        help="Nombre de tokens alloués au raisonnement interne. 2048 est un bon compromis.",
+                    )
 
         st.write("")
         # Toggle: Travail agentique (Writer seul si décoché)
@@ -650,15 +684,36 @@ def render_creation_tab(domain: str, selected_model: str, model_info: dict) -> N
             value=bool(st.session_state.get("agentic_work", True)),
             help="Quand décoché, seule l'étape d'écriture (Writer) est exécutée. Les étapes d'analyse/correction/validation sont sautées (plus rapide).",
         )
-        max_tokens = st.slider(
+        # Slider UI: when set to maximum, interpret as "no limit" (None)
+        _slider_min = 50000
+        _slider_max = 500000
+        _current_pref = st.session_state.max_tokens
+        _default_slider_value = _slider_max if (_current_pref is None) else max(_slider_min, min(int(_current_pref), _slider_max))
+        _slider_value = st.slider(
             "Max tokens (sortie)",
-            min_value=50000,
-            max_value=500000,
-            value=st.session_state.max_tokens,
+            min_value=_slider_min,
+            max_value=_slider_max,
+            value=_default_slider_value,
             step=10000,
-            help="Limite de tokens pour la réponse (50000-300000). ⚠️ GPT-5 utilise des tokens pour le reasoning !",
+            help="Mettre au maximum = illimité. ⚠️ Les modèles reasoning (GPT-5) consomment aussi des tokens pour le raisonnement.",
             key=f"max_tokens_slider_{st.session_state.random_seed}",
         )
+        max_tokens = None if _slider_value == _slider_max else int(_slider_value)
+        # Right-aligned indicator (∞ when unlimited, numeric otherwise)
+        try:
+            _col_l, _col_mid, _col_r = st.columns([1,6,1])
+            with _col_r:
+                if max_tokens is None:
+                    st.markdown("<div style='text-align:right; font-weight:600;'>∞</div>", unsafe_allow_html=True)
+                else:
+                    st.markdown(f"<div style='text-align:right; color:#aaa;'>{_slider_value}</div>", unsafe_allow_html=True)
+        except Exception:
+            # Fallback caption
+            if max_tokens is None:
+                try:
+                    st.caption("∞ Sans limite explicite de tokens (le modèle appliquera ses bornes internes)")
+                except Exception:
+                    pass
 
         # Encadré de configuration retiré (doublon avec la barre latérale)
 

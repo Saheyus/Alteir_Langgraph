@@ -59,7 +59,7 @@ from langchain_anthropic import ChatAnthropic
 
 llm = ChatAnthropic(
     model="claude-3-5-sonnet-20241022",
-    temperature=0.3
+    temperature=1.0
 )
 ```
 
@@ -76,7 +76,7 @@ from langchain_mistralai import ChatMistralAI
 
 llm = ChatMistralAI(
     model="mistral-large-latest",
-    temperature=0.3
+    temperature=1.0
 )
 ```
 
@@ -92,7 +92,7 @@ from langchain_ollama import ChatOllama
 
 llm = ChatOllama(
     model="llama3.2",  # ou mistral, qwen, etc.
-    temperature=0.3,
+    temperature=1.0,
     format="json"
 )
 ```

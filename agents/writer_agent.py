@@ -18,7 +18,7 @@ from agents.base.domain_config import DomainConfig
 class WriterConfig:
     """Configuration additionnelle pour l'agent d'écriture"""
     # Paramètres génériques
-    creativity: float = 0.7  # Température du LLM
+    creativity: float = 1.0  # Température du LLM
     max_length: int = 2000   # Longueur max de sortie
     
     # Paramètres spécifiques au domaine personnages (optionnels)
@@ -422,7 +422,7 @@ def main():
         intent="orthogonal_depth",
         level="standard",
         dialogue_mode="parle",
-        creativity=0.7
+        creativity=1.0
     )
     
     agent = WriterAgent(PERSONNAGES_CONFIG, writer_config)

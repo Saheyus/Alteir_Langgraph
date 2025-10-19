@@ -126,53 +126,58 @@ def test_domain_config_integration():
         console.print(f"[bold red][ERREUR] {e}[/bold red]")
         return False
 
-def test_character_agent_template_usage():
-    """Test: Vérifier que l'agent utilise bien le template narratif"""
-    console.print(Panel("[bold cyan]=== Test: Agent Template Usage ===[/bold cyan]", expand=False))
-    
+def test_writer_agent_template_usage():
+    """Test: Vérifier que l'agent générique utilise bien le template narratif du domaine"""
+    console.print(Panel("[bold cyan]=== Test: WriterAgent Template Usage ===[/bold cyan]", expand=False))
+
     try:
-        from agents.character_writer_agent import CharacterWriterAgent, CharacterWriterConfig
-        
-        # Créer l'agent
-        config = CharacterWriterConfig(
+        from agents.writer_agent import WriterAgent, WriterConfig
+        from config.domain_configs.personnages_config import PERSONNAGES_CONFIG
+
+        # Créer l'agent générique pour le domaine Personnages
+        config = WriterConfig(
             intent="orthogonal_depth",
             level="standard",
-            dialogue_mode="parle"
+            dialogue_mode="parle",
         )
-        agent = CharacterWriterAgent(config)
-        
-        # Vérifier que l'agent a bien chargé le template narratif
-        if not hasattr(agent, 'narrative_template'):
-            console.print("[red][ERREUR] Agent n'a pas d'attribut narrative_template[/red]")
+        agent = WriterAgent(PERSONNAGES_CONFIG, config)
+
+        # Vérifier que l'agent possède bien une DomainConfig
+        if not hasattr(agent, 'domain_config'):
+            console.print("[red][ERREUR] WriterAgent n'a pas d'attribut domain_config[/red]")
             return False
-        
-        if not hasattr(agent, 'character_schema'):
-            console.print("[red][ERREUR] Agent n'a pas d'attribut character_schema[/red]")
+
+        template = agent.domain_config.template
+        schema = agent.domain_config.schema
+
+        # Vérifier types
+        if not isinstance(template, str):
+            console.print(f"[red][ERREUR] Template (domain_config.template) doit être une string, reçu: {type(template)}[/red]")
             return False
-        
-        # Vérifier que le template narratif est bien une string
-        if not isinstance(agent.narrative_template, str):
-            console.print(f"[red][ERREUR] narrative_template doit être une string, reçu: {type(agent.narrative_template)}[/red]")
+
+        if not isinstance(schema, dict):
+            console.print(f"[red][ERREUR] Schéma (domain_config.schema) doit être un dict, reçu: {type(schema)}[/red]")
             return False
-        
-        # Vérifier que le schéma est bien un dict
-        if not isinstance(agent.character_schema, dict):
-            console.print(f"[red][ERREUR] character_schema doit être un dict, reçu: {type(agent.character_schema)}[/red]")
+
+        # Vérifier que l'agent renvoie bien le template narratif via _build_template_section
+        built_section = agent._build_template_section()
+        if template not in built_section:
+            console.print("[red][ERREUR] _build_template_section ne réutilise pas le template de la DomainConfig[/red]")
             return False
-        
-        # Vérifier que le template contient des sections clés
+
+        # Vérifier sections clés
         key_sections = ["# Résumé de la fiche", "# Caractérisation"]
         for section in key_sections:
-            if section not in agent.narrative_template:
-                console.print(f"[red][ERREUR] Section manquante: {section}[/red]")
+            if section not in template:
+                console.print(f"[red][ERREUR] Section manquante: {section}")
                 return False
-        
-        console.print("[green][OK] Agent correctement configuré avec template narratif[/green]")
-        console.print(f"[green][OK] Template narratif: {len(agent.narrative_template)} caractères[/green]")
-        console.print(f"[green][OK] Schéma: {len(agent.character_schema)} champs[/green]")
-        
+
+        console.print("[green][OK] WriterAgent correctement configuré avec le template narratif du domaine[/green]")
+        console.print(f"[green][OK] Template narratif: {len(template)} caractères[/green]")
+        console.print(f"[green][OK] Schéma: {len(schema)} champs[/green]")
+
         return True
-        
+
     except Exception as e:
         console.print(f"[bold red][ERREUR] {e}[/bold red]")
         return False
@@ -192,8 +197,8 @@ def run_narrative_template_tests():
     # Test 2: Intégration DomainConfig
     results.append(("DomainConfig Integration", test_domain_config_integration()))
     
-    # Test 3: Usage dans l'agent
-    results.append(("Agent Template Usage", test_character_agent_template_usage()))
+    # Test 3: Usage dans l'agent générique
+    results.append(("WriterAgent Template Usage", test_writer_agent_template_usage()))
     
     # Résumé global
     console.print("\n" + "=" * 70)

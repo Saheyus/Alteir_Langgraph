@@ -311,7 +311,7 @@ agents/
 ├── corrector_agent.py             # CorrectorAgent générique
 ├── validator_agent.py             # ValidatorAgent générique
 └── specialized/                   # (optionnel) agents très spécifiques
-    └── character_writer_agent.py  # Si besoin de logique unique
+    └── (exemples uniquement, pas de code en production)
 
 config/
 ├── __init__.py
@@ -415,25 +415,20 @@ result = writer.process(
 
 ## 🔄 Migration du Code Existant
 
-### CharacterWriterAgent → WriterAgent
+### Migration vers WriterAgent (remplace les agents spécialisés)
 
 ```python
-# Avant (spécialisé)
-character_agent = CharacterWriterAgent(config)
-
-# Après (générique avec config)
+# Exemple générique (recommandé)
 domain_config = PERSONNAGES_CONFIG
 writer_config = WriterConfig(
-    intent=config.intent,
-    level=config.level,
-    dialogue_mode=config.dialogue_mode
+    intent="orthogonal_depth",
+    level="standard",
+    dialogue_mode="parle"
 )
 writer_agent = WriterAgent(domain_config, writer_config)
 ```
 
-Le `CharacterWriterAgent` existant peut soit :
-1. Être refactorisé en `WriterAgent` + `PERSONNAGES_CONFIG`
-2. Rester comme exemple d'agent ultra-spécialisé dans `agents/specialized/`
+Les anciens agents spécialisés (ex. `CharacterWriterAgent`) ont été retirés. Utiliser uniquement `WriterAgent` avec la `DomainConfig` appropriée.
 
 ---
 
